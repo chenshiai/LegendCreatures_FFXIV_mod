@@ -22,4 +22,4 @@ func _connect():
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "5":
-			addBuff(b_kuangNu.new(5))
+		addBuff(b_kuangNu.new(5))
