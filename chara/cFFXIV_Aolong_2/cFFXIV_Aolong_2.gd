@@ -58,7 +58,7 @@ func _onAtkChara(atkInfo:AtkInfo):
 				if !moon :
 					moon = true
 					flash += 1
-				baddBuff(b_MoonLigth.new(12))
+				addBuff(b_MoonLigth.new(12))
 			else:
 				atkInfo.hurtVal *= 1.1
 				if !flower :
@@ -68,8 +68,8 @@ func _onAtkChara(atkInfo:AtkInfo):
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_Setsugekka" && aiCha != null::
-		if flash == 1 :
+	if id == "skill_Setsugekka" && aiCha != null:
+		if flash == 1:
 			var d:Eff = newEff("sk_4_1_2",sprcPos)
 			d._initFlyCha(aiCha)
 			yield(d,"onReach")
@@ -111,10 +111,7 @@ class b_FlowerCar:
 		id = "b_FlowerCar"
 		isNegetive = false
 		life = dur
-
-	func _connect():
-		masCha.connect("onHurt", self, "onHurt")
-
+		
 	func _upS():
 		att.spd = 0.10
 		eff.amount = clamp(life, 1, 30)
