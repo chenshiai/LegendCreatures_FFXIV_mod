@@ -17,11 +17,11 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_Setsugekka", 12)
 	addSkillTxt("""[雪风/月光/花车]：被动，第二次攻击将随机释放以下效果，并获得一个印记，一个印记最多存在一个
-	(雪风：增伤20%，获得“雪”；月光：增伤10%，12s内攻击提升5%，获得“月”；花车：增伤10%，12s内攻速提升10%，获得“花”)
-	[居合术]：复唱时间12s，消耗当前获得的全部印记，根据不同的数量来释放以下效果
-	[彼岸花]：消耗一个印记，造成物理伤害，并附加10层[烧灼]。威力：120
-	[天下五剑]：消耗两个印记，对目标及周围一格敌人造成物理伤害，威力：350
-	[纷乱雪月花]：消耗三个印记，造成物理伤害。威力：720)""")
+(雪风：增伤20%，获得“雪”；月光：增伤10%，12s内攻击提升10%，获得“月”；花车：增伤10%，12s内攻速提升10%，获得“花”)
+[居合术]：复唱时间12s，消耗当前获得的全部印记，根据不同的数量来释放以下效果
+[彼岸花]：消耗一个印记，造成物理伤害，并附加10层[烧灼]。威力：120
+[天下五剑]：消耗两个印记，对目标及周围一格敌人造成物理伤害，威力：350
+[纷乱雪月花]：消耗三个印记，造成物理伤害。威力：720)""")
 
 var snow = false
 var moon = false
@@ -77,18 +77,25 @@ func _castCdSkill(id):
 			hurtChara(aiCha, att.mgiAtk * 1.20, Chara.HurtType.PHY)
 		elif flash == 2:
 			var chas = getCellChas(aiCha.cell, 1)
-			yield(d,"onReach")
 			for i in chas:
 				if i != self:
 					fx(i)
-					hurtChara(i, att.atk * 3.50, HurtType.PHY)
 		elif flash == 3:
-			hurtChara(i, att.atk * 7.20, HurtType.PHY)
+			hurtChara(aiCha, att.atk * 7.20, HurtType.PHY)
+		reset()
 
 func fx(cha):
-	var d:Eff = newEff("sk_4_1_2", sprcPos)
+	var d:Eff = newEff("sk_4_1_2",sprcPos)
 	d._initFlyCha(cha)
 	yield(d,"onReach")
+	if sys.isClass(cha, "Chara"):
+		hurtChara(cha, att.atk * 3.50)
+
+func reset():
+	snow = false
+	moon = false
+	flower = false
+	flash = 0
 
 class b_MoonLigth:
 	extends Buff
@@ -100,8 +107,9 @@ class b_MoonLigth:
 		life = dur
 
 	func _upS():
-		att.atkL = 0.05
-		eff.amount = clamp(life, 1, 12)
+		att.atkL = 0.10
+		life = clamp(life, 0, 12)
+		if life <= 1: life = 0
 
 class b_FlowerCar:
 	extends Buff
@@ -114,4 +122,5 @@ class b_FlowerCar:
 		
 	func _upS():
 		att.spd = 0.10
-		eff.amount = clamp(life, 1, 30)
+		life = clamp(life, 0, 12)
+		if life <= 1: life = 0

@@ -16,14 +16,14 @@ func _extInit():
 	evos = []
 	atkEff = "atk_dao"
 	addSkillTxt("""[深恶痛绝]：被动，战斗开始时，魔法防御提高20%，受到的伤害减少15%
-	[嗜血]：被动，攻击恢复自身2%的HP""")
+[嗜血]：被动，攻击恢复自身2%的HP""")
 
 #进入战斗初始化，事件连接在这里初始化
 func _connect():
 	._connect() #保留继承的处理
 func _onBattleStart():
 	._onBattleStart()
-	addBuff(b_Abhor.new(1, true))
+	addBuff(b_Abhor.new(10))
 
 func _onAtkChara(atkInfo:AtkInfo):
 	._onAtkChara(atkInfo)
@@ -31,21 +31,19 @@ func _onAtkChara(atkInfo:AtkInfo):
 
 class b_Abhor:
 	extends Buff
-	func _init(dur = 1, forever = false):
+	func _init(dur = 1):
 		._init()
 		attInit()
 		id = "b_Abhor"
 		isNegetive = false
 		life = dur
-		forever = forever
 
 	func _connect():
 		masCha.connect("onHurt", self, "onHurt")
 
 	func _upS():
 		att.mgiDefL = 0.20
-		if !forever:
-			eff.amount = clamp(life, 1, 30)
+		if life <= 1: life = 10
 
 	func onHurt(atkInfo:AtkInfo):
 		atkInfo.hurtVal *= 0.85
