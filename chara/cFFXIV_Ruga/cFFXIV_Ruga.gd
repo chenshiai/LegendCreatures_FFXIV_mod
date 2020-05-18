@@ -13,13 +13,17 @@ func _extInit():
 	attCoe.def = 3
 	attCoe.mgiDef = 3
 	lv = 1
+	evos = ["cFFXIV_Ruga_1", "cFFXIV_Ruga_2", "cFFXIV_Ruga_3"]
 	atkEff = "atk_dao"
 	addCdSkill("5",5)#添加cd技能
-	addSkillTxt("每5秒：获得5层[狂怒]")
+	addSkillTxt("[光之加护]：每5秒，获得5层[狂怒][抵御]")
+
 #进入战斗初始化，事件连接在这里初始化
 func _connect():
 	._connect() #保留继承的处理
+
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "5":
+		addBuff(b_diYu.new(5))
 		addBuff(b_kuangNu.new(5))
