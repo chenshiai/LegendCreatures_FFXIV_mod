@@ -25,6 +25,9 @@ func _extInit():
 	addSkillTxt("""[阳星相位]：复唱时间18s，回复全场友军的HP，威力：40
 [白昼学派]：被动，阳星相位会给目标施加持续恢复效果，持续5秒，该效果无法叠加，威力：15""")
 
+const MASCOT_PW = 0.70 # 福星威力
+const STARPHASE_PW = 0.40 # 阳星威力
+
 #进入战斗初始化，事件连接在这里初始化
 func _connect():
 	._connect() #保留继承的处理
@@ -55,41 +58,46 @@ func _castCdSkill(id):
 			yield(d, "onReach")
 			aiCha.addBuff(bf)
 
-	if id == "skill_Mascot":
-		var cha = null
-		var m = 10000
-		var chas = getAllChas(2)
-		for i in chas:
-			if i.att.hp / i.att.maxHp < m :
-				cha = i
-				m = i.att.hp / i.att.maxHp
-		if cha != null:
-			cha.plusHp(att.mgiAtk * 0.7)
+	if id == "skill_Mascot": mascot()
+	if id == "skill_StarPhase": starPhase()
 
-	if id == "skill_StarPhase":
-		var ailys = getAllChas(2)
-		for cha in ailys:
-			if cha != null:
-				cha.plusHp(att.mgiAtk * 0.4)
-				cha.addBuff(b_LuckyStar.new(5, att.mgiAtk * 0.15))
+# 福星
+func mascot():
+	var cha = null
+	var m = 10000
+	var chas = getAllChas(2)
+	for i in chas:
+		if i.att.hp / i.att.maxHp < m :
+			cha = i
+			m = i.att.hp / i.att.maxHp
+	if cha != null:
+		cha.plusHp(att.mgiAtk * MASCOT_PW)
+
+# 阳星相位		
+func starPhase():
+	var ailys = getAllChas(2)
+	for cha in ailys:
+		if cha != null:
+			cha.plusHp(att.mgiAtk * STARPHASE_PW)
+			cha.addBuff(b_LuckyStar.new(5, att.mgiAtk * 0.15))
 
 class b_LuckyStar:
 	extends Buff
-	var total setget set_total, get_total
+	var hot setget set_hot, get_hot
 
-	func get_total():
-		return total
-	func set_total(val):
-		total = val
+	func get_hot():
+		return hot
+	func set_hot(val):
+		hot = val
 
 	func _init(dur = 1, val = 0):
 		attInit()
 		id = "b_LuckyStar"
-		total = val
+		hot = val
 		life = dur
 
 	func _upS():
-		masCha.plusHp(total)
+		masCha.plusHp(hot)
 		life = clamp(life, 0, 5)
 		if life <= 1: life = 0
 			

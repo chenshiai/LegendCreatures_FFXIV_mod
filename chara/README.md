@@ -14,7 +14,7 @@ cFFXIV_Larafel 拉拉肥
   ├──cFFXIV_Larafel_3 赤魔 魔法/物理输出切换  
 
 cFFXIV_Neko 猫魅  
-  ├──cFFXIV_Neko_1 学者 护盾减伤应有尽有，就是莫得奶  
+  ├──cFFXIV_Neko_1 学者 护盾减伤应有尽有，就是莫得奶 未进行测试  
   ├──cFFXIV_Neko_2 召唤 召唤蛮神  
   ├──cFFXIV_Neko_3 诗人 buff管理者 已测试完成  
 

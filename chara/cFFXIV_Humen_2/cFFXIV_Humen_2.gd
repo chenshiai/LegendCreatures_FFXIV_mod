@@ -25,8 +25,7 @@ func _connect():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_BowShock":
-		bowShock()
+	if id == "skill_BowShock": bowShock()
 
 # 弓形冲波
 func bowShock():

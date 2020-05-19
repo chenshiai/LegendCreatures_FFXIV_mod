@@ -25,30 +25,16 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
-	addBuff(b_Guard.new(10))
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	plusHp(att.maxHp * 0.20)
-	addBuff(b_Shiver.new(10))
+	if id == "skill_Shiver":
+		plusHp(att.maxHp * 0.20)
+		addBuff(b_Shiver.new(10))
 
-class b_Guard:
-	extends Buff
-	func _init(dur = 1):
-		._init()
-		attInit()
-		id = "b_Guard"
-		isNegetive = false
-		life = dur
-
-	func _connect():
-		masCha.connect("onHurt", self, "onHurt")
-
-	func _upS():
-		if life <= 1: life = 10
-
-	func onHurt(atkInfo:AtkInfo):
-		atkInfo.hurtVal *= 0.80
+func _onHurt(atkInfo):
+	._onHurt(atkInfo)
+	atkInfo.hurtVal *= 0.80
 
 class b_Shiver:
 	extends Buff

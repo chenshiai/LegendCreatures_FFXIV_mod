@@ -8,8 +8,8 @@ func _extInit():
 	chaName = "黑魔法师"
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
-	attCoe.atk = 1
-	attCoe.mgiAtk = 7
+	attCoe.atk = 2
+	attCoe.mgiAtk = 4
 	attCoe.def = 3
 	attCoe.mgiDef = 3
 	lv = 2

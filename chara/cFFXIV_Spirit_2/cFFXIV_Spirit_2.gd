@@ -23,7 +23,10 @@ func _extInit():
 [福星]：复唱时间10s，为生命最低的友方单位恢复HP，威力：70""")
 	addCdSkill("skill_StarPhase", 15)#添加cd技能
 	addSkillTxt("""[阳星相位]：复唱时间15s，回复全场友军的HP，威力：60
-[黑夜学派]：被动，阳星相位会给目标施加一层护盾，能够吸收125%法强的伤害，持续5秒，该效果无法叠加，威力：125""")
+[黑夜学派]：被动，阳星相位会给目标施加一层护盾，抵消治疗量初始值125%的伤害，持续5秒，该效果无法叠加，无法与学者的[鼓舞]叠加，威力：125""")
+
+const MASCOT_PW = 0.70 # 福星威力
+const STARPHASE_PW = 0.60 # 阳星威力
 
 #进入战斗初始化，事件连接在这里初始化
 func _connect():
@@ -55,23 +58,28 @@ func _castCdSkill(id):
 			yield(d, "onReach")
 			aiCha.addBuff(bf)
 
-	if id == "skill_Mascot":
-		var cha = null
-		var m = 10000
-		var chas = getAllChas(2)
-		for i in chas:
-			if i.att.hp / i.att.maxHp < m :
-				cha = i
-				m = i.att.hp / i.att.maxHp
-		if cha != null:
-			cha.plusHp(att.mgiAtk * 0.7)
+	if id == "skill_Mascot": mascot()
+	if id == "skill_StarPhase": starPhase()
 
-	if id == "skill_StarPhase":
-		var ailys = getAllChas(2)
-		for cha in ailys:
-			if cha != null:
-				cha.plusHp(att.mgiAtk * 0.6)
-				cha.addBuff(b_Night.new(5, att.mgiAtk * 1.25))
+# 福星
+func mascot():
+	var cha = null
+	var m = 10000
+	var chas = getAllChas(2)
+	for i in chas:
+		if i.att.hp / i.att.maxHp < m :
+			cha = i
+			m = i.att.hp / i.att.maxHp
+	if cha != null:
+		cha.plusHp(att.mgiAtk * MASCOT_PW)
+
+# 阳星相位		
+func starPhase():
+	var ailys = getAllChas(2)
+	for cha in ailys:
+		if cha != null:
+			cha.plusHp(att.mgiAtk * STARPHASE_PW)
+			cha.addBuff(b_Night.new(5, att.mgiAtk * STARPHASE_PW * 1.25))
 
 # 黑夜领域，护盾。可以吸收一定数值的伤害
 class b_Night:
