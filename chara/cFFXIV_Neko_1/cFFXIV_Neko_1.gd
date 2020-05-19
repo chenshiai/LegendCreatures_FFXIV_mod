@@ -16,11 +16,11 @@ func _extInit():
 	evos = []
 	atkEff = "atk_dang"
 	addCdSkill("skill_Adloquium", 10)#添加cd技能
-	addCdSkill("skill_Embrace", 9)
+	addCdSkill("skill_Embrace", 12)
 	addCdSkill("skill_WhisperingDawn", 20)
 	addSkillTxt("""[鼓舞激励之策]：复唱时间10s，为生命最低的友方单位恢复HP，并为其附加[鼓舞]，持续5s，威力：110
 [鼓舞]：Buff，抵消治疗量初始值125%的伤害，无法与占星术士的[黑夜领域]叠加
-[仙光的拥抱]：被动，小仙女协助作战。每9s，为生命最低的友方单位恢复HP，威力：40
+[仙光的拥抱]：被动，小仙女协助作战。每12s，为生命最低的友方单位恢复HP，威力：40
 [仙光的低语]：被动，小仙女协助作战。每20s，给所有队友施加持续恢复效果，持续5s，威力：10""")
 
 const ADLOQUIUM_PW = 1.10 # 鼓舞激励之策威力

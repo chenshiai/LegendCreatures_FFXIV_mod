@@ -15,7 +15,6 @@ func _extInit():
 	lv = 2
 	evos = []
 	atkEff = "atk_dang"
-	atkEff = "atk_dang"
 	addCdSkill("skill_DrawCard", 8)#添加cd技能
 	addCdSkill("skill_Mascot", 10)#添加cd技能
 	addSkillTxt("""[抽卡]：复唱时间8s，随机抽取一张卡施加效果给自己或者敌人，5层效果

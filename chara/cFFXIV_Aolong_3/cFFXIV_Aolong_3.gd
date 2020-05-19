@@ -17,7 +17,7 @@ func _extInit():
 	evos = []
 	atkEff = "atk_dao"
 	addCdSkill("skill_Ninjutsu", 11)
-	addSkillTxt("""[背刺]：被动，普通攻击会给目标施加2层[流血]效果
+	addSkillTxt("""[攻其不备]：被动，普通攻击会给目标施加2层[流血]效果
 [隐遁]：被动，获得30%的闪避
 [忍术]：复唱时间11s，随机释放以下忍术
 [风魔手里剑]：对魔法攻击力最高的一名敌人造成物理伤害，威力：350

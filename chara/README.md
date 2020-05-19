@@ -6,12 +6,12 @@ cFFXIV_Aolong 敖龙
 cFFXIV_Humen 人族  
   ├──cFFXIV_Humen_1 战士 标准公式光，配合奶妈电梯坐电梯 已测试完成  
   ├──cFFXIV_Humen_2 绝枪战士 俄罗斯轮盘赌 已测试完成  
-  ├──cFFXIV_Humen_3 舞者 提高自嗨队友的输出 
+  ├──cFFXIV_Humen_3 舞者 提高自嗨队友的输出 未进行测试  
 
 cFFXIV_Larafel 拉拉肥  
-  ├──cFFXIV_Larafel_1 白魔 奶量巨大  
+  ├──cFFXIV_Larafel_1 白魔 奶量巨大 未进行测试  
   ├──cFFXIV_Larafel_2 黑魔 魔法输出爆炸 已测试完成  
-  ├──cFFXIV_Larafel_3 赤魔 魔法/物理输出切换  
+  ├──cFFXIV_Larafel_3 赤魔 魔法/物理输出切换 未进行测试  
 
 cFFXIV_Neko 猫魅  
   ├──cFFXIV_Neko_1 学者 护盾减伤应有尽有，就是莫得奶 未进行测试  

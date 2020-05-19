@@ -50,6 +50,3 @@ class b_Shiver:
 		att.reHp = 0.20
 		life = clamp(life, 0, 10)
 		if life <= 1: life = 0
-
-	func onHurt(atkInfo:AtkInfo):
-		atkInfo.hurtVal *= 0.80
