@@ -17,7 +17,7 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_BowShock", 9)#添加cd技能
 	addSkillTxt("""[王室亲卫]：被动，受到的伤害减少10%
-	[弓形冲波]：复唱时间9s，对周围1格的敌人造成物理伤害，并附加4层[烧灼]。威力：160""")
+[弓形冲波]：复唱时间9s，对周围1格的敌人造成物理伤害，并附加4层[烧灼]。威力：160""")
 
 #进入战斗初始化，事件连接在这里初始化
 func _connect():
@@ -26,11 +26,15 @@ func _connect():
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_BowShock":
-		var chas = getCellChas(cell, 1)
-		for i in chas:
-			if i != self:
-				hurtChara(i, att.atk * 1.6, HurtType.PHY)
-				i.addBuff(b_shaoZhuo.new(4))
+		bowShock()
+
+# 弓形冲波
+func bowShock():
+	var chas = getCellChas(cell, 1)
+	for i in chas:
+		if i != self:
+			hurtChara(i, att.atk * 1.60, HurtType.PHY)
+			i.addBuff(b_shaoZhuo.new(4))
 
 func _onHurt(atkInfo:AtkInfo):
 	._onHurt(atkInfo)

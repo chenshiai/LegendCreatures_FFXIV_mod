@@ -15,7 +15,7 @@ func _extInit():
 	lv = 2
 	evos = []
 	atkEff = "atk_dao"
-	addCdSkill("skill_Shiver", 10)
+	addCdSkill("skill_Shiver", 20)
 	addSkillTxt("""[守护]：受到的伤害减少20%
 [战栗]：复唱时间20s，治疗20%的最大生命值。最大生命值提高20%，受到的治疗量提高20%，持续10s""")
 
@@ -23,13 +23,14 @@ func _extInit():
 func _connect():
 	._connect() #保留继承的处理
 
+func _onBattleStart():
+	._onBattleStart()
+	addBuff(b_Guard.new(10))
+
 func _castCdSkill(id):
 	._castCdSkill(id)
 	plusHp(att.maxHp * 0.20)
 	addBuff(b_Shiver.new(10))
-func _onBattleStart():
-	._onBattleStart()
-	addBuff(b_Guard.new(10))
 
 class b_Guard:
 	extends Buff
