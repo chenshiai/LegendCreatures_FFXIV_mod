@@ -57,9 +57,10 @@ func paean():
 	if cha != null:
 		cha.addBuff(b_Paean.new(3))
 		var bfs = cha.buffs()
-		for bf in bfs:
-			if bf.isNegetive:
-				bf.isDel = true
+		if bfs != null:
+			for bf in bfs:
+				if bf.isNegetive:
+					bf.isDel = true
 
 # 叙事谣buff
 class b_Ballad:
