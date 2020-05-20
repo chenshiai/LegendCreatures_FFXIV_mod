@@ -16,16 +16,16 @@ func _extInit():
 	evos = ["cFFXIVNeko_2_1"]
 	atkEff = "atk_dang"
 	addCdSkill("skill_RuinIII", 3)
-	addCdSkill("skill_Summon", 80)
 	addCdSkill("skill_Fester", 5)
+	addCdSkill("skill_Summon", 30)
 	addSkillTxt("""[毁荡]：复唱时间3s，对目标造成魔法伤害，威力：90
-[迦楼罗/伊芙利特/泰坦]：复唱时间8s，随机召唤一个召唤师与召唤师攻击共同作战，召唤兽死亡后才可召唤下一个
+[召唤I]：被动，随机召唤[迦楼罗/伊弗利特/泰坦]与召唤师攻击共同作战，召唤兽死亡后过一会才可召唤下一个
 [溃烂爆发]：复唱时间5s，根据目标当前debuff数量提高伤害，每个提高30威力，威力：100""")
 
 var RUINIII_PW = 0.90 # 毁荡威力
 var FESTER_PW = 1 # 溃烂爆发威力
 var FESTER_N_PW = 0.30 # 层数提升威力
-var summonIsLive = false
+var summonIsLive = false # 召唤兽是否存活
 
 func _connect():
 	._connect()
@@ -33,13 +33,12 @@ func _connect():
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_RuinIII" && aiCha != null: ruinIII()
-	if id == "skill_Summon": summon()
 	if id == "skill_Fester" && aiCha != null: fester()
+	if id == "skill_Summon" && !summonIsLive: summon(lv)
 
 func _onBattleStart():
 	._onBattleStart()
-	summon()
-
+	summon(lv)
 
 # 毁荡	
 func ruinIII():
@@ -63,5 +62,27 @@ func fester():
 	
 	hurtChara(aiCha, att.mgiAtk * (FESTER_PW + FESTER_N_PW * sf), Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
-func summon():
-	newChara("c6", self.cell)	
+func summon(lv):
+	var n = sys.rndRan(0, 2)
+	summonIsLive = true
+	if lv == 2:
+		if n == 0 :
+			newChara("cFFXIV_Evlet", self.cell)
+		elif n == 1:
+			newChara("cFFXIV_Kaluro", self.cell)
+		elif n == 2:
+			newChara("cFFXIV_Titan", self.cell)
+	elif lv == 3:
+		if n == 0 :
+			newChara("cFFXIV_Evlet_1", self.cell)
+		elif n == 1:
+			newChara("cFFXIV_Kaluro_1", self.cell)
+		elif n == 2:
+			newChara("cFFXIV_Titan_1", self.cell)
+
+func _onCharaDel(cha):
+	if (cha.team == self.team
+		&& cha.id == "cFFXIV_Evlet"
+		|| cha.id == "cFFXIV_Kaluro"
+		|| cha.id == "cFFXIV_Titan"):
+		summonIsLive = false
