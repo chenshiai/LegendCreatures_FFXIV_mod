@@ -10,8 +10,8 @@ func _extInit():
 	attCoe.maxHp = 5
 	attCoe.atk = 3.6
 	attCoe.mgiAtk = 0
-	attCoe.def = 3
-	attCoe.mgiDef = 3.5
+	attCoe.def = 3.6
+	attCoe.mgiDef = 4.4
 	lv = 2
 	evos = ["cFFXIVAolong_1_1"]
 	atkEff = "atk_dao"

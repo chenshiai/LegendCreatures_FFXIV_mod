@@ -15,7 +15,7 @@ cFFXIVLarafel 拉拉肥
 
 cFFXIVNeko 猫魅  
   ├──cFFXIVNeko_1 学者 护盾减伤应有尽有，就是莫得奶 已测试完成  
-  ├──cFFXIVNeko_2 召唤 召唤蛮神  
+  ├──cFFXIVNeko_2 召唤 召唤蛮神 已测试完成  
   ├──cFFXIVNeko_3 诗人 buff管理者 已测试完成  
 
 cFFXIVRuga 鲁加
