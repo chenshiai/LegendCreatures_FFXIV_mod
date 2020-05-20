@@ -1,10 +1,9 @@
 extends Chara
-#覆盖的初始化
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
+
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "龙骑士"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 3
@@ -15,25 +14,27 @@ func _extInit():
 	lv = 2
 	evos = ["cFFXIVSpirit_3_1"]
 	atkEff = "atk_dao"
-	addCdSkill("skill_DragonBlood", 10)#添加cd技能
+	addCdSkill("skill_DragonBlood", 10)
 	addSkillTxt("""[跳跃]：战斗开始时，快速跳到敌方中场
 [苍天龙血]：复唱时间10s，获得5层狂怒，并使用一次[武神枪]
 [武神枪]：对直线上的敌人造成物理伤害，威力：360""")
 
-#进入战斗初始化，事件连接在这里初始化
+const DRAGONBLOOD_PW = 3.60 # 武神枪威力
+
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
-	yield(reTimer(0.4),"timeout")
 	addBuff(b_kuangNu.new(10))
+
+	yield(reTimer(0.4), "timeout")
 	var mv = Vector2(cell.x, cell.y)
-	if team == 1:mv.x = 6
-	else:mv.x = 1
+	if team == 1: mv.x = 6
+	else: mv.x = 1
 	var vs = [Vector2(0, 0), Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, -1), Vector2(1, 1), Vector2(-1, 1), Vector2(-1, -1), Vector2(1, -1)]
 	for i in vs:
-		var v = mv+i
+		var v = mv + i
 		if matCha(v) == null && sys.main.isMatin(v):
 			if setCell(v) :
 				var pos = sys.main.map.map_to_world(cell)
@@ -64,7 +65,7 @@ func _castCdSkill(id):
 		var chas = lineChas(cell, aiCha.cell, 4)
 		for cha in chas:
 			if cha.team != team :
-				hurtChara(cha, att.atk * 3.60, HurtType.PHY)
+				hurtChara(cha, att.atk * DRAGONBLOOD_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
 func lineChas(aCell, bCell, num):
 	var chas = []

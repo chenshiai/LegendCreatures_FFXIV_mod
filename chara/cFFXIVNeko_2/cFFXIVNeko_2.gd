@@ -1,10 +1,10 @@
 extends Chara
-#覆盖的初始化
+
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
+
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "召唤师"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 3
@@ -27,15 +27,14 @@ var FESTER_PW = 1 # 溃烂爆发威力
 var FESTER_N_PW = 0.30 # 层数提升威力
 var summonIsLive = false
 
-#进入战斗初始化，事件连接在这里初始化
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
 
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_RuinIII" && aiCha != null: ruinIII()
 	if id == "skill_Summon": summon()
-	if id == "skill_Fester": fester()
+	if id == "skill_Fester" && aiCha != null: fester()
 
 func _onBattleStart():
 	._onBattleStart()
@@ -47,7 +46,8 @@ func ruinIII():
 	var d:Eff = newEff("sk_feiDang",sprcPos)
 	d._initFlyCha(aiCha)
 	yield(d,"onReach")
-	hurtChara(aiCha, att.mgiAtk * RUINIII_PW, Chara.HurtType.MGI)
+
+	hurtChara(aiCha, att.mgiAtk * RUINIII_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
 # 溃烂爆发	
 func fester():
@@ -61,7 +61,7 @@ func fester():
 		if bf.isNegetive :
 			sf += 1
 	
-	hurtChara(aiCha, att.mgiAtk * (FESTER_PW + FESTER_N_PW * sf), Chara.HurtType.MGI)
+	hurtChara(aiCha, att.mgiAtk * (FESTER_PW + FESTER_N_PW * sf), Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
 func summon():
 	newChara("c6", self.cell)	

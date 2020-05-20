@@ -1,61 +1,66 @@
 extends Chara
-#覆盖的初始化
+
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
 
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "骑士"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 3
 	attCoe.atk = 4
-	attCoe.mgiAtk = 2
-	attCoe.def = 3
+	attCoe.mgiAtk = 1
+	attCoe.def = 3.5
 	attCoe.mgiDef = 3
 	lv = 2
 	evos = ["cFFXIVRuga_1_1"]
 	atkEff = "atk_dao"
-	addCdSkill("skill_Grace", 10)#添加cd技能
+	addCdSkill("skill_Grace", 15)
+	addCdSkill("skill_Authority", 10)
 	addSkillTxt("""[钢铁信念]：被动，战斗开始后，提高10%的物理防御，受到的伤害减少10%
-[深仁厚泽]：复唱时间10s，为生命最低的单位恢复生命值。威力：100""")
+[深仁厚泽]：复唱时间15s，为生命最低的单位使用治疗魔法，恢复其生命值。威力：1200
+[王权剑]：复唱时间10s，对目标造成物理伤害，威力：350""")
 
-#进入战斗初始化，事件连接在这里初始化
+const GRACE_PW = 12 # 深仁厚泽威力
+const AUTHORITY_PW = 3.50 # 王权剑威力
+
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
-	addBuff(b_SteelBelief.new(10))
+	addBuff(b_SteelBelief.new())
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_Grace":
-		var cha = null
-		var m = 10000
-		var chas = getAllChas(2)
-		for i in chas:
-			if i.att.hp / i.att.maxHp < m :
-				cha = i
-				m = i.att.hp / i.att.maxHp
-		if cha != null: cha.plusHp(att.mgiAtk * 1)
+	if id == "skill_Grace": grace()
+	if id == "skill_Authority" && aiCha != null: authority()
+
+# 深仁厚泽		
+class grace():
+	var cha = null
+	var m = 10000
+	var chas = getAllChas(2)
+	for i in chas:
+		if i.att.hp / i.att.maxHp < m :
+			cha = i
+			m = i.att.hp / i.att.maxHp
+	if cha != null: cha.plusHp(att.mgiAtk * 1)
+
+# 王权剑		
+func authority():
+	hurtChara(aiCha, att.atk * AUTHORITY_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
 class b_SteelBelief:
 	extends Buff
-	func _init(dur = 1):
-		._init()
+	func _init():
 		attInit()
 		id = "b_SteelBelief"
 		isNegetive = false
-		life = dur
+		att.defL = 0.10
 
 	func _connect():
 		masCha.connect("onHurt", self, "onHurt")
-
-	func _upS():
-		att.defL = 0.10
-		life = clamp(life, 0, 10)
-		if life <= 1: life = 10
 
 	func onHurt(atkInfo:AtkInfo):
 		atkInfo.hurtVal *= 0.90

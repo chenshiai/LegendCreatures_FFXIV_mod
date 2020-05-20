@@ -1,10 +1,10 @@
 extends Chara
-#覆盖的初始化
+
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
+
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "战士"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 3
@@ -19,12 +19,8 @@ func _extInit():
 	addSkillTxt("""[守护]：受到的伤害减少20%
 [战栗]：复唱时间20s，治疗20%的最大生命值。最大生命值提高20%，受到的治疗量提高20%，持续10s""")
 
-#进入战斗初始化，事件连接在这里初始化
 func _connect():
-	._connect() #保留继承的处理
-
-func _onBattleStart():
-	._onBattleStart()
+	._connect()
 
 func _castCdSkill(id):
 	._castCdSkill(id)

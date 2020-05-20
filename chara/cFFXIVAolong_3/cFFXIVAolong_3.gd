@@ -1,10 +1,10 @@
 extends Chara
-#覆盖的初始化
+
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
+
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "忍者"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 3
@@ -18,8 +18,8 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_Ninjutsu", 11)
 	addSkillTxt("""[攻其不备]：被动，普通攻击会给目标施加2层[流血]效果
-[隐遁]：被动，获得30%的闪避
-[忍术]：复唱时间11s，随机释放以下忍术
+[隐遁]：被动，获得30%的闪避""")
+	addSkillTxt("""[忍术]：复唱时间11s，随机释放以下忍术
 [风魔手里剑]：对魔法攻击力最高的一名敌人造成物理伤害，威力：350
 [冰遁之术]：对周围1格的敌人造成物理伤害，并附加5层[结霜]，威力：50
 [火遁之术]：对周围1格的敌人造成物理伤害，并附加5层[烧灼]，威力：30""")
@@ -28,9 +28,8 @@ const FUMA_PW = 3.50 # 风魔手里剑威力
 const HYOTON_PW = 0.50 # 冰遁威力
 const KATON_PW = 0.30 # 火遁威力
 
-#进入战斗初始化，事件连接在这里初始化
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
@@ -72,14 +71,14 @@ func fx(cha):
 	d._initFlyCha(cha)
 	yield(d,"onReach")
 	if sys.isClass(cha,"Chara"):
-		hurtChara(cha, att.atk * FUMA_PW)
+		hurtChara(cha, att.atk * FUMA_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
 # 冰遁之术
 func hyoton():
 	var chas = getCellChas(cell,1)
 	for i in chas:
 		if i != self:
-			hurtChara(i, att.atk * HYOTON_PW, HurtType.PHY)
+			hurtChara(i, att.atk * HYOTON_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 			i.addBuff(b_jieShuang.new(5))
 
 # 火遁之术			

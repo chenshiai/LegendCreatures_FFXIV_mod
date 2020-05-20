@@ -1,10 +1,10 @@
 extends Chara
-#覆盖的初始化
+
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
+
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "绝枪战士"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 3
@@ -15,13 +15,14 @@ func _extInit():
 	lv = 2
 	evos = ["cFFXIVHumen_2_1"]
 	atkEff = "atk_dao"
-	addCdSkill("skill_BowShock", 9)#添加cd技能
+	addCdSkill("skill_BowShock", 9)
 	addSkillTxt("""[王室亲卫]：被动，受到的伤害减少10%
-[弓形冲波]：复唱时间9s，对周围1格的敌人造成物理伤害，并附加4层[烧灼]。威力：160""")
+[弓形冲波]：复唱时间9s，对周围1格的敌人造成物理伤害，并附加4层[烧灼]。威力：260""")
 
-#进入战斗初始化，事件连接在这里初始化
+const BOWSHOCK_PW = 2.60 # 弓形冲波威力
+
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -32,7 +33,7 @@ func bowShock():
 	var chas = getCellChas(cell, 1)
 	for i in chas:
 		if i != self:
-			hurtChara(i, att.atk * 1.60, HurtType.PHY)
+			hurtChara(i, att.atk * BOWSHOCK_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 			i.addBuff(b_shaoZhuo.new(4))
 
 func _onHurt(atkInfo:AtkInfo):

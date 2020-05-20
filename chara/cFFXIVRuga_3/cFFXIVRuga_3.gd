@@ -1,10 +1,10 @@
 extends Chara
-#覆盖的初始化
+
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
+
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "机工士"
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -27,9 +27,8 @@ var autoCount = 0 # 浮空炮攻击次数
 var fireCount = 0 # 野火提升阶段
 var fireChara = null # 被施加了野火的目标
 
-#进入战斗初始化，事件连接在这里初始化
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
@@ -47,9 +46,9 @@ func _onAtkChara(atkInfo):
 	if atkInfo.hitCha == fireChara && atkInfo.atkType == AtkType.NORMAL:
 		if atkInfo.hitCha.hasBuff("b_Wildfire") != null:
 			fireCount += 1
-			print("野火：", fireCount)
+			print("野火层数：", fireCount)
 		elif atkInfo.hitCha.hasBuff("b_Wildfire") == null:
-			print("野火触发：", fireCount)
+			print("野火触发！", att.atk * WILDFIRE_PW * fireCount)
 			hurtChara(aiCha, att.atk * WILDFIRE_PW * fireCount, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 			fireCount = 0
 			fireChara = null
