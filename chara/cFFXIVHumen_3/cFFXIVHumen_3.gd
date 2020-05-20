@@ -8,10 +8,11 @@ func _extInit():
 	chaName = "舞者"
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
-	attCoe.atk = 3
+	attCoe.atk = 4 
 	attCoe.mgiAtk = 2
-	attCoe.def = 3
-	attCoe.mgiDef = 3
+	attCoe.def = 2.8
+	attCoe.mgiDef = 2.8
+	attAdd.cri += 0.3
 	lv = 2
 	evos = ["cFFXIVHumen_3_1"]
 	atkEff = "atk_dao"
@@ -83,7 +84,7 @@ class b_DancingPartner:
 		id = "b_DancingPartner"
 		isNegetive = false
 		att.atkR = 0.10
-		att.mgiAtk = masCha.att.mgiAtk * 0.10
+		att.mgiAtkL = 0.10
 
 # 伶俐
 class b_DanceStep:

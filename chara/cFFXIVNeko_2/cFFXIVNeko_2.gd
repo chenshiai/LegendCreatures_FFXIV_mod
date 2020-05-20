@@ -6,10 +6,10 @@ func _info():
 func _extInit():
 	._extInit()
 	chaName = "召唤师"
-	attCoe.atkRan = 1
+	attCoe.atkRan = 3
 	attCoe.maxHp = 3
 	attCoe.atk = 2
-	attCoe.mgiAtk = 4
+	attCoe.mgiAtk = 4.2
 	attCoe.def = 3
 	attCoe.mgiDef = 3
 	lv = 2

@@ -8,9 +8,9 @@ func _extInit():
 	chaName = "忍者"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 3
-	attCoe.atk = 4
+	attCoe.atk = 4.1
 	attCoe.mgiAtk = 2
-	attCoe.def = 3
+	attCoe.def = 2.8
 	attCoe.mgiDef = 3
 	attAdd.dod += 0.30
 	lv = 2
@@ -20,13 +20,13 @@ func _extInit():
 	addSkillTxt("""[攻其不备]：被动，普通攻击会给目标施加2层[流血]效果
 [隐遁]：被动，获得30%的闪避""")
 	addSkillTxt("""[忍术]：复唱时间11s，随机释放以下忍术
-[风魔手里剑]：对魔法攻击力最高的一名敌人造成物理伤害，威力：350
-[冰遁之术]：对周围1格的敌人造成物理伤害，并附加5层[结霜]，威力：50
-[火遁之术]：对周围1格的敌人造成物理伤害，并附加5层[烧灼]，威力：30""")
+[风魔手里剑]：对魔法攻击力最高的一名敌人造成物理伤害，威力：450
+[冰遁之术]：对周围1格的敌人造成物理伤害，并附加5层[结霜]，威力：70
+[火遁之术]：对周围1格的敌人造成物理伤害，并附加5层[烧灼]，威力：50""")
 
-const FUMA_PW = 3.50 # 风魔手里剑威力
-const HYOTON_PW = 0.50 # 冰遁威力
-const KATON_PW = 0.30 # 火遁威力
+const FUMA_PW = 4.50 # 风魔手里剑威力
+const HYOTON_PW = 0.70 # 冰遁威力
+const KATON_PW = 0.50 # 火遁威力
 
 func _connect():
 	._connect()

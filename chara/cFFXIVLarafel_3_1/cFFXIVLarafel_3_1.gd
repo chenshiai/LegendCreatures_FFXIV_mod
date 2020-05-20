@@ -6,12 +6,6 @@ func _info():
 func _extInit():
 	._extInit()#保留继承的处理
 	chaName = "抗争之红"
-	attCoe.atkRan = 3
-	attCoe.maxHp = 3
-	attCoe.atk = 2
-	attCoe.mgiAtk = 4
-	attCoe.def = 3
-	attCoe.mgiDef = 3
 	lv = 3
 	evos = []
 

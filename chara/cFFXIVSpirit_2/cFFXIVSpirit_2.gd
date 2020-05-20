@@ -6,12 +6,12 @@ func _info():
 func _extInit():
 	._extInit()
 	chaName = "占星术士-夜"
-	attCoe.atkRan = 1
+	attCoe.atkRan = 3
 	attCoe.maxHp = 3
 	attCoe.atk = 2
 	attCoe.mgiAtk = 4
-	attCoe.def = 3
-	attCoe.mgiDef = 3
+	attCoe.def = 2.9
+	attCoe.mgiDef = 3.2
 	lv = 2
 	evos = ["cFFXIVSpirit_2_1"]
 	atkEff = "atk_dang"

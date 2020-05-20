@@ -6,12 +6,6 @@ func _info():
 func _extInit():
 	._extInit()#保留继承的处理
 	chaName = "红血之龙"
-	attCoe.atkRan = 1
-	attCoe.maxHp = 3
-	attCoe.atk = 4
-	attCoe.mgiAtk = 2
-	attCoe.def = 3
-	attCoe.mgiDef = 3
 	lv = 3
 	evos = []
 

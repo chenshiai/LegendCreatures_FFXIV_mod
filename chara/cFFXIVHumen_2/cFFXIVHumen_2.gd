@@ -7,11 +7,11 @@ func _extInit():
 	._extInit()
 	chaName = "绝枪战士"
 	attCoe.atkRan = 1
-	attCoe.maxHp = 3
-	attCoe.atk = 4
+	attCoe.maxHp = 4.3
+	attCoe.atk = 3.8
 	attCoe.mgiAtk = 2
-	attCoe.def = 3
-	attCoe.mgiDef = 3
+	attCoe.def = 3.3
+	attCoe.mgiDef = 3.3
 	lv = 2
 	evos = ["cFFXIVHumen_2_1"]
 	atkEff = "atk_dao"

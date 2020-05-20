@@ -7,8 +7,8 @@ func _extInit():
 	._extInit()
 	chaName = "骑士"
 	attCoe.atkRan = 1
-	attCoe.maxHp = 3
-	attCoe.atk = 4
+	attCoe.maxHp = 4.3
+	attCoe.atk = 3.7
 	attCoe.mgiAtk = 1
 	attCoe.def = 3.5
 	attCoe.mgiDef = 3
@@ -37,7 +37,7 @@ func _castCdSkill(id):
 	if id == "skill_Authority" && aiCha != null: authority()
 
 # 深仁厚泽		
-class grace():
+func grace():
 	var cha = null
 	var m = 10000
 	var chas = getAllChas(2)

@@ -9,8 +9,8 @@ func _extInit():
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
 	attCoe.atk = 4
-	attCoe.mgiAtk = 2
-	attCoe.def = 3
+	attCoe.mgiAtk = 1
+	attCoe.def = 2.9
 	attCoe.mgiDef = 3
 	lv = 2
 	evos = ["cFFXIVRuga_3_1"]

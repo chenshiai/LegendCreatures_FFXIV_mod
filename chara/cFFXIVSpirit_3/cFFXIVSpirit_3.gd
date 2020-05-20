@@ -6,11 +6,11 @@ func _extInit():
 	._extInit()
 	chaName = "龙骑士"
 	attCoe.atkRan = 1
-	attCoe.maxHp = 3
+	attCoe.maxHp = 3.3
 	attCoe.atk = 4
 	attCoe.mgiAtk = 2
 	attCoe.def = 3
-	attCoe.mgiDef = 3
+	attCoe.mgiDef = 2.8
 	lv = 2
 	evos = ["cFFXIVSpirit_3_1"]
 	atkEff = "atk_dao"
