@@ -8,7 +8,7 @@ func _extInit():
 	chaName = "赤魔法师"
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
-	attCoe.atk = 2
+	attCoe.atk = 2.5
 	attCoe.mgiAtk = 4
 	attCoe.def = 3
 	attCoe.mgiDef = 3
@@ -16,8 +16,8 @@ func _extInit():
 	evos = ["cFFXIVLarafel_3_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_Verthunder", 8)#添加cd技能
-	addSkillTxt("""[魔元平衡/连续咏唱]：被动，[赤闪雷]获得15黑魔元，[赤疾风]获得15白魔元，上限100；魔法技能会连续释放两次
-[赤闪雷/赤疾风]：复唱时间8s，随机释放其中一个技能对目标造成魔法伤害，威力：110
+	addSkillTxt("""[魔元平衡/连续咏唱]：被动，[赤闪雷]获得15黑魔元，[赤疾风]获得15白魔元，上限100；魔法技能会连续释放两次""")
+	addSkillTxt("""[赤闪雷/赤疾风]：复唱时间8s，随机释放其中一个技能对目标造成魔法伤害，威力：110
 [魔连攻]：被动，攻击时，同时消耗25点黑白魔元，物理攻击伤害提高470%""")
 
 const MORGEN = 15 # 释放魔法获得魔元数量

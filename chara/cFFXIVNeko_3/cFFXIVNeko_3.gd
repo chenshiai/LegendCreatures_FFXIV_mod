@@ -41,7 +41,6 @@ func lronjaws():
 func ballad():
 	normalAtkChara(aiCha)
 	var chas = getAllChas(2)
-	var s = 0
 	for cha in chas :
 		cha.addBuff(b_Ballad.new(8))
 

@@ -47,9 +47,9 @@ func _onAtkChara(atkInfo):
 	if atkInfo.hitCha == fireChara && atkInfo.atkType == AtkType.NORMAL:
 		if atkInfo.hitCha.hasBuff("b_Wildfire") != null:
 			fireCount += 1
-			print("野火：", fireCount)
+			print("野火层数：", fireCount)
 		elif atkInfo.hitCha.hasBuff("b_Wildfire") == null:
-			print("野火触发：", fireCount)
+			print("野火触发！", att.atk * WILDFIRE_PW * fireCount)
 			hurtChara(aiCha, att.atk * WILDFIRE_PW * fireCount, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 			fireCount = 0
 			fireChara = null
