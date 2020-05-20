@@ -1,10 +1,10 @@
 extends Chara
-#覆盖的初始化
+
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
+
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "占星术士-昼"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 3
@@ -15,21 +15,20 @@ func _extInit():
 	lv = 2
 	evos = ["cFFXIVSpirit_1_1"]
 	atkEff = "atk_dang"
-	addCdSkill("skill_DrawCard", 8)#添加cd技能
-	addCdSkill("skill_Mascot", 10)#添加cd技能
+	addCdSkill("skill_DrawCard", 8)
+	addCdSkill("skill_Mascot", 10)
 	addSkillTxt("""[抽卡]：复唱时间8s，随机抽取一张卡施加效果给自己或者敌人，5层效果
 (太阳神之衡[烧灼]；放浪神之箭[失明]；战争神之枪[流血]；世界树之干[抵御]；河流神之瓶[结霜]；建筑神之塔[魔御])
 [福星]：复唱时间10s，为生命最低的友方单位恢复HP，威力：70""")
-	addCdSkill("skill_StarPhase", 18)#添加cd技能
+	addCdSkill("skill_StarPhase", 18)
 	addSkillTxt("""[阳星相位]：复唱时间18s，回复全场友军的HP，威力：40
 [白昼学派]：被动，阳星相位会给目标施加持续恢复效果，持续5秒，该效果无法叠加，威力：15""")
 
 const MASCOT_PW = 0.70 # 福星威力
 const STARPHASE_PW = 0.40 # 阳星威力
 
-#进入战斗初始化，事件连接在这里初始化
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
 
 func _castCdSkill(id):
 	._castCdSkill(id)

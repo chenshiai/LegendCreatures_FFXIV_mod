@@ -1,10 +1,10 @@
 extends Chara
-#覆盖的初始化
+
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
+
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "吟游诗人"
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -14,16 +14,15 @@ func _extInit():
 	attCoe.mgiDef = 3
 	lv = 2
 	evos = ["cFFXIVNeko_3_1"]
-	addCdSkill("skill_LronJaws", 15)#添加cd技能
-	addCdSkill("skill_Ballad", 20)#添加cd技能
-	addCdSkill("skill_Paean", 11)#添加cd技能
+	addCdSkill("skill_LronJaws", 15)
+	addCdSkill("skill_Ballad", 20)
+	addCdSkill("skill_Paean", 11)
 	addSkillTxt("""[伶牙俐齿]：复唱时间15s，对攻击目标造成物理伤害，并附加5层[流血][中毒]，威力：100
 [贤者的叙事谣]：复唱时间20s，对目标造成物理伤害，并使队伍全员攻击伤害提高5%，持续8s，此效果无法叠加，威力：100
-[光阴神的礼赞凯歌]：复唱时间11s，以HP最少的队员为目标，解除其所有负面效果，并免疫所有负面效果，持续3s""")
+[光阴神的礼赞凯歌]：复唱时间11s，以HP最少的队员为目标，解除其[中毒][流血]效果，并使其免疫后来的所有负面效果，持续3s""")
 
-#进入战斗初始化，事件连接在这里初始化
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -55,10 +54,12 @@ func paean():
 			m = i.att.hp / i.att.maxHp
 	if cha != null:
 		cha.addBuff(b_Paean.new(3))
-		var bfs = cha.buffs()
-		for bf in bfs:
-			if bf.isNegetive:
-				bf.isDel = true
+
+	var lx = cha.hasBuff("b_liuXue")
+	var zd = cha.hasBuff("b_zhonDu")
+	if lx != null: lx.isDel = true
+	if zd != null: zd.isDel = true
+
 
 # 叙事谣buff
 class b_Ballad:

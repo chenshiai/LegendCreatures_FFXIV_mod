@@ -1,10 +1,10 @@
 extends Chara
-#覆盖的初始化
+
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
+
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "暗黑骑士"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 3
@@ -15,37 +15,53 @@ func _extInit():
 	lv = 2
 	evos = ["cFFXIVAolong_1_1"]
 	atkEff = "atk_dao"
-	addSkillTxt("""[深恶痛绝]：被动，战斗开始时，魔法防御提高20%，受到的伤害减少15%
-[嗜血]：被动，普通攻击会恢复自身2%的HP""")
+	addCdSkill("skill_Bloodspiller", 10)
+	addSkillTxt("""[深恶痛绝]：被动，战斗开始时，魔法防御提高20%，受到的伤害减少10%
+[噬魂斩]：被动，第三次普通攻击造成120%的伤害，并恢复自身2%的HP
+[血溅]：复唱时间10s，对目标造成物理伤害，威力：250""")
 
 const PLUSHP = 0.02 # 回复量
-#进入战斗初始化，事件连接在这里初始化
+const BLOODSPILLER_PW = 2.50 # 血溅倍率
+var atkCount = 0 # 攻击次数
+
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
+
 func _onBattleStart():
 	._onBattleStart()
-	addBuff(b_Abhor.new(10))
+	atkCount = 0
+	addBuff(b_Abhor.new())
+
+func _castCdSkill(id):
+	._castCdSkill(id)
+	if id == "skill_Bloodspiller": bloodspiller()
 
 func _onAtkChara(atkInfo:AtkInfo):
 	._onAtkChara(atkInfo)
 	if atkInfo.atkType == AtkType.NORMAL:
-		plusHp(att.maxHp * PLUSHP)
+		atkCount += 1
+		if atkCount == 3:
+			atkCount = 0
+			atkInfo.hurtVal *= 1.2
+			plusHp(att.maxHp * PLUSHP)
 
+# 血溅
+func bloodspiller():
+	if aiCha != null:
+		hurtChara(aiCha, att.atk * BLOODSPILLER_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+
+
+# 深恶痛绝buff
 class b_Abhor:
 	extends Buff
-	func _init(dur = 1):
-		._init()
+	func _init():
 		attInit()
 		id = "b_Abhor"
 		isNegetive = false
-		life = dur
+		att.mgiDefL = 0.20
 
 	func _connect():
 		masCha.connect("onHurt", self, "onHurt")
 
-	func _upS():
-		att.mgiDefL = 0.20
-		if life <= 1: life = 10
-
 	func onHurt(atkInfo:AtkInfo):
-		atkInfo.hurtVal *= 0.85
+		atkInfo.hurtVal *= 0.90

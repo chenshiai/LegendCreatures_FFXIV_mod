@@ -1,10 +1,10 @@
 extends Chara
-#覆盖的初始化
+
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
+
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "舞者"
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -15,7 +15,7 @@ func _extInit():
 	lv = 2
 	evos = ["cFFXIVHumen_3_1"]
 	atkEff = "atk_dao"
-	addCdSkill("skill_DanceStep", 35)#添加cd技能
+	addCdSkill("skill_DanceStep", 35)
 	addSkillTxt("""[闭式舞姿]：被动，战斗开始时，选择物攻最高与魔攻最高的队友作为舞伴，提高他们与自己的攻击力10%，不可以叠加
 [标准舞步]：复唱时间35s，对三格内的敌人造成物理伤害，同时舞伴与自己的攻击力再提升10%，持续10s，威力：1000""")
 
@@ -23,9 +23,8 @@ const DANCESTEP_PW = 10 # 标准舞步威力
 var atkMaxAlly = null # 攻击力最高的队友
 var mgiAtkMaxAlly = null # 法强最高的队友
 
-#进入战斗初始化，事件连接在这里初始化
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
@@ -42,23 +41,23 @@ func setDancePartner():
 	for i in range(1):
 		if i >= chas.size() : break
 		mgiAtkMaxAlly = chas[i]
-		mgiAtkMaxAlly.addBuff(b_DancingPartner.new(10))
+		mgiAtkMaxAlly.addBuff(b_DancingPartner.new())
 
 	var allys = getAllChas(2)
 	allys.sort_custom(self, "sortAtkMax")
 	for i in range(1):
 		if i >= allys.size() : break
 		atkMaxAlly = allys[i]
-		atkMaxAlly.addBuff(b_DancingPartner.new(10))
+		atkMaxAlly.addBuff(b_DancingPartner.new())
 
-	addBuff(b_DancingPartner.new(10))
+	addBuff(b_DancingPartner.new())
 
 # 标准舞步
 func danceStep():
 	var chas = getCellChas(cell, 3)
 	for i in chas:
 		if i != null: 
-			hurtChara(i, att.atk * DANCESTEP_PW, HurtType.PHY)
+			hurtChara(i, att.atk * DANCESTEP_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 	
 	addBuff(b_DanceStep.new(10))
 	atkMaxAlly.addBuff(b_DanceStep.new(10))
@@ -79,17 +78,13 @@ func sortAtkMax(a,b):
 # 舞伴buff
 class b_DancingPartner:
 	extends Buff
-	func _init(dur = 1):
-		._init()
+	func _init():
 		attInit()
 		id = "b_DancingPartner"
 		isNegetive = false
-		life = dur
-
-	func _upS():
 		att.atkR = 0.10
 		att.mgiAtk = masCha.att.mgiAtk * 0.10
-		if life <= 1: life = 10
+
 # 伶俐
 class b_DanceStep:
 	extends Buff

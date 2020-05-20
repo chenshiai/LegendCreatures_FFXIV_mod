@@ -1,10 +1,10 @@
 extends Chara
-#覆盖的初始化
+
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
+
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "学者"
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -15,7 +15,7 @@ func _extInit():
 	lv = 2
 	evos = ["cFFXIVNeko_1_1"]
 	atkEff = "atk_dang"
-	addCdSkill("skill_Adloquium", 10)#添加cd技能
+	addCdSkill("skill_Adloquium", 10)
 	addCdSkill("skill_Embrace", 12)
 	addCdSkill("skill_WhisperingDawn", 20)
 	addSkillTxt("""[鼓舞激励之策]：复唱时间10s，为生命最低的友方单位恢复HP，并为其附加[鼓舞]，持续5s，威力：110
@@ -27,9 +27,8 @@ const ADLOQUIUM_PW = 1.10 # 鼓舞激励之策威力
 const EMBRACE_PW = 0.40 # 仙光的拥抱威力
 const WHISPERINGDAWN_PW = 0.10 # 仙光的低语威力
 
-#进入战斗初始化，事件连接在这里初始化
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
 
 func _castCdSkill(id):
 	._castCdSkill(id)
