@@ -18,8 +18,8 @@ func _extInit():
 	evos = ["cFFXIVRuga_2_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_FightGas", 7)
-	addSkillTxt("""[红莲/疾风]：被动，红莲体势，增加5%的攻击力；疾风体势：增加18%攻速
-[斗气]：被动，每次攻击有50%概率获得一层斗气，最大五层
+	addSkillTxt("[红莲/疾风]：被动，红莲体势，增加5%的攻击力；疾风体势：增加18%攻速")
+	addSkillTxt("""[斗气]：被动，每次攻击有50%概率获得一层斗气，最大五层
 [阴阳斗气斩]：冷却时间7s，对目标造成[210%]的物理伤害，根据斗气层数提高伤害，每层提高[20%]的倍率，最大伤害[310%]""")
 
 #进入战斗初始化，事件连接在这里初始化
@@ -44,5 +44,6 @@ func _castCdSkill(id):
 	if id == "skill_FightGas" && aiCha != null: fightGasAtk()
 
 func fightGasAtk():
-	hurtChara(aiCha, att.atk * (FIGHTGAS_PW + FIGHTGAS_N_PW * fightGas), Chara.HurtType.PHY, Chara.AtkType.SKILL)
-	fightGas = 0
+	if aiCha != null:
+		hurtChara(aiCha, att.atk * (FIGHTGAS_PW + FIGHTGAS_N_PW * fightGas), Chara.HurtType.PHY, Chara.AtkType.SKILL)
+		fightGas = 0

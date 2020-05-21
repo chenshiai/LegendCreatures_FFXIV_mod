@@ -15,12 +15,12 @@ func _extInit():
 	lv = 2
 	evos = ["cFFXIVNeko_2_1"]
 	atkEff = "atk_dang"
-	addCdSkill("skill_RuinIII", 3)
-	addCdSkill("skill_Fester", 5)
+	addCdSkill("skill_RuinIII", 4)
+	addCdSkill("skill_Fester", 6)
 	addCdSkill("skill_Summon", 30)
 	addSkillTxt("""[毁荡]：冷却时间4s，对目标造成[90%]法强的魔法伤害
 [召唤I]：被动，随机召唤[迦楼罗/伊弗利特/泰坦]与召唤师攻击共同作战，召唤兽死亡后过一会才可召唤下一个
-[溃烂爆发]：冷却时间5s，对目标造成[100%]法强的魔法伤害，根据目标当前debuff数量提高伤害，每个提高[30%]威力""")
+[溃烂爆发]：冷却时间6s，对目标造成[100%]法强的魔法伤害，根据目标当前debuff数量提高伤害，每个提高[30%]威力""")
 
 var RUINIII_PW = 0.90 # 毁荡威力
 var FESTER_PW = 1 # 溃烂爆发威力
@@ -32,8 +32,8 @@ func _connect():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_RuinIII" && aiCha != null: ruinIII()
-	if id == "skill_Fester" && aiCha != null: fester()
+	if id == "skill_RuinIII": ruinIII()
+	if id == "skill_Fester": fester()
 	if id == "skill_Summon" && !summonIsLive: summon(lv)
 
 func _onBattleStart():
@@ -45,22 +45,23 @@ func ruinIII():
 	var d:Eff = newEff("sk_feiDang",sprcPos)
 	d._initFlyCha(aiCha)
 	yield(d,"onReach")
-
-	hurtChara(aiCha, att.mgiAtk * RUINIII_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+	if aiCha != null:
+		hurtChara(aiCha, att.mgiAtk * RUINIII_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
 # 溃烂爆发	
 func fester():
 	var eff:Eff = newEff("sk_shiBao")
 	eff.position = aiCha.position
 	eff.scale /= 4
-	yield(reTimer(0.5), "timeout")
 
 	var sf = 0
 	for bf in aiCha.buffs :
 		if bf.isNegetive :
 			sf += 1
-	
-	hurtChara(aiCha, att.mgiAtk * (FESTER_PW + FESTER_N_PW * sf), Chara.HurtType.MGI, Chara.AtkType.SKILL)
+			
+	yield(reTimer(0.5), "timeout")
+	if aiCha != null:
+		hurtChara(aiCha, att.mgiAtk * (FESTER_PW + FESTER_N_PW * sf), Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
 func summon(lv):
 	var n = sys.rndRan(0, 2)

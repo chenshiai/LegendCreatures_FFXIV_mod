@@ -34,7 +34,7 @@ func _onBattleStart():
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Grace": grace()
-	if id == "skill_Authority" && aiCha != null: authority()
+	if id == "skill_Authority": authority()
 
 # 深仁厚泽		
 func grace():
@@ -45,11 +45,12 @@ func grace():
 		if i.att.hp / i.att.maxHp < m :
 			cha = i
 			m = i.att.hp / i.att.maxHp
-	if cha != null: cha.plusHp(att.mgiAtk * 1)
+	if cha != null: cha.plusHp(att.mgiAtk * GRACE_PW, true)
 
 # 王权剑		
 func authority():
-	hurtChara(aiCha, att.atk * AUTHORITY_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+	if aiCha != null:
+		hurtChara(aiCha, att.atk * AUTHORITY_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
 class b_SteelBelief:
 	extends Buff

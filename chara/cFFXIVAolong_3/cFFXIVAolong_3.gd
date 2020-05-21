@@ -67,14 +67,14 @@ func fx(cha):
 	var d:Eff = newEff("sk_4_1_2", sprcPos)
 	d._initFlyCha(cha)
 	yield(d, "onReach")
-	if sys.isClass(cha, "Chara"):
+	if sys.isClass(cha, "Chara") && cha != null:
 		hurtChara(cha, att.atk * FUMA_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
 # 冰遁之术
 func hyoton():
 	var chas = getCellChas(cell,1)
 	for i in chas:
-		if i != self:
+		if i != null:
 			hurtChara(i, att.atk * HYOTON_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 			i.addBuff(b_jieShuang.new(5))
 

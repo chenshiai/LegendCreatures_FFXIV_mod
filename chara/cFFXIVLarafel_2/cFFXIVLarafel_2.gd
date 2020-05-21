@@ -40,8 +40,8 @@ func _onBattleStart():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_FireIII" && aiCha != null: fireIII()
-	if id == "skill_Freeze" && aiCha != null: freezeIII()
+	if id == "skill_FireIII": fireIII()
+	if id == "skill_Freeze": freezeIII()
 	
 # 火三
 func fireIII():
@@ -49,9 +49,9 @@ func fireIII():
 	eff.position = aiCha.position
 	eff.scale *= 1.2
 	yield(reTimer(0.45),"timeout")
-
-	hurtChara(aiCha, att.mgiAtk * (FIREIII_PW + FIRE_PW * fire), Chara.HurtType.MGI, Chara.AtkType.SKILL)
-	enhanced()
+	if aiCha != null:
+		hurtChara(aiCha, att.mgiAtk * (FIREIII_PW + FIRE_PW * fire), Chara.HurtType.MGI, Chara.AtkType.SKILL)
+		enhanced()
 
 # 消耗灵极心，提高火阶段，减少火3cd	
 func enhanced():
@@ -65,19 +65,16 @@ func enhanced():
 
 # 冰三		
 func freezeIII():
+	for i in range(4):
+		var eff:Eff = newEff("sk_bingYu")
+		eff.position = aiCha.position
+
 	fire = 0
 	freeze = FREEZE_MAX
 	var sk = getSkill("skill_FireIII")
 	sk.nowTime = FIRE_CD
-	
 	var cell = aiCha.cell
 	var chas = getCellChas(cell, 1)
-
-	for i in range(4):
-		var eff:Eff = newEff("sk_bingYu")
-		eff.position = aiCha.position
-	
-	yield(reTimer(0.5),"timeout")
 	for i in chas:
 		if i != null: 
 			hurtChara(i, att.mgiAtk * FREEZE_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)

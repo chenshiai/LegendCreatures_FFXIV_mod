@@ -16,14 +16,5 @@ func _connect():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_Tsubame": tsubame()
+	if id == "skill_Tsubame": setsugekka(beforIaijutsu)
 
-func tsubame():
-	match beforIaijutsu:
-		"higanBana": higanBana()
-		"fiveSword":
-			var chas = getCellChas(aiCha.cell, 1)
-			for i in chas:
-				if i != self:
-					fiveSword(i)
-		"setsugekka": setsugekka()

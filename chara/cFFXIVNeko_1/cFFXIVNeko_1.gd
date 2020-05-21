@@ -72,6 +72,7 @@ class b_Adloquium:
 		id = "b_Adloquium"
 		total = val
 		life = dur
+		isNegetive = false
 
 	func _connect():
 		._connect()
@@ -107,6 +108,7 @@ class b_WhisperingDawn:
 		id = "b_WhisperingDawn"
 		hot = val
 		life = dur
+		isNegetive = false
 
 	func _upS():
 		masCha.plusHp(hot)

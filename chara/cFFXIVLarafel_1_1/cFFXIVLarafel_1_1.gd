@@ -10,6 +10,10 @@ func _extInit():
 	evos = []
 	addCdSkill("skill_Benediction", 20)
 	addSkillTxt("[天赐祝福]：冷却时间20s，为生命最低的友方单位恢复至满血，第一次使用后，此技能冷却时间延长至60s")
+	addCdSkill("skill_StornIII", 4)
+	addSkillTxt("[崩石]：冷却时间4s，对目标造成[210%]的魔法伤害")
+
+const STORNIII_PW = 2.10 # 崩石威力
 
 func _connect():
 	._connect()
@@ -23,6 +27,14 @@ func _onBattleStart():
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Benediction": benediction()
+	if id == "skill_Benediction": stornIII()
+
+func stornIII():
+	var d:Eff = newEff("sk_feiDang",sprcPos)
+	d._initFlyCha(aiCha)
+	yield(d,"onReach")
+	if aiCha != null:
+		hurtChara(aiCha, att.mgiAtk * STORNIII_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
 func benediction():
 	var cha = null

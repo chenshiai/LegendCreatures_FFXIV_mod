@@ -37,3 +37,17 @@ func _onAtkChara(atkInfo):
 		atkInfo.isCri = true
 		atkInfo.isAtk = false
 		atkInfo.atkVal *= FELLCLEAVE_PW
+
+class b_InnerRelease:
+	extends Buff
+	func _init(dur = 1):
+		._init()
+		attInit()
+		id = "b_InnerRelease"
+		isNegetive = false
+		att.cri = 1
+		life = dur
+
+	func _upS():
+		life = clamp(life, 0, 8)
+		if life <= 1: life = 0
