@@ -9,6 +9,19 @@ func _extInit():
 	chaName = "化身为影"
 	lv = 3
 	evos = []
+	addCdSkill("skill_Assassinate", 20)
+	addSkillTxt("[生杀予夺]：被动，提高自身伤害20%，第一次使用[忍术]后，之后[忍术]的冷却时间减少5s")
 
 func _connect():
 	._connect() #保留继承的处理
+
+func _onAtkChara(atkInfo):
+	._onAtkChara(atkInfo)
+	if atkInfo.atkType != Chara.AtkType.EFF:
+		atkInfo.atkVal *= 1.20
+
+func _castCdSkill(id):
+	._castCdSkill(id)
+	if id == "skill_Ninjutsu":
+		var sk = getSkill("skill_Ninjutsu")
+		sk.nowTime += 5

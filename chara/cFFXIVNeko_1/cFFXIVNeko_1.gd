@@ -18,10 +18,10 @@ func _extInit():
 	addCdSkill("skill_Adloquium", 10)
 	addCdSkill("skill_Embrace", 12)
 	addCdSkill("skill_WhisperingDawn", 20)
-	addSkillTxt("""[鼓舞激励之策]：复唱时间10s，为生命最低的友方单位恢复HP，并为其附加[鼓舞]，持续5s，威力：110
+	addSkillTxt("""[鼓舞激励之策]：冷却时间10s，为生命最低的友方单位恢复[110%]法强的HP，并为其附加[鼓舞]，持续5s
 [鼓舞]：Buff，抵消治疗量初始值125%的伤害，无法与占星术士的[黑夜领域]叠加""")
-	addSkillTxt("""[仙光的拥抱]：被动，小仙女协助作战。每12s，为生命最低的友方单位恢复HP，威力：40
-[仙光的低语]：被动，小仙女协助作战。每20s，给所有队友施加持续恢复效果，持续5s，威力：10""")
+	addSkillTxt("""[仙光的拥抱]：被动，小仙女协助作战。每12s，为生命最低的友方单位恢复[40%]法强的HP
+[仙光的低语]：被动，小仙女协助作战。每20s，给所有队友施加持续恢复效果，每秒恢复[10%]法强的HP，持续5s""")
 
 const ADLOQUIUM_PW = 1.10 # 鼓舞激励之策威力
 const EMBRACE_PW = 0.40 # 仙光的拥抱威力
@@ -82,14 +82,14 @@ class b_Adloquium:
 		if life <= 1: life = 0
 
 	func onHurt(atkInfo:AtkInfo):
-		if total > 0:
+		if total >= 0:
 			if total > atkInfo.hurtVal:
-				total -= atkInfo.atkVal
+				total -= atkInfo.hurtVal
 				atkInfo.hurtVal = 0
 			else:
 				atkInfo.hurtVal -= total
 				total = 0
-		elif total < 0:
+		elif total <= 0:
 			total = 0
 
 # 仙光的低语

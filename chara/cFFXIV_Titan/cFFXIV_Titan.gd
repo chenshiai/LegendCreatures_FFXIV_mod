@@ -16,7 +16,7 @@ func _extInit():
 	evos = ["cFFXIV_Titan_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_RockBuster", 5)#添加cd技能
-	addSkillTxt("[碎岩]：复唱时间5s，为周围2格的友军附加3层[抵御]")
+	addSkillTxt("[碎岩]：冷却时间5s，为周围2格的友军附加3层[抵御]")
 
 #进入战斗初始化，事件连接在这里初始化
 func _connect():

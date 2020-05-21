@@ -1,13 +1,28 @@
 extends "../cFFXIVHumen_3/cFFXIVHumen_3.gd"
-#覆盖的初始化
+
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
+
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "心动之舞"
 	lv = 3
 	evos = []
+	addCdSkill("skill_SaberdDance", 13)
+	addSkillTxt("[剑舞]：冷却时间13s，对目标及周围2格敌人造成[300%]的物理伤害")
+
+const SABERDANCE_PW = 3 # 剑舞威力
 
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
+
+func _castCdSkill(id):
+	._castCdSkill(id)
+	if id == "skill_SaberDance" && aiCha != null: saberDance()
+
+func saberDance():
+	var cell = aiCha.cell
+	var chas = getCellChas(cell, 2)
+	for i in chas:
+		if i != null: 
+			hurtChara(i, att.atk * SABERDANCE_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)

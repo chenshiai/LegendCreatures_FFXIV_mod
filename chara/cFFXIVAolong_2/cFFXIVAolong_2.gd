@@ -15,13 +15,12 @@ func _extInit():
 	lv = 2
 	evos = ["cFFXIVAolong_2_1"]
 	atkEff = "atk_dao"
-	addCdSkill("skill_Setsugekka", 12)
-	addSkillTxt("""[雪风/月光/花车]：被动，第二次攻击将随机释放以下效果，并获得一个印记，一个印记最多存在一个
-(雪风：威力120，获得雪;月光：威力110，12s内攻击提升10%，获得月;花车：威力110，12s内攻速提升10%，获得花)""")
-	addSkillTxt("""[居合术]：复唱时间12s，消耗当前获得的全部印记，根据不同的数量来释放以下效果
-[彼岸花]：消耗一个印记，造成物理伤害，并附加10层[烧灼]。威力：120
-[天下五剑]：消耗两个印记，对目标及周围一格敌人造成物理伤害，威力：350
-[纷乱雪月花]：消耗三个印记，造成高额物理伤害。威力：720""")
+	addSkillTxt("""[雪/月/花]：被动，每2次攻击前，随机获得[雪/月/花]中的一个印记，且使攻击伤害增加10%。每个印记效果如下
+(雪：伤害再增加10%；月：12s内攻击提升10%；花：12s内攻速提升10%)""")
+	addSkillTxt("""[居合术]：每第8次攻击，消耗当前获得的全部印记，根据印记不同的数量来释放以下效果
+[彼岸花]：消耗一个印记，造成[120%]的物理伤害，并附加10层[烧灼]
+[天下五剑]：消耗两个印记，对目标及周围一格敌人造成[350%]的物理伤害
+[纷乱雪月花]：消耗三个印记，造成高额[720%]的物理伤害，可暴击""")
 
 const SNOW_PW = 1.20 # 雪风威力
 const MOON_PW = 1.10 # 月光威力
@@ -35,6 +34,7 @@ var moon = false # 月
 var flower = false # 花
 var atkCount = 0 # 当前攻击次数
 var flash = 0 # 当前闪的数量
+var beforIaijutsu = "" # 上一次居合术
 
 func _connect():
 	._connect()
@@ -47,8 +47,10 @@ func _onAtkChara(atkInfo:AtkInfo):
 	._onAtkChara(atkInfo)
 	if atkInfo.atkType == AtkType.NORMAL: 
 		atkCount += 1
-		if atkCount > 1 :
+		if atkCount == 8:
 			atkCount = 0
+			iaijutsu()
+		elif atkCount % 2 == 0:
 			var bf = null
 			var n = sys.rndRan(0, 2)
 			if n == 0 :
@@ -65,17 +67,21 @@ func _onAtkChara(atkInfo:AtkInfo):
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_Setsugekka" && aiCha != null:
-		if flash == 1:
-			higanBana()
-		elif flash == 2:
-			var chas = getCellChas(aiCha.cell, 1)
-			for i in chas:
-				if i != self:
-					fiveSword(i)
-		elif flash == 3:
-			hurtChara(aiCha, att.atk * SETSUGEKKA_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
-		reset()
+		
+func iaijutsu():
+	if flash == 1:
+		higanBana()
+		beforIaijutsu = "higanBana"
+	elif flash == 2:
+		beforIaijutsu = "fiveSword"
+		var chas = getCellChas(aiCha.cell, 1)
+		for i in chas:
+			if i != self:
+				fiveSword(i)
+	elif flash == 3:
+		setsugekka()
+		beforIaijutsu = "setsugekka"
+	reset()
 
 # 获得对应的印记
 func getFlash(name):
@@ -111,6 +117,12 @@ func fiveSword(cha):
 	if sys.isClass(cha, "Chara"):
 		hurtChara(cha, att.atk * FIVESWORD_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
+# 纷乱雪月花
+func setsugekka():
+	var pw = 1
+	if sys.rndPer(att.cri * 100): pw = 2
+	hurtChara(aiCha, att.atk * SETSUGEKKA_PW * pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+
 # 重置所有状态
 func reset():
 	snow = false
@@ -127,10 +139,10 @@ class b_MoonLigth:
 		attInit()
 		id = "b_MoonLigth"
 		isNegetive = false
+		att.atkL = 0.10
 		life = dur
 
 	func _upS():
-		att.atkL = 0.10
 		life = clamp(life, 0, 12)
 		if life <= 1: life = 0
 
@@ -142,9 +154,9 @@ class b_FlowerCar:
 		attInit()
 		id = "b_FlowerCar"
 		isNegetive = false
+		att.spd = 0.10
 		life = dur
 		
 	func _upS():
-		att.spd = 0.10
 		life = clamp(life, 0, 12)
 		if life <= 1: life = 0

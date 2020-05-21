@@ -14,7 +14,7 @@ func _extInit():
 	evos = ["cFFXIV_Evlet_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_BurningStrike", 5)
-	addSkillTxt("[燃火强袭]：复唱时间5s，对目标附加3层[烧灼]")
+	addSkillTxt("[燃火强袭]：冷却时间5s，对目标附加3层[烧灼]")
 
 #进入战斗初始化，事件连接在这里初始化
 func _connect():

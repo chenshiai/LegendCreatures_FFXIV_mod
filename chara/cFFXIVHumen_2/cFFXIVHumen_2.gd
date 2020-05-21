@@ -17,7 +17,7 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_BowShock", 9)
 	addSkillTxt("""[王室亲卫]：被动，受到的伤害减少10%
-[弓形冲波]：复唱时间9s，对周围1格的敌人造成物理伤害，并附加4层[烧灼]。威力：260""")
+[弓形冲波]：冷却时间9s，对周围1格的敌人造成[260%]的物理伤害，并附加4层[烧灼]""")
 
 const BOWSHOCK_PW = 2.60 # 弓形冲波威力
 

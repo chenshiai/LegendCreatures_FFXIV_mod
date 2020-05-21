@@ -18,9 +18,9 @@ func _extInit():
 	addCdSkill("skill_RuinIII", 3)
 	addCdSkill("skill_Fester", 5)
 	addCdSkill("skill_Summon", 30)
-	addSkillTxt("""[毁荡]：复唱时间3s，对目标造成魔法伤害，威力：90
+	addSkillTxt("""[毁荡]：冷却时间4s，对目标造成[90%]法强的魔法伤害
 [召唤I]：被动，随机召唤[迦楼罗/伊弗利特/泰坦]与召唤师攻击共同作战，召唤兽死亡后过一会才可召唤下一个
-[溃烂爆发]：复唱时间5s，根据目标当前debuff数量提高伤害，每个提高30威力，威力：100""")
+[溃烂爆发]：冷却时间5s，对目标造成[100%]法强的魔法伤害，根据目标当前debuff数量提高伤害，每个提高[30%]威力""")
 
 var RUINIII_PW = 0.90 # 毁荡威力
 var FESTER_PW = 1 # 溃烂爆发威力
@@ -53,7 +53,7 @@ func fester():
 	var eff:Eff = newEff("sk_shiBao")
 	eff.position = aiCha.position
 	eff.scale /= 4
-	yield(reTimer(0.5),"timeout")
+	yield(reTimer(0.5), "timeout")
 
 	var sf = 0
 	for bf in aiCha.buffs :
@@ -81,6 +81,7 @@ func summon(lv):
 			newChara("cFFXIV_Titan_1", self.cell)
 
 func _onCharaDel(cha):
+	_onCharaDel(cha)
 	if (cha.team == self.team
 		&& cha.id == "cFFXIV_Evlet"
 		|| cha.id == "cFFXIV_Kaluro"

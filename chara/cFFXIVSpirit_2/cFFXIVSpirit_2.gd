@@ -17,12 +17,12 @@ func _extInit():
 	atkEff = "atk_dang"
 	addCdSkill("skill_DrawCard", 8)
 	addCdSkill("skill_Mascot", 10)
-	addSkillTxt("""[抽卡]：复唱时间8s，随机抽取一张卡施加效果给自己或者敌人，5层效果
+	addSkillTxt("""[抽卡]：冷却时间8s，随机抽取一张卡施加效果给自己或者敌人，5层效果
 (太阳神之衡[烧灼]；放浪神之箭[失明]；战争神之枪[流血]；世界树之干[抵御]；河流神之瓶[结霜]；建筑神之塔[魔御])
-[福星]：复唱时间10s，为生命最低的友方单位恢复HP，威力：70""")
+[福星]：冷却时间10s，为生命最低的友方单位恢复[70%]法强的HP""")
 	addCdSkill("skill_StarPhase", 15)
-	addSkillTxt("""[阳星相位]：复唱时间15s，回复全场友军的HP，并附加[黑夜领域]效果，持续5s，威力：60
-[黑夜学派]：被动，[黑夜领域]可以抵消治疗量125%的伤害，持续5秒，无法与学者的[鼓舞]叠加""")
+	addSkillTxt("""[阳星相位]：冷却时间15s，回复全场友军[60%]法强的HP，并附加[黑夜领域]效果，持续5s
+[黑夜学派]：被动，[黑夜领域]可以抵消[初始治疗量125%]的伤害，持续5秒，无法与学者的[鼓舞]叠加""")
 
 const MASCOT_PW = 0.70 # 福星威力
 const STARPHASE_PW = 0.60 # 阳星威力
@@ -104,14 +104,14 @@ class b_Night:
 		if life <= 1: life = 0
 
 	func onHurt(atkInfo:AtkInfo):
-		if total > 0:
+		if total >= 0:
 			if total > atkInfo.hurtVal:
-				total -= atkInfo.atkVal
+				total -= atkInfo.hurtVal
 				atkInfo.hurtVal = 0
 			else:
 				atkInfo.hurtVal -= total
 				total = 0
-		elif total < 0:
+		elif total <= 0:
 			total = 0
 			
 			

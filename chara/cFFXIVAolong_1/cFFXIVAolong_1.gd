@@ -17,8 +17,8 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_Bloodspiller", 10)
 	addSkillTxt("""[深恶痛绝]：被动，战斗开始时，魔法防御提高20%，受到的伤害减少10%
-[噬魂斩]：被动，第三次普通攻击造成120%的伤害，并恢复自身2%的HP
-[血溅]：复唱时间10s，对目标造成物理伤害，威力：250""")
+[噬魂斩]：被动，第三次普通攻击造成[120%]的伤害，并恢复自身2%的HP""")
+	addSkillTxt("[血溅]：冷却时间10s，对目标造成[250%]的物理伤害")
 
 const PLUSHP = 0.02 # 回复量
 const BLOODSPILLER_PW = 2.50 # 血溅倍率

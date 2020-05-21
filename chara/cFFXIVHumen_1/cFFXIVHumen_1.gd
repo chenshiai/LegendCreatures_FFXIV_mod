@@ -16,8 +16,8 @@ func _extInit():
 	evos = ["cFFXIVHumen_1_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_Shiver", 20)
-	addSkillTxt("""[守护]：受到的伤害减少20%
-[战栗]：复唱时间20s，治疗20%的最大生命值。最大生命值提高20%，受到的治疗量提高20%，持续10s""")
+	addSkillTxt("[守护]：受到的伤害减少20%")
+	addSkillTxt("[战栗]：冷却时间20s，立即治疗20%的最大生命值。然后最大生命值提高20%，受到的治疗量提高20%，持续10s")
 
 func _connect():
 	._connect()
@@ -40,9 +40,9 @@ class b_Shiver:
 		id = "b_Shiver"
 		isNegetive = false
 		life = dur
-
-	func _upS():
 		att.maxHpL = 0.20
 		att.reHp = 0.20
+
+	func _upS():
 		life = clamp(life, 0, 10)
 		if life <= 1: life = 0

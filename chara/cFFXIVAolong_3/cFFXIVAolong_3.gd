@@ -19,10 +19,10 @@ func _extInit():
 	addCdSkill("skill_Ninjutsu", 11)
 	addSkillTxt("""[攻其不备]：被动，普通攻击会给目标施加2层[流血]效果
 [隐遁]：被动，获得30%的闪避""")
-	addSkillTxt("""[忍术]：复唱时间11s，随机释放以下忍术
-[风魔手里剑]：对魔法攻击力最高的一名敌人造成物理伤害，威力：450
-[冰遁之术]：对周围1格的敌人造成物理伤害，并附加5层[结霜]，威力：70
-[火遁之术]：对周围1格的敌人造成物理伤害，并附加5层[烧灼]，威力：50""")
+	addSkillTxt("""[忍术]：冷却时间11s，随机释放以下忍术
+[风魔手里剑]：对魔法攻击力最高的一名敌人造成[450%]的物理伤害
+[冰遁之术]：对周围1格的敌人造成[70%]的物理伤害，并附加5层[结霜]
+[火遁之术]：对周围1格的敌人造成[50%]的物理伤害，并附加5层[烧灼]""")
 
 const FUMA_PW = 4.50 # 风魔手里剑威力
 const HYOTON_PW = 0.70 # 冰遁威力
@@ -43,12 +43,9 @@ func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Ninjutsu" && aiCha != null:
 		var n = sys.rndRan(0, 2)
-		if n == 0:
-			fuma()
-		elif n == 1:
-			hyoton()
-		else:
-			katon()
+		if n == 0: fuma()
+		elif n == 1: hyoton()
+		else: katon()
 
 # 风魔手里剑
 func fuma():
@@ -67,10 +64,10 @@ func sort(a,b):
 
 # 风魔特效
 func fx(cha):
-	var d:Eff = newEff("sk_4_1_2",sprcPos)
+	var d:Eff = newEff("sk_4_1_2", sprcPos)
 	d._initFlyCha(cha)
-	yield(d,"onReach")
-	if sys.isClass(cha,"Chara"):
+	yield(d, "onReach")
+	if sys.isClass(cha, "Chara"):
 		hurtChara(cha, att.atk * FUMA_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
 # 冰遁之术
