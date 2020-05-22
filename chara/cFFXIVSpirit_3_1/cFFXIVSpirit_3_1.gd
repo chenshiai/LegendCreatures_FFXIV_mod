@@ -8,6 +8,25 @@ func _extInit():
 	chaName = "红血之龙"
 	lv = 3
 	evos = []
+	attAdd.atkR += 0.15
+	addCdSkill("skill_Stardiver", 25)
+	addSkillTxt("[红莲龙血]：被动，获得15%的攻击力加成")
+	addSkillTxt("[坠星冲]：冷却时间25s，高高跃起，向地面猛冲，对周围1格的敌人造成[600%]的物理伤害，并附加10层[烧灼]")
 
 func _connect():
 	._connect() #保留继承的处理
+
+func _castCdSkill(id):
+	._castCdSkill(id)
+	if id == "skill_Stardiver": stardiver()
+
+func stardiver():
+	_process(self.cell)
+	var eff:Eff = newEff("sk_yunShi")
+	eff.position = aiCha.position
+	eff.scale *= 2
+	yield(reTimer(0.5), "timeout")
+
+# 垂直上升
+func _process(delta):
+	normalSpr.position += delta * Vector2(0, -300)

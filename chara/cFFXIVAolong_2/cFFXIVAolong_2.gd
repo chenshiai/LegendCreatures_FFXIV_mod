@@ -12,11 +12,13 @@ func _extInit():
 	attCoe.mgiAtk = 2
 	attCoe.def = 3
 	attCoe.mgiDef = 2.8
+	attAdd.atkR += 0.10
+	attAdd.spd += 0.10
 	lv = 2
 	evos = ["cFFXIVAolong_2_1"]
 	atkEff = "atk_dao"
 	addSkillTxt("""[雪/月/花]：被动，每次攻击随机获得[雪][月][花]印记，攻击伤害增加10%，攻击力提升10%，攻速提升10%""")
-	addSkillTxt("""[居合术]：每第12次攻击，发动一次[纷乱雪月花]
+	addSkillTxt("""[居合术]：每第8次攻击，发动一次[纷乱雪月花]
 [纷乱雪月花]：对目标造成[120%][350%][720%]的物理伤害，印记种类越多伤害越高，可暴击""")
 
 const HIGANBANE_PW = 1.20 # 一个印记威力
@@ -35,15 +37,13 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
-	addBuff(b_MoonLigth.new())
-	addBuff(b_FlowerCar.new())
 	reset()
 
 func _onAtkChara(atkInfo:AtkInfo):
 	._onAtkChara(atkInfo)
 	if atkInfo.atkType == AtkType.NORMAL: 
 		atkCount += 1
-		if atkCount == 12:
+		if atkCount == 8:
 			atkCount = 0
 			iaijutsu()
 		else:
@@ -89,7 +89,7 @@ func getFlash(name):
 # 纷乱雪月花
 func setsugekka(skill_pw):
 	var pw = 1
-	if sys.rndPer(att.cri * 100): pw = 2
+	if sys.rndPer(att.cri * 100): pw = 2 + att.criR
 
 	var eff = newEff("aoyi1", sprcPos)
 	eff.sprLookAt(aiCha.global_position)
@@ -104,23 +104,4 @@ func reset():
 	flower = false
 	atkCount = 0
 	flash = 0
-
-# 月光buff
-class b_MoonLigth:
-	extends Buff
-	func _init():
-		._init()
-		attInit()
-		id = "b_MoonLigth"
-		isNegetive = false
-		att.atkL = 0.10
-
-# 花车buff
-class b_FlowerCar:
-	extends Buff
-	func _init():
-		._init()
-		attInit()
-		id = "b_FlowerCar"
-		isNegetive = false
-		att.spd = 0.10
+	beforIaijutsu = 0

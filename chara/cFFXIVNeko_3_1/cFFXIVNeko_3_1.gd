@@ -30,7 +30,7 @@ func _castCdSkill(id):
 func apexArrow():
 	if aiCha != null:
 		var eff:Eff = newEff("sk_chuanTouJian", sprcPos)
-		eff._initFlyPos(position + (aiCha.position - position).normalized() * 1000,250)
+		eff._initFlyPos(position + (aiCha.position - position).normalized() * 1000, 250)
 		eff.connect("onInCell", self, "effInCell")
 
 func effInCell(cell):

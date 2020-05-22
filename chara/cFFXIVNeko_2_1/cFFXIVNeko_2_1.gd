@@ -34,7 +34,7 @@ func enkindleBahamut():
 	eff.position = aiCha.position
 	eff.scale /= 2
 	
-	yield(reTimer(0.5),"timeout")
+	yield(reTimer(0.5), "timeout")
 	print("龙神迸发!")
 	for i in chas:
 		if i != null: 

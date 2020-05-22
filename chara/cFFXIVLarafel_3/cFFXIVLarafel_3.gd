@@ -61,7 +61,7 @@ func _onAtkChara(atkInfo):
 func verthunder(first, pw):
 	var d:Eff = newEff("sk_feiDang", sprcPos)
 	d._initFlyCha(aiCha)
-	yield(d,"onReach")
+	yield(d, "onReach")
 	hurtChara(aiCha, att.mgiAtk * pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
 	var n = sys.rndRan(0, 1)

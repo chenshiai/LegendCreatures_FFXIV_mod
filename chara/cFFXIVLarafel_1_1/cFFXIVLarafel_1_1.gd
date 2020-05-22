@@ -32,7 +32,7 @@ func _castCdSkill(id):
 func stornIII():
 	var d:Eff = newEff("sk_feiDang",sprcPos)
 	d._initFlyCha(aiCha)
-	yield(d,"onReach")
+	yield(d, "onReach")
 	if aiCha != null:
 		hurtChara(aiCha, att.mgiAtk * STORNIII_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 

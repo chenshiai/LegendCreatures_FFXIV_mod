@@ -16,15 +16,12 @@ func _extInit():
 	evos = ["cFFXIVSpirit_2_1"]
 	atkEff = "atk_dang"
 	addCdSkill("skill_DrawCard", 8)
-	addCdSkill("skill_Mascot", 10)
-	addSkillTxt("""[抽卡]：冷却时间8s，随机抽取一张卡施加效果给自己或者敌人，5层效果
-(太阳神之衡[烧灼]；放浪神之箭[失明]；战争神之枪[流血]；世界树之干[抵御]；河流神之瓶[结霜]；建筑神之塔[魔御])
-[福星]：冷却时间10s，为生命最低的友方单位恢复[70%]法强的HP""")
+	addSkillTxt("""[抽卡]：冷却时间8s，随机抽取一张卡施加效果给全部队友，持续5s
+(太阳神之衡[狂怒]；放浪神之箭[急速]；战争神之枪[暴击20%]；世界树之干[抵御]；河流神之瓶[冷却缩减10%]；建筑神之塔[魔御])""")
 	addCdSkill("skill_StarPhase", 15)
 	addSkillTxt("""[阳星相位]：冷却时间15s，回复全场友军[60%]法强的HP，并附加[黑夜领域]效果，持续5s
 [黑夜学派]：被动，[黑夜领域]可以抵消[初始治疗量125%]的伤害，持续5秒，无法与学者的[鼓舞]叠加""")
 
-const MASCOT_PW = 0.70 # 福星威力
 const STARPHASE_PW = 0.60 # 阳星威力
 
 func _connect():
@@ -32,44 +29,24 @@ func _connect():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_DrawCard" :
-		var bf = null
-		var n = sys.rndRan(0,5)
-		if n == 0 :
-			bf = b_shaoZhuo.new(5)
-		elif n == 1:
-			bf = b_liuXue.new(5)
-		elif n == 2:
-			bf = b_jieShuang.new(5)
-		elif n == 3:
-			bf = b_shiMing.new(5)
-		elif n == 4:
-			bf = b_diYu.new(5)
-		elif n == 5:
-			bf = b_moYu.new(5)
-
-		if !bf.isNegetive:
-			addBuff(bf)
-		elif aiCha != null:
-			var d:Eff = newEff("sk_feiDang", sprcPos)
-			d._initFlyCha(aiCha)
-			yield(d, "onReach")
-			aiCha.addBuff(bf)
-
-	if id == "skill_Mascot": mascot()
+	if id == "skill_DrawCard" : drawCard()
 	if id == "skill_StarPhase": starPhase()
 
-# 福星
-func mascot():
-	var cha = null
-	var m = 10000
+func drawCard():
+	var n = sys.rndRan(0, 5)
+	var bf = null
+	match n:
+		0: bf = b_kuangNu.new(5)
+		1: bf = b_jiSu.new(5)
+		2: bf = b_baoJi.new(5)
+		3: bf = b_diYu.new(5)
+		4: bf = b_lengQue.new(5)
+		5: bf = b_moYun.new(5)
+	
 	var chas = getAllChas(2)
-	for i in chas:
-		if i.att.hp / i.att.maxHp < m :
-			cha = i
-			m = i.att.hp / i.att.maxHp
-	if cha != null:
-		cha.plusHp(att.mgiAtk * MASCOT_PW)
+	for cha in chas:
+		if cha != null && bf != null:
+			cha.addBuff(bf)
 
 # 阳星相位		
 func starPhase():
@@ -114,4 +91,28 @@ class b_Night:
 		elif total <= 0:
 			total = 0
 			
-			
+class b_baoJi:
+	extends Buff
+	func _init(dur = 1):
+		attInit()
+		id = "b_baoJi"
+		isNegetive = false
+		att.cri = 0.10
+		life = dur
+
+	func _upS():
+		life = clamp(life, 0, 5)
+		if life <= 1: life = 0
+
+class b_lengQue:
+	extends Buff
+	func _init(dur = 1):
+		attInit()
+		id = "b_lengQue"
+		isNegetive = false
+		att.cd = 0.15
+		life = dur
+
+	func _upS():
+		life = clamp(life, 0, 5)
+		if life <= 1: life = 0

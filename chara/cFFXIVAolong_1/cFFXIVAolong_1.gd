@@ -43,14 +43,13 @@ func _onAtkChara(atkInfo:AtkInfo):
 		atkCount += 1
 		if atkCount == 3:
 			atkCount = 0
-			atkInfo.hurtVal *= 1.2
-			plusHp(att.maxHp * PLUSHP)
+			atkInfo.atkVal *= 1.2
+			plusHp(att.maxHp * PLUSHP, true)
 
 # 血溅
 func bloodspiller():
 	if aiCha != null:
 		hurtChara(aiCha, att.atk * BLOODSPILLER_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
-
 
 # 深恶痛绝buff
 class b_Abhor:

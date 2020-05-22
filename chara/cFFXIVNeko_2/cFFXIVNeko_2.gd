@@ -44,7 +44,7 @@ func _onBattleStart():
 func ruinIII():
 	var d:Eff = newEff("sk_feiDang",sprcPos)
 	d._initFlyCha(aiCha)
-	yield(d,"onReach")
+	yield(d, "onReach")
 	if aiCha != null:
 		hurtChara(aiCha, att.mgiAtk * RUINIII_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 

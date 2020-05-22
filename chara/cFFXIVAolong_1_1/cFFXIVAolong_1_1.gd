@@ -1,10 +1,10 @@
 extends "../cFFXIVAolong_1/cFFXIVAolong_1.gd"
-#覆盖的初始化
+
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
+
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "深渊之暗"
 	lv = 3
 	evos = []
@@ -15,7 +15,7 @@ func _extInit():
 var darkCount = 0 # 暗黑值
 
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
@@ -34,6 +34,7 @@ func _onAtkChara(atkInfo:AtkInfo):
 			darkCount = 0
 			addBuff(b_TheBlackestNight.new(att.maxHp * 0.20))
 
+# 暗黑布道			
 func darkMissionary():
 	var allys = getAllChas(2)
 	for cha in allys:

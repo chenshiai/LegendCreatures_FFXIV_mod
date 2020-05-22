@@ -48,7 +48,7 @@ func fireIII():
 	var eff:Eff = newEff("sk_yunShi")
 	eff.position = aiCha.position
 	eff.scale *= 1.2
-	yield(reTimer(0.45),"timeout")
+	yield(reTimer(0.5), "timeout")
 	if aiCha != null:
 		hurtChara(aiCha, att.mgiAtk * (FIREIII_PW + FIRE_PW * fire), Chara.HurtType.MGI, Chara.AtkType.SKILL)
 		enhanced()

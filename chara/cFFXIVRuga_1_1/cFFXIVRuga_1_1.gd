@@ -1,11 +1,10 @@
 extends "../cFFXIVRuga_1/cFFXIVRuga_1.gd"
-#覆盖的初始化
+
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
 
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "冠军之剑"
 	lv = 3
 	evos = []

@@ -28,7 +28,7 @@ func _onBattleStart():
 	._onBattleStart()
 	addBuff(b_kuangNu.new(10))
 
-	yield(reTimer(0.4), "timeout")
+	yield(reTimer(0.1), "timeout")
 	var mv = Vector2(cell.x, cell.y)
 	if team == 1: mv.x = 6
 	else: mv.x = 1
@@ -54,7 +54,6 @@ func ying(pos):
 		spr.texture = img.texture_normal
 		spr.position = position + s * (i+1) * l.normalized() - Vector2(img.texture_normal.get_width() / 2, img.texture_normal.get_height())
 		spr.init(255/n * i + 100)
-
 
 func _castCdSkill(id):
 	._castCdSkill(id)
