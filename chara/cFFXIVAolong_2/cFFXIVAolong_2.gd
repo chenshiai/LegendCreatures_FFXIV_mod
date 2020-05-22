@@ -91,8 +91,8 @@ func setsugekka(skill_pw):
 	var pw = 1
 	if sys.rndPer(att.cri * 100): pw = 2 + att.criR
 
-	var eff = newEff("aoyi1", sprcPos)
-	eff.sprLookAt(aiCha.global_position)
+	var eff = newEff("numHit", Vector2(30, -60))
+	eff.setText("斩！")
 
 	if aiCha != null:
 		hurtChara(aiCha, att.atk * skill_pw * pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
@@ -104,4 +104,3 @@ func reset():
 	flower = false
 	atkCount = 0
 	flash = 0
-	beforIaijutsu = 0

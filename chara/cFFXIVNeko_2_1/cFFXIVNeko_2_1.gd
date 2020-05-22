@@ -29,13 +29,14 @@ func dreadwyrm():
 func enkindleBahamut():
 	var cell = aiCha.cell
 	var chas = getCellChas(cell, 1)
+	var eff = newEff("numHit", Vector2(-10, -60))
+	eff.setText("龙神迸发！")
 
-	var eff:Eff = newEff("sk_shiBao")
-	eff.position = aiCha.position
-	eff.scale /= 2
-	
+	var eff1:Eff = newEff("sk_shiBao")
+	eff1.position = aiCha.position
+	eff1.scale *= 2
 	yield(reTimer(0.5), "timeout")
-	print("龙神迸发!")
+	
 	for i in chas:
 		if i != null: 
 			hurtChara(i, att.mgiAtk * ENKINDLEBAHAMUT_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)

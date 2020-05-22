@@ -27,7 +27,7 @@ func _onBattleStart():
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Benediction": benediction()
-	if id == "skill_Benediction": stornIII()
+	if id == "skill_StornIII": stornIII()
 
 func stornIII():
 	var d:Eff = newEff("sk_feiDang",sprcPos)

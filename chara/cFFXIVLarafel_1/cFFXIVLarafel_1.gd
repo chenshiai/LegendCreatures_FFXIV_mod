@@ -83,6 +83,6 @@ class b_Regen:
 		life = dur
 
 	func _upS():
-		masCha.plusHp(hot)
+		masCha.plusHp(hot, true)
 		life = clamp(life, 0, 18)
 		if life <= 1: life = 0

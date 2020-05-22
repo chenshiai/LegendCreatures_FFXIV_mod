@@ -21,6 +21,8 @@ func _connect():
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)
 	if atkInfo.atkType == AtkType.NORMAL && sys.rndPer(20):
+		var eff = newEff("numHit", Vector2(30, -60))
+		eff.setText("辉煌箭！")
 		atkInfo.atkVal *= REFULGENT_PW
 
 func _castCdSkill(id):
@@ -30,7 +32,7 @@ func _castCdSkill(id):
 func apexArrow():
 	if aiCha != null:
 		var eff:Eff = newEff("sk_chuanTouJian", sprcPos)
-		eff._initFlyPos(position + (aiCha.position - position).normalized() * 1000, 250)
+		eff._initFlyPos(position + (aiCha.position - position).normalized() * 1000, 450)
 		eff.connect("onInCell", self, "effInCell")
 
 func effInCell(cell):

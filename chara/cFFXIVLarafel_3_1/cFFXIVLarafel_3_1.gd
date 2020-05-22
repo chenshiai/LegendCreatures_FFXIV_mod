@@ -23,6 +23,8 @@ func _castCdSkill(id):
 	if id == "skill_Manafication": manafication()
 
 func manafication():
+	var eff = newEff("numHit", Vector2(30, -60))
+	eff.setText("倍增！")
 	blackMorgen *= 2
 	whiteMorgan *= 2
 	if blackMorgen > 100: blackMorgen = 100

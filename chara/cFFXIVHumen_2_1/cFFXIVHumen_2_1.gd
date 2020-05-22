@@ -13,19 +13,28 @@ func _extInit():
 [续剑]：被动，攻击速度提高20%
 [血壤]：被动，普通攻击会附加20%攻击力的魔法伤害""")
 
+var superbolide = true # 火流星？
+
 func _connect():
 	._connect() #保留继承的处理
 
+func _onBattleStart():
+	._onBattleStart()
+	superbolide = true
+
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)
-	if att.Hp <= att.maxHp * 0.10 && sys.rndPer(50):
+	if att.Hp <= att.maxHp * 0.10 && sys.rndPer(50) && superbolide:
 		addBuff(b_Superbolide.new(15))
+		var eff = newEff("numHit", Vector2(-40, -60))
+		eff.setText("超火流星！！！")
+		superbolide = false
 		att.Hp = 1
 
 func _onAtkChara(atkInfo:AtkInfo):
 	._onAtkChara(atkInfo)
-	if atkInfo.atkType == Chara.AtkType.NORMAL:
-		hurtChara(atkInfo.hitCha, att.atk * 0.2, Chara.HurtType.MGI, Chara.AtkType.NORMAL)
+	if atkInfo.atkType == AtkType.NORMAL :
+		hurtChara(atkInfo.hitCha, att.atk * 0.2, Chara.HurtType.MGI, Chara.AtkType.EFF)
 
 class b_Superbolide:
 	extends Buff

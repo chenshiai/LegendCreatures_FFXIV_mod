@@ -20,11 +20,11 @@ func _connect():
 	._connect()
 
 func _onBattleStart():
-	_onBattleStart()
+	._onBattleStart()
 	fc = false
 
 func _castCdSkill(id):
-	._casrCdSkill(id)
+	._castCdSkill(id)
 	if id == "skill_FellCleave": fc = true
 	if id == "skill_InnerRelease": addBuff(b_InnerRelease.new(8))
 
@@ -36,7 +36,7 @@ func _onAtkChara(atkInfo):
 		fc = false
 		atkInfo.isCri = true
 		atkInfo.isAtk = false
-		atkInfo.atkVal *= FELLCLEAVE_PW
+		atkInfo.hurtVal *= FELLCLEAVE_PW
 
 class b_InnerRelease:
 	extends Buff

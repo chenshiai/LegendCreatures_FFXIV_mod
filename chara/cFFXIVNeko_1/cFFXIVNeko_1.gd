@@ -17,11 +17,9 @@ func _extInit():
 	atkEff = "atk_dang"
 	addCdSkill("skill_Adloquium", 10)
 	addCdSkill("skill_Embrace", 12)
-	addCdSkill("skill_WhisperingDawn", 20)
 	addSkillTxt("""[鼓舞激励之策]：冷却时间10s，为生命最低的友方单位恢复[110%]法强的HP，并为其附加[鼓舞]，持续5s
 [鼓舞]：Buff，抵消[初始治疗量125%]的伤害，无法与占星术士的[黑夜领域]叠加""")
-	addSkillTxt("""[仙光的拥抱]：被动，小仙女协助作战。每12s，为生命最低的友方单位恢复[40%]法强的HP
-[仙光的低语]：被动，小仙女协助作战。每20s，给所有队友施加持续恢复效果，每秒恢复[10%]法强的HP，持续5s""")
+	addSkillTxt("""[仙光的拥抱]：被动，小仙女协助作战。每12s，为生命最低的友方单位恢复[40%]法强的HP""")
 
 const ADLOQUIUM_PW = 1.10 # 鼓舞激励之策威力
 const EMBRACE_PW = 0.40 # 仙光的拥抱威力
@@ -34,7 +32,6 @@ func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Adloquium": adloquium(ADLOQUIUM_PW, true)
 	if id == "skill_Embrace": adloquium(EMBRACE_PW)
-	if id == "skill_WhisperingDawn": whisperingDawn()
 
 # 鼓舞激励之策/仙光的拥抱
 func adloquium(pw, hudun = false):
@@ -49,13 +46,6 @@ func adloquium(pw, hudun = false):
 		cha.plusHp(att.mgiAtk * pw)
 		if hudun:
 			cha.addBuff(b_Adloquium.new(5, att.mgiAtk * pw * 1.25))
-
-# 仙光的低语
-func whisperingDawn():
-	var ailys = getAllChas(2)
-	for cha in ailys:
-		if cha != null:
-			cha.addBuff(b_WhisperingDawn.new(5, att.mgiAtk * WHISPERINGDAWN_PW))
 
 # 鼓舞，护盾。可以吸收一定数值的伤害
 class b_Adloquium:
@@ -92,26 +82,3 @@ class b_Adloquium:
 				total = 0
 		elif total <= 0:
 			total = 0
-
-# 仙光的低语
-class b_WhisperingDawn:
-	extends Buff
-	var hot setget set_hot, get_hot
-
-	func get_hot():
-		return hot
-	func set_hot(val):
-		hot = val
-
-	func _init(dur = 1, val = 0):
-		attInit()
-		id = "b_WhisperingDawn"
-		hot = val
-		life = dur
-		isNegetive = false
-
-	func _upS():
-		masCha.plusHp(hot)
-		life = clamp(life, 0, 5)
-		if life <= 1: life = 0
-						

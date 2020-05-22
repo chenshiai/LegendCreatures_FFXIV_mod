@@ -24,6 +24,9 @@ const BOWSHOCK_PW = 2.60 # 弓形冲波威力
 func _connect():
 	._connect()
 
+func _onBattleStart():
+	._onBattleStart()
+
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_BowShock": bowShock()

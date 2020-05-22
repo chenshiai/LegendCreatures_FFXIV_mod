@@ -47,7 +47,8 @@ func _onAtkChara(atkInfo):
 		if atkInfo.hitCha.hasBuff("b_Wildfire") != null:
 			fireCount += 1
 		elif atkInfo.hitCha.hasBuff("b_Wildfire") == null:
-			print("野火触发！", att.atk * WILDFIRE_PW * fireCount)
+			var eff = newEff("numHit", Vector2(0, -60))
+			eff.setText("引爆！！！")
 			hurtChara(aiCha, att.atk * WILDFIRE_PW * fireCount, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 			fireCount = 0
 			fireChara = null

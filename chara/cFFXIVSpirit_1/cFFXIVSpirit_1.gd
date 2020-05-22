@@ -16,8 +16,8 @@ func _extInit():
 	evos = ["cFFXIVSpirit_1_1"]
 	atkEff = "atk_dang"
 	addCdSkill("skill_DrawCard", 8)
-	addSkillTxt("""[抽卡]：冷却时间8s，随机抽取一张卡施加效果给全部队友，持续5s
-(太阳神之衡[狂怒]；放浪神之箭[急速]；战争神之枪[暴击20%]；世界树之干[抵御]；河流神之瓶[冷却缩减10%]；建筑神之塔[魔御])""")
+	addSkillTxt("""[抽卡]：冷却时间8s，随机抽取一张卡施加效果给全部队友，持续5s。太阳神之衡[狂怒]；放浪神之箭[急速]；
+战争神之枪[暴击20%]；世界树之干[抵御]；河流神之瓶[冷却10%]；建筑神之塔[魔御]""")
 	addCdSkill("skill_StarPhase", 18)
 	addSkillTxt("""[阳星相位]：冷却时间18s，回复全场友军[40%]法强的HP
 [白昼学派]：被动，阳星相位会给目标施加持续恢复效果，每秒恢复[15%]法强的HP，持续5秒""")
@@ -27,6 +27,9 @@ const STARPHASE_PW = 0.40 # 阳星威力
 func _connect():
 	._connect()
 
+func _onBattleStart():
+	._onBattleStart()
+
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_DrawCard" : drawCard()
@@ -35,17 +38,18 @@ func _castCdSkill(id):
 func drawCard():
 	var n = sys.rndRan(0, 5)
 	var bf = null
-	match n:
-		0: bf = b_kuangNu.new(5)
-		1: bf = b_jiSu.new(5)
-		2: bf = b_baoJi.new(5)
-		3: bf = b_diYu.new(5)
-		4: bf = b_lengQue.new(5)
-		5: bf = b_moYun.new(5)
-	
-	var eff = newEff("bo1")
-	eff.position = position
-	eff.scale *= 2
+	if n == 0:
+		bf = b_kuangNu.new(5)
+	elif n == 1:
+		bf = b_jiSu.new(5)
+	elif n == 2:
+		bf = b_baoJi.new(5)
+	elif n == 3:
+		bf = b_diYu.new(5)
+	elif n == 4:
+		bf = b_lengQue.new(5)
+	elif n == 5:
+		bf = b_moYu.new(5)
 
 	var chas = getAllChas(2)
 	for cha in chas:

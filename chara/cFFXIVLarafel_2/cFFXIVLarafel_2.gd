@@ -26,7 +26,7 @@ var fire = 0 # 星极火当前阶段
 var freeze = 0 # 灵极冰当前层数
 const FIRE_PW = 0.30 # 星极火倍率
 const FREEZE_MAX = 3 # 灵极冰最大值
-const FIRE_CD = 21 # 每次减火系魔法的cd值
+const FIRE_CD = 23 # 每次减火系魔法的cd值
 const FIREIII_PW = 2.40 # 爆炎威力
 const FREEZE_PW = 1.00 # 玄冰威力
 
@@ -55,13 +55,13 @@ func fireIII():
 
 # 消耗灵极心，提高火阶段，减少火3cd	
 func enhanced():
+	var fz = getSkill("skill_Freeze")
+	fz.nowTime = 0
 	fire += 1
 	if freeze > 0:
 		freeze -= 1
 		var sk = getSkill("skill_FireIII")
-		var fz = getSkill("skill_Freeze")
 		sk.nowTime = FIRE_CD
-		fz.nowTime = 0
 
 # 冰三		
 func freezeIII():

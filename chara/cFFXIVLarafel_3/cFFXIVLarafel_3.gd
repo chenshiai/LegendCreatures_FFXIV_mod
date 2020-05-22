@@ -54,8 +54,6 @@ func _onAtkChara(atkInfo):
 		whiteMorgan -= REDOUBLEMENT_CAST
 		if lv == 3:
 			verthunder(false, VERFLARE_PW)
-			print("赤核爆！")
-
 
 # 赤闪雷/赤疾风
 func verthunder(first, pw):
@@ -73,6 +71,6 @@ func verthunder(first, pw):
 		if whiteMorgan > MORGEN_MAX: whiteMorgan = MORGEN_MAX
 
 	if first:
-		yield(reTimer(0.5), "timeout")
+		yield(reTimer(0.3), "timeout")
 		verthunder(false, VERTHUNDER_PW)
 		skillStrs[0] = "白魔元：%d / 100	黑魔元：%d / 100" % [whiteMorgan, blackMorgen]

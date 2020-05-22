@@ -32,6 +32,8 @@ func succor():
 			cha.addBuff(b_Adloquium.new(5, att.mgiAtk * SUCCOR_PW * 1.25))
 
 func sacredSoil():
+	var eff = newEff("numHit", Vector2(-30, -60))
+	eff.setText("野战治疗阵！")
 	var ailys = getCellChas(cell, 2, 2)
 	for cha in ailys:
 		if cha != null:
@@ -48,7 +50,7 @@ class b_SacredSoil:
 
 	func _init(dur = 1, val = 0):
 		attInit()
-		id = "b_WhisperingDawn"
+		id = "b_SacredSoil"
 		hot = val
 		life = dur
 		isNegetive = false
@@ -60,7 +62,7 @@ class b_SacredSoil:
 		atkInfo.hurtVal *= 0.9
 
 	func _upS():
-		masCha.plusHp(hot)
-		life = clamp(life, 0, 5)
+		masCha.plusHp(hot, true)
+		life = clamp(life, 0, 10)
 		if life <= 1: life = 0
 						

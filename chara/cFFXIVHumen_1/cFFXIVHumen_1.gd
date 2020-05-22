@@ -24,9 +24,14 @@ func _connect():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_Shiver":
-		plusHp(att.maxHp * 0.20)
-		addBuff(b_Shiver.new(10))
+	if id == "skill_Shiver": shiver()
+
+func _onBattleStart():
+	._onBattleStart()
+
+func shiver():
+	plusHp(att.maxHp * 0.20, true)
+	addBuff(b_Shiver.new(10))
 
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)

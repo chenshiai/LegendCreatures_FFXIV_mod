@@ -17,8 +17,7 @@ func _connect():
 
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)
-	if atkInfo.atkType != Chara.AtkType.EFF:
-		atkInfo.atkVal *= 1.20
+	atkInfo.hurtVal *= 1.20
 
 func _castCdSkill(id):
 	._castCdSkill(id)

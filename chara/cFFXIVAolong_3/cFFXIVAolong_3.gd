@@ -42,6 +42,8 @@ func _onAtkChara(atkInfo:AtkInfo):
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Ninjutsu" && aiCha != null:
+		var eff = newEff("numHit", Vector2(30, -60))
+		eff.setText("术！")
 		var n = sys.rndRan(0, 2)
 		if n == 0: fuma()
 		elif n == 1: hyoton()
