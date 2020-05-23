@@ -26,7 +26,10 @@ func _onBattleStart():
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_FellCleave": fc = true
-	if id == "skill_InnerRelease": addBuff(b_InnerRelease.new(8))
+	if id == "skill_InnerRelease":
+		addBuff(b_InnerRelease.new(8))
+		var eff = newEff("numHit", Vector2(-30, -60))
+		eff.setText("原初的解放！", "#ff0000")
 
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)

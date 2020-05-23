@@ -1,4 +1,5 @@
 extends Chara
+const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
 
 func _info():
 	pass
@@ -16,8 +17,8 @@ func _extInit():
 	evos = ["cFFXIVSpirit_1_1"]
 	atkEff = "atk_dang"
 	addCdSkill("skill_DrawCard", 8)
-	addSkillTxt("""[抽卡]：冷却时间8s，随机抽取一张卡施加效果给全部队友，持续5s。太阳神之衡[狂怒]；放浪神之箭[急速]；
-战争神之枪[暴击20%]；世界树之干[抵御]；河流神之瓶[冷却10%]；建筑神之塔[魔御]""")
+	addSkillTxt("""[抽卡]：冷却时间8s，随机抽取一张卡施加效果给全部队友，持续5s。太阳神之衡[攻击力20%]；放浪神之箭[攻速20%]；
+战争神之枪[暴击20%]；世界树之干[物防20%]；河流神之瓶[冷却20%]；建筑神之塔[魔防20%]""")
 	addCdSkill("skill_StarPhase", 18)
 	addSkillTxt("""[阳星相位]：冷却时间18s，回复全场友军[40%]法强的HP
 [白昼学派]：被动，阳星相位会给目标施加持续恢复效果，每秒恢复[15%]法强的HP，持续5秒""")
@@ -39,17 +40,17 @@ func drawCard():
 	var n = sys.rndRan(0, 5)
 	var bf = null
 	if n == 0:
-		bf = b_kuangNu.new(5)
+		bf = BUFF_LIST.b_Balance.new(5)
 	elif n == 1:
-		bf = b_jiSu.new(5)
+		bf = BUFF_LIST.b_Arrow.new(5)
 	elif n == 2:
-		bf = b_baoJi.new(5)
+		bf = BUFF_LIST.b_Spear.new(5)
 	elif n == 3:
-		bf = b_diYu.new(5)
+		bf = BUFF_LIST.b_Bole.new(5)
 	elif n == 4:
-		bf = b_lengQue.new(5)
+		bf = BUFF_LIST.b_Ewer.new(5)
 	elif n == 5:
-		bf = b_moYu.new(5)
+		bf = BUFF_LIST.b_Spire.new(5)
 
 	var chas = getAllChas(2)
 	for cha in chas:
@@ -62,51 +63,4 @@ func starPhase():
 	for cha in ailys:
 		if cha != null:
 			cha.plusHp(att.mgiAtk * STARPHASE_PW)
-			cha.addBuff(b_LuckyStar.new(5, att.mgiAtk * 0.15))
-
-class b_LuckyStar:
-	extends Buff
-	var hot setget set_hot, get_hot
-
-	func get_hot():
-		return hot
-	func set_hot(val):
-		hot = val
-
-	func _init(dur = 1, val = 0):
-		attInit()
-		id = "b_LuckyStar"
-		isNegetive = false
-		hot = val
-		life = dur
-
-	func _upS():
-		masCha.plusHp(hot)
-		life = clamp(life, 0, 5)
-		if life <= 1: life = 0
-
-class b_baoJi:
-	extends Buff
-	func _init(dur = 1):
-		attInit()
-		id = "b_baoJi"
-		isNegetive = false
-		att.cri = 0.10
-		life = dur
-
-	func _upS():
-		life = clamp(life, 0, 5)
-		if life <= 1: life = 0
-
-class b_lengQue:
-	extends Buff
-	func _init(dur = 1):
-		attInit()
-		id = "b_lengQue"
-		isNegetive = false
-		att.cd = 0.15
-		life = dur
-
-	func _upS():
-		life = clamp(life, 0, 5)
-		if life <= 1: life = 0
+			cha.addBuff(BUFF_LIST.b_LuckyStar.new(5, att.mgiAtk * 0.15))

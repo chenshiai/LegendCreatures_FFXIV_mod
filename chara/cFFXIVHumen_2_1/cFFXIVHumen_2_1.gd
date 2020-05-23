@@ -16,7 +16,7 @@ func _extInit():
 var superbolide = true # 火流星？
 
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
@@ -24,10 +24,10 @@ func _onBattleStart():
 
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)
-	if att.Hp <= att.maxHp * 0.10 && sys.rndPer(50) && superbolide:
+	if att.hp <= att.maxHp * 0.10 && sys.rndPer(50) && superbolide:
 		addBuff(b_Superbolide.new(15))
 		var eff = newEff("numHit", Vector2(-40, -60))
-		eff.setText("超火流星！！！")
+		eff.setText("超火流星！！！", "#006cff")
 		superbolide = false
 		att.Hp = 1
 

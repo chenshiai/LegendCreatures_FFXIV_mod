@@ -17,6 +17,9 @@ const SIXSIDEDSTAR_PW = 4 # 六合星导腿威力
 func _connect():
 	._connect()
 
+func _onBattleStart():
+	._onBattleStart()
+
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)
 	atkInfo.hurtVal *= 0.90

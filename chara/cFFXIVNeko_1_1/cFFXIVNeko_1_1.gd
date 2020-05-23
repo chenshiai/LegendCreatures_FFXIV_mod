@@ -19,6 +19,9 @@ const SACREDSOIL_PW = 0.05 # 野战治疗阵恢复力
 func _connect():
 	._connect()
 
+func _onBattleStart():
+	._onBattleStart()
+
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Succor": succor()
@@ -33,7 +36,7 @@ func succor():
 
 func sacredSoil():
 	var eff = newEff("numHit", Vector2(-30, -60))
-	eff.setText("野战治疗阵！")
+	eff.setText("野战治疗阵！", "#1a8a00")
 	var ailys = getCellChas(cell, 2, 2)
 	for cha in ailys:
 		if cha != null:

@@ -50,3 +50,5 @@ func benediction():
 	var sk = getSkill("skill_Benediction")
 	sk.cd = 60
 	skillStrs[2] = "[天赐祝福]：冷却时间60s，为生命最低的友方单位恢复至满血（已经使用过一次）"
+	var eff = newEff("numHit", Vector2(-10, -60))
+	eff.setText("天赐祝福", "#00ff5a")

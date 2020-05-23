@@ -63,6 +63,8 @@ func danceStep():
 	addBuff(b_DanceStep.new(10))
 	atkMaxAlly.addBuff(b_DanceStep.new(10))
 	mgiAtkMaxAlly.addBuff(b_DanceStep.new(10))
+	var eff = newEff("numHit", Vector2(-10, -60))
+	eff.setText("标准舞步！", "#ff008a")
 
 # 魔法强度排序
 func sortMgiAtkMax(a,b):

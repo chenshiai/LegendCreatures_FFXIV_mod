@@ -34,8 +34,8 @@ func xenoglossy():
 	var eff:Eff = newEff("sk_shiBao")
 	eff.position = aiCha.position
 	yield(reTimer(0.3), "timeout")
-	var eff = newEff("numHit", Vector2(30, -60))
-	eff.setText("异言！")
+	var eff1 = newEff("numHit", Vector2(30, -60))
+	eff1.setText("异言！", "#fe99ff")
 	if aiCha != null:
 		hurtChara(aiCha, att.mgiAtk * XENOGLOSSY_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 

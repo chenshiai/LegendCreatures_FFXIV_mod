@@ -18,12 +18,15 @@ const APEXARROW_PW = 2 # 绝峰箭威力
 func _connect():
 	._connect()
 
+func _onBattleStart():
+	._onBattleStart()
+
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)
 	if atkInfo.atkType == AtkType.NORMAL && sys.rndPer(20):
 		var eff = newEff("numHit", Vector2(30, -60))
-		eff.setText("辉煌箭！")
-		atkInfo.atkVal *= REFULGENT_PW
+		eff.setText("辉煌箭！", "#fff000")
+		atkInfo.hurtVal *= REFULGENT_PW
 
 func _castCdSkill(id):
 	._castCdSkill(id)

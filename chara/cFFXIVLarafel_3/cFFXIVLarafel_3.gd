@@ -36,6 +36,9 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
+
+func _onBattleEnd():
+	._onBattleEnd()
 	blackMorgen = 0 # 黑魔元
 	whiteMorgan = 0 # 白魔元
 

@@ -17,10 +17,14 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("5",5)#添加cd技能
 	addSkillTxt("[光之加护]：每5秒，获得5层[狂怒][抵御]")
+	addSkillTxt("[进化分支]：[治疗]白魔法师，[进攻]黑魔法师，[进攻]赤魔法师")
 
 #进入战斗初始化，事件连接在这里初始化
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
+
+func _onBattleStart():
+	._onBattleStart()
 
 func _castCdSkill(id):
 	._castCdSkill(id)

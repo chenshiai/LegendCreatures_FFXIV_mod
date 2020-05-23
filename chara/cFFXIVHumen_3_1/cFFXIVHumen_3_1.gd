@@ -16,13 +16,14 @@ const SABERDANCE_PW = 3 # 剑舞威力
 func _connect():
 	._connect()
 
+func _onBattleStart():
+	._onBattleStart()
+
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_SaberDance" && aiCha != null: saberDance()
 
 func saberDance():
-	var eff = newEff("numHit", Vector2(30, -60))
-	eff.setText("剑舞！")
 	var chas = getCellChas(aiCha.cell, 2, 1)
 	for i in chas:
 		if i != null: 

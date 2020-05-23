@@ -29,6 +29,9 @@ const REGEN_PW = 0.15 # 再生威力
 func _connect():
 	._connect()
 
+func _onBattleStart():
+	._onBattleStart()
+
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_CureII": cureII()

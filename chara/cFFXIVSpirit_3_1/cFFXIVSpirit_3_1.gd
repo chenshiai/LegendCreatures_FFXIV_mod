@@ -1,25 +1,29 @@
 extends "../cFFXIVSpirit_3/cFFXIVSpirit_3.gd"
-#覆盖的初始化
+
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
+
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "红血之龙"
 	lv = 3
 	evos = []
 	attAdd.atkR += 0.15
 	addCdSkill("skill_Stardiver", 25)
 	addSkillTxt("[红莲龙血]：被动，获得15%的攻击力加成")
-	addSkillTxt("[坠星冲]：冷却时间25s，高高跃起，向地面猛冲，对周围1格的敌人造成[600%]的物理伤害")
+	addSkillTxt("[坠星冲]：冷却时间25s，高高跃起，向随机一名敌人猛冲，对落点周围2格的敌人造成[600%]的物理伤害")
 
 const STARDIVER_PW = 6 # 坠星冲倍率
 
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
+
+func _onBattleEnd():
+	._onBattleEnd()
+	normalSpr.position = Vector2(0, 0)
 
 func _castCdSkill(id):
 	._castCdSkill(id)

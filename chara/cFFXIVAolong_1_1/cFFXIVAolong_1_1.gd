@@ -19,6 +19,9 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
+
+func _onBattleEnd():
+	._onBattleEnd()
 	darkCount = 0
 
 func _castCdSkill(id):
@@ -33,6 +36,8 @@ func _onAtkChara(atkInfo:AtkInfo):
 		if darkCount >= 1000:
 			darkCount = 0
 			addBuff(b_TheBlackestNight.new(att.maxHp * 0.20))
+			var eff = newEff("numHit", Vector2(30, -60))
+			eff.setText("至黑之夜！", "#6a00b4")
 
 # 暗黑布道			
 func darkMissionary():

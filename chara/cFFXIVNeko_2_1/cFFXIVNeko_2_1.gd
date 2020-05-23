@@ -17,6 +17,9 @@ const ENKINDLEBAHAMUT_PW = 7 # 龙神迸发威力
 func _connect():
 	._connect()
 
+func _onBattleStart():
+	._onBattleStart()
+
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Dreadwyrm":
@@ -30,7 +33,7 @@ func enkindleBahamut():
 	var cell = aiCha.cell
 	var chas = getCellChas(cell, 1)
 	var eff = newEff("numHit", Vector2(-10, -60))
-	eff.setText("龙神迸发！")
+	eff.setText("龙神迸发！", "#01a8ed")
 
 	var eff1:Eff = newEff("sk_shiBao")
 	eff1.position = aiCha.position

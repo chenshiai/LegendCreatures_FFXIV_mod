@@ -23,10 +23,12 @@ func _extInit():
 
 const ADLOQUIUM_PW = 1.10 # 鼓舞激励之策威力
 const EMBRACE_PW = 0.40 # 仙光的拥抱威力
-const WHISPERINGDAWN_PW = 0.10 # 仙光的低语威力
 
 func _connect():
 	._connect()
+
+func _onBattleStart():
+	._onBattleStart()
 
 func _castCdSkill(id):
 	._castCdSkill(id)

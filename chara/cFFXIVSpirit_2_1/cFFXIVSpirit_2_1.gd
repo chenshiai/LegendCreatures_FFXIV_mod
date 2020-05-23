@@ -1,10 +1,10 @@
 extends "../cFFXIVSpirit_2/cFFXIVSpirit_2.gd"
-#覆盖的初始化
+
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
+
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "东天之星-夜"
 	lv = 3
 	evos = []
@@ -16,7 +16,10 @@ const LORDOFCROWNS_PW = 1
 const LADYOFCROWNS_PW = 1
 
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
+
+func _onBattleStart():
+	._onBattleStart()
 
 func _castCdSkill(id):
 	._castCdSkill(id)

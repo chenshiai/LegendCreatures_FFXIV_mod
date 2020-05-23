@@ -16,6 +16,9 @@ func _extInit():
 func _connect():
 	._connect()
 
+func _onBattleStart():
+	._onBattleStart()
+
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Horoscope":

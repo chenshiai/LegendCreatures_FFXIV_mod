@@ -13,7 +13,10 @@ func _extInit():
 	addSkillTxt("[生杀予夺]：被动，提高自身伤害20%，第一次使用[忍术]后，之后[忍术]的冷却时间减少5s")
 
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
+
+func _onBattleStart():
+	._onBattleStart()
 
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)

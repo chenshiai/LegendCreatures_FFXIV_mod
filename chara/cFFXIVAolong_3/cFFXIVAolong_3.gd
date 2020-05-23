@@ -43,11 +43,16 @@ func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Ninjutsu" && aiCha != null:
 		var eff = newEff("numHit", Vector2(30, -60))
-		eff.setText("术！")
 		var n = sys.rndRan(0, 2)
-		if n == 0: fuma()
-		elif n == 1: hyoton()
-		else: katon()
+		if n == 0:
+			fuma()
+			eff.setText("风魔！", "#00c541")
+		elif n == 1:
+			hyoton()
+			eff.setText("冰遁！", "#00deff")
+		else:
+			katon()
+			eff.setText("火遁！", "#ff3000")
 
 # 风魔手里剑
 func fuma():
