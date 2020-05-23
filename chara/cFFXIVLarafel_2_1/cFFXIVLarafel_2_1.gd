@@ -31,11 +31,13 @@ func leyLines():
 	addBuff(b_LeyLines.new(30))
 
 func xenoglossy():
-	var eff:Eff = newEff("sk_shiBao")
-	eff.position = aiCha.position
-	yield(reTimer(0.3), "timeout")
-	var eff1 = newEff("numHit", Vector2(30, -60))
-	eff1.setText("异言！", "#fe99ff")
+	var eff = sys.newEff("animEff", aiCha.position)
+	var v2 = Vector2(0, -100)
+	eff.normalSpr.position = v2
+	eff.sprLookAt(aiCha.global_position)
+	eff.setImgs(direc + "/effyiyan", 7, false)
+	eff.scale /= 2
+
 	if aiCha != null:
 		hurtChara(aiCha, att.mgiAtk * XENOGLOSSY_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 

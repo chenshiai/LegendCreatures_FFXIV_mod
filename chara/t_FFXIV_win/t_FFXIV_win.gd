@@ -13,7 +13,7 @@ func run():
 			i.addBuff(Bf.new(TIMEOUT))
 
 func get_info():
-	return "敏菲利亚喊你回一趟沙之家，赶紧结束战斗吧！当战斗时间超过120秒后，己方角色的攻击力提升500%，并获得500点护甲穿透。此天赋不需要提升等级"
+	return "敏菲利亚喊你回一趟沙之家，赶紧结束战斗吧！当战斗时间超过120秒后，己方角色的攻击力提升5000%，并获得5000点护甲穿透。此天赋不需要提升等级"
 
 class Bf:
 	extends Buff
@@ -25,6 +25,6 @@ class Bf:
 	
 	func _upS():
 		if life < 120:
-			att.atkL = 5
-			att.pen = 500
+			att.atkL = 50
+			att.pen = 5000
 		if life < 1: life = 5

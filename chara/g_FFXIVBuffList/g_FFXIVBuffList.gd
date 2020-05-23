@@ -1,3 +1,5 @@
+var name = "BuffList"
+
 func _init():
   pass
 

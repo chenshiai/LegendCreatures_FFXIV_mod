@@ -25,11 +25,12 @@ func _onBattleStart():
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)
 	if att.hp <= att.maxHp * 0.10 && sys.rndPer(50) && superbolide:
+		atkInfo.hurtVal = 0
 		addBuff(b_Superbolide.new(15))
 		var eff = newEff("numHit", Vector2(-40, -60))
 		eff.setText("超火流星！！！", "#006cff")
 		superbolide = false
-		att.Hp = 1
+		att.hp = 1
 
 func _onAtkChara(atkInfo:AtkInfo):
 	._onAtkChara(atkInfo)

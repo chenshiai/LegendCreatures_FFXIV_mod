@@ -45,9 +45,11 @@ func _castCdSkill(id):
 	
 # 火三
 func fireIII():
-	var eff:Eff = newEff("sk_yunShi")
-	eff.position = aiCha.position
-	eff.scale *= 1.2
+	var eff = sys.newEff("animEff", aiCha.position)
+	var v2 = Vector2(0,-40)
+	eff.normalSpr.position = v2
+	eff.setImgs(direc + "/effBaoyan", 7, false) 
+
 	yield(reTimer(0.5), "timeout")
 	if aiCha != null:
 		hurtChara(aiCha, att.mgiAtk * (FIREIII_PW + FIRE_PW * fire), Chara.HurtType.MGI, Chara.AtkType.SKILL)

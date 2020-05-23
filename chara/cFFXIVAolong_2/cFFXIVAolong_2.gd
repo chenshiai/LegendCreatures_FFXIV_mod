@@ -91,8 +91,11 @@ func setsugekka(skill_pw):
 	var pw = 1
 	if sys.rndPer(att.cri * 100): pw = 2 + att.criR
 
-	var eff = newEff("numHit", Vector2(30, -60))
-	eff.setText("斩！")
+	var eff = sys.newEff("animEff", position)
+	var v2 = Vector2(0,-40)
+	eff.normalSpr.position = v2
+	eff.sprLookAt(aiCha.global_position)
+	eff.setImgs(direc + "/effxueyuehua", 15, false)
 
 	if aiCha != null:
 		hurtChara(aiCha, att.atk * skill_pw * pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)

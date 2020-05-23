@@ -31,13 +31,13 @@ func dreadwyrm():
 
 func enkindleBahamut():
 	var cell = aiCha.cell
-	var chas = getCellChas(cell, 1)
-	var eff = newEff("numHit", Vector2(-10, -60))
-	eff.setText("龙神迸发！", "#01a8ed")
+	var chas = getCellChas(cell, 2)
 
-	var eff1:Eff = newEff("sk_shiBao")
-	eff1.position = aiCha.position
-	eff1.scale *= 2
+	var eff = sys.newEff("animEff", aiCha.position)
+	var v2 = Vector2(0,-40)
+	eff.normalSpr.position = v2
+	eff.sprLookAt(aiCha.global_position)
+	eff.setImgs(direc + "/efflongshenbengfa", 15, false)
 	yield(reTimer(0.5), "timeout")
 	
 	for i in chas:
