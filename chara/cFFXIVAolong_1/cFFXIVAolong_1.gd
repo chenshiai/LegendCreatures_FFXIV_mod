@@ -1,4 +1,6 @@
 extends Chara
+const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
+var Utils = globalData.infoDs["g_FFXIVUtils"]
 
 func _info():
 	pass
@@ -24,6 +26,7 @@ func _extInit():
 const PLUSHP = 0.02 # 回复量
 const BLOODSPILLER_PW = 2.50 # 血溅倍率
 var atkCount = 0 # 攻击次数
+var darkCount = 0 # 暗黑值
 
 func _connect():
 	._connect()
@@ -31,11 +34,12 @@ func _connect():
 func _onBattleStart():
 	._onBattleStart()
 	atkCount = 0
-	addBuff(b_Abhor.new())
+	addBuff(BUFF_LIST.b_Abhor.new())
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_Bloodspiller": bloodspiller()
+	if id == "skill_Bloodspiller":
+		bloodspiller()
 
 func _onAtkChara(atkInfo:AtkInfo):
 	._onAtkChara(atkInfo)
@@ -50,18 +54,3 @@ func _onAtkChara(atkInfo:AtkInfo):
 func bloodspiller():
 	if aiCha != null:
 		hurtChara(aiCha, att.atk * BLOODSPILLER_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
-
-# 深恶痛绝buff
-class b_Abhor:
-	extends Buff
-	func _init():
-		attInit()
-		id = "b_Abhor"
-		isNegetive = false
-		att.mgiDefL = 0.20
-
-	func _connect():
-		masCha.connect("onHurt", self, "onHurt")
-
-	func onHurt(atkInfo:AtkInfo):
-		atkInfo.hurtVal *= 0.90

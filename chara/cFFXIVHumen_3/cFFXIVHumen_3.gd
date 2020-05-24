@@ -1,4 +1,6 @@
 extends Chara
+const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
+var Utils = globalData.infoDs["g_FFXIVUtils"]
 
 func _info():
 	pass
@@ -33,25 +35,22 @@ func _onBattleStart():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_DanceStep": danceStep()
+	if id == "skill_DanceStep":
+		danceStep()
 
 # 寻找舞伴		
 func setDancePartner():
 	var chas = getAllChas(2)
-	chas.sort_custom(self, "sortMgiAtkMax")
-	for i in range(1):
-		if i >= chas.size() : break
-		mgiAtkMaxAlly = chas[i]
-		mgiAtkMaxAlly.addBuff(b_DancingPartner.new())
+	chas.sort_custom(Utils.Calculation, "sortMgiAtkMax")
+	mgiAtkMaxAlly = chas[0]
+	mgiAtkMaxAlly.addBuff(BUFF_LIST.b_DancingPartner.new())
 
 	var allys = getAllChas(2)
-	allys.sort_custom(self, "sortAtkMax")
-	for i in range(1):
-		if i >= allys.size() : break
-		atkMaxAlly = allys[i]
-		atkMaxAlly.addBuff(b_DancingPartner.new())
+	allys.sort_custom(Utils.Calculation, "sortAtkMax")
+	atkMaxAlly = allys[0]
+	atkMaxAlly.addBuff(BUFF_LIST.b_DancingPartner.new())
 
-	addBuff(b_DancingPartner.new())
+	addBuff(BUFF_LIST.b_DancingPartner.new())
 
 # 标准舞步
 func danceStep():
@@ -60,46 +59,8 @@ func danceStep():
 		if i != null: 
 			hurtChara(i, att.atk * DANCESTEP_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 	
-	addBuff(b_DanceStep.new(10))
-	atkMaxAlly.addBuff(b_DanceStep.new(10))
-	mgiAtkMaxAlly.addBuff(b_DanceStep.new(10))
+	addBuff(BUFF_LIST.b_DanceStep.new(10))
+	atkMaxAlly.addBuff(BUFF_LIST.b_DanceStep.new(10))
+	mgiAtkMaxAlly.addBuff(BUFF_LIST.b_DanceStep.new(10))
 	var eff = newEff("numHit", Vector2(-10, -60))
 	eff.setText("标准舞步！", "#ff008a")
-
-# 魔法强度排序
-func sortMgiAtkMax(a,b):
-	if a.att.mgiAtk > b.att.mgiAtk :
-		return true
-	return false
-
-# 物理攻击排序
-func sortAtkMax(a,b):
-	if a.att.atk > b.att.atk :
-		return true
-	return false
-
-# 舞伴buff
-class b_DancingPartner:
-	extends Buff
-	func _init():
-		attInit()
-		id = "b_DancingPartner"
-		isNegetive = false
-		att.atkR = 0.10
-		att.mgiAtkL = 0.10
-
-# 伶俐
-class b_DanceStep:
-	extends Buff
-	func _init(dur = 1):
-		._init()
-		attInit()
-		id = "b_DanceStep"
-		isNegetive = false
-		life = dur
-
-	func _upS():
-		att.atkR = 0.10
-		att.mgiAtk = masCha.att.mgiAtk * 0.10
-		life = clamp(life, 0, 10)
-		if life <= 1: life = 0

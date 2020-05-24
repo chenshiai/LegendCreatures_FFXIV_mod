@@ -1,4 +1,6 @@
 extends Chara
+const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
+var Utils = globalData.infoDs["g_FFXIVUtils"]
 
 func _info():
 	pass
@@ -42,40 +44,31 @@ func _onAtkChara(atkInfo:AtkInfo):
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Ninjutsu" && aiCha != null:
-		var eff = newEff("numHit", Vector2(30, -60))
+		Utils.createEffect("whirlwind", position, Vector2(0,-40), 15, 0.5, false)
 		var n = sys.rndRan(0, 2)
 		if n == 0:
 			fuma()
-			eff.setText("风魔！", "#00c541")
 		elif n == 1:
 			hyoton()
-			eff.setText("冰遁！", "#00deff")
 		else:
 			katon()
-			eff.setText("火遁！", "#ff3000")
 
 # 风魔手里剑
 func fuma():
 	var chas = getAllChas(1)
 	chas.sort_custom(self, "sort")
-	for i in range(1):
-		if i >= chas.size() : break
-		var cha:Chara = chas[i]
-		fx(cha)
+	var d:Eff = newEff("sk_4_1_2", sprcPos)
+	d._initFlyCha(chas[0])
+	yield(d, "onReach")
+
+	if sys.isClass(chas[0], "Chara") && chas[0] != null:
+		hurtChara(chas[0], att.atk * FUMA_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
 # 魔法强度排序
 func sort(a,b):
-	if a.att.mgiAtk > b.att.mgiAtk :
+	if a.att.mgiAtk > b.att.mgiAtk:
 		return true
 	return false
-
-# 风魔特效
-func fx(cha):
-	var d:Eff = newEff("sk_4_1_2", sprcPos)
-	d._initFlyCha(cha)
-	yield(d, "onReach")
-	if sys.isClass(cha, "Chara") && cha != null:
-		hurtChara(cha, att.atk * FUMA_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
 # 冰遁之术
 func hyoton():

@@ -1,4 +1,6 @@
 extends Chara
+const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
+var Utils = globalData.infoDs["g_FFXIVUtils"]
 
 func _info():
 	pass
@@ -30,9 +32,12 @@ func _onBattleStart():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_LronJaws" && aiCha != null: lronjaws()
-	if id == "skill_Ballad": ballad()
-	if id == "skill_Paean": paean()
+	if id == "skill_LronJaws":
+		lronjaws()
+	if id == "skill_Ballad":
+		ballad()
+	if id == "skill_Paean":
+		paean()
 
 # 伶牙俐齿
 func lronjaws():
@@ -45,64 +50,17 @@ func ballad():
 	normalAtkChara(aiCha)
 	var chas = getAllChas(2)
 	for cha in chas :
-		cha.addBuff(b_Ballad.new(8))
+		cha.addBuff(BUFF_LIST.b_Ballad.new(8))
 
 # 光阴神的礼赞凯歌
 func paean():
-	var cha = null
-	var m = 10000
-	var chas = getAllChas(2)
-	for i in chas:
-		if i.att.hp / i.att.maxHp < m :
-			cha = i
-			m = i.att.hp / i.att.maxHp
+	var cha = Utils.Calculation.findOneByMinHp(getAllChas(2))
 	if cha != null:
-		cha.addBuff(b_Paean.new(3))
+		cha.addBuff(BUFF_LIST.b_Paean.new(3))
 
 	var lx = cha.hasBuff("b_liuXue")
 	var zd = cha.hasBuff("b_zhonDu")
-	if lx != null: lx.isDel = true
-	if zd != null: zd.isDel = true
-
-
-# 叙事谣buff
-class b_Ballad:
-	extends Buff
-	func _init(dur = 1):
-		._init()
-		attInit()
-		id = "b_Ballad"
-		isNegetive = false
-		life = dur
-	
-	func _connect():
-		masCha.connect("onAtkChara", self, "onAtkChara")
-
-	func _upS():
-		life = clamp(life, 0, 8)
-		if life <= 1: life = 0
-
-	func onAtkChara(atkInfo:AtkInfo):
-		if atkInfo.atkType != Chara.AtkType.EFF: 
-			atkInfo.hurtVal *= 1.05
-
-# 凯歌buff
-class b_Paean:
-	extends Buff
-	func _init(dur = 1):
-		._init()
-		attInit()
-		id = "b_Paean"
-		isNegetive = false
-		life = dur
-	
-	func _connect():
-		masCha.connect("onAddBuff", self, "onAddBuff")
-
-	func onAddBuff(buff:Buff):
-		if buff.isNegetive :
-			buff.isDel = true
-
-	func _upS():
-		life = clamp(life, 0, 3)
-		if life <= 1: life = 0
+	if lx != null:
+		lx.isDel = true
+	if zd != null:
+		zd.isDel = true

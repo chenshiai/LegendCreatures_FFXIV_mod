@@ -1,4 +1,6 @@
 extends Chara
+const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
+var Utils = globalData.infoDs["g_FFXIVUtils"]
 
 func _info():
 	pass
@@ -8,7 +10,7 @@ func _extInit():
 	chaName = "绝枪战士"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4.3
-	attCoe.atk = 3.8
+	attCoe.atk = 4
 	attCoe.mgiAtk = 2
 	attCoe.def = 4.3
 	attCoe.mgiDef = 4.3
@@ -29,7 +31,8 @@ func _onBattleStart():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_BowShock": bowShock()
+	if id == "skill_BowShock":
+		bowShock()
 
 # 弓形冲波
 func bowShock():

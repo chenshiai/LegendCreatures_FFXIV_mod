@@ -1,11 +1,10 @@
 extends "../cFFXIVRuga_3/cFFXIVRuga_3.gd"
 
-#覆盖的初始化
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
+
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "咆哮之火"
 	lv = 3
 	evos = []
@@ -16,14 +15,15 @@ func _extInit():
 const DRILL_PW = 4 # 钻头威力
 
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_Drill": drill()
+	if id == "skill_Drill":
+		drill()
 
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)

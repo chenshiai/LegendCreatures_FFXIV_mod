@@ -16,4 +16,3 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
-	superbolide = true

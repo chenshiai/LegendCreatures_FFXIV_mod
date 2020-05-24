@@ -26,8 +26,10 @@ func _onBattleStart():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_Benediction": benediction()
-	if id == "skill_StornIII": stornIII()
+	if id == "skill_Benediction":
+		benediction()
+	if id == "skill_StornIII":
+		stornIII()
 
 func stornIII():
 	var d:Eff = newEff("sk_feiDang",sprcPos)
@@ -37,18 +39,11 @@ func stornIII():
 		hurtChara(aiCha, att.mgiAtk * STORNIII_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
 func benediction():
-	var cha = null
-	var m = 10000
-	var chas = getAllChas(2)
-	for i in chas:
-		if i.att.hp / i.att.maxHp < m :
-			cha = i
-			m = i.att.hp / i.att.maxHp
+	var cha = Utils.Calculation.findOneByMinHp(getAllChas(2))
 	if cha != null:
 		cha.plusHp(cha.att.maxHp)
 	
 	var sk = getSkill("skill_Benediction")
 	sk.cd = 60
 	skillStrs[2] = "[天赐祝福]：冷却时间60s，为生命最低的友方单位恢复至满血（已经使用过一次）"
-	var eff = newEff("numHit", Vector2(-10, -60))
-	eff.setText("天赐祝福", "#00ff5a")
+	Utils.createEffect("heal", position, Vector2(0, -30), 7)

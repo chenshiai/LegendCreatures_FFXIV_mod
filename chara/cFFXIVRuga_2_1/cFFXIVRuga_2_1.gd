@@ -26,7 +26,8 @@ func _onHurt(atkInfo):
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_SixSidedStar": sixSidedStar()
+	if id == "skill_SixSidedStar":
+		sixSidedStar()
 
 func sixSidedStar():
 	var js = hasBuff("b_jiSu")

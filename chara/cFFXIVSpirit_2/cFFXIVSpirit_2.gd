@@ -1,5 +1,6 @@
 extends Chara
 const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
+var Utils = globalData.infoDs["g_FFXIVUtils"]
 
 func _info():
 	pass
@@ -33,8 +34,10 @@ func _onBattleStart():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_DrawCard" : drawCard()
-	if id == "skill_StarPhase": starPhase()
+	if id == "skill_DrawCard" :
+		drawCard()
+	if id == "skill_StarPhase":
+		starPhase()
 
 func drawCard():
 	var n = sys.rndRan(0, 5)

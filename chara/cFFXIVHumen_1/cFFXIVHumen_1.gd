@@ -1,4 +1,6 @@
 extends Chara
+const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
+var Utils = globalData.infoDs["g_FFXIVUtils"]
 
 func _info():
 	pass
@@ -24,32 +26,18 @@ func _connect():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_Shiver": shiver()
+	if id == "skill_Shiver":
+		shiver()
 
 func _onBattleStart():
 	._onBattleStart()
 
 func shiver():
 	plusHp(att.maxHp * 0.20, true)
-	addBuff(b_Shiver.new(10))
+	addBuff(BUFF_LIST.b_Shiver.new(10))
 	var eff = newEff("numHit", Vector2(30, -60))
 	eff.setText("战栗！", "#3cff00")
 
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)
 	atkInfo.hurtVal *= 0.80
-
-class b_Shiver:
-	extends Buff
-	func _init(dur = 1):
-		._init()
-		attInit()
-		id = "b_Shiver"
-		isNegetive = false
-		life = dur
-		att.maxHpL = 0.20
-		att.reHp = 0.20
-
-	func _upS():
-		life = clamp(life, 0, 10)
-		if life <= 1: life = 0

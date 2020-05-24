@@ -27,7 +27,8 @@ func _onBattleEnd():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_Stardiver": stardiver()
+	if id == "skill_Stardiver":
+		stardiver()
 
 func stardiver():
 	aiCha = null

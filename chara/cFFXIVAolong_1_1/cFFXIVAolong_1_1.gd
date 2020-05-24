@@ -7,12 +7,10 @@ func _extInit():
 	._extInit()
 	chaName = "深渊之暗"
 	lv = 3
-	evos = ["cFFXIVAolong_1_1_1"]
+	evos = []
 	addCdSkill("skill_DarkMissionary", 12)
 	addSkillTxt("""[至黑之夜]：造成伤害时会累计暗黑值，达到1000点时，释放可以吸收最大生命值20%伤害的护盾
 [暗黑布道]：冷却时间12s，使队伍全员受到魔法伤害减少20%，持续6s""")
-
-var darkCount = 0 # 暗黑值
 
 func _connect():
 	._connect()
@@ -23,10 +21,12 @@ func _onBattleStart():
 func _onBattleEnd():
 	._onBattleEnd()
 	darkCount = 0
+	skillStrs[0] = "当前暗黑值：%d" % darkCount as int
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_DarkMissionary": darkMissionary()
+	if id == "skill_DarkMissionary":
+		darkMissionary()
 
 func _onAtkChara(atkInfo:AtkInfo):
 	._onAtkChara(atkInfo)
@@ -35,58 +35,12 @@ func _onAtkChara(atkInfo:AtkInfo):
 		skillStrs[0] = "当前暗黑值：%d" % darkCount as int
 		if darkCount >= 1000:
 			darkCount = 0
-			addBuff(b_TheBlackestNight.new(att.maxHp * 0.20))
-			var eff = newEff("numHit", Vector2(30, -60))
-			eff.setText("至黑之夜！", "#6a00b4")
+			addBuff(BUFF_LIST.b_TheBlackestNight.new(att.maxHp * 0.20))
+			Utils.createEffect("shield", position, Vector2(0,-30), 7)
 
 # 暗黑布道			
 func darkMissionary():
 	var allys = getAllChas(2)
 	for cha in allys:
 		if cha != null:
-			cha.addBuff(b_DarkMissionary.new(6))
-
-class b_DarkMissionary:
-	extends Buff
-	func _init(dur = 1):
-		attInit()
-		id = "b_DarkMissionary"
-		life = dur
-		isNegetive = false
-
-	func _connect():
-		masCha.connect("onHurt", self, "onHurt")
-
-	func onHurt(atkInfo:AtkInfo):
-		if atkInfo.hurtType == Chara.HurtType.MGI:
-			atkInfo.hurtVal *= 0.80
-
-# 至黑之夜，护盾。可以吸收一定数值的伤害
-class b_TheBlackestNight:
-	extends Buff
-	var total setget set_total, get_total
-
-	func get_total():
-		return total
-	func set_total(val):
-		total = val
-
-	func _init(val = 0):
-		attInit()
-		id = "b_TheBlackestNight"
-		total = val
-
-	func _connect():
-		._connect()
-		masCha.connect("onHurt", self, "onHurt")
-
-	func onHurt(atkInfo:AtkInfo):
-		if total >= 0:
-			if total > atkInfo.hurtVal:
-				total -= atkInfo.hurtVal
-				atkInfo.hurtVal = 0
-			else:
-				atkInfo.hurtVal -= total
-				total = 0
-		elif total <= 0:
-			total = 0
+			cha.addBuff(BUFF_LIST.b_DarkMissionary.new(6))

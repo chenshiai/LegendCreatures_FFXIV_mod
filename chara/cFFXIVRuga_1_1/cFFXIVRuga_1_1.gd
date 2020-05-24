@@ -19,20 +19,8 @@ func _onBattleStart():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_Requiescat": requiescat()
+	if id == "skill_Requiescat":
+		requiescat()
 
 func requiescat():
-	addBuff(b_requiescat.new(15))
-
-class b_requiescat:
-	extends Buff
-	func _init(dur = 1):
-		attInit()
-		id = "b_requiescat"
-		life = dur
-		isNegetive = false
-		att.mgiAtk = 50
-
-	func _upS():
-		life = clamp(life, 0, 15)
-		if life <= 1: life = 0
+	addBuff(BUFF_LIST.b_requiescat.new(15))

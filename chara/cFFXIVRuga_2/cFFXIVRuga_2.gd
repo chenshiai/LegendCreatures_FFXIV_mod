@@ -1,4 +1,6 @@
 extends Chara
+const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
+var Utils = globalData.infoDs["g_FFXIVUtils"]
 
 func _info():
 	pass
@@ -13,12 +15,11 @@ func _extInit():
 	attCoe.def = 3.1
 	attCoe.mgiDef = 3.1
 	attAdd.spd += 0.18
-	attAdd.atkR += 0.05
 	lv = 2
 	evos = ["cFFXIVRuga_2_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_FightGas", 7)
-	addSkillTxt("[红莲/疾风]：被动，红莲体势，增加5%的攻击力；疾风体势：增加18%攻速")
+	addSkillTxt("[迅雷疾风]：被动，增加16%的攻击速度，且在攻击时，获得2层[急速]")
 	addSkillTxt("""[斗气]：被动，每次攻击有50%概率获得一层斗气，最大五层
 [阴阳斗气斩]：冷却时间7s，对目标造成[210%]的物理伤害，根据斗气层数提高伤害，每层提高[20%]的倍率，最大伤害[310%]""")
 
@@ -28,7 +29,7 @@ const FIGHTGAS_PW = 2.10 # 斗气斩威力
 const FIGHTGAS_N_PW = 0.20 # 斗气提升威力
 
 func _connect():
-	._connect() #保留继承的处理
+	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
@@ -36,12 +37,15 @@ func _onBattleStart():
 
 func _onAtkChara(atkInfo:AtkInfo):
 	._onAtkChara(atkInfo)
-	if sys.rndPer(50) && fightGas < 5:
-		fightGas += 1
+	if atkInfo.atkType == Chara.AtkType.NORMAL:
+		addBuff(b_jiSu.new(2))
+		if sys.rndPer(50) && fightGas < 5:
+			fightGas += 1
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_FightGas" && aiCha != null: fightGasAtk()
+	if id == "skill_FightGas":
+		fightGasAtk()
 
 func fightGasAtk():
 	if aiCha != null:

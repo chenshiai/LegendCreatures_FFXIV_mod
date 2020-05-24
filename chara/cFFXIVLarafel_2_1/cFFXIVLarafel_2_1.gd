@@ -24,32 +24,15 @@ func _onBattleStart():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_LeyLines": leyLines()
-	if id == "skill_Xenoglossy" && aiCha != null: xenoglossy()
+	if id == "skill_LeyLines":
+		leyLines()
+	if id == "skill_Xenoglossy":
+		xenoglossy()
 
 func leyLines():
-	addBuff(b_LeyLines.new(30))
+	addBuff(BUFF_LIST.b_LeyLines.new(30))
 
 func xenoglossy():
-	var eff = sys.newEff("animEff", aiCha.position)
-	var v2 = Vector2(0, -100)
-	eff.normalSpr.position = v2
-	eff.sprLookAt(aiCha.global_position)
-	eff.setImgs(direc + "/effyiyan", 7, false)
-	eff.scale /= 2
-
+	Utils.createEffect("melanositis", aiCha.position, Vector2(0,-120), 7, 0.2)
 	if aiCha != null:
 		hurtChara(aiCha, att.mgiAtk * XENOGLOSSY_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
-
-class b_LeyLines:
-	extends Buff
-	func _init(dur = 1):
-		attInit()
-		id = "b_LeyLines"
-		isNegetive = false
-		att.cd = 0.15
-		life = dur
-
-	func _upS():
-		life = clamp(life, 0, 30)
-		if life <= 1: life = 0

@@ -21,7 +21,8 @@ func _onBattleStart():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_SaberDance" && aiCha != null: saberDance()
+	if id == "skill_SaberDance":
+		saberDance()
 
 func saberDance():
 	var chas = getCellChas(aiCha.cell, 2, 1)

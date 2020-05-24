@@ -27,32 +27,14 @@ func _castCdSkill(id):
 		enkindleBahamut()
 
 func dreadwyrm():
-	addBuff(b_Dreadwyrm.new(8))
+	addBuff(BUFF_LIST.b_Dreadwyrm.new(8))
 
 func enkindleBahamut():
 	var cell = aiCha.cell
 	var chas = getCellChas(cell, 2)
-
-	var eff = sys.newEff("animEff", aiCha.position)
-	var v2 = Vector2(0,-40)
-	eff.normalSpr.position = v2
-	eff.sprLookAt(aiCha.global_position)
-	eff.setImgs(direc + "/efflongshenbengfa", 15, false)
+	Utils.createEffect("nuclearExplosion", aiCha.position, Vector2(0,-40), 15)
 	yield(reTimer(0.5), "timeout")
 	
 	for i in chas:
 		if i != null: 
 			hurtChara(i, att.mgiAtk * ENKINDLEBAHAMUT_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
-
-class b_Dreadwyrm:
-	extends Buff
-	func _init(dur = 1):
-		attInit()
-		id = "b_Dreadwyrm"
-		life = dur
-		isNegetive = false
-		att.mgiAtkL = 0.10
-
-	func _upS():
-		life = clamp(life, 0, 8)
-		if life <= 1: life = 0

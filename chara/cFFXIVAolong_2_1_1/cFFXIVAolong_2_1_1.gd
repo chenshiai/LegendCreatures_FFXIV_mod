@@ -5,7 +5,7 @@ func _info():
 
 func _extInit():
 	._extInit()
-	chaName = "无双斋-传奇"
+	chaName = "豪雪-传奇"
 	lv = 4
 	evos = []
 

@@ -1,4 +1,6 @@
 extends Chara
+const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
+var Utils = globalData.infoDs["g_FFXIVUtils"]
 
 func _info():
 	pass
@@ -20,10 +22,10 @@ func _extInit():
 	addCdSkill("skill_Regen", 18)
 	addSkillTxt("""[救疗]：冷却时间10s，为生命最低的友方单位恢复[80%]法强的HP
 [愈疗]：冷却时间15s，为全体友方单位恢复[60%]法强的HP""")
-	addSkillTxt("[再生]：冷却时间18s，为生命最低的友方单位附加再生，每秒恢复[15%]法强的HP，持续18s")
+	addSkillTxt("[再生]：冷却时间18s，为生命最低的友方单位附加再生，每秒恢复[15%]法强的HP，持续10s")
 
 const CUREII_PW = 0.80 # 救疗威力
-const CUREIII_PW = 0.6 # 愈疗威力
+const CUREIII_PW = 0.60 # 愈疗威力
 const REGEN_PW = 0.15 # 再生威力
 
 func _connect():
@@ -34,9 +36,12 @@ func _onBattleStart():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_CureII": cureII()
-	if id == "skill_CureIII": cureIII()
-	if id == "skill_Regen": regen()
+	if id == "skill_CureII":
+		cureII()
+	if id == "skill_CureIII":
+		cureIII()
+	if id == "skill_Regen":
+		regen()
 
 # 救疗
 func cureII():
@@ -67,25 +72,4 @@ func regen():
 			cha = i
 			m = i.att.hp / i.att.maxHp
 	if cha != null:
-		cha.addBuff(b_Regen.new(18, att.mgiAtk * REGEN_PW))
-
-# 再生buff
-class b_Regen:
-	extends Buff
-	var hot setget set_hot, get_hot
-
-	func get_hot():
-		return hot
-	func set_hot(val):
-		hot = val
-
-	func _init(dur = 1, val = 0):
-		attInit()
-		id = "b_Regen"
-		hot = val
-		life = dur
-
-	func _upS():
-		masCha.plusHp(hot, true)
-		life = clamp(life, 0, 18)
-		if life <= 1: life = 0
+		cha.addBuff(BUFF_LIST.b_Regen.new(10, att.mgiAtk * REGEN_PW))

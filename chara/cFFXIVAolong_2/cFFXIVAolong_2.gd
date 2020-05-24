@@ -1,4 +1,6 @@
 extends Chara
+const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
+var Utils = globalData.infoDs["g_FFXIVUtils"]
 
 func _info():
 	pass
@@ -89,13 +91,13 @@ func getFlash(name):
 # 纷乱雪月花
 func setsugekka(skill_pw):
 	var pw = 1
-	if sys.rndPer(att.cri * 100): pw = 2 + att.criR
+	if sys.rndPer(att.cri * 100):
+		pw = 2 + att.criR
 
-	var eff = sys.newEff("animEff", position)
-	var v2 = Vector2(0,-40)
-	eff.normalSpr.position = v2
-	eff.sprLookAt(aiCha.global_position)
-	eff.setImgs(direc + "/effxueyuehua", 15, false)
+	jump(position, aiCha.position)
+	normalSpr.position = Vector2(0, -600)
+	yield(reTimer(0.3), "timeout")
+	normalSpr.position = Vector2(0, 0)
 
 	if aiCha != null:
 		hurtChara(aiCha, att.atk * skill_pw * pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
@@ -107,3 +109,15 @@ func reset():
 	flower = false
 	atkCount = 0
 	flash = 0
+
+func jump(startPositon, endPositon):
+	var l:Vector2 = endPositon - startPositon
+	var s = 25
+	var rs = preload("res://core/ying.tscn")
+	var n = l.length()/s
+	for i in range(n):
+		var spr = rs.instance()
+		sys.main.map.add_child(spr)
+		spr.texture = img.texture_normal
+		spr.position = position + s * (i+1) * l.normalized() - Vector2(img.texture_normal.get_width() / 2, img.texture_normal.get_height())
+		spr.init(255/n * i + 100)

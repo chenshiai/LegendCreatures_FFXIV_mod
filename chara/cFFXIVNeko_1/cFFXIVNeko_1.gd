@@ -1,4 +1,6 @@
 extends Chara
+const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
+var Utils = globalData.infoDs["g_FFXIVUtils"]
 
 func _info():
 	pass
@@ -32,55 +34,16 @@ func _onBattleStart():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_Adloquium": adloquium(ADLOQUIUM_PW, true)
-	if id == "skill_Embrace": adloquium(EMBRACE_PW)
+	if id == "skill_Adloquium":
+		adloquium(ADLOQUIUM_PW, true)
+	if id == "skill_Embrace":
+		adloquium(EMBRACE_PW)
 
 # 鼓舞激励之策/仙光的拥抱
 func adloquium(pw, hudun = false):
-	var cha = null
-	var m = 10000
-	var chas = getAllChas(2)
-	for i in chas:
-		if i.att.hp / i.att.maxHp < m :
-			cha = i
-			m = i.att.hp / i.att.maxHp
+	var cha = Utils.Calculation.findOneByMinHp(getAllChas(2))
 	if cha != null:
 		cha.plusHp(att.mgiAtk * pw)
 		if hudun:
-			cha.addBuff(b_Adloquium.new(5, att.mgiAtk * pw * 1.25))
-
-# 鼓舞，护盾。可以吸收一定数值的伤害
-class b_Adloquium:
-	extends Buff
-	var total setget set_total, get_total
-
-	func get_total():
-		return total
-	func set_total(val):
-		total = val
-
-	func _init(dur = 1, val = 0):
-		attInit()
-		id = "b_Adloquium"
-		total = val
-		life = dur
-		isNegetive = false
-
-	func _connect():
-		._connect()
-		masCha.connect("onHurt", self, "onHurt")
-
-	func _upS():
-		life = clamp(life, 0, 5)
-		if life <= 1: life = 0
-
-	func onHurt(atkInfo:AtkInfo):
-		if total >= 0:
-			if total > atkInfo.hurtVal:
-				total -= atkInfo.hurtVal
-				atkInfo.hurtVal = 0
-			else:
-				atkInfo.hurtVal -= total
-				total = 0
-		elif total <= 0:
-			total = 0
+			cha.addBuff(BUFF_LIST.b_Adloquium.new(5, att.mgiAtk * pw * 1.25))
+			Utils.createEffect("shield", cha.position, Vector2(0,-30), 7)

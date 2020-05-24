@@ -25,9 +25,11 @@ func _onBattleStart():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_FellCleave": fc = true
+	if id == "skill_FellCleave":
+		fc = true
+
 	if id == "skill_InnerRelease":
-		addBuff(b_InnerRelease.new(8))
+		addBuff(BUFF_LIST.b_InnerRelease.new(8))
 		var eff = newEff("numHit", Vector2(-30, -60))
 		eff.setText("原初的解放！", "#ff0000")
 
@@ -40,17 +42,3 @@ func _onAtkChara(atkInfo):
 		atkInfo.isCri = true
 		atkInfo.isAtk = false
 		atkInfo.hurtVal *= FELLCLEAVE_PW
-
-class b_InnerRelease:
-	extends Buff
-	func _init(dur = 1):
-		._init()
-		attInit()
-		id = "b_InnerRelease"
-		isNegetive = false
-		att.cri = 1
-		life = dur
-
-	func _upS():
-		life = clamp(life, 0, 8)
-		if life <= 1: life = 0

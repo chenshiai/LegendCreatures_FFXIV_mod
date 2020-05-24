@@ -1,4 +1,6 @@
 extends Chara
+const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
+var Utils = globalData.infoDs["g_FFXIVUtils"]
 
 func _info():
 	pass
@@ -44,7 +46,8 @@ func _onBattleEnd():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_Verthunder" && aiCha != null: verthunder(true, VERTHUNDER_PW)
+	if id == "skill_Verthunder" && aiCha != null:
+		verthunder(true, VERTHUNDER_PW)
 
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)

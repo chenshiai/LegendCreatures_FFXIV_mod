@@ -1,10 +1,10 @@
 extends "../cFFXIVLarafel_3/cFFXIVLarafel_3.gd"
-#覆盖的初始化
+
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
+
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "抗争之红"
 	lv = 3
 	evos = []
@@ -20,26 +20,16 @@ func _onBattleStart():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_Manafication": manafication()
+	if id == "skill_Manafication":
+		manafication()
 
 func manafication():
 	var eff = newEff("numHit", Vector2(30, -60))
 	eff.setText("倍增！")
 	blackMorgen *= 2
 	whiteMorgan *= 2
-	if blackMorgen > 100: blackMorgen = 100
-	if whiteMorgan > 100: whiteMorgan = 100
-	addBuff(b_Manafication.new(10))
-
-class b_Manafication:
-	extends Buff
-	func _init(dur = 1):
-		attInit()
-		id = "b_Manafication"
-		isNegetive = false
-		life = dur
-		att.mgiAtkL = 0.10
-
-	func _upS():
-		life = clamp(life, 0, 10)
-		if life <= 1: life = 0
+	if blackMorgen > MORGEN_MAX:
+		blackMorgen = MORGEN_MAX
+	if whiteMorgan > MORGEN_MAX:
+		whiteMorgan = MORGEN_MAX
+	addBuff(BUFF_LIST.b_Manafication.new(10))
