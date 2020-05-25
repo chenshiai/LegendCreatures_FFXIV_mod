@@ -13,7 +13,7 @@ func testInit():
   if globalData.infoDs.has("g_FFXIVBuffList"):
     var BuffList = globalData.infoDs["g_FFXIVBuffList"]
     if BuffList != null:
-      print("最终幻想14：—————— BUFF列表加载完成 ——————")
+      print("最终幻想14：—————— BUFF列表读取完成 ——————")
 
     path = chaData.infoDs["cFFXIV_zTatalu"].dir
     if path != null:

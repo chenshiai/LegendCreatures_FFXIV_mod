@@ -345,7 +345,7 @@ class b_Overload:
 		if life > 5:
 			att.atkR = 0.20
 		else:
-			att.atkR = - 0.10 
+			att.atkR = -0.10 
 		life = clamp(life, 0, 13)
 		if life < 1: life = 0
 

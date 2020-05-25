@@ -56,19 +56,13 @@ func _castCdSkill(id):
 # 风魔手里剑
 func fuma():
 	var chas = getAllChas(1)
-	chas.sort_custom(self, "sort")
+	chas.sort_custom(Utils.Calculation, "sortMgiAtkMax")
 	var d:Eff = newEff("sk_4_1_2", sprcPos)
 	d._initFlyCha(chas[0])
 	yield(d, "onReach")
 
 	if sys.isClass(chas[0], "Chara") && chas[0] != null:
 		hurtChara(chas[0], att.atk * FUMA_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
-
-# 魔法强度排序
-func sort(a,b):
-	if a.att.mgiAtk > b.att.mgiAtk:
-		return true
-	return false
 
 # 冰遁之术
 func hyoton():
@@ -83,5 +77,5 @@ func katon():
 	var chas = getCellChas(cell,1)
 	for i in chas:
 		if i != self:
-			hurtChara(i, att.atk * KATON_PW, HurtType.PHY)
+			hurtChara(i, att.atk * KATON_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 			i.addBuff(b_shaoZhuo.new(5))
