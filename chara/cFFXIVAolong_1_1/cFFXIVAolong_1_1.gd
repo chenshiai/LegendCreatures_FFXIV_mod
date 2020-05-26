@@ -9,7 +9,7 @@ func _extInit():
 	lv = 3
 	evos = []
 	addCdSkill("skill_DarkMissionary", 12)
-	addSkillTxt("""[至黑之夜]：造成伤害时会累计暗黑值，达到1000点时，释放可以吸收最大生命值20%伤害的护盾
+	addSkillTxt("""[至黑之夜]：造成非特效伤害时会累计暗黑值，达到1000点时，释放可以吸收最大生命值20%伤害的护盾
 [暗黑布道]：冷却时间12s，使队伍全员受到魔法伤害减少20%，持续6s""")
 
 func _connect():

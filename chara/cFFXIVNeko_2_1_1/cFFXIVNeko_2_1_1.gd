@@ -1,4 +1,4 @@
-extends "../cFFXIVNeko_2_/cFFXIVNeko_2_1.gd"
+extends "../cFFXIVNeko_2_1/cFFXIVNeko_2_1.gd"
 
 func _info():
 	pass

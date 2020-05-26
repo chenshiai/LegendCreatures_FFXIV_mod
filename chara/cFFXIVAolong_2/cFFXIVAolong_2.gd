@@ -14,12 +14,12 @@ func _extInit():
 	attCoe.mgiAtk = 2
 	attCoe.def = 3
 	attCoe.mgiDef = 2.8
-	attAdd.atkR += 0.10
+	attAdd.atkL += 0.10
 	attAdd.spd += 0.10
 	lv = 2
 	evos = ["cFFXIVAolong_2_1"]
 	atkEff = "atk_dao"
-	addSkillTxt("""[雪/月/花]：被动，每次攻击随机获得[雪][月][花]印记，攻击伤害增加10%，攻击力提升10%，攻速提升10%""")
+	addSkillTxt("""[雪/月/花]：被动，每次攻击随机获得[雪][月][花]印记，攻击力提升10%，攻速提升10%""")
 	addSkillTxt("""[居合术]：每第8次攻击，发动一次[纷乱雪月花]
 [纷乱雪月花]：对目标造成[120%][350%][720%]的物理伤害，印记种类越多伤害越高，可暴击""")
 

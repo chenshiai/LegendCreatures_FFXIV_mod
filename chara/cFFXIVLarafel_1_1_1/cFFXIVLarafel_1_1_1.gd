@@ -6,13 +6,38 @@ func _info():
 func _extInit():
 	._extInit()
 	chaName = "嘉恩·艾·神纳-传奇"
+	attCoe.maxHp = 4
+	attCoe.mgiAtk = 5
+	attCoe.def = 3.5
+	attCoe.mgiDef = 3.9
+	attAdd.cd += 0.15
 	lv = 4
 	evos = []
+	addSkillTxt("[神速咏唱]：被动，加快自身15%的技能释放速度")
+	addCdSkill("skill_Assize", 20)
+	addSkillTxt("[法令]：冷却时间20s，对周围2格内的敌人造成[270%]法强的魔法伤害，同时为范围内的队友回复[90%]法强的HP")
 
 var baseId = ""
-
+const ASSIZE_PW = 2.70 # 法令伤害威力
+const ASSIZE_HEAL_PW = 0.90 # 法令治疗威力
 func _connect():
 	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
+
+func _castCdSkill(id):
+	._castCdSkill(id)
+	if id == "skill_Assize":
+		assize()
+
+func assize():
+	var allys = getCellChas(self.cell, 2, 2)
+	for cha in allys:
+		if cha != null:
+			cha.plusHp(att.mgiAtk * CUREIII_PW)
+
+	var enmy = getCellChas(self.cell, 2)
+	for cha in enmy:
+		if cha != null:
+			hurtChara(cha, att.mgiAtk * STORNIII_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)

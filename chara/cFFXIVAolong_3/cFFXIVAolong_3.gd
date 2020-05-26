@@ -23,8 +23,8 @@ func _extInit():
 [隐遁]：被动，获得30%的闪避""")
 	addSkillTxt("""[忍术]：冷却时间11s，随机释放以下忍术
 [风魔手里剑]：对魔法攻击力最高的一名敌人造成[450%]的物理伤害
-[冰遁之术]：对周围1格的敌人造成[70%]的物理伤害，并附加5层[结霜]
-[火遁之术]：对周围1格的敌人造成[50%]的物理伤害，并附加5层[烧灼]""")
+[冰遁之术]：对周围2格的敌人造成[70%]的物理伤害，并附加5层[结霜]
+[火遁之术]：对周围2格的敌人造成[50%]的物理伤害，并附加5层[烧灼]""")
 
 const FUMA_PW = 4.50 # 风魔手里剑威力
 const HYOTON_PW = 0.70 # 冰遁威力
@@ -66,7 +66,7 @@ func fuma():
 
 # 冰遁之术
 func hyoton():
-	var chas = getCellChas(cell,1)
+	var chas = getCellChas(cell, 2)
 	for i in chas:
 		if i != null:
 			hurtChara(i, att.atk * HYOTON_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
@@ -74,7 +74,7 @@ func hyoton():
 
 # 火遁之术			
 func katon():
-	var chas = getCellChas(cell,1)
+	var chas = getCellChas(cell, 2)
 	for i in chas:
 		if i != self:
 			hurtChara(i, att.atk * KATON_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)

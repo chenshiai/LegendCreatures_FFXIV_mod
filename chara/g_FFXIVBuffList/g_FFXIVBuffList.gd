@@ -67,6 +67,20 @@ class b_TheBlackestNight:
 		elif total <= 0:
 			total = 0
 
+# 强甲破点突，削弱双抗
+class b_ArmorCrush:
+	extends Buff
+	func _init(dur = 1, pw = 0.15):
+		attInit()
+		id = "b_ArmorCrush"
+		life = dur
+		att.defL -= pw
+		att.mgiDefL -= pw
+	
+	func _upS():
+		life = clamp(life, 0, 7)
+		if life <= 1: life = 0
+
 # 战栗，提高最大生命值和治疗量
 class b_Shiver:
 	extends Buff
@@ -138,6 +152,20 @@ class b_DanceStep:
 
 	func _upS():
 		life = clamp(life, 0, 10)
+		if life <= 1: life = 0
+
+class b_Devilment:
+	extends Buff
+	func _init(dur = 1):
+		attInit()
+		id = "b_DanceStep"
+		isNegetive = false
+		life = dur
+		att.atkL = 0.20
+		att.mgiAtkL = 0.20
+
+	func _upS():
+		life = clamp(life, 0, 8)
 		if life <= 1: life = 0
 
 # 再生，持续恢复

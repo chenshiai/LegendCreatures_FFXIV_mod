@@ -1,5 +1,4 @@
 extends Talent
-
 func init():
 	name = "队伍编制"
 
@@ -7,6 +6,7 @@ func _connect():
 	sys.main.connect("onBattleStart", self, "run")
 	
 func run():
+	var count = 0
 	for i in sys.main.btChas:
 		if i.team == 1:
 			count += 1
