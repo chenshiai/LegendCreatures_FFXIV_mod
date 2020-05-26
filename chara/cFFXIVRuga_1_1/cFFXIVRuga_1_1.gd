@@ -23,4 +23,4 @@ func _castCdSkill(id):
 		requiescat()
 
 func requiescat():
-	addBuff(BUFF_LIST.b_requiescat.new(15))
+	addBuff(BUFF_LIST.b_Requiescat.new(15))

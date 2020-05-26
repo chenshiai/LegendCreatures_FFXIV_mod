@@ -39,11 +39,10 @@ func stardiver():
 	jump(Vector2(0, 0), normalSpr.position)
 	yield(reTimer(0.4), "timeout")
 
-	var allChas = getAllChas(1)
-	allChas.shuffle()
+	var cha = rndChas(getAllChas(1), 1)
 	var mv = Vector2(cell.x, cell.y)
-	mv.x = allChas[0].cell.x
-	mv.y = allChas[0].cell.y
+	mv.x = cha.cell.x
+	mv.y = cha.cell.y
 	var vs = [Vector2(0, 0), Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, -1), Vector2(1, 1), Vector2(-1, 1), Vector2(-1, -1), Vector2(1, -1)]
 	for i in vs:
 		var v = mv + i

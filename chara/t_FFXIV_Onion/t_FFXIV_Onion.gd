@@ -10,7 +10,8 @@ func _connect():
 func run():
 	if player.hp < player.maxHp:
 		player.hp += 5
-		if player.hp > player.maxHp: player.hp = player.maxHp
+		if player.hp > player.maxHp:
+			player.hp = player.maxHp
 
 func bgChange(talent:Talent):
 	if !bg && talent.name == "迷你欧米茄":

@@ -32,7 +32,7 @@ func _onHurt(atkInfo):
 		yield(reTimer(0.5), "timeout")
 		att.hp = 1
 
-func _onAtkChara(atkInfo:AtkInfo):
-	._onAtkChara(atkInfo)
-	if atkInfo.atkType == AtkType.NORMAL :
-		hurtChara(atkInfo.hitCha, att.atk * 0.5, Chara.HurtType.MGI, Chara.AtkType.EFF)
+func normalAtkChara(cha):
+	.normalAtkChara(cha)
+	if cha != null:
+		hurtChara(cha, att.atk * 0.5, Chara.HurtType.MGI, Chara.AtkType.EFF)

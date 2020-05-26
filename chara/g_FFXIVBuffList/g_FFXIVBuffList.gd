@@ -304,11 +304,11 @@ class b_SteelBelief:
 		atkInfo.hurtVal *= 0.90
 
 # 安魂祈祷
-class b_requiescat:
+class b_Requiescat:
 	extends Buff
 	func _init(dur = 1):
 		attInit()
-		id = "b_requiescat"
+		id = "b_Requiescat"
 		life = dur
 		isNegetive = false
 		att.mgiAtk = 50

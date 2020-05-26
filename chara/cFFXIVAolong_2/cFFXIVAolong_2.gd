@@ -41,21 +41,20 @@ func _onBattleStart():
 	._onBattleStart()
 	reset()
 
-func _onAtkChara(atkInfo:AtkInfo):
-	._onAtkChara(atkInfo)
-	if atkInfo.atkType == AtkType.NORMAL: 
-		atkCount += 1
-		if atkCount == 8:
-			atkCount = 0
-			iaijutsu()
+func normalAtkChara(cha):
+	.normalAtkChara(cha)
+	atkCount += 1
+	if atkCount == 8:
+		atkCount = 0
+		iaijutsu()
+	else:
+		var n = sys.rndRan(0, 2)
+		if n == 0 :
+			getFlash("snow")
+		elif n == 1:
+			getFlash("moon")
 		else:
-			var n = sys.rndRan(0, 2)
-			if n == 0 :
-				getFlash("snow")
-			elif n == 1:
-				getFlash("moon")
-			else:
-				getFlash("flower")
+			getFlash("flower")
 
 func _castCdSkill(id):
 	._castCdSkill(id)

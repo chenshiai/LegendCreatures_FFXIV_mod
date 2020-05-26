@@ -36,10 +36,10 @@ func _connect():
 func _onBattleStart():
 	._onBattleStart()
 
-func _onAtkChara(atkInfo:AtkInfo):
-	._onAtkChara(atkInfo)
-	if atkInfo.atkType == AtkType.NORMAL:
-		atkInfo.hitCha.addBuff(b_liuXue.new(2))
+func normalAtkChara(cha):
+	.normalAtkChara(cha)
+	if cha != null:
+		cha.addBuff(b_liuXue.new(2))
 
 func _castCdSkill(id):
 	._castCdSkill(id)
