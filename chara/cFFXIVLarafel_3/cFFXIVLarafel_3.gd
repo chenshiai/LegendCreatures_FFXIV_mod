@@ -71,12 +71,14 @@ func verthunder(first, pw):
 	var n = sys.rndRan(0, 1)
 	if n == 0 && blackMorgen < (MORGEN + MORGEN_MAX):
 		blackMorgen += MORGEN
-		if blackMorgen > MORGEN_MAX: blackMorgen = MORGEN_MAX
+		if blackMorgen > MORGEN_MAX:
+			blackMorgen = MORGEN_MAX
 	elif n == 1 && whiteMorgan < (MORGEN + MORGEN_MAX):
 		whiteMorgan += MORGEN
-		if whiteMorgan > MORGEN_MAX: whiteMorgan = MORGEN_MAX
+		if whiteMorgan > MORGEN_MAX:
+			whiteMorgan = MORGEN_MAX
 
+	skillStrs[0] = "白魔元：%d / 100	黑魔元：%d / 100" % [whiteMorgan, blackMorgen]
 	if first:
 		yield(reTimer(0.3), "timeout")
 		verthunder(false, VERTHUNDER_PW)
-		skillStrs[0] = "白魔元：%d / 100	黑魔元：%d / 100" % [whiteMorgan, blackMorgen]
