@@ -24,17 +24,19 @@ func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Dreadwyrm":
 		dreadwyrm()
-		enkindleBahamut()
+		enkindleBahamut(3)
 
 func dreadwyrm():
 	addBuff(BUFF_LIST.b_Dreadwyrm.new(8))
 
-func enkindleBahamut():
+func enkindleBahamut(lv):
 	var cell = aiCha.cell
 	var chas = getCellChas(cell, 2)
 	Utils.createEffect("nuclearExplosion", aiCha.position, Vector2(0,-40), 15)
 	yield(reTimer(0.5), "timeout")
 	
 	for i in chas:
-		if i != null: 
+		if i != null:
 			hurtChara(i, att.mgiAtk * ENKINDLEBAHAMUT_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+			if lv == 4:
+				i.addBuff(b_shaoZhuo.new(20))

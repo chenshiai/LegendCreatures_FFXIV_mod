@@ -20,8 +20,8 @@ func run():
 
 func get_info():
 	return """根据当前上场人数提供额外加成
-轻锐小队：4人及以上，所有友方单位双攻提高5%
-满编小队：8人及以上，所有友方单位双攻提高10%"""
+轻锐小队：4人及以上，所有友方单位双攻提高10%
+满编小队：8人及以上，所有友方单位双攻提高20%"""
 
 class LightTeam:
 	extends Buff
@@ -29,8 +29,8 @@ class LightTeam:
 	func _init(lv):
 		attInit()
 		isNegetive = false
-		att.atkL = 0.05
-		att.mgiAtkL = 0.05
+		att.atkL = 0.1
+		att.mgiAtkL = 0.1
 
 	func _del():
 		.del()
@@ -42,8 +42,8 @@ class FullTeam:
 	func _init(lv):
 		attInit()
 		isNegetive = false
-		att.atkL = 0.10
-		att.mgiAtkL = 0.10
+		att.atkL = 0.2
+		att.mgiAtkL = 0.2
 
 	func _del():
 		.del()

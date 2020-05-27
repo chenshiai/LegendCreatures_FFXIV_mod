@@ -7,7 +7,7 @@ func _extInit():
 	._extInit()
 	chaName = "阿尔伯特-传奇"
 	attCoe.maxHp = 6.5
-	attCoe.atk = 5
+	attCoe.atk = 4.8
 	attCoe.def = 5.5
 	attCoe.mgiDef = 5.5
 	lv = 4
@@ -18,8 +18,8 @@ func _extInit():
 
 var baseId = ""
 const DECIMATE_PW = 1.80 # 地毁人亡威力
-var livingDead = false # 行尸走肉是否触发
-var deadTime = 7 # 行尸走肉倒计时
+var livingDead = false # 死斗是否触发
+var deadTime = 7 # 死斗倒计时
 
 func _connect():
 	._connect()

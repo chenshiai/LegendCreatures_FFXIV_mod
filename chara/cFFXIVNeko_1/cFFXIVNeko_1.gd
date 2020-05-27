@@ -25,6 +25,7 @@ func _extInit():
 
 const ADLOQUIUM_PW = 1.10 # 鼓舞激励之策威力
 const EMBRACE_PW = 0.40 # 仙光的拥抱威力
+var shield_pw = 1.25 # 护盾生成量
 
 func _connect():
 	._connect()
@@ -45,5 +46,5 @@ func adloquium(pw, hudun = false):
 	if cha != null:
 		cha.plusHp(att.mgiAtk * pw)
 		if hudun:
-			cha.addBuff(BUFF_LIST.b_Adloquium.new(5, att.mgiAtk * pw * 1.25))
+			cha.addBuff(BUFF_LIST.b_Adloquium.new(5, att.mgiAtk * pw * shield_pw))
 			Utils.createEffect("shield", cha.position, Vector2(0,-30), 7)

@@ -8,14 +8,12 @@ func _extInit():
 	chaName = "无双斋-传奇"
 	attCoe.maxHp = 4.3
 	attCoe.atk = 5
-	attCoe.def = 3.6
-	attCoe.mgiDef = 3.3
+	attCoe.def = 4
+	attCoe.mgiDef = 4
 	lv = 4
 	evos = []
-	addCdSkill("skill_Shinten", 8)
-	addSkillTxt("""[必杀剑·震天]：冷却时间8s，对目标造成[300%]的物理伤害""")
+	addSkillTxt("[仗剑行侠]：被动，是恶皆斩，斩杀一名敌人后恢复[5%]的HP")
 
-const SHINTEN_PW = 3 # 震天威力
 var baseId = ""
 
 func _connect():
@@ -24,8 +22,6 @@ func _connect():
 func _onBattleStart():
 	._onBattleStart()
 
-func _castCdSkill(id):
-	._castCdSkill(id)
-	if id == "skill_Shinten":
-		if aiCha != null:
-			hurtChara(aiCha, att.atk * SHINTEN_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+func _onKillChara(atkInfo:AtkInfo):
+	._onKillChara(atkInfo)
+	plusHp(att.maxHp * 0.05)

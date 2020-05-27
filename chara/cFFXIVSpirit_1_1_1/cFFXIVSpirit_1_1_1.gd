@@ -6,6 +6,10 @@ func _info():
 func _extInit():
 	._extInit()
 	chaName = "蕾薇瓦-传奇"
+	attCoe.maxHp = 4
+	attCoe.mgiAtk = 5
+	attCoe.def = 3.5
+	attCoe.mgiDef = 3.9
 	lv = 4
 	evos = []
 

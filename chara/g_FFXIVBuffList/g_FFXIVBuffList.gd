@@ -316,6 +316,20 @@ class b_Paean:
 		life = clamp(life, 0, 3)
 		if life <= 1: life = 0
 
+# 行吟，减伤			
+class b_Troubadour:
+	extends Buff
+	func _init():
+		attInit()
+		id = "b_Troubadour"
+		isNegetive = false
+
+	func _connect():
+		masCha.connect("onHurt", self, "onHurt")
+
+	func onHurt(atkInfo:AtkInfo):
+		atkInfo.hurtVal *= 0.90
+
 # 钢铁意志，提高防御，固定减伤
 class b_SteelBelief:
 	extends Buff

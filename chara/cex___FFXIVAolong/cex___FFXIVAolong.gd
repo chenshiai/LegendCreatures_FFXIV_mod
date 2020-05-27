@@ -10,6 +10,7 @@ func _connect():
 	._connect()
 func _extInit():
 	._extInit()
+	attCoe.atkRan = 8
 	chaName = "工具人"
 	attCoe.maxHp = 1
 	lv = 4

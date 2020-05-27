@@ -34,7 +34,7 @@ func succor():
 	for cha in ailys:
 		if cha != null:
 			cha.plusHp(att.mgiAtk * SUCCOR_PW)
-			cha.addBuff(BUFF_LIST.b_Adloquium.new(5, att.mgiAtk * SUCCOR_PW * 1.25))
+			cha.addBuff(BUFF_LIST.b_Adloquium.new(5, att.mgiAtk * SUCCOR_PW * shield_pw))
 			Utils.createEffect("shield", cha.position, Vector2(0,-30), 7)
 
 func sacredSoil():

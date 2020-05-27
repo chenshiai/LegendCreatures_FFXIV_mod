@@ -39,8 +39,8 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
-	handleSkillFire = getSkill("skill_Freeze")
-	handleSkillFreeze = getSkill("skill_FireIII")
+	handleSkillFire = getSkill("skill_FireIII")
+	handleSkillFreeze = getSkill("skill_Freeze")
 	fire = 0
 	freeze = 0
 
