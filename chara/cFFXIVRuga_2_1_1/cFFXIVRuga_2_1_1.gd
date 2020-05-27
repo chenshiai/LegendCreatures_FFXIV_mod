@@ -10,8 +10,10 @@ func _extInit():
 	attCoe.atk = 5
 	attCoe.def = 4.5
 	attCoe.mgiDef = 4
+	attAdd.atkR += 0.25
 	lv = 4
 	evos = []
+	addSkillTxt("[红莲之狂潮]：被动，复国领袖，提升25%的攻击力")
 
 var baseId = ""
 func _connect():

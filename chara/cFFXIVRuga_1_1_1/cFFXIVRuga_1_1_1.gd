@@ -10,8 +10,10 @@ func _extInit():
 	attCoe.atk = 4.8
 	attCoe.def = 6
 	attCoe.mgiDef = 4.9
+	attAdd.defL += 0.10
 	lv = 4
 	evos = []
+	addSkillTxt("[为了更强]：被动，物理防御力再提升10%，")
 
 var baseId = ""
 

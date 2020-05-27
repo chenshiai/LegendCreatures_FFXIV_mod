@@ -40,7 +40,7 @@ func _castCdSkill(id):
 func _onBattleStart():
 	._onBattleStart()
 	yield(reTimer(0.5), "timeout")
-	summon(lv)
+	summon(self.lv)
 
 # 毁荡	
 func ruinIII():

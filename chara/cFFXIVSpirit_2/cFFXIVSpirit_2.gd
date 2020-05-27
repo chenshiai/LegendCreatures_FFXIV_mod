@@ -37,7 +37,7 @@ func _castCdSkill(id):
 	if id == "skill_DrawCard" :
 		drawCard()
 	if id == "skill_StarPhase":
-		starPhase()
+		starPhase(self.lv)
 
 func drawCard():
 	var n = sys.rndRan(0, 5)
@@ -61,9 +61,11 @@ func drawCard():
 			cha.addBuff(bf)
 
 # 阳星相位		
-func starPhase():
+func starPhase(lv):
 	var ailys = getAllChas(2)
 	for cha in ailys:
 		if cha != null:
 			cha.plusHp(att.mgiAtk * STARPHASE_PW)
 			cha.addBuff(BUFF_LIST.b_Night.new(5, att.mgiAtk * STARPHASE_PW * 1.25))
+			if lv == 4:
+				cha.addBuff(BUFF_LIST.b_LuckyStar.new(5, att.mgiAtk * 0.15))

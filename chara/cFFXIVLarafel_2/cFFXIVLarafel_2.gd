@@ -75,7 +75,7 @@ func freezeIII():
 
 	fire = 0
 	freeze = FREEZE_MAX
-	handleSkillFreeze.nowTime = FIRE_CD
+	handleSkillFire.nowTime = FIRE_CD
 
 	var cell = aiCha.cell
 	var chas = getCellChas(cell, 1)

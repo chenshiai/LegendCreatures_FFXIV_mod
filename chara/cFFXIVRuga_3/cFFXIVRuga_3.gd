@@ -41,7 +41,7 @@ func _onBattleStart():
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Autoturret":
-		autoturret()
+		autoturret(true)
 	if id == "skill_Wildfire":
 		wildfire()
 
@@ -58,9 +58,10 @@ func _onAtkChara(atkInfo):
 			fireChara = null
 
 # 车式浮空炮
-func autoturret():
+func autoturret(addCount):
 	if aiCha != null:
-		autoCount += 1
+		if addCount:
+			autoCount += 1
 		hurtChara(aiCha, att.atk * AUTOTURRET_PW, Chara.HurtType.PHY, Chara.AtkType.EFF)
 	if autoCount > 4:
 		autoCount = 0

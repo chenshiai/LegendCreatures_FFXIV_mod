@@ -2,6 +2,7 @@ extends Talent
 func init():
 	name = "队伍编制"
 
+
 func _connect():
 	sys.main.connect("onBattleStart", self, "run")
 	
@@ -26,25 +27,17 @@ func get_info():
 class LightTeam:
 	extends Buff
 
-	func _init(lv):
+	func _init():
 		attInit()
 		isNegetive = false
 		att.atkL = 0.1
 		att.mgiAtkL = 0.1
 
-	func _del():
-		.del()
-		masCha.addBuff(LightTeam.new())
-
 class FullTeam:
 	extends Buff
 
-	func _init(lv):
+	func _init():
 		attInit()
 		isNegetive = false
 		att.atkL = 0.2
 		att.mgiAtkL = 0.2
-
-	func _del():
-		.del()
-		masCha.addBuff(FullTeam.new())

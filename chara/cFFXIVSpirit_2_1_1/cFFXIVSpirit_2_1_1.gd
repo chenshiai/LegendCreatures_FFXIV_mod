@@ -12,6 +12,7 @@ func _extInit():
 	attCoe.mgiDef = 3.9
 	lv = 4
 	evos = []
+	addSkillTxt("[天星交错]：被动，阳星相位现在会附加[持续恢复]的效果")
 
 var baseId = ""
 
