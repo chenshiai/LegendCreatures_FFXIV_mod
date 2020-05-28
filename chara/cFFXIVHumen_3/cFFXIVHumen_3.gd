@@ -41,13 +41,12 @@ func _castCdSkill(id):
 # 寻找舞伴		
 func setDancePartner():
 	var chas = getAllChas(2)
-	chas.sort_custom(Utils.Calculation, "sortMgiAtkMax")
-	mgiAtkMaxAlly = chas[0]
-	mgiAtkMaxAlly.addBuff(BUFF_LIST.b_DancingPartner.new())
+	var chasMgi = Utils.Calculation.sortChasByMgiAtk(chas)
+	var chasAtk = Utils.Calculation.sortChasByAtk(chas)
 
-	var allys = getAllChas(2)
-	allys.sort_custom(Utils.Calculation, "sortAtkMax")
-	atkMaxAlly = allys[0]
+	mgiAtkMaxAlly = chasMgi[0]
+	atkMaxAlly = chasAtk[0]
+	mgiAtkMaxAlly.addBuff(BUFF_LIST.b_DancingPartner.new())
 	atkMaxAlly.addBuff(BUFF_LIST.b_DancingPartner.new())
 
 	addBuff(BUFF_LIST.b_DancingPartner.new())

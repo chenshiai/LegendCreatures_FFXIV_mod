@@ -37,7 +37,7 @@ func _castCdSkill(id):
 	if id == "skill_DrawCard" :
 		drawCard()
 	if id == "skill_StarPhase":
-		starPhase(self.lv)
+		starPhase(lv)
 
 func drawCard():
 	var n = sys.rndRan(0, 5)

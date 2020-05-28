@@ -41,7 +41,8 @@ class b_DarkMissionary:
 			
 	func _upS():
 		life = clamp(life, 0, 6)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 # 至黑之夜，护盾。可以吸收一定数值的伤害
 class b_TheBlackestNight:
@@ -79,7 +80,8 @@ class b_ArmorCrush:
 	
 	func _upS():
 		life = clamp(life, 0, 7)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 # 战栗，提高最大生命值和治疗量
 class b_Shiver:
@@ -94,7 +96,8 @@ class b_Shiver:
 
 	func _upS():
 		life = clamp(life, 0, 10)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 # 原初的解放，提高暴击率
 class b_InnerRelease:
@@ -108,7 +111,8 @@ class b_InnerRelease:
 
 	func _upS():
 		life = clamp(life, 0, 8)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 # 超火流星，无敌
 class b_Superbolide:
@@ -127,7 +131,8 @@ class b_Superbolide:
 
 	func _upS():
 		life = clamp(life, 0, 15)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 # 舞伴，攻击力提高
 class b_DancingPartner:
@@ -152,7 +157,8 @@ class b_DanceStep:
 
 	func _upS():
 		life = clamp(life, 0, 10)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 class b_Devilment:
 	extends Buff
@@ -166,7 +172,8 @@ class b_Devilment:
 
 	func _upS():
 		life = clamp(life, 0, 8)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 # 再生，持续恢复
 class b_Regen:
@@ -181,7 +188,8 @@ class b_Regen:
 	func _upS():
 		masCha.plusHp(hot)
 		life = clamp(life, 0, 18)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 # 黑魔纹，冷却缩减
 class b_LeyLines:
@@ -195,7 +203,8 @@ class b_LeyLines:
 
 	func _upS():
 		life = clamp(life, 0, 30)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 # 倍增,提高法强
 class b_Manafication:
@@ -209,7 +218,8 @@ class b_Manafication:
 
 	func _upS():
 		life = clamp(life, 0, 10)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 # 鼓舞，护盾。可以吸收一定数值的伤害
 class b_Adloquium:
@@ -227,7 +237,8 @@ class b_Adloquium:
 
 	func _upS():
 		life = clamp(life, 0, 5)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 	func onHurt(atkInfo:AtkInfo):
 		if total >= 0:
@@ -260,7 +271,8 @@ class b_SacredSoil:
 	func _upS():
 		masCha.plusHp(hot)
 		life = clamp(life, 0, 10)
-		if life <= 1: life = 0			
+		if life <= 1:
+			life = 0			
 
 # 龙神迸发，提高法强
 class b_Dreadwyrm:
@@ -274,7 +286,8 @@ class b_Dreadwyrm:
 
 	func _upS():
 		life = clamp(life, 0, 8)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 # 贤者的叙事谣，提高非特效伤害
 class b_Ballad:
@@ -290,7 +303,8 @@ class b_Ballad:
 
 	func _upS():
 		life = clamp(life, 0, 8)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 	func onAtkChara(atkInfo:AtkInfo):
 		if atkInfo.atkType != Chara.AtkType.EFF: 
@@ -314,7 +328,8 @@ class b_Paean:
 
 	func _upS():
 		life = clamp(life, 0, 3)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 # 行吟，减伤			
 class b_Troubadour:
@@ -357,7 +372,8 @@ class b_Requiescat:
 
 	func _upS():
 		life = clamp(life, 0, 15)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 # 野火Buff
 class b_Wildfire:
@@ -371,7 +387,8 @@ class b_Wildfire:
 
 	func _upS():
 		life = clamp(life, 0, 7)
-		if life < 1: life = 0
+		if life < 1:
+			life = 0
 
 # 过载			
 class b_Overload:
@@ -389,7 +406,8 @@ class b_Overload:
 		else:
 			att.atkR = -0.10 
 		life = clamp(life, 0, 13)
-		if life < 1: life = 0
+		if life < 1:
+			life = 0
 
 # 太阳神之衡  
 class b_Balance:
@@ -403,7 +421,8 @@ class b_Balance:
 
 	func _upS():
 		life = clamp(life, 0, 5)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 # 放浪神之箭  
 class b_Arrow:
@@ -417,7 +436,8 @@ class b_Arrow:
 
 	func _upS():
 		life = clamp(life, 0, 5)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 # 战争神之枪     
 class b_Spear:
@@ -431,7 +451,8 @@ class b_Spear:
 
 	func _upS():
 		life = clamp(life, 0, 5)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 # 世界树之干
 class b_Bole:
@@ -445,7 +466,8 @@ class b_Bole:
 
 	func _upS():
 		life = clamp(life, 0, 5)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 # 河流神之瓶
 class b_Ewer:
@@ -459,7 +481,8 @@ class b_Ewer:
 
 	func _upS():
 		life = clamp(life, 0, 5)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 # 建筑神之塔
 class b_Spire:
@@ -473,7 +496,8 @@ class b_Spire:
 
 	func _upS():
 		life = clamp(life, 0, 5)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 # 吉星
 class b_LuckyStar:
@@ -495,7 +519,8 @@ class b_LuckyStar:
 	func _upS():
 		masCha.plusHp(hot)
 		life = clamp(life, 0, 5)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 # 黑夜领域，护盾。可以吸收一定数值的伤害
 class b_Night:
@@ -513,7 +538,8 @@ class b_Night:
 
 	func _upS():
 		life = clamp(life, 0, 5)
-		if life <= 1: life = 0
+		if life <= 1:
+			life = 0
 
 	func onHurt(atkInfo:AtkInfo):
 		if total >= 0:

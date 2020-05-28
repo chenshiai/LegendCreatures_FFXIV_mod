@@ -46,14 +46,10 @@ func _castCdSkill(id):
 # 救疗
 func cureII():
 	var cha = null
-	var m = 10000
 	var chas = getAllChas(2)
-	for i in chas:
-		if i.att.hp / i.att.maxHp < m :
-			cha = i
-			m = i.att.hp / i.att.maxHp
-	if cha != null:
-		cha.plusHp(att.mgiAtk * CUREII_PW)
+	cha = Utils.Calculation.sortChasByMinHp(chas)
+	if cha[0] != null:
+		cha[0].plusHp(att.mgiAtk * CUREII_PW)
 
 # 愈疗		
 func cureIII():
@@ -65,11 +61,7 @@ func cureIII():
 # 再生
 func regen():
 	var cha = null
-	var m = 10000
 	var chas = getAllChas(2)
-	for i in chas:
-		if i.att.hp / i.att.maxHp < m :
-			cha = i
-			m = i.att.hp / i.att.maxHp
-	if cha != null:
-		cha.addBuff(BUFF_LIST.b_Regen.new(10, att.mgiAtk * REGEN_PW))
+	cha = Utils.Calculation.sortChasByMinHp(chas)
+	if cha[0] != null:
+		cha[0].addBuff(BUFF_LIST.b_Regen.new(10, att.mgiAtk * REGEN_PW))

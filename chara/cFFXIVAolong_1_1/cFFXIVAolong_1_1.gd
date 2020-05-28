@@ -21,7 +21,6 @@ func _onBattleStart():
 func _onBattleEnd():
 	._onBattleEnd()
 	darkCount = 0
-	skillStrs[0] = "当前暗黑值：%d" % darkCount as int
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -32,7 +31,6 @@ func _onAtkChara(atkInfo:AtkInfo):
 	._onAtkChara(atkInfo)
 	if atkInfo.atkType != AtkType.EFF:
 		darkCount += atkInfo.atkVal * 0.5
-		skillStrs[0] = "当前暗黑值：%d" % darkCount as int
 		if darkCount >= 1000:
 			darkCount = 0
 			addBuff(BUFF_LIST.b_TheBlackestNight.new(att.maxHp * 0.20))
