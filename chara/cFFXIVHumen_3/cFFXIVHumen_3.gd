@@ -19,7 +19,7 @@ func _extInit():
 	evos = ["cFFXIVHumen_3_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_DanceStep", 35)
-	addSkillTxt("[闭式舞姿]：被动，战斗开始时，选择物攻最高与魔攻最高的队友作为舞伴，提高他们与自己的攻击力10%，不可以叠加")
+	addSkillTxt("[闭式舞姿]：被动，战斗开始时，选择物攻最高与魔攻最高的队友作为舞伴，提高他们与自己的攻击力10%，可以叠加")
 	addSkillTxt("[标准舞步]：冷却时间35s，对三格内的敌人造成[1000%]的物理伤害，同时舞伴与自己的攻击力再提升10%，持续10s")
 
 const DANCESTEP_PW = 10 # 标准舞步威力
@@ -41,11 +41,12 @@ func _castCdSkill(id):
 # 寻找舞伴		
 func setDancePartner():
 	var chas = getAllChas(2)
-	var chasMgi = Utils.Calculation.sortChasByMgiAtk(chas)
-	var chasAtk = Utils.Calculation.sortChasByAtk(chas)
+	chas.sort_custom(Utils.Calculation, "sort_MaxMgiAtk")
+	mgiAtkMaxAlly = chas[0]
 
-	mgiAtkMaxAlly = chasMgi[0]
-	atkMaxAlly = chasAtk[0]
+	chas.sort_custom(Utils.Calculation, "sort_MaxAtk")
+	atkMaxAlly = chas[0]
+
 	mgiAtkMaxAlly.addBuff(BUFF_LIST.b_DancingPartner.new())
 	atkMaxAlly.addBuff(BUFF_LIST.b_DancingPartner.new())
 

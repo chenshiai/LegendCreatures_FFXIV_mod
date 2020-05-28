@@ -42,9 +42,11 @@ func _castCdSkill(id):
 
 # 鼓舞激励之策/仙光的拥抱
 func adloquium(pw, hudun = false):
-	var cha = Utils.Calculation.findOneByMinHp(getAllChas(2))
-	if cha != null:
-		cha.plusHp(att.mgiAtk * pw)
+	var chas = getAllChas(2)
+	chas.sort_custom(Utils.Calculation, "sort_MinHp")
+
+	if chas[0] != null:
+		chas[0].plusHp(att.mgiAtk * pw)
 		if hudun:
-			cha.addBuff(BUFF_LIST.b_Adloquium.new(5, att.mgiAtk * pw * shield_pw))
-			Utils.createEffect("shield", cha.position, Vector2(0,-30), 7)
+			chas[0].addBuff(BUFF_LIST.b_Adloquium.new(5, att.mgiAtk * pw * shield_pw))
+			Utils.createEffect("shield", chas[0].position, Vector2(0,-30), 7)

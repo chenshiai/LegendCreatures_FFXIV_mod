@@ -45,23 +45,25 @@ func _castCdSkill(id):
 
 # 救疗
 func cureII():
-	var cha = null
 	var chas = getAllChas(2)
-	cha = Utils.Calculation.sortChasByMinHp(chas)
-	if cha[0] != null:
-		cha[0].plusHp(att.mgiAtk * CUREII_PW)
+	chas.sort_custom(Utils.Calculation, "sort_MinHp")
+
+	if chas[0] != null:
+		chas[0].plusHp(att.mgiAtk * CUREII_PW)
 
 # 愈疗		
 func cureIII():
 	var allys = getAllChas(2)
+	allys.shuffle()
 	for cha in allys:
 		if cha != null:
 			cha.plusHp(att.mgiAtk * CUREIII_PW)
+			yield(reTimer(0.1), "timeout")
 
 # 再生
 func regen():
-	var cha = null
 	var chas = getAllChas(2)
-	cha = Utils.Calculation.sortChasByMinHp(chas)
-	if cha[0] != null:
-		cha[0].addBuff(BUFF_LIST.b_Regen.new(10, att.mgiAtk * REGEN_PW))
+	chas.sort_custom(Utils.Calculation, "sort_MinHp")
+
+	if chas[0] != null:
+		chas[0].addBuff(BUFF_LIST.b_Regen.new(10, att.mgiAtk * REGEN_PW))

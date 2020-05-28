@@ -44,7 +44,7 @@ func _onBattleStart():
 
 # 毁荡	
 func ruinIII():
-	var d:Eff = newEff("sk_feiDang",sprcPos)
+	var d:Eff = newEff("sk_feiDang", sprcPos)
 	d._initFlyCha(aiCha)
 	yield(d, "onReach")
 	if aiCha != null:
@@ -65,17 +65,17 @@ func fester():
 
 func summon(lv):
 	var n = sys.rndRan(0, 2)
-	if lv == 2:
-		if n == 0 :
-			newChara("cFFXIV_Evlet", self.cell)
-		elif n == 1:
-			newChara("cFFXIV_Kaluro", self.cell)
-		elif n == 2:
-			newChara("cFFXIV_Titan", self.cell)
-	elif lv == 3:
-		if n == 0 :
-			newChara("cFFXIV_Evlet_1", self.cell)
-		elif n == 1:
-			newChara("cFFXIV_Kaluro_1", self.cell)
-		elif n == 2:
-			newChara("cFFXIV_Titan_1", self.cell)
+	var summonCha = ""
+	if n == 0 :
+		summonCha = "cFFXIV_Evlet"
+	elif n == 1:
+		summonCha = "cFFXIV_Kaluro"
+	elif n == 2:
+		summonCha = "cFFXIV_Titan"
+
+	if lv == 3:
+		summonCha += "_1"
+	elif lv == 4:
+		summonCha += "_11"
+
+	newChara(summonCha, self.cell)

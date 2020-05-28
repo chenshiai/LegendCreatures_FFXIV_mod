@@ -42,10 +42,12 @@ func _castCdSkill(id):
 
 # 深仁厚泽		
 func grace():
-	var cha = Utils.Calculation.findOneByMinHp(getAllChas(2))
-	if cha != null:
-		cha.plusHp(att.mgiAtk * GRACE_PW, true)
-		Utils.createEffect("laser", cha.position, Vector2(0,-150), 7, 0.5)
+	var chas = getAllChas(2)
+	chas.sort_custom(Utils.Calculation, "sort_MinHp")
+
+	if chas[0] != null:
+		chas[0].plusHp(att.mgiAtk * GRACE_PW)
+		Utils.createEffect("laser", chas[0].position, Vector2(0,-150), 7, 0.5)
 
 # 王权剑		
 func authority():

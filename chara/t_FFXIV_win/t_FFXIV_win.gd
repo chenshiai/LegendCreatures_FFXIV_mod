@@ -1,6 +1,5 @@
 extends Talent
 
-const TIMEOUT = 240 # 0级的倒计时
 func init():
 	name = "光之加护"
 
@@ -10,21 +9,18 @@ func _connect():
 func run():
 	for i in sys.main.btChas:
 		if i.team == 1:
-			i.addBuff(Bf.new(TIMEOUT))
+			i.addBuff(LightHard.new(lv))
 
 func get_info():
-	return "敏菲利亚喊你回一趟沙之家，赶紧结束战斗吧！当战斗时间超过120秒后，己方角色的攻击力提升5000%，并获得5000点护甲穿透。此天赋不需要提升等级"
+	return "战斗开始后，己方所有角色双抗提高 %d%%\n“海德林的光之信徒啊！随着这黑暗的要塞一起消失吧！！！” ———— 拉哈布雷亚" % [(0.1 + lv * 0.01)*100]
 
-class Bf:
+class LightHard:
 	extends Buff
 
 	func _init(lv):
 		attInit()
+		id = "LightHard"
 		isNegetive = false
-		life = lv
-	
-	func _upS():
-		if life < 120:
-			att.atkL = 50
-			att.pen = 5000
-		if life < 1: life = 5
+		att.defL = 0.1 + lv * 0.01
+		att.mgiDefL = 0.1 + lv * 0.01
+		self.lv = lv

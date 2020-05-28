@@ -20,6 +20,7 @@ func _extInit():
 var baseId = ""
 const ASSIZE_PW = 2.70 # 法令伤害威力
 const ASSIZE_HEAL_PW = 0.90 # 法令治疗威力
+
 func _connect():
 	._connect()
 
