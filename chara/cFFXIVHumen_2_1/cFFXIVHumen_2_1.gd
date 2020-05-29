@@ -23,7 +23,7 @@ func _onBattleStart():
 
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)
-	if att.hp <= att.maxHp * 0.10 && sys.rndPer(84) && superbolide:
+	if att.hp <= att.maxHp * 0.10 && sys.rndPer(70) && superbolide:
 		Utils.createEffect("shield", position, Vector2(0,-30), 7)
 		atkInfo.hurtVal = 0
 		addBuff(BUFF_LIST.b_Superbolide.new(15))

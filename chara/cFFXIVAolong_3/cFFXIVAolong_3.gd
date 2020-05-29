@@ -42,7 +42,7 @@ func normalAtkChara(cha):
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Ninjutsu" && aiCha != null:
-		Utils.createEffect("whirlwind", position, Vector2(0,-40), 15, 0.5, false)
+		Utils.createEffect("whirlwind", position, Vector2(0,-40), 15, 1, false)
 		var n = sys.rndRan(0, 2)
 		if n == 0:
 			fuma()
@@ -54,7 +54,8 @@ func _castCdSkill(id):
 # 风魔手里剑
 func fuma():
 	var chas = getAllChas(1)
-	chas.sort_custom(Utils.Calculation, "sortMgiAtkMax")
+	chas.sort_custom(Utils.Calculation, "sort_MaxMgiAtk")
+
 	var d:Eff = newEff("sk_4_1_2", sprcPos)
 	d._initFlyCha(chas[0])
 	yield(d, "onReach")

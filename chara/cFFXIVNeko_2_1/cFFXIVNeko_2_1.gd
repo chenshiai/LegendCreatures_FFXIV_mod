@@ -24,7 +24,7 @@ func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Dreadwyrm":
 		dreadwyrm()
-		enkindleBahamut(lv)
+		enkindleBahamut(self.lv)
 
 func dreadwyrm():
 	addBuff(BUFF_LIST.b_Dreadwyrm.new(8))

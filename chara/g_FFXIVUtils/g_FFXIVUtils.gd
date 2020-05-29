@@ -54,26 +54,21 @@ class Calculation:
       return true
     return false
 
-
   static func sort_MaxAtk(a, b):
     if a.att.atk > b.att.atk:
       return true
     return false
-
-
+  
   static func sort_MinHp(a, b):
     if (a.att.hp / a.att.maxHp) < (b.att.hp / b.att.maxHp):
       return true
     return false
 
-
-  static func sortChasByMgiAtk(chas):
-	  return chas.sort_custom(self, "sort_MaxMgiAtk")
-
-
-  static func sortChasByAtk(chas):
-	  return chas.sort_custom(self, "sort_MaxAtk")
-
-
-  static func sortChasByMinHp(chas):
-    return chas.sort_custom(self, "sort_MinHp")
+  # static func findOneByMinHp(chas):
+  #   var cha = null
+  #   var m = 10000
+  #   for i in chas:
+  #     if i.att.hp / i.att.maxHp < m:
+  #       cha = i
+  #       m = i.att.hp / i.att.maxHp
+  #   return cha

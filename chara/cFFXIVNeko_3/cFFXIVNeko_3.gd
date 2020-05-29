@@ -52,7 +52,9 @@ func ballad():
 
 # 光阴神的礼赞凯歌
 func paean():
-	var cha = Utils.Calculation.findOneByMinHp(getAllChas(2))
+	var chas = getAllChas(2)
+	chas.sort_custom(Utils.Calculation, "sort_MinHp")
+	var cha = chas[0]
 	if cha != null:
 		cha.addBuff(BUFF_LIST.b_Paean.new(3))
 

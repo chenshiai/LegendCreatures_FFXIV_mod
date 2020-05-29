@@ -1,10 +1,10 @@
 extends Chara
-#覆盖的初始化
+
 func _info():
 	pass
-#继承的初始化，技能描述在这里写，保留之前的技能描述
+
 func _extInit():
-	._extInit()#保留继承的处理
+	._extInit()
 	chaName = "拉拉肥冒险者"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 3
@@ -15,11 +15,10 @@ func _extInit():
 	lv = 1
 	evos = ["cFFXIVLarafel_1", "cFFXIVLarafel_2", "cFFXIVLarafel_3"]
 	atkEff = "atk_dao"
-	addCdSkill("5",5)#添加cd技能
+	addCdSkill("5", 5)
 	addSkillTxt("[光之加护]：每5秒，获得5层[狂怒][抵御]")
 	addSkillTxt("[进化分支]：[治疗]白魔法师，[进攻]黑魔法师，[进攻]赤魔法师")
 
-#进入战斗初始化，事件连接在这里初始化
 func _connect():
 	._connect()
 

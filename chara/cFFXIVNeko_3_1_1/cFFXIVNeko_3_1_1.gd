@@ -23,6 +23,7 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
+	troubadour()
 
 func troubadour():
 	var ailys = getAllChas(2)
