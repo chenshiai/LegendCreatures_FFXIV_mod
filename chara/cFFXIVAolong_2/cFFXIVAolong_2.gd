@@ -35,8 +35,8 @@ var beforIaijutsu = 0 # 上一次雪月花的威力
 func _connect():
 	._connect()
 
-func _onBattleStart():
-	._onBattleStart()
+func _onBattleEnd():
+	._onBattleEnd()
 	reset()
 
 func normalAtkChara(cha):
@@ -94,10 +94,10 @@ func setsugekka(skill_pw):
 	jump(position, aiCha.position)
 	normalSpr.position = Vector2(0, -600)
 	yield(reTimer(0.3), "timeout")
-	normalSpr.position = Vector2(0, 0)
-
+	Utils.createEffect("slashBlue", aiCha.position, Vector2(0,-30), 14)
 	if aiCha != null:
 		hurtChara(aiCha, att.atk * skill_pw * pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+	normalSpr.position = Vector2(0, 0)
 
 # 重置所有状态
 func reset():
@@ -106,6 +106,7 @@ func reset():
 	flower = false
 	atkCount = 0
 	flash = 0
+	normalSpr.position = Vector2(0, 0)
 
 func jump(startPositon, endPositon):
 	var l:Vector2 = endPositon - startPositon

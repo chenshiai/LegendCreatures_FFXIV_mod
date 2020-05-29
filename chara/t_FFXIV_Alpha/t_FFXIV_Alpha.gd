@@ -15,7 +15,7 @@ func run():
 func bgChange(talent:Talent):
 	if !bg && talent.name == "阿尔法战斗记录":
 		var utils = globalData.infoDs["g_FFXIVUtils"]
-		utils.backGroundChange()
+		utils.backGroundChange("SpaceTimeSlit")
 		bg = true
 
 func get_info():

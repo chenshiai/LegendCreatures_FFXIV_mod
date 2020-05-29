@@ -15,4 +15,5 @@ func _extInit():
   ._extInit()
 
 func _upS():
+  ._upS()
   

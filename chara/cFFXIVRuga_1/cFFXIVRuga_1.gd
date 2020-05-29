@@ -30,6 +30,8 @@ func _connect():
 func _onBattleStart():
 	._onBattleStart()
 	addBuff(BUFF_LIST.b_SteelBelief.new())
+	Utils.createEffect("defense", position, Vector2(0,-60), 14)
+
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -45,7 +47,7 @@ func grace():
 
 	if chas[0] != null:
 		chas[0].plusHp(att.mgiAtk * GRACE_PW)
-		Utils.createEffect("laser", chas[0].position, Vector2(0,-150), 7, 0.5)
+		Utils.createEffect("laser", chas[0].position, Vector2(0, -60), 7, 1)
 
 # 王权剑		
 func authority():

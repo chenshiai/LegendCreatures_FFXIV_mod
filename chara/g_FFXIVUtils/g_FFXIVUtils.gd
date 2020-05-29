@@ -35,8 +35,8 @@ func loadImg(path, imgPath):
   return imt
 
 
-func backGroundChange():
-  sys.main.get_node("scene/bg/bg").set_texture(loadImg(path, "g_FFXIVBG/bg_normal2.png"))
+func backGroundChange(name):
+  sys.main.get_node("scene/bg/bg").set_texture(loadImg(path, "g_FFXIVBG/" + name +".png"))
 
 
 func createEffect(effectName:String, position:Vector2, deviation:Vector2, frame = 15, scale = 1, repeat = false): 
@@ -64,11 +64,11 @@ class Calculation:
       return true
     return false
 
-  # static func findOneByMinHp(chas):
-  #   var cha = null
-  #   var m = 10000
-  #   for i in chas:
-  #     if i.att.hp / i.att.maxHp < m:
-  #       cha = i
-  #       m = i.att.hp / i.att.maxHp
-  #   return cha
+  func getRandomList(list, length):
+    list.shuffle()
+    var ans = []
+    for i in range(length):
+      if i >= list.size():
+        break
+      ans.append(list[i])
+    return ans

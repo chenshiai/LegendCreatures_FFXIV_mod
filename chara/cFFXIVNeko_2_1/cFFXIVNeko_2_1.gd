@@ -32,7 +32,9 @@ func dreadwyrm():
 func enkindleBahamut(lv):
 	var cell = aiCha.cell
 	var chas = getCellChas(cell, 2)
-	Utils.createEffect("nuclearExplosion", aiCha.position, Vector2(0,-40), 15)
+	if lv == 4:
+		Utils.createEffect("phoenix", position, Vector2(40, -40), 15, 2)
+	Utils.createEffect("nuclearExplosion", aiCha.position, Vector2(0, -30), 8, 2)
 	yield(reTimer(0.5), "timeout")
 	
 	for i in chas:

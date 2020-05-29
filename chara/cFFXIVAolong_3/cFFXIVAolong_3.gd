@@ -42,7 +42,7 @@ func normalAtkChara(cha):
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Ninjutsu" && aiCha != null:
-		Utils.createEffect("whirlwind", position, Vector2(0,-40), 15, 1, false)
+		Utils.createEffect("whirlwind", Vector2(position.x, position.y - 1), Vector2(0,-40), 15, 1, false)
 		var n = sys.rndRan(0, 2)
 		if n == 0:
 			fuma()

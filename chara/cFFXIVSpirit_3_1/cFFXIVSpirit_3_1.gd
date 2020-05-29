@@ -36,7 +36,7 @@ func stardiver():
 	yield(reTimer(0.2), "timeout")
 
 	normalSpr.position = Vector2(0, -450)
-	jump(Vector2(0, 0), normalSpr.position)
+	trajectory(Vector2(0, 0), normalSpr.position)
 	yield(reTimer(0.4), "timeout")
 
 	var cha = rndChas(getAllChas(1), 1)
@@ -63,11 +63,11 @@ func stardiver():
 		if i != null: 
 			hurtChara(i, att.atk * STARDIVER_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
-func jump(startPositon, endPositon):
+func trajectory(startPositon, endPositon):
 	var l:Vector2 = endPositon - startPositon
 	var s = 25
 	var rs = preload("res://core/ying.tscn")
-	var n = l.length()/s
+	var n = l.length() / s
 	for i in range(n):
 		var spr = rs.instance()
 		sys.main.map.add_child(spr)
