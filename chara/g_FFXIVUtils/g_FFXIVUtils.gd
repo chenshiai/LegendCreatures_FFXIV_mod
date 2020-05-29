@@ -38,15 +38,7 @@ func loadImg(path, imgPath):
 func backGroundChange():
   sys.main.get_node("scene/bg/bg").set_texture(loadImg(path, "g_FFXIVBG/bg_normal2.png"))
 
-# 创建自定义特效方法
-# 入参
-# effectName{string} 特效名字
-# position{Vector2} 创建位置
-# deviation{Vector2} 偏移位置
-# frame 播放速率
-# scale 缩放比率
-# repeat 是否重复播放
-# 返回 eff对象
+
 func createEffect(effectName:String, position:Vector2, deviation:Vector2, frame = 15, scale = 1, repeat = false): 
   var eff = sys.newEff("animEff", position)
   var direc = path + "/effects/" + effectName
@@ -85,13 +77,3 @@ class Calculation:
 
   static func sortChasByMinHp(chas):
     return chas.sort_custom(self, "sort_MinHp")
-    
-
-  # static func findOneByMinHp(chas):
-  #   var cha = null
-  #   var m = 10000
-  #   for i in chas:
-  #     if i.att.hp / i.att.maxHp < m:
-  #       cha = i
-  #       m = i.att.hp / i.att.maxHp
-  #   return cha

@@ -1,6 +1,4 @@
-extends Chara
-const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
-var Utils = globalData.infoDs["g_FFXIVUtils"]
+extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 
 func _info():
 	pass
