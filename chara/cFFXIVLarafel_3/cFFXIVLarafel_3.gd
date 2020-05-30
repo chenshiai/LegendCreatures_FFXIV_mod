@@ -16,7 +16,7 @@ func _extInit():
 	evos = ["cFFXIVLarafel_3_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_Verthunder", 8)
-	addSkillTxt("白魔元：%d / 100	黑魔元：%d / 100" % [whiteMorgan, blackMorgen])
+	addSkillTxt("白魔元：0 / 100	黑魔元：0 / 100")
 	addSkillTxt("""[魔元平衡/连续咏唱]：被动，[赤闪雷]获得15黑魔元，[赤疾风]获得15白魔元，上限100；魔法技能会连续释放两次
 [赤闪雷/赤疾风]：冷却时间8s，随机释放其中一个技能对目标造成[110%]法强的魔法伤害
 [魔连攻]：被动，攻击时同时消耗25点黑白魔元，使物理攻击伤害提高500%""")
@@ -41,6 +41,7 @@ func _onBattleEnd():
 	._onBattleEnd()
 	blackMorgen = 0 # 黑魔元
 	whiteMorgan = 0 # 白魔元
+	skillStrs[0] = "白魔元：%d / 100	黑魔元：%d / 100" % [whiteMorgan, blackMorgen]
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -76,6 +77,7 @@ func verthunder(first, pw):
 		if whiteMorgan > MORGEN_MAX:
 			whiteMorgan = MORGEN_MAX
 
+	skillStrs[0] = "白魔元：%d / 100	黑魔元：%d / 100" % [whiteMorgan, blackMorgen]
 	if first:
 		yield(reTimer(0.3), "timeout")
 		verthunder(false, VERTHUNDER_PW)

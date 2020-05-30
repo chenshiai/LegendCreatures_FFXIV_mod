@@ -9,6 +9,9 @@ func _connect():
 	player.connect("onPlusLv", self, "population")
 
 func population(talent:Talent = null):
+	if talent != null && talent.name == "队伍编制":
+		print("学习天赋")
+		player.renKou = 10
 	player.renKou = 10
 
 func run():
@@ -36,11 +39,11 @@ class LightTeam:
 		attInit()
 		self.lv = lv
 		isNegetive = false
-		att.maxHpL = 0.04 + lv * 0.01
-		att.atkL = 0.04 + lv * 0.01
-		att.mgiAtkL = 0.04 + lv * 0.01
-		att.defL = 0.04 + lv * 0.01
-		att.mgiDefL = 0.04 + lv * 0.01
+		att.maxHpL = 0.05 + lv * 0.01
+		att.atkL = 0.05 + lv * 0.01
+		att.mgiAtkL = 0.05 + lv * 0.01
+		att.defL = 0.05 + lv * 0.01
+		att.mgiDefL = 0.05 + lv * 0.01
 
 class FullTeam:
 	extends Buff
@@ -48,8 +51,8 @@ class FullTeam:
 		attInit()
 		isNegetive = false
 		self.lv = lv
-		att.maxHpL = 0.08 + lv * 0.02
-		att.atkL = 0.08 + lv * 0.02
-		att.mgiAtkL = 0.08 + lv * 0.02
-		att.defL = 0.08 + lv * 0.02
-		att.mgiDefL = 0.08 + lv * 0.02
+		att.maxHpL = 0.1 + lv * 0.02
+		att.atkL = 0.1 + lv * 0.02
+		att.mgiAtkL = 0.1 + lv * 0.02
+		att.defL = 0.1 + lv * 0.02
+		att.mgiDefL = 0.1 + lv * 0.02

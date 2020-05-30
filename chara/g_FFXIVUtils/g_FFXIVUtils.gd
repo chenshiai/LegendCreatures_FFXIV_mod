@@ -4,6 +4,7 @@ var path = null
 func _init():
   print("最终幻想14：—————— mod完整性检测中 ——————")
   call_deferred("testInit")
+  call_deferred("createTimeAxis")
   pass
 
 
@@ -47,6 +48,14 @@ func createEffect(effectName:String, position:Vector2, deviation:Vector2, frame 
   eff.scale *= scale
   return eff
 
+func createTimeAxis(skillAxis):
+  var timeAxis = {}
+  for sk in skillAxis:
+    for timeA in skillAxis[sk]:
+      timeAxis[timeA] = sk
+  return timeAxis
+  
+
 # 计算排序类
 class Calculation:
   static func sort_MaxMgiAtk(a, b):
@@ -64,11 +73,20 @@ class Calculation:
       return true
     return false
 
-  func getRandomList(list, length):
-    list.shuffle()
-    var ans = []
-    for i in range(length):
-      if i >= list.size():
-        break
-      ans.append(list[i])
-    return ans
+  static func getEnemyPower(team):
+    var att = {
+      "maxHp": 1,
+      "atk": 1,
+      "mgiAtk": 1,
+      "def": 1,
+      "mgiDef": 1
+    }
+    for i in sys.main.btChas:
+      if i.team != team:
+        att["maxHp"] += i.att.maxHp
+        att["atk"] += i.att.atk
+        att["mgiAtk"] += i.att.mgiAtk
+        att["def"] += i.att.def
+        att["mgiDef"] += i.att.mgiDef
+    print("当前敌方数据：", att)
+    return att
