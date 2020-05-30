@@ -9,9 +9,6 @@ func _connect():
 	player.connect("onPlusLv", self, "population")
 
 func population(talent:Talent = null):
-	if talent != null && talent.name == "队伍编制":
-		print("学习天赋")
-		player.renKou = 10
 	player.renKou = 10
 
 func run():
