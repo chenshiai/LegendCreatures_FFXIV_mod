@@ -10,7 +10,7 @@ var layer = 0 # 当前关卡数
 var probability = 100 # boss出现概率
 
 var allAtt = {}
-var toolman = sys.main.newChara("cex___FFXIVBaseChara", 2)
+var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
 
 var im = Image.new()
 var hpBarUnder = ImageTexture.new()
@@ -58,7 +58,7 @@ class Bf:
 
 func run():
 	allAtt = Utils.Calculation.getEnemyPower(2)
-	limitBreakVal = (allAtt["atk"] + allAtt["mgiAtk"]) * 40
+	limitBreakVal = (allAtt["atk"] + allAtt["mgiAtk"]) * 30
 	for i in sys.main.btChas:
 		if i.team == 2:
 			i.addBuff(Bf.new(lv))
@@ -76,7 +76,7 @@ func come():
 		hpBar.value = 100
 		probability = 10
 		clear(null)
-		var n = sys.rndRan(0, 2)
+		var n = 2
 		match n:
 			0:
 				Utils.backGroundChange("SpaceTimeSlit")
@@ -179,7 +179,7 @@ func hpdown(atkInfo):
 	var cha = atkInfo.hitCha
 	hpBar.value = cha.att.hp / cha.att.maxHp * 100
 	if limitBreak.value < 100:
-		limitBreak.value += atkInfo.atkVal * 200 / limitBreakVal
+		limitBreak.value += atkInfo.atkVal * 100 / limitBreakVal
 
 	if limitBreak.value >= 100:
 		limitBreak.texture_progress = limitProgress
@@ -200,7 +200,6 @@ func limit_protect():
 	if limitBreakLevel != 0:
 		for i in sys.main.btChas:
 			if i != null and i.team == 1:
-				yield(Chara.reTimer(0.1), "timeout")
 				i.addBuff(limit_protect.new(limitBreakLevel))
 				Utils.createEffect("defense", i.position, Vector2(0, -60), 14)
 		resetLimit()
@@ -222,7 +221,6 @@ func limit_treatment():
 	if limitBreakLevel != 0:
 		for i in sys.main.btChas:
 			if i != null and i.team == 1:
-				yield(Chara.reTimer(0.1), "timeout")
 				i.plusHp(i.att.maxHp * 0.33 * limitBreakLevel)
 				Utils.createEffect("heal", i.position, Vector2(0, -30), 7)
 		resetLimit()
@@ -242,7 +240,7 @@ class limit_protect:
 		masCha.connect("onHurt", self, "onHurt")
 
 	func onHurt(atkInfo:AtkInfo):
-		atkInfo.hurtVal *= 0.3 * lv
+		atkInfo.hurtVal *= 1 - (0.3 * lv)
 
 	func _upS():
 		life = clamp(life, 0, 10)

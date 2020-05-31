@@ -36,7 +36,7 @@ func loadImg(path, imgPath):
 
 
 func backGroundChange(name):
-  sys.main.get_node("scene/bg/bg").set_texture(loadImg(path, "g_FFXIVBG/" + name +".png"))
+  sys.main.get_node("scene/bg/bg").set_texture(loadImg(path, "img/" + name +".png"))
 
 
 func createEffect(effectName:String, position:Vector2, deviation:Vector2, frame = 15, scale = 1, repeat = false): 

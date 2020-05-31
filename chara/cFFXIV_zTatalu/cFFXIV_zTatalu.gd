@@ -9,12 +9,12 @@ func _ready():
 func _extInit():
 	._extInit()
 	chaName = "塔塔露（吉祥物）"
-	attCoe.atkRan = 4
+	attCoe.atkRan = 3
 	attCoe.maxHp = 2
 	attCoe.atk = 10
 	attAdd.spd = 2
 	lv = 4
-	addSkillTxt("""“上！我的奴仆
+	addSkillTxt("""上！我的奴仆
 宝石兽！
 ……
 临阵脱逃可是要被处刑的！
@@ -25,7 +25,7 @@ func _extInit():
 为什么要跑啊？！
 啊啊啊啊啊！
 哇啊啊！
-救救我啊！”""")
+救救我啊！""")
 
 func _connect():
 	._connect()
