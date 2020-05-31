@@ -6,13 +6,13 @@ var TimeAxis = {} # 时间轴
 
 # 敌方全部属性总和字典
 var allAtt = {}
-var E_maxHp = 0
-var E_atk = 0
-var E_mgiAtk = 0
-var E_def = 0
-var E_mgiDef = 0
-var E_num = 0
-var E_lv = 0
+var E_maxHp = 1
+var E_atk = 1
+var E_mgiAtk = 1
+var E_def = 1
+var E_mgiDef = 1
+var E_num = 1
+var E_lv = 1
 
 func _extInit():
 	._extInit()
@@ -51,7 +51,7 @@ func selfAdaption():
 	E_num = allAtt["num"]
 	E_lv = allAtt["lv"]
 	
-	attInfo.maxHp = (E_atk + E_mgiAtk) * layer
+	attInfo.maxHp = (E_atk + E_mgiAtk) * 30
 	attInfo.atk = (E_def + E_maxHp / 8) / E_num + layer
 	attInfo.mgiAtk = (E_mgiDef + E_maxHp / 8) / E_num + layer
 	attInfo.def = E_atk / E_num + layer

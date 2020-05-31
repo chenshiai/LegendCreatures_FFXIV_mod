@@ -79,5 +79,4 @@ func verthunder(first, pw):
 
 	skillStrs[0] = "白魔元：%d / 100	黑魔元：%d / 100" % [whiteMorgan, blackMorgen]
 	if first:
-		yield(reTimer(0.3), "timeout")
 		verthunder(false, VERTHUNDER_PW)

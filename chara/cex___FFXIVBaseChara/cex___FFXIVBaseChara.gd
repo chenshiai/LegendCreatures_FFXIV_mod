@@ -1,6 +1,7 @@
 extends Chara
 const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
 var Utils = globalData.infoDs["g_FFXIVUtils"]
+const OCCUPATION = ["protect", "attack", "treatment"]
 
 func _info():
   pass
@@ -13,7 +14,7 @@ func _connect():
 
 func _extInit():
   ._extInit()
-  chaName = "基础角色"
+  chaName = "极限技"
   attCoe.atkRan = 1
   attCoe.maxHp = 1
   attCoe.atk = 0
