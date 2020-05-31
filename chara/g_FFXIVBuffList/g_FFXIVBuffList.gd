@@ -236,7 +236,7 @@ class b_Adloquium:
 		masCha.connect("onHurt", self, "onHurt")
 
 	func _upS():
-		life = clamp(life, 0, 5)
+		life = clamp(life, 0, 10)
 		if life <= 1:
 			life = 0
 
@@ -502,13 +502,7 @@ class b_Spire:
 # 吉星
 class b_LuckyStar:
 	extends Buff
-	var hot setget set_hot, get_hot
-
-	func get_hot():
-		return hot
-	func set_hot(val):
-		hot = val
-
+	var hot = 0
 	func _init(dur = 1, val = 0):
 		attInit()
 		id = "b_LuckyStar"
@@ -518,7 +512,7 @@ class b_LuckyStar:
 
 	func _upS():
 		masCha.plusHp(hot)
-		life = clamp(life, 0, 5)
+		life = clamp(life, 0, 8)
 		if life <= 1:
 			life = 0
 
@@ -537,7 +531,7 @@ class b_Night:
 		masCha.connect("onHurt", self, "onHurt")
 
 	func _upS():
-		life = clamp(life, 0, 5)
+		life = clamp(life, 0, 10)
 		if life <= 1:
 			life = 0
 

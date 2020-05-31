@@ -15,7 +15,7 @@ func _extInit():
 	lv = 4
 	evos = []
 	addCdSkill("skill_ArmorCrush", 16)
-	addSkillTxt("[强甲破点突]：冷却时间16s，削弱目标的15%的双抗，若目标的仇恨不是自己，则数值提高为30%。持续7s")
+	addSkillTxt("[强甲破点突]：ÇÐ16s，削弱目标的15%的双抗，若目标的仇恨不是自己，则数值提高为30%。持续7s")
 
 var baseId = ""
 

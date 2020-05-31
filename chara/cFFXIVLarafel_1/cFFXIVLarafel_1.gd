@@ -15,16 +15,16 @@ func _extInit():
 	lv = 2
 	evos = ["cFFXIVLarafel_1_1"]
 	atkEff = "atk_dang"
-	addCdSkill("skill_CureII", 10)
-	addCdSkill("skill_CureIII", 15)
+	addCdSkill("skill_CureII", 9)
+	addCdSkill("skill_CureIII", 14)
 	addCdSkill("skill_Regen", 18)
-	addSkillTxt("""[救疗]：冷却时间10s，为生命最低的友方单位恢复[80%]法强的HP
-[愈疗]：冷却时间15s，为全体友方单位恢复[60%]法强的HP""")
-	addSkillTxt("[再生]：冷却时间18s，为生命最低的友方单位附加再生，每秒恢复[15%]法强的HP，持续10s")
+	addSkillTxt("""[救疗]：ÇÐ9s，为生命最低的友方单位恢复[80%]法强的HP
+[医济]：ÇÐ14s，为全体友方单位恢复[60%]法强的HP，并附加[再生]效果，持续5s""")
+	addSkillTxt("[再生]：ÇÐ18s，为生命最低的友方单位附加再生，每秒恢复[10%]法强的HP，持续10s")
 
 const CUREII_PW = 0.80 # 救疗威力
-const CUREIII_PW = 0.60 # 愈疗威力
-const REGEN_PW = 0.15 # 再生威力
+const CUREIII_PW = 0.60 # 医济威力
+const REGEN_PW = 0.10 # 再生威力
 
 func _connect():
 	._connect()
@@ -50,12 +50,13 @@ func cureII():
 		Utils.createEffect("healGreen", chas[0].position, Vector2(0, -30), 11, 1)
 		chas[0].plusHp(att.mgiAtk * CUREII_PW)
 
-# 愈疗		
+# 医济		
 func cureIII():
 	var allys = getAllChas(2)
 	allys.shuffle()
 	for cha in allys:
 		if cha != null:
+			cha.addBuff(BUFF_LIST.b_Regen.new(5, att.mgiAtk * REGEN_PW))
 			cha.plusHp(att.mgiAtk * CUREIII_PW)
 			yield(reTimer(0.1), "timeout")
 

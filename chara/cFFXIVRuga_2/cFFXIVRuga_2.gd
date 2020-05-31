@@ -9,7 +9,6 @@ func _extInit():
 	attCoe.atkRan = 1
 	attCoe.maxHp = 3
 	attCoe.atk = 4
-	attCoe.mgiAtk = 1
 	attCoe.def = 3.1
 	attCoe.mgiDef = 3.1
 	attAdd.spd += 0.18
@@ -19,7 +18,7 @@ func _extInit():
 	addCdSkill("skill_FightGas", 7)
 	addSkillTxt("[迅雷疾风]：被动，增加16%的攻击速度，且在攻击时，获得2层[急速]")
 	addSkillTxt("""[斗气]：被动，每次攻击有50%概率获得一层斗气，最大五层
-[阴阳斗气斩]：冷却时间7s，对目标造成[210%]的物理伤害，根据斗气层数提高伤害，每层提高[20%]的倍率，最大伤害[310%]""")
+[阴阳斗气斩]：ÇÐ7s，对目标造成[210%]的物理伤害，根据斗气层数提高伤害，每层提高[20%]的倍率，最大伤害[310%]""")
 
 var fightGas = 0
 const FIGHTGAS_PW = 2.10 # 斗气斩威力

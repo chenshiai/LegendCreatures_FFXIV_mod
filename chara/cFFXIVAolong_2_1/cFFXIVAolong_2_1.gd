@@ -9,7 +9,7 @@ func _extInit():
 	lv = 3
 	evos = []
 	addCdSkill("skill_Tsubame", 14)
-	addSkillTxt("[燕回返]：冷却时间14s，发动上一次使用的居合术")
+	addSkillTxt("[燕回返]：ÇÐ14s，发动上一次使用的居合术")
 
 func _connect():
 	._connect()

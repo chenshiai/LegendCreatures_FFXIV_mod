@@ -9,7 +9,7 @@ func _extInit():
 	lv = 3
 	evos = []
 	addCdSkill("skill_SaberDance", 13)
-	addSkillTxt("[剑舞]：冷却时间13s，对目标及周围2格敌人造成[100%]的物理伤害")
+	addSkillTxt("[剑舞]：ÇÐ13s，对目标及周围2格敌人造成[100%]的物理伤害")
 
 const SABERDANCE_PW = 1 # 剑舞威力
 

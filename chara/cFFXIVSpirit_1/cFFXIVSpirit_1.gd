@@ -16,13 +16,13 @@ func _extInit():
 	evos = ["cFFXIVSpirit_1_1"]
 	atkEff = "atk_dang"
 	addCdSkill("skill_DrawCard", 8)
-	addSkillTxt("""[抽卡]：冷却时间8s，随机抽取一张卡施加效果给全部队友，持续5s。太阳神之衡[攻击力20%]；放浪神之箭[攻速20%]；
+	addSkillTxt("""[抽卡]：ÇÐ8s，随机抽取一张卡施加效果给全部队友，持续5s。太阳神之衡[攻击力20%]；放浪神之箭[攻速20%]；
 战争神之枪[暴击20%]；世界树之干[物防20%]；河流神之瓶[冷却20%]；建筑神之塔[魔防20%]""")
 	addCdSkill("skill_StarPhase", 18)
-	addSkillTxt("""[阳星相位]：冷却时间18s，回复全场友军[40%]法强的HP
-[白昼学派]：被动，阳星相位会给目标施加持续恢复效果，每秒恢复[15%]法强的HP，持续5秒""")
+	addSkillTxt("""[阳星相位]：ÇÐ18s，回复全场友军[50%]法强的HP
+[白昼学派]：被动，阳星相位会给目标施加持续恢复效果，每秒恢复[15%]法强的HP，持续8秒""")
 
-const STARPHASE_PW = 0.40 # 阳星威力
+const STARPHASE_PW = 0.50 # 阳星威力
 
 func _connect():
 	._connect()
@@ -64,6 +64,6 @@ func starPhase(lv):
 	for cha in ailys:
 		if cha != null:
 			cha.plusHp(att.mgiAtk * STARPHASE_PW)
-			cha.addBuff(BUFF_LIST.b_LuckyStar.new(5, att.mgiAtk * 0.15))
+			cha.addBuff(BUFF_LIST.b_LuckyStar.new(8, att.mgiAtk * 0.15))
 			if lv == 4:
-				cha.addBuff(BUFF_LIST.b_Night.new(5, att.mgiAtk * STARPHASE_PW * 1.25))
+				cha.addBuff(BUFF_LIST.b_Night.new(10, att.mgiAtk * STARPHASE_PW * 1.25))

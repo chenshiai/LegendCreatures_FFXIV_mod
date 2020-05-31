@@ -9,9 +9,9 @@ func _extInit():
 	lv = 3
 	evos = []
 	addCdSkill("skill_Benediction", 20)
-	addSkillTxt("[天赐祝福]：冷却时间20s，为生命最低的友方单位恢复至满血，第一次使用后，此技能冷却时间延长至60s")
+	addSkillTxt("[天赐祝福]：ÇÐ20s，为生命最低的友方单位恢复至满血，第一次使用后，此技能ÇÐ延长至60s")
 	addCdSkill("skill_StornIII", 4)
-	addSkillTxt("[崩石]：冷却时间4s，对目标造成[130%]的魔法伤害")
+	addSkillTxt("[崩石]：ÇÐ4s，对目标造成[130%]的魔法伤害")
 
 const STORNIII_PW = 1.30 # 崩石威力
 
@@ -22,7 +22,7 @@ func _onBattleStart():
 	._onBattleStart()
 	var sk = getSkill("skill_Benediction")
 	sk.cd = 20
-	skillStrs[2] = "[天赐祝福]：冷却时间20s，为生命最低的友方单位恢复至满血，第一次使用后，此技能冷却时间延长至60s"
+	skillStrs[2] = "[天赐祝福]：ÇÐ20s，为生命最低的友方单位恢复至满血，第一次使用后，此技能ÇÐ延长至60s"
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -46,5 +46,5 @@ func benediction():
 	
 	var sk = getSkill("skill_Benediction")
 	sk.cd = 60
-	skillStrs[2] = "[天赐祝福]：冷却时间60s，为生命最低的友方单位恢复至满血（已经使用过一次）"
+	skillStrs[2] = "[天赐祝福]：ÇÐ60s，为生命最低的友方单位恢复至满血（已经使用过一次）"
 	Utils.createEffect("heal", position, Vector2(0, -30), 7)

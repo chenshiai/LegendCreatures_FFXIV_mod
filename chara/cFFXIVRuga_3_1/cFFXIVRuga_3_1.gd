@@ -9,7 +9,7 @@ func _extInit():
 	lv = 3
 	evos = []
 	addCdSkill("skill_Drill", 12)
-	addSkillTxt("[钻头]：冷却时间12s，对目标造成[400%]的物理伤害")
+	addSkillTxt("[钻头]：ÇÐ12s，对目标造成[400%]的物理伤害")
 	addSkillTxt("[火焰喷射器]：被动，普通攻击会对目标及其周围一格的敌人附加2层[烧灼]")
 
 const DRILL_PW = 4 # 钻头威力

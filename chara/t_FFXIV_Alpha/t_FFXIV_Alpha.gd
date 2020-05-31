@@ -4,7 +4,7 @@ var bgimg
 var hpBar
 var layer = 0
 var utils = globalData.infoDs["g_FFXIVUtils"]
-var probability = 10 # boss出现概率
+var probability = 15 # boss出现概率
 
 func init():
 	name = "零式战斗记录"
@@ -59,7 +59,7 @@ func get_info():
 
 func come():
 	layer = sys.main.guankaMsg.lvStep - 2
-	if sys.rndPer(probability):
+	if sys.rndPer(probability) && layer > 27:
 		utils.backGroundChange("SpaceTimeSlit")
 		hpBar.set_visible(true)
 		hpBar.value = 100
@@ -75,6 +75,7 @@ func come():
 		probability += 1
 
 func clear(bosscha):
+	var cha
 	for i in range(0,8):
 		for j in range(0,5):
 			cha = sys.main.matCha(Vector2(i, j))

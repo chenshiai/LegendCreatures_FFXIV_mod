@@ -9,7 +9,6 @@ func _extInit():
 	attCoe.atkRan = 1
 	attCoe.maxHp = 3
 	attCoe.atk = 4.1
-	attCoe.mgiAtk = 2
 	attCoe.def = 2.8
 	attCoe.mgiDef = 3
 	attAdd.dod += 0.30
@@ -19,7 +18,7 @@ func _extInit():
 	addCdSkill("skill_Ninjutsu", 11)
 	addSkillTxt("""[攻其不备]：被动，普通攻击会给目标施加2层[流血]效果
 [隐遁]：被动，获得30%的闪避""")
-	addSkillTxt("""[忍术]：冷却时间11s，随机释放以下忍术
+	addSkillTxt("""[忍术]：ÇÐ11s，随机释放以下忍术
 [风魔手里剑]：对魔法攻击力最高的一名敌人造成[450%]的物理伤害
 [冰遁之术]：对周围2格的敌人造成[70%]的物理伤害，并附加5层[结霜]
 [火遁之术]：对周围2格的敌人造成[50%]的物理伤害，并附加5层[烧灼]""")

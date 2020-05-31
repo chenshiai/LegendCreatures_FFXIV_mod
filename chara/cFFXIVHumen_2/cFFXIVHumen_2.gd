@@ -9,7 +9,6 @@ func _extInit():
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4.3
 	attCoe.atk = 4
-	attCoe.mgiAtk = 2
 	attCoe.def = 4.3
 	attCoe.mgiDef = 4.3
 	lv = 2
@@ -17,7 +16,7 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_BowShock", 9)
 	addSkillTxt("""[王室亲卫]：被动，受到的伤害减少10%
-[弓形冲波]：冷却时间9s，对周围1格的敌人造成[260%]的物理伤害，并附加4层[烧灼]""")
+[弓形冲波]：ÇÐ9s，对周围1格的敌人造成[260%]的物理伤害，并附加4层[烧灼]""")
 
 const BOWSHOCK_PW = 2.60 # 弓形冲波威力
 

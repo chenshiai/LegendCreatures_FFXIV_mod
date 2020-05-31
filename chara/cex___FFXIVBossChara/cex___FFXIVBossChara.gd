@@ -41,6 +41,7 @@ func _onBattleEnd():
 
 # Boss自适应属性
 func selfAdaption():
+	layer = sys.main.guankaMsg.lvStep - 2
 	allAtt = Utils.Calculation.getEnemyPower(self.team)
 	E_atk = allAtt["atk"]
 	E_mgiAtk = allAtt["mgiAtk"]
@@ -50,13 +51,12 @@ func selfAdaption():
 	E_num = allAtt["num"]
 	E_lv = allAtt["lv"]
 	
-	attInfo.maxHp = (E_atk + E_mgiAtk) * 20
-	attInfo.atk = (E_def + E_maxHp / 8) / E_num
-	attInfo.mgiAtk = (E_mgiDef + E_maxHp / 10) / E_num
-	attInfo.def = E_atk / E_num
-	attInfo.mgiDef = E_mgiAtk / E_num
+	attInfo.maxHp = (E_atk + E_mgiAtk) * layer
+	attInfo.atk = (E_def + E_maxHp / 8) / E_num + layer
+	attInfo.mgiAtk = (E_mgiDef + E_maxHp / 8) / E_num + layer
+	attInfo.def = E_atk / E_num + layer
+	attInfo.mgiDef = E_mgiAtk / E_num + layer
 
-	layer = sys.main.guankaMsg.lvStep - 2
 	upAtt()
 
 # 战后重置属性

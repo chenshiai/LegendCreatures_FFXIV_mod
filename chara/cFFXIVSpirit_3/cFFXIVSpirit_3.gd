@@ -9,7 +9,6 @@ func _extInit():
 	attCoe.atkRan = 1
 	attCoe.maxHp = 3.3
 	attCoe.atk = 4
-	attCoe.mgiAtk = 2
 	attCoe.def = 3
 	attCoe.mgiDef = 2.8
 	lv = 2
@@ -17,7 +16,7 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_DragonBlood", 10)
 	addSkillTxt("""[跳跃]：战斗开始时，快速跳到敌方中场
-[苍天龙血]：冷却时间10s，获得5层狂怒，并使用一次[武神枪]
+[苍天龙血]：ÇÐ10s，获得5层狂怒，并使用一次[武神枪]
 [武神枪]：对直线上的敌人造成[360%]的物理伤害""")
 
 const DRAGONBLOOD_PW = 3.60 # 武神枪威力

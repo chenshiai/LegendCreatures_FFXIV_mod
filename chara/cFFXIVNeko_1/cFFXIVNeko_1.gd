@@ -17,8 +17,8 @@ func _extInit():
 	atkEff = "atk_dang"
 	addCdSkill("skill_Adloquium", 10)
 	addCdSkill("skill_Embrace", 12)
-	addSkillTxt("""[鼓舞激励之策]：冷却时间10s，为生命最低的友方单位恢复[110%]法强的HP，并为其附加[鼓舞]，持续5s
-[鼓舞]：Buff，抵消[初始治疗量125%]的伤害，无法与占星术士的[黑夜领域]叠加""")
+	addSkillTxt("""[鼓舞激励之策]：ÇÐ10s，为生命最低的友方单位恢复[110%]法强的HP，并为其附加[鼓舞]
+[鼓舞]：Buff，抵消[治疗量125%]的伤害，持续10s，无法与占星术士的[黑夜领域]叠加""")
 	addSkillTxt("""[仙光的拥抱]：被动，小仙女协助作战。每12s，为生命最低的友方单位恢复[40%]法强的HP""")
 
 const ADLOQUIUM_PW = 1.10 # 鼓舞激励之策威力
@@ -46,5 +46,5 @@ func adloquium(pw, hudun = false):
 	if chas[0] != null:
 		chas[0].plusHp(att.mgiAtk * pw)
 		if hudun:
-			chas[0].addBuff(BUFF_LIST.b_Adloquium.new(5, att.mgiAtk * pw * shield_pw))
+			chas[0].addBuff(BUFF_LIST.b_Adloquium.new(10, att.mgiAtk * pw * shield_pw))
 			Utils.createEffect("shield", chas[0].position, Vector2(0,-30), 7)

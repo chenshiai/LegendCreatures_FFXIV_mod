@@ -13,7 +13,7 @@ func _extInit():
 	lv = 4
 	evos = []
 	addCdSkill("skill_Decimate", 12)
-	addSkillTxt("[地毁人亡]：冷却时间12s，对周围2格内的敌人造成[180%]的物理伤害")
+	addSkillTxt("[地毁人亡]：ÇÐ12s，对周围2格内的敌人造成[180%]的物理伤害")
 	addSkillTxt("[死斗]：当受到致命伤害时，不会立即死亡（除特定攻击外），持续7s，效果结束后恢复20%的HP")
 
 var baseId = ""

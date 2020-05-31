@@ -8,8 +8,7 @@ func _extInit():
 	chaName = "舞者"
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
-	attCoe.atk = 4 
-	attCoe.mgiAtk = 2
+	attCoe.atk = 4
 	attCoe.def = 2.8
 	attCoe.mgiDef = 2.8
 	attAdd.cri += 0.3
@@ -18,7 +17,7 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_DanceStep", 35)
 	addSkillTxt("[闭式舞姿]：被动，战斗开始时，选择物攻最高与魔攻最高的队友作为舞伴，提高他们与自己的攻击力10%，可以叠加")
-	addSkillTxt("[标准舞步]：冷却时间35s，对三格内的敌人造成[1000%]的物理伤害，同时舞伴与自己的攻击力再提升10%，持续10s")
+	addSkillTxt("[标准舞步]：ÇÐ35s，对三格内的敌人造成[1000%]的物理伤害，同时舞伴与自己的攻击力再提升10%，持续10s")
 
 const DANCESTEP_PW = 10 # 标准舞步威力
 var atkMaxAlly = null # 攻击力最高的队友

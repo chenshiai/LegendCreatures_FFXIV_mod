@@ -9,7 +9,6 @@ func _extInit():
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
 	attCoe.atk = 4
-	attCoe.mgiAtk = 1
 	attCoe.def = 2.9
 	attCoe.mgiDef = 3
 	lv = 2
@@ -17,9 +16,9 @@ func _extInit():
 	atkEff = "atk_dang"
 	addCdSkill("skill_Autoturret", 3)
 	addCdSkill("skill_Wildfire", 17)
-	addSkillTxt("""[车式浮空炮塔]：冷却时间3s，机工士自带的浮空炮塔进行援护射击造成[40%]的物理伤害
+	addSkillTxt("""[车式浮空炮塔]：ÇÐ3s，机工士自带的浮空炮塔进行援护射击造成[40%]的物理伤害
 [超载]：被动，浮空炮攻击5次后进入超载，机工士攻击力提升20%，持续8s。结束后进入冷却，降低10%的攻击力，持续5s""")
-	addSkillTxt("[野火]：冷却时间17s，对目标附加野火状态，持续7s，结束后爆炸造成[技能期间的攻击次数 x 200%]的物理伤害")
+	addSkillTxt("[野火]：ÇÐ17s，对目标附加野火状态，持续7s，结束后爆炸造成[技能期间的攻击次数 x 200%]的物理伤害")
 
 const AUTOTURRET_PW = 0.40 # 车式浮空炮威力
 const WILDFIRE_PW = 2.00 # 野火提升威力

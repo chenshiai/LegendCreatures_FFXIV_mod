@@ -10,8 +10,8 @@ func _extInit():
 	evos = []
 	addCdSkill("skill_LeyLines", 50)
 	addCdSkill("skill_Xenoglossy", 30)
-	addSkillTxt("[黑魔纹]：冷却时间50s，开局立即释放一次，加快自身15%的技能冷却时间，持续30s")
-	addSkillTxt("[异言]：冷却时间30s，对目标造成[750%]法强的魔法伤害")
+	addSkillTxt("[黑魔纹]：ÇÐ50s，开局立即释放一次，加快自身15%的技能ÇÐ，持续30s")
+	addSkillTxt("[异言]：ÇÐ30s，对目标造成[750%]法强的魔法伤害")
 
 const XENOGLOSSY_PW = 7.5 # 异言威力
 
