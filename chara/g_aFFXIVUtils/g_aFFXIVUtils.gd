@@ -1,5 +1,5 @@
 var handle = sys.get_node("../Control")
-var path = null
+var Path = null
 
 func _init():
   print("最终幻想14：—————— mod完整性检测中 ——————")
@@ -12,14 +12,9 @@ func _ready():
   
   
 func testInit():
-  if globalData.infoDs.has("g_FFXIVBuffList"):
-    var BuffList = globalData.infoDs["g_FFXIVBuffList"]
-    if BuffList != null:
-      print("最终幻想14：—————— BUFF列表读取完成 ——————")
-
-    path = chaData.infoDs["cFFXIV_zTatalu"].dir
-    if path != null:
-      print("最终幻想14：—————— 塔塔露读取完毕 ——————")
+  Path = chaData.infoDs["cFFXIV_zTatalu"].dir
+  if Path != null:
+    pass
   else:
     var label = Label.new()
     label.text = "最终幻想14：BUFF列表读取失败！请在创意工坊内重新订阅"
@@ -27,21 +22,21 @@ func testInit():
     handle.add_child(label)
 
 
-func loadImg(path, imgPath):
+func loadImg(Path, imgPath):
   var im = Image.new()
-  im.load("%s/%s" % [path, imgPath])
+  im.load("%s/%s" % [Path, imgPath])
   var imt = ImageTexture.new()
   imt.create_from_image(im)
   return imt
 
 
 func backGroundChange(name):
-  sys.main.get_node("scene/bg/bg").set_texture(loadImg(path, "img/" + name +".png"))
+  sys.main.get_node("scene/bg/bg").set_texture(loadImg(Path, "img/" + name +".png"))
 
 
 func createEffect(effectName:String, position:Vector2, deviation:Vector2, frame = 15, scale = 1, repeat = false): 
   var eff = sys.newEff("animEff", position)
-  var direc = path + "/effects/" + effectName
+  var direc = Path + "/effects/" + effectName
   eff.setImgs(direc, frame, repeat)
   eff.normalSpr.position = deviation
   eff.scale *= scale

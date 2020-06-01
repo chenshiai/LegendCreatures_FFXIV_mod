@@ -15,7 +15,7 @@ func _extInit():
 
 var mustardBomb_pw = 4 # 死刑威力
 var atomicRay_pw = 0.75 # 原子射线威力
-var triangleAttack_pw = 18 # 三角攻击威力
+var triangleAttack_pw = 30 # 三角攻击威力
 
 func _init():
 	var SkillAxis = {
@@ -64,10 +64,10 @@ func atomicRay():
 
 # 技能-三角攻击
 func triangleAttack():
+	var oriAi = self.aiOn
 	normalSpr.position = Vector2(0, -50)
-	for cha in sys.main.btChas:
-		if cha != null:
-			cha.addBuff(BUFF_LIST.b_StaticTime.new(13))
+	self.isDeath = true
+	self.aiOn = false
 
 	yield(reTimer(1), "timeout")
 	setCell(Vector2(0, 0))
@@ -96,6 +96,11 @@ func triangleAttack():
 	for i in chas:
 		if i != null:
 			hurtChara(i, att.mgiAtk * triangleAttack_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+	
+	yield(reTimer(2), "timeout")
+	self.isDeath = false
+	self.aiOn = oriAi
+	
 
 func _upS():
 	._upS()

@@ -1,7 +1,6 @@
 var name = "BuffList"
 
 func _ready():
-	print("最终幻想14：—————— 读取Buff列表 ——————")
 	pass
 
 func _init():
