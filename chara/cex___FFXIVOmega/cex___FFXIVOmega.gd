@@ -1,5 +1,5 @@
 extends "../cex___FFXIVBossChara/cex___FFXIVBossChara.gd"
-const BERSERKERTIME = 120 # 狂暴时间
+const BERSERKERTIME = 140 # 狂暴时间
 
 const SKILL_TXT = """[芥末爆弹]：死刑，对当前攻击目标造成[未知]法强的小范围魔法伤害
 [原子射线]：对全屏的敌人造成[未知]法强的魔法伤害
@@ -20,7 +20,7 @@ var triangleAttack_pw = 18 # 三角攻击威力
 func _init():
 	var SkillAxis = {
 		"mustardBomb": [25, 55, 90, 115],
-		"atomicRay": [3, 20, 40, 60, 110],
+		"atomicRay": [2, 20, 40, 60, 110],
 		"triangleAttack": [65]
 	}
 	call_deferred("setTimeAxis", SkillAxis)
@@ -67,7 +67,7 @@ func triangleAttack():
 	normalSpr.position = Vector2(0, -50)
 	for cha in sys.main.btChas:
 		if cha != null:
-			cha.addBuff(b_StaticTime.new(13))
+			cha.addBuff(BUFF_LIST.b_StaticTime.new(13))
 
 	yield(reTimer(1), "timeout")
 	setCell(Vector2(0, 0))
@@ -102,21 +102,3 @@ func _upS():
 	if battleDuration > BERSERKERTIME && (battleDuration % 5 == 0):
 		atomicRay()
 		atomicRay_pw += 0.3
-
-class b_StaticTime:
-	extends Buff
-	var oriAi
-	func _init(lv):
-		attInit()
-		id = "b_StaticTime"
-		life = lv
-		isNegetive = false
-
-	func _connect():
-		._connect()
-		oriAi = masCha.aiOn
-		masCha.aiOn = false
-
-	func _del():
-		._del()
-		masCha.aiOn = oriAi

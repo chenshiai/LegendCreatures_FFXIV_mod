@@ -545,3 +545,22 @@ class b_Night:
 				total = 0
 		elif total <= 0:
 			total = 0
+
+# 静止不动
+class b_StaticTime:
+	extends Buff
+	var oriAi
+	func _init(lv):
+		attInit()
+		id = "b_StaticTime"
+		life = lv
+		isNegetive = false
+
+	func _connect():
+		._connect()
+		oriAi = masCha.aiOn
+		masCha.aiOn = false
+
+	func _del():
+		._del()
+		masCha.aiOn = oriAi

@@ -1,16 +1,19 @@
 extends Talent
-var Utils = globalData.infoDs["g_FFXIVUtils"]
-var Path
-var originBackground
+var Utils = globalData.infoDs["g_FFXIVUtils"] # 全局工具
+var Path # 当前路径
+var originBackground # 原版背景
 var hpBar # 血条UI节点
 var limitBreak # 极限技UI节点
-var limitBreakLevel = 0 # 极限技等级
-var limitBreakVal = 0 # 攒满极限技所需要的点数
+var limitBreakLevel:float = 0 # 极限技等级
+var limitBreakVal:float = 0 # 攒满极限技所需要的点数
 var layer = 0 # 当前关卡数
-var probability = 100 # boss出现概率
 
-var allAtt = {}
-var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
+const PROBABILITY = 100 # boss出现的基本概率
+const BOSS_LAYER = 1 # 在多少关之后概率动态调整
+var probability = PROBABILITY # Boss出现的动态概率
+
+var allAtt = {} # 玩家数据总和
+var toolman = sys.main.newChara("cFFXIV_zTatalu", 2) # 释放极限技能的工具人
 
 var im = Image.new()
 var hpBarUnder = ImageTexture.new()
@@ -71,24 +74,25 @@ func reward():
 
 func come():
 	layer = sys.main.guankaMsg.lvStep - 2
-	if sys.rndPer(probability) && layer > 1:
-		hpBar.set_visible(true)
-		hpBar.value = 100
-		probability = 10
-		clear(null)
-		var n = 2
-		match n:
-			0:
-				Utils.backGroundChange("SpaceTimeSlit")
-				addenemy("cex___FFXIVOmegaF")
-			1:
-				Utils.backGroundChange("SpaceTimeSlit")
-				addenemy("cex___FFXIVOmegaM")
-			2:
-				Utils.backGroundChange("SpaceTimeSlit1")
-				addenemy("cex___FFXIVOmega")
-	elif layer > 27:
-		probability += 1
+	if layer > BOSS_LAYER:
+		if sys.rndPer(probability):
+			hpBar.set_visible(true)
+			hpBar.value = 100
+			probability = PROBABILITY
+			clear(null)
+			var n = 2
+			match n:
+				0:
+					Utils.backGroundChange("SpaceTimeSlit")
+					addenemy("cex___FFXIVOmegaF")
+				1:
+					Utils.backGroundChange("SpaceTimeSlit")
+					addenemy("cex___FFXIVOmegaM")
+				2:
+					Utils.backGroundChange("SpaceTimeSlit1")
+					addenemy("cex___FFXIVOmega")
+		else:
+			probability += 1
 	
 func progressBar():
 	hpBar = TextureProgress.new()
@@ -117,7 +121,7 @@ func progressBar():
 	im.load(Path + "/img/limitBreak_progress.png")
 	limitProgress.create_from_image(im)
 
-	hpBar.value = 100
+	hpBar.value = 100.0
 	hpBar.visible = false
 	hpBar.grow_vertical = 0
 	hpBar.anchor_top = 1
@@ -126,7 +130,7 @@ func progressBar():
 	hpBar.margin_bottom = -23
 	sys.main.get_node("kuang/NinePatchRect3").add_child(hpBar)
 
-	limitBreak.value = 0
+	limitBreak.value = 0.0
 	limitBreak.visible = true
 	limitBreak.grow_vertical = 0
 	limitBreak.anchor_top = 20
@@ -167,7 +171,7 @@ func clear(bosscha):
 
 func addenemy(id):
 	var cha
-	cha = sys.main.newChara(id, 2)
+	cha = sys.main.newChara(id, 6)
 	sys.main.map.add_child(cha)
 	sys.main.setMatCha(Vector2(6, 2), cha)
 	cha.isDeath = true
@@ -177,53 +181,66 @@ func addenemy(id):
 
 func hpdown(atkInfo):
 	var cha = atkInfo.hitCha
-	hpBar.value = cha.att.hp / cha.att.maxHp * 100
-	if limitBreak.value < 100:
-		limitBreak.value += atkInfo.atkVal * 100 / limitBreakVal
+	hpBar.value = cha.att.hp / cha.att.maxHp * 100.0
 
-	if limitBreak.value >= 100:
-		limitBreak.texture_progress = limitProgress
-		limitBreakLevel = 3
-	elif limitBreak.value >= 67:
-		limitBreak.texture_progress = limitProgress2
-		limitBreakLevel = 2
-	elif limitBreak.value >= 33:
-		limitBreak.texture_progress = limitProgress1
-		limitBreakLevel = 1
+	if limitBreak.value < 100:
+		limitBreak.value += atkInfo.atkVal * 100.0 / limitBreakVal
+		nowLimitBreak(limitBreak.value)
 
 func resetLimit():
 	limitBreakLevel = 0
 	limitBreak.value = 0
 	limitBreak.texture_progress = limitProgress0
 
+func nowLimitBreak(value):
+	if value >= 100:
+		limitBreak.texture_progress = limitProgress
+		limitBreakLevel = 3
+	elif value >= 67:
+		limitBreak.texture_progress = limitProgress2
+		limitBreakLevel = 2
+	elif value >= 33:
+		limitBreak.texture_progress = limitProgress1
+		limitBreakLevel = 1
+
 func limit_protect():
 	if limitBreakLevel != 0:
+		var lv = limitBreakLevel
+		yield(get_tree().create_timer(1.0), "timeout")
+		resetLimit()
 		for i in sys.main.btChas:
 			if i != null and i.team == 1:
-				i.addBuff(limit_protect.new(limitBreakLevel))
+				i.addBuff(limit_protect.new(lv))
 				Utils.createEffect("defense", i.position, Vector2(0, -60), 14)
-		resetLimit()
+				yield(get_tree().create_timer(0.1), "timeout")
 	else:
 		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")
 
 func limit_attack():
 	if limitBreakLevel != 0:
+		var lv = limitBreakLevel
+		yield(get_tree().create_timer(1.0), "timeout")
+		resetLimit()
 		for i in sys.main.btChas:
 			if i != null and i.team == 2:
+				toolman.hurtChara(i, (allAtt["atk"] + allAtt["mgiAtk"]) * lv, Chara.HurtType.REAL, Chara.AtkType.SKILL)
 				Utils.createEffect("fireII", i.position, Vector2(0, -60), 15, 2)
-				toolman.hurtChara(i, (allAtt["atk"] + allAtt["mgiAtk"]) * limitBreakLevel, Chara.HurtType.REAL, Chara.AtkType.SKILL)
 				pass
-		resetLimit()
 	else:
 		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")
 
 func limit_treatment():
 	if limitBreakLevel != 0:
+		var lv = limitBreakLevel
+		var h:float = lv
+		h = (h * h * 0.5 + 1.5 * h + 1) / 10
+		yield(get_tree().create_timer(1.0), "timeout")
+		resetLimit()
 		for i in sys.main.btChas:
 			if i != null and i.team == 1:
-				i.plusHp(i.att.maxHp * 0.33 * limitBreakLevel)
+				i.plusHp(i.att.maxHp * h)
 				Utils.createEffect("heal", i.position, Vector2(0, -30), 7)
-		resetLimit()
+				yield(get_tree().create_timer(0.1), "timeout")
 	else:
 		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")
 
@@ -240,9 +257,4 @@ class limit_protect:
 		masCha.connect("onHurt", self, "onHurt")
 
 	func onHurt(atkInfo:AtkInfo):
-		atkInfo.hurtVal *= 1 - (0.3 * lv)
-
-	func _upS():
-		life = clamp(life, 0, 10)
-		if life <= 1:
-			life = 0
+		atkInfo.hurtVal *= 1 - pow(2, limitBreakLevel) / 10
