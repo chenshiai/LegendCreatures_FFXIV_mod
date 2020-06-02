@@ -10,7 +10,9 @@ func _init():
 func _ready():
 	pass
 	
-	
+func getPath():
+	return Path
+
 func testInit():
 	Path = chaData.infoDs["cFFXIV_zTatalu"].dir
 	if Path != null:
@@ -51,10 +53,13 @@ func createTimeAxis(skillAxis):
 	return timeAxis
 
 
-func createUiButton(config = {}, target = self, callback = "defaultCallback"):
+func createUiButton(text, position, target = self, callback = "defaultCallback", config = {}):
 	var button = Button.new()
-	button.text = config["text"]
-	
+	button.text = text
+	button.rect_position = position
+
+	if config.has("set_size"):
+		button.set_size = config["set_size"]
 	if config.has("margin_left"):
 		button.margin_left = config["margin_left"]
 	if config.has("margin_right"):
@@ -63,13 +68,10 @@ func createUiButton(config = {}, target = self, callback = "defaultCallback"):
 		button.margin_top = config["margin_top"]
 	if config.has("margin_bottom"):
 		button.margin_bottom = config["margin_bottom"]
-	
-	if target.has(callback):
-		button.connect("pressed", target, callback)
-		sys.main.get_node("ui").add_child(button)
-		return button
-	else:
-		print("最终幻想14：Utils.createUiButton() => 目标上并未找到%s方法" % [callback])
+
+	button.connect("pressed", target, callback)
+	sys.main.get_node("ui").add_child(button)
+	return button
 
 
 func defaultCallback():

@@ -4,7 +4,7 @@ func _ready():
 	pass
 
 func _init():
-	print("最终幻想14：—————— Buff列表加载中 ——————")
+	print("最终幻想14：—————— Buff列表加载 ——————")
 	pass
 
 # 深恶痛绝，提高魔防
@@ -232,6 +232,9 @@ class b_Adloquium:
 		isNegetive = false
 
 	func _connect():
+		var bf = masCha.hasBuff("b_Night")
+		if bf != null:
+			bf.isDel = true
 		masCha.connect("onHurt", self, "onHurt")
 
 	func _upS():
@@ -322,7 +325,7 @@ class b_Paean:
 		masCha.connect("onAddBuff", self, "onAddBuff")
 
 	func onAddBuff(buff:Buff):
-		if buff.isNegetive :
+		if buff.isNegetive:
 			buff.isDel = true
 
 	func _upS():
@@ -512,8 +515,6 @@ class b_LuckyStar:
 	func _upS():
 		masCha.plusHp(hot)
 		life = clamp(life, 0, 8)
-		if life <= 1:
-			life = 0
 
 # 黑夜领域，护盾。可以吸收一定数值的伤害
 class b_Night:
@@ -527,6 +528,9 @@ class b_Night:
 		life = dur
 
 	func _connect():
+		var bf = masCha.hasBuff("b_Adloquium")
+		if bf != null:
+			bf.isDel = true
 		masCha.connect("onHurt", self, "onHurt")
 
 	func _upS():

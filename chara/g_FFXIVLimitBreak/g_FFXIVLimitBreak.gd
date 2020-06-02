@@ -1,7 +1,9 @@
-# 这个文件尚未完成迁移
-# 暂时没有使用
 var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
-var Path = Utils.Path
+var allAtt = {}
+
+var limitBreak = null
+var limitBreakLevel:float = 0 # 极限技等级
+var limitBreakVal:float = 0 # 攒满极限技所需要的点数
 
 var im = Image.new()
 var limitUnder = ImageTexture.new()
@@ -10,19 +12,16 @@ var limitProgress0 = ImageTexture.new()
 var limitProgress1 = ImageTexture.new()
 var limitProgress2 = ImageTexture.new()
 
-var limitBreak # 极限技UI节点
-var limitBreakLevel:float = 0 # 极限技等级
-var limitBreakVal:float = 0 # 攒满极限技所需要的点数
-
 func _init():
-	print("最终幻想14：---------极限技功能加载-----------")
-	pass
-
-func testInit():
+	print("最终幻想14：—————— LimitBreak功能加载 ——————")
 	pass
 
 func createLimitBreak():
-	limitBreak = TextureProgress.new()
+	var Path = Utils.getPath()
+	limitBreak = TextureProgress.new() # 极限技UI节点
+	im.load(Path + "/img/limitBreak_under.png")
+	limitUnder.create_from_image(im)
+	limitBreak.texture_under = limitUnder
 
 	im.load(Path + "/img/limitBreak_progress0.png")
 	limitProgress0.create_from_image(im)
@@ -35,42 +34,28 @@ func createLimitBreak():
 	im.load(Path + "/img/limitBreak_progress.png")
 	limitProgress.create_from_image(im)
 
-	limitBreak.value = 0.0
+	limitBreak.value = 0
 	limitBreak.visible = true
-	limitBreak.grow_vertical = 0
-	limitBreak.anchor_top = 20
-	limitBreak.anchor_bottom = 1
-	limitBreak.margin_left = 50
-	limitBreak.margin_bottom = -7
-	sys.main.get_node("kuang/NinePatchRect3").add_child(limitBreak)
+	limitBreak.rect_position = Vector2(380, 528)
+	sys.main.get_node("ui").add_child(limitBreak)
 
-	var protectBtn = Button.new()
-	protectBtn.text = "防护"
-	protectBtn.margin_left = 1130
-	protectBtn.margin_right = 1180
-	sys.main.get_node("ui").add_child(protectBtn)
-	protectBtn.connect("pressed", self, "limit_protect")
+	Utils.createUiButton("防护", Vector2(1140, 250), self, "limit_protect", {})
+	Utils.createUiButton("进攻", Vector2(1140, 305), self, "limit_attack", {})
+	Utils.createUiButton("治疗", Vector2(1140, 360), self, "limit_treatment", {})
 
-	var attackBtn = Button.new()
-	attackBtn.text = "进攻"
-	attackBtn.margin_left = 1180
-	attackBtn.margin_right = 1230
-	sys.main.get_node("ui").add_child(attackBtn)
-	attackBtn.connect("pressed", self, "limit_attack")
 
-	var treatmentBtn = Button.new()
-	treatmentBtn.text = "治疗"
-	treatmentBtn.margin_left = 1230
-	treatmentBtn.margin_right = 1280
-	sys.main.get_node("ui").add_child(treatmentBtn)
-	treatmentBtn.connect("pressed", self, "limit_treatment")
+func initLimitValue():
+	allAtt = Utils.Calculation.getEnemyPower(2)
+	limitBreakVal = (allAtt["atk"] + allAtt["mgiAtk"]) * 30
 
-func reset():
+
+func resetLimit():
 	limitBreakLevel = 0
 	limitBreak.value = 0
 	limitBreak.texture_progress = limitProgress0
 
-func now(value):
+
+func nowLimitBreak(value):
 	if value >= 100:
 		limitBreak.texture_progress = limitProgress
 		limitBreakLevel = 3
@@ -81,49 +66,57 @@ func now(value):
 		limitBreak.texture_progress = limitProgress1
 		limitBreakLevel = 1
 
-func limitBreakUp():
+
+func limitBreakUp(atkInfo):
+	if limitBreak.value < 100:
+		limitBreak.value +=  clamp(atkInfo.atkVal * 100.0 / limitBreakVal, 2, 5)
+		nowLimitBreak(limitBreak.value)
 	pass
+
 
 func limit_protect():
 	if limitBreakLevel != 0:
 		var lv = limitBreakLevel
-		yield(sys.get_tree().create_timer(1.0), "timeout")
-		reset()
+		yield(sys.get_tree().create_timer(0.5), "timeout")
+		resetLimit()
 		for i in sys.main.btChas:
 			if i != null and i.team == 1:
 				i.addBuff(limit_protect.new(lv))
-				Utils.createEffect("defense", i.position, Vector2(0, -60), 14)
+				Utils.createEffect("defense", i.position, Vector2(0, -30), 14, 2)
 				yield(sys.get_tree().create_timer(0.1), "timeout")
 	else:
 		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")
 
-func limit_attack(allAtt, toolman):
+
+func limit_attack():
 	if limitBreakLevel != 0:
+		var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
 		var lv = limitBreakLevel
-		yield(sys.get_tree().create_timer(1.0), "timeout")
-		reset()
+		yield(sys.get_tree().create_timer(0.5), "timeout")
+		resetLimit()
 		for i in sys.main.btChas:
 			if i != null and i.team == 2:
 				toolman.hurtChara(i, (allAtt["atk"] + allAtt["mgiAtk"]) * lv, Chara.HurtType.REAL, Chara.AtkType.SKILL)
-				Utils.createEffect("fireII", i.position, Vector2(0, -60), 15, 2)
+				Utils.createEffect("fireII", i.position, Vector2(0, -40), 15, 4)
 				pass
 	else:
 		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")
 
+
 func limit_treatment():
 	if limitBreakLevel != 0:
-		var lv = limitBreakLevel
-		var h:float = lv
-		h = (h * h * 0.5 + 1.5 * h + 1) / 10
-		yield(sys.get_tree().create_timer(1.0), "timeout")
-		reset()
+		var healStep = limitBreakLevel
+		healStep = (healStep * healStep * 0.5 + 1.5 * healStep + 1) / 10
+		yield(sys.get_tree().create_timer(0.5), "timeout")
+		resetLimit()
 		for i in sys.main.btChas:
 			if i != null and i.team == 1:
-				i.plusHp(i.att.maxHp * h)
-				Utils.createEffect("heal", i.position, Vector2(0, -30), 7)
+				i.plusHp(i.att.maxHp * healStep)
+				Utils.createEffect("heal", i.position, Vector2(0, -30), 7, 2)
 				yield(sys.get_tree().create_timer(0.1), "timeout")
 	else:
 		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")
+
 
 class limit_protect:
 	extends Buff

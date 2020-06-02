@@ -9,19 +9,20 @@ func _extInit():
 	._extInit()
 	chaName = "欧米茄"
 	lv = 4
+	moveSpeed += 200
 	addSkillTxt(SKILL_TXT)
 	addSkillTxt("""[宇宙之光]：战斗时间超过 %d秒后，进入狂暴，每5s释放一次原子射线，每次伤害增加30%%
 [机械构造]：该单位免疫[流血]""" % [BERSERKERTIME])
 
 var mustardBomb_pw = 4 # 死刑威力
 var atomicRay_pw = 0.75 # 原子射线威力
-var triangleAttack_pw = 30 # 三角攻击威力
+var triangleAttack_pw = 20 # 三角攻击威力
 
 func _init():
 	var SkillAxis = {
 		"mustardBomb": [25, 55, 90, 115],
 		"atomicRay": [2, 20, 40, 60, 110],
-		"triangleAttack": [65]
+		"triangleAttack": [70]
 	}
 	call_deferred("setTimeAxis", SkillAxis)
 
@@ -32,7 +33,7 @@ func _onBattleStart():
 	._onBattleStart()
 	mustardBomb_pw *= (E_lv / E_num)
 	atomicRay_pw *= (E_lv / E_num)
-	skillStrs[1] = """[芥末爆弹]：死刑，对当前攻击目标造成[%d%%]的单体物理伤害
+	skillStrs[1] = """[芥末爆弹]：死刑，对当前攻击目标造成[%d%%]的小范围魔法伤害
 [原子射线]：对全屏的敌人造成[%d%%]法强的魔法伤害
 [三角攻击]：对全屏的敌人造成[致命]的魔法伤害（会移动至场边释放，届时请使用三段极限技[防护]）""" % [mustardBomb_pw * 100, atomicRay_pw * 100]
 	upAtt()
@@ -69,16 +70,15 @@ func triangleAttack():
 	self.isDeath = true
 	self.aiOn = false
 
-	yield(reTimer(1), "timeout")
+	yield(reTimer(0.5), "timeout")
 	setCell(Vector2(0, 0))
-	yield(reTimer(2), "timeout")
+	yield(reTimer(0.9), "timeout")
 	setCell(Vector2(0, 4))
-	yield(reTimer(2), "timeout")
+	yield(reTimer(0.8), "timeout")
 	setCell(Vector2(7, 4))
-	yield(reTimer(2.5), "timeout")
+	yield(reTimer(1.4), "timeout")
 	setCell(Vector2(7, 2))
 
-	yield(reTimer(1), "timeout")
 	for i in range(10):
 		normalSpr.position = Vector2(0, -2)
 		yield(reTimer(0.1), "timeout")
@@ -86,11 +86,11 @@ func triangleAttack():
 		yield(reTimer(0.1), "timeout")
 	normalSpr.position = Vector2(0, 0)
 
-	Utils.createEffect("sanjiao", Vector2(300, 300), Vector2(0, -30), 7, 3)
+	Utils.createEffect("sanjiao", Vector2(300, 350), Vector2(0, -30), 7, 3)
 	yield(reTimer(0.2), "timeout")
-	Utils.createEffect("sanjiao", Vector2(300, 100), Vector2(0, -30), 9, 3)
+	Utils.createEffect("sanjiao", Vector2(300, 120), Vector2(0, -30), 9, 3)
 	yield(reTimer(0.2), "timeout")
-	Utils.createEffect("sanjiao", Vector2(400, 200), Vector2(0, -30), 13, 3)
+	Utils.createEffect("sanjiao", Vector2(400, 225), Vector2(0, -30), 13, 3)
 	
 	var chas = getAllChas(1)
 	for i in chas:
