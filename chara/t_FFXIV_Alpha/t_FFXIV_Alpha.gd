@@ -62,11 +62,9 @@ class Bf:
 func run():
 	allAtt = Utils.Calculation.getEnemyPower(2)
 	limitBreakVal = (allAtt["atk"] + allAtt["mgiAtk"]) * 30
-	print("所需极限值", limitBreakVal)
 	for i in sys.main.btChas:
 		if i.team == 2:
 			i.addBuff(Bf.new(lv))
-
 
 func reward():
 	player.plusGold(25 + lv * 15)
@@ -142,26 +140,26 @@ func progressBar():
 	sys.main.get_node("kuang/NinePatchRect3").add_child(limitBreak)
 
 func limitBreakButton():
-	var protectBtn = Button.new()
-	protectBtn.text = "防护"
-	protectBtn.margin_left = 1130
-	protectBtn.margin_right = 1180
-	sys.main.get_node("ui").add_child(protectBtn)
-	protectBtn.connect("pressed", self, "limit_protect")
-
-	var attackBtn = Button.new()
-	attackBtn.text = "进攻"
-	attackBtn.margin_left = 1180
-	attackBtn.margin_right = 1230
-	sys.main.get_node("ui").add_child(attackBtn)
-	attackBtn.connect("pressed", self, "limit_attack")
-
-	var treatmentBtn = Button.new()
-	treatmentBtn.text = "治疗"
-	treatmentBtn.margin_left = 1230
-	treatmentBtn.margin_right = 1280
-	sys.main.get_node("ui").add_child(treatmentBtn)
-	treatmentBtn.connect("pressed", self, "limit_treatment")
+	var config = {
+		"text": "防护",
+		"margin_left": 1130,
+		"margin_right": 1180
+	}
+	Utils.createUiButton(config, self, "limit_protect")
+	
+	config = {
+		"text": "进攻",
+		"margin_left": 1185,
+		"margin_right": 1235
+	}
+	Utils.createUiButton(config, self, "limit_attack")
+	
+	config = {
+		"text": "治疗",
+		"margin_left": 1240,
+		"margin_right": 1290
+	}
+	Utils.createUiButton(config, self, "limit_treatment")
 
 func clear(bosscha):
 	var cha
@@ -198,7 +196,6 @@ func resetLimit():
 	limitBreak.texture_progress = limitProgress0
 
 func nowLimitBreak(value):
-	print("当前极限值：", value)
 	if value >= 100:
 		limitBreak.texture_progress = limitProgress
 		limitBreakLevel = 3
@@ -217,7 +214,7 @@ func limit_protect():
 		for i in sys.main.btChas:
 			if i != null and i.team == 1:
 				i.addBuff(limit_protect.new(lv))
-				Utils.createEffect("defense", i.position, Vector2(0, -60), 14, 2)
+				Utils.createEffect("defense", i.position, Vector2(0, -30), 14, 2)
 				yield(sys.get_tree().create_timer(0.1), "timeout")
 	else:
 		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")
@@ -237,14 +234,13 @@ func limit_attack():
 
 func limit_treatment():
 	if limitBreakLevel != 0:
-		var lv = limitBreakLevel
-		var h:float = lv
-		h = (h * h * 0.5 + 1.5 * h + 1) / 10
+		var healStep = limitBreakLevel
+		healStep = (healStep * healStep * 0.5 + 1.5 * healStep + 1) / 10
 		yield(sys.get_tree().create_timer(0.5), "timeout")
 		resetLimit()
 		for i in sys.main.btChas:
 			if i != null and i.team == 1:
-				i.plusHp(i.att.maxHp * h)
+				i.plusHp(i.att.maxHp * healStep)
 				Utils.createEffect("heal", i.position, Vector2(0, -30), 7, 2)
 				yield(sys.get_tree().create_timer(0.1), "timeout")
 	else:
