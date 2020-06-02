@@ -42,6 +42,7 @@ func _onBattleEnd():
 	._onBattleEnd()
 	skillStrs[1] = SKILL_TXT
 	atomicRay_pw = 0.75
+	mustardBomb_pw = 4
 
 func _onAddBuff(buff:Buff):
 	if buff.id == "b_liuXue" :
