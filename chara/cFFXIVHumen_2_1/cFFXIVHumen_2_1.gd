@@ -23,13 +23,14 @@ func _onBattleStart():
 
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)
-	if att.hp <= att.maxHp * 0.10 && sys.rndPer(70) && superbolide:
-		Utils.createEffect("shieldBlue", position, Vector2(0, -20), 14, 2)
-		atkInfo.hurtVal = 0
-		addBuff(BUFF_LIST.b_Superbolide.new(15))
-		superbolide = false
-		yield(reTimer(0.5), "timeout")
-		att.hp = 1
+	if (att.hp - atkInfo.hurtVal) <= att.maxHp * 0.10:
+		if sys.rndPer(70) && superbolide:
+			atkInfo.hurtVal = 0
+			superbolide = false
+			addBuff(BUFF_LIST.b_Superbolide.new(15))
+			Utils.createEffect("shieldBlue", position, Vector2(0, -20), 14, 2)
+			yield(reTimer(0.5), "timeout")
+			att.hp = 1
 
 func _onAtkChara(atkInfo:AtkInfo):
 	._onAtkChara(atkInfo)

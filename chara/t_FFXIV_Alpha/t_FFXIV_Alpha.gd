@@ -66,13 +66,13 @@ func come():
 			var n = sys.rndRan(0, 2)
 			match n:
 				0:
-					Utils.backGroundChange("SpaceTimeSlit")
+					Utils.backGroundChange("/img/SpaceTimeSlit.png")
 					addUnit("cex___FFXIVOmegaF")
 				1:
-					Utils.backGroundChange("SpaceTimeSlit")
+					Utils.backGroundChange("/img/SpaceTimeSlit.png")
 					addUnit("cex___FFXIVOmegaM")
 				2:
-					Utils.backGroundChange("SpaceTimeSlit1")
+					Utils.backGroundChange("/img/SpaceTimeSlit1.png")
 					addUnit("cex___FFXIVOmega")
 		else:
 			probability += 1

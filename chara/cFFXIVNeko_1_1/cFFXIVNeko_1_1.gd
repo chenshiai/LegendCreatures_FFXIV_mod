@@ -30,9 +30,9 @@ func _castCdSkill(id):
 		sacredSoil()
 
 func succor():
-	var ailys = getCellChas(cell, 4, 2)
-	ailys.shuffle()
-	for cha in ailys:
+	var allys = getCellChas(cell, 4, 2)
+	allys.shuffle()
+	for cha in allys:
 		if cha != null:
 			cha.plusHp(att.mgiAtk * SUCCOR_PW)
 			cha.addBuff(BUFF_LIST.b_Adloquium.new(10, att.mgiAtk * SUCCOR_PW * shield_pw))
@@ -42,7 +42,7 @@ func succor():
 func sacredSoil():
 	var eff = newEff("numHit", Vector2(-30, -60))
 	eff.setText("野战治疗阵！", "#1a8a00")
-	var ailys = getCellChas(cell, 2, 2)
-	for cha in ailys:
+	var allys = getCellChas(cell, 2, 2)
+	for cha in allys:
 		if cha != null:
 			cha.addBuff(BUFF_LIST.b_SacredSoil.new(10, att.mgiAtk * SACREDSOIL_PW))

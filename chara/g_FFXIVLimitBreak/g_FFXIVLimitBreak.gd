@@ -19,20 +19,16 @@ func _init():
 func createLimitBreak():
 	var Path = Utils.getPath()
 	limitBreak = TextureProgress.new() # 极限技UI节点
-	im.load(Path + "/img/limitBreak_under.png")
-	limitUnder.create_from_image(im)
+
+	limitUnder = Utils.loadImgTexture("/img/limitBreak_under.png")
 	limitBreak.texture_under = limitUnder
 
-	im.load(Path + "/img/limitBreak_progress0.png")
-	limitProgress0.create_from_image(im)
+	limitProgress0 = Utils.loadImgTexture("/img/limitBreak_progress0.png")
 	limitBreak.texture_progress = limitProgress0
 
-	im.load(Path + "/img/limitBreak_progress1.png")
-	limitProgress1.create_from_image(im)
-	im.load(Path + "/img/limitBreak_progress2.png")
-	limitProgress2.create_from_image(im)
-	im.load(Path + "/img/limitBreak_progress.png")
-	limitProgress.create_from_image(im)
+	limitProgress1 = Utils.loadImgTexture("/img/limitBreak_progress1.png")
+	limitProgress2 = Utils.loadImgTexture("/img/limitBreak_progress2.png")
+	limitProgress = Utils.loadImgTexture("/img/limitBreak_progress.png")
 
 	limitBreak.value = 0
 	limitBreak.visible = true

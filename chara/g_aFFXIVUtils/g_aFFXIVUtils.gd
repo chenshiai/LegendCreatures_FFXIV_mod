@@ -24,16 +24,16 @@ func testInit():
 		handle.add_child(label)
 
 
-func loadImg(Path, imgPath):
+func loadImgTexture(imgPath):
 	var im = Image.new()
-	im.load("%s/%s" % [Path, imgPath])
 	var imt = ImageTexture.new()
+	im.load(Path + imgPath)
 	imt.create_from_image(im)
 	return imt
 
 
-func backGroundChange(name):
-	sys.main.get_node("scene/bg/bg").set_texture(loadImg(Path, "img/" + name +".png"))
+func backGroundChange(imgPath):
+	sys.main.get_node("scene/bg/bg").set_texture(loadImgTexture(imgPath))
 
 
 func createEffect(effectName:String, position:Vector2, deviation:Vector2, frame = 15, scale = 1, repeat = false): 

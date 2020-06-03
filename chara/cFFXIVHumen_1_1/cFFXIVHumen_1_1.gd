@@ -9,9 +9,9 @@ func _extInit():
 	lv = 3
 	evos = []
 	addCdSkill("skill_FellCleave", 4)
-	addCdSkill("skill_InnerRelease", 20)
+	addCdSkill("skill_InnerRelease", 16)
 	addSkillTxt("[裂石飞环]：ÇÐ4s，下一次普通攻击对目标造成[390%]的物理伤害")
-	addSkillTxt("[原初的解放]：ÇÐ20s，获得100%的暴击率提升，持续8s")
+	addSkillTxt("[原初的解放]：ÇÐ16s，获得100%的暴击率提升，持续8s")
 
 const FELLCLEAVE_PW = 3.90 # 裂石飞环威力
 var fc = false # 是否准备就绪	
