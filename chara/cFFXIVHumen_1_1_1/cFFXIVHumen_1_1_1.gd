@@ -26,11 +26,13 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
+	livingDead = false
+	deadTime = 7
 
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Decimate":
-		var chas = getCellChas(cell,1)
+		var chas = getCellChas(cell, 2)
 		for i in chas:
 			if i != null:
 				hurtChara(i, att.atk * DECIMATE_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
@@ -41,7 +43,7 @@ func _onHurt(atkInfo:AtkInfo):
 		if !livingDead:
 			atkInfo.hurtVal = 0
 			livingDead = true
-		elif livingDead && deadTime > 0:
+		elif livingDead && deadTime >= 0:
 			atkInfo.hurtVal = 0
 
 func _upS():
@@ -49,5 +51,6 @@ func _upS():
 	if livingDead && deadTime > 0:
 		att.hp = 1
 		deadTime -= 1
-	elif deadTime <= 0:
+	elif deadTime == 0:
 		plusHp(att.maxHp * 0.20)
+		deadTime -= 1

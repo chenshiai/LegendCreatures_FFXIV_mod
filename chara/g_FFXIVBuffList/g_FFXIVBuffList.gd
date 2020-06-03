@@ -336,10 +336,11 @@ class b_Paean:
 # 行吟，减伤			
 class b_Troubadour:
 	extends Buff
-	func _init():
+	func _init(dur = 1):
 		attInit()
 		id = "b_Troubadour"
 		isNegetive = false
+		life = dur
 
 	func _connect():
 		masCha.connect("onHurt", self, "onHurt")

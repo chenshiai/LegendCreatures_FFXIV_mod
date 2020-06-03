@@ -25,7 +25,7 @@ func _onBattleStart():
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Autoturret":
-		yield(reTimer(1), "timeout")
+		yield(reTimer(0.2), "timeout")
 		autoturret(false)
-		yield(reTimer(1), "timeout")
+		yield(reTimer(0.2), "timeout")
 		autoturret(false)

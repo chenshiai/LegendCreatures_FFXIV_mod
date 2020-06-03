@@ -51,7 +51,7 @@ func selfAdaption():
 	E_num = allAtt["num"]
 	E_lv = allAtt["lv"]
 	
-	attInfo.maxHp = (E_atk + E_mgiAtk) * 30
+	attInfo.maxHp = (E_atk + E_mgiAtk) * 36
 	attInfo.atk = (E_def + E_maxHp / 8) / E_num + layer
 	attInfo.mgiAtk = (E_mgiDef + E_maxHp / 8) / E_num + layer
 	attInfo.def = E_atk / E_num + layer

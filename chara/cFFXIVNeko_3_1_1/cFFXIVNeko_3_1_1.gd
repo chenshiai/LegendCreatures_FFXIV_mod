@@ -29,4 +29,4 @@ func troubadour():
 	var ailys = getAllChas(2)
 	for cha in ailys:
 		if cha != null:
-			cha.addBuff(BUFF_LIST.b_Troubadour.new())
+			cha.addBuff(BUFF_LIST.b_Troubadour.new(999))
