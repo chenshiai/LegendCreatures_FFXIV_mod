@@ -94,7 +94,7 @@ class b_Shiver:
 		att.reHp = 0.20
 
 	func _upS():
-		life = clamp(life, 0, 10)
+		life = clamp(life, 0, 20)
 		if life <= 1:
 			life = 0
 
@@ -401,16 +401,11 @@ class b_Overload:
 		attInit()
 		id = "b_Overload"
 		isNegetive = false
+		att.atkR = 0.20
 		life = dur
 
 	func _upS():
-		if life > 5:
-			att.atkR = 0.20
-		else:
-			att.atkR = -0.10 
-		life = clamp(life, 0, 13)
-		if life < 1:
-			life = 0
+		life = clamp(life, 0, 8)
 
 # 太阳神之衡  
 class b_Balance:

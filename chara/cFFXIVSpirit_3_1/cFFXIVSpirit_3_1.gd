@@ -11,7 +11,7 @@ func _extInit():
 	attAdd.atkL += 0.15
 	addCdSkill("skill_Stardiver", 25)
 	addSkillTxt("[红莲龙血]：被动，获得15%的攻击力加成")
-	addSkillTxt("[坠星冲]：冷却时间25s，高高跃起，向随机一名敌人猛冲，对落点周围2格的敌人造成[600%]的物理伤害")
+	addSkillTxt("[坠星冲]：冷却时间25s，高高跃起，向随机一名敌人猛冲，对落点周围2格的敌人造成[700%]的物理伤害")
 
 const STARDIVER_PW = 6 # 坠星冲倍率
 

@@ -17,7 +17,8 @@ func get_info():
 	return """从此刻开始体验经过夸大的激昂战斗
 所有敌方双攻提高%d%%，战斗后额外获得%d金币
 有概率出现强大的BOSS单位！！！
-BOSS战可以使用极限技能了！！！""" % [(0.1 + lv * 0.01) * 100, 25 + lv * 15]
+BOSS战可以使用极限技能了！！！
+来自《最终幻想14》""" % [(0.1 + lv * 0.01) * 100, 25 + lv * 15]
 
 func _connect():
 	sys.main.connect("onBattleReady", self, "come")

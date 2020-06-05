@@ -13,6 +13,7 @@ var E_def = 1
 var E_mgiDef = 1
 var E_num = 1
 var E_lv = 1
+var E_spd = 1
 
 func _extInit():
 	._extInit()
@@ -41,23 +42,25 @@ func _onBattleEnd():
 
 # Boss自适应属性
 func selfAdaption():
-	layer = sys.main.guankaMsg.lvStep - 2
-	allAtt = Utils.Calculation.getEnemyPower(self.team)
-	E_atk = allAtt["atk"]
-	E_mgiAtk = allAtt["mgiAtk"]
-	E_def = allAtt["def"]
-	E_mgiDef = allAtt["mgiDef"]
-	E_maxHp = allAtt["maxHp"]
-	E_num = allAtt["num"]
-	E_lv = allAtt["lv"]
-	
-	attInfo.maxHp = (E_atk + E_mgiAtk) * 36
-	attInfo.atk = (E_def + E_maxHp / 8) / E_num + layer
-	attInfo.mgiAtk = (E_mgiDef + E_maxHp / 8) / E_num + layer
-	attInfo.def = E_atk / E_num + layer
-	attInfo.mgiDef = E_mgiAtk / E_num + layer
+	if self.team == 2:
+		layer = sys.main.guankaMsg.lvStep - 2
+		allAtt = Utils.Calculation.getEnemyPower(self.team)
+		E_atk = allAtt["atk"]
+		E_mgiAtk = allAtt["mgiAtk"]
+		E_def = allAtt["def"]
+		E_mgiDef = allAtt["mgiDef"]
+		E_maxHp = allAtt["maxHp"]
+		E_spd = allAtt["spd"]
+		E_num = allAtt["num"]
+		E_lv = allAtt["lv"]
+		print(E_spd)
+		attInfo.maxHp = (E_atk + E_mgiAtk) * (30 * E_spd / E_num)
+		attInfo.atk = (E_def + E_maxHp / 8) / E_num
+		attInfo.mgiAtk = (E_mgiDef + E_maxHp / 8) / E_num
+		attInfo.def = (E_atk + layer * 2) / E_num
+		attInfo.mgiDef = (E_mgiAtk + layer * 2) / E_num
 
-	upAtt()
+		upAtt()
 
 # 战后重置属性
 func reset():
@@ -72,6 +75,11 @@ func reset():
 func setTimeAxis(skillAxis):
 	TimeAxis = Utils.createTimeAxis(skillAxis)
 	print("最终幻想14：Boss时间轴已创建")
+
+func _onHurt(atkInfo:AtkInfo):
+	._onHurt(atkInfo)
+	if atkInfo.hurtType == Chara.AtkType.EFF:
+		atkInfo.hurtVal = att.maxHp * 0.005
 
 func _upS():
 	._upS()

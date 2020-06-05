@@ -9,7 +9,6 @@ func _extInit():
 	attCoe.atkRan = 2
 	attCoe.maxHp = 4.1
 	attCoe.atk = 5.2
-	attCoe.mgiAtk = 2
 	attCoe.def = 4
 	attCoe.mgiDef = 3.7
 	lv = 4

@@ -8,6 +8,7 @@ func _extInit():
 	chaName = "龙骑士"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 3.3
+	attCoe.mgiAtk = 1
 	attCoe.atk = 4
 	attCoe.def = 3
 	attCoe.mgiDef = 2.8

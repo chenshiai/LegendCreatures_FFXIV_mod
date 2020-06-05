@@ -9,6 +9,7 @@ func _extInit():
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4.6
 	attCoe.atk = 4
+	attCoe.mgiAtk = 1
 	attCoe.def = 4
 	attCoe.mgiDef = 4
 	lv = 2
@@ -16,7 +17,7 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_Shiver", 20)
 	addSkillTxt("[守护]：受到的伤害减少20%")
-	addSkillTxt("[战栗]：ÇÐ20s，立即治疗20%的最大生命值。然后最大生命值提高20%，受到的治疗量提高20%，持续10s")
+	addSkillTxt("[战栗]：ÇÐ20s，立即治疗20%的最大生命值。然后最大生命值提高20%，受到的治疗量提高20%，持续20s")
 
 func _connect():
 	._connect()
@@ -31,7 +32,7 @@ func _onBattleStart():
 
 func shiver():
 	plusHp(att.maxHp * 0.20)
-	addBuff(BUFF_LIST.b_Shiver.new(10))
+	addBuff(BUFF_LIST.b_Shiver.new(20))
 	var eff = newEff("numHit", Vector2(30, -60))
 	eff.setText("战栗！", "#3cff00")
 

@@ -8,7 +8,6 @@ func _extInit():
 	chaName = "娜休梅拉-传奇"
 	attCoe.maxHp = 4
 	attCoe.atk = 5
-	attCoe.mgiAtk = 2
 	attCoe.def = 3.2
 	attCoe.mgiDef = 3.8
 	lv = 4

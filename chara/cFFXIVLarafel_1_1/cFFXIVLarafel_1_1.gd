@@ -11,9 +11,9 @@ func _extInit():
 	addCdSkill("skill_Benediction", 20)
 	addSkillTxt("[天赐祝福]：ÇÐ20s，为生命最低的友方单位恢复至满血，第一次使用后，此技能ÇÐ延长至60s")
 	addCdSkill("skill_StornIII", 4)
-	addSkillTxt("[崩石]：ÇÐ4s，对目标造成[130%]的魔法伤害")
+	addSkillTxt("[崩石]：ÇÐ4s，对目标造成[90%]的魔法伤害")
 
-const STORNIII_PW = 1.30 # 崩石威力
+const STORNIII_PW = 0.90 # 崩石威力
 
 func _connect():
 	._connect()

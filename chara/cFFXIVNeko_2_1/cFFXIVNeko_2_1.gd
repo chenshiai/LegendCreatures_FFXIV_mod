@@ -9,8 +9,8 @@ func _extInit():
 	lv = 3
 	evos = []
 	addCdSkill("skill_Dreadwyrm", 24)
-	addSkillTxt("[龙神附体]：ÇÐ24s，自身魔法强度提高10%，持续8s")
-	addSkillTxt("[龙神迸发]：被动，龙神附体时，对目标及周围2格内的敌人造成[700%]法强的魔法伤害")
+	addSkillTxt("""[龙神附体]：ÇÐ24s，自身魔法强度提高10%，持续8s
+[龙神迸发]：被动，龙神附体时，对目标及周围2格内的敌人造成[700%]法强的魔法伤害""")
 
 const ENKINDLEBAHAMUT_PW = 7 # 龙神迸发威力
 
@@ -39,6 +39,8 @@ func enkindleBahamut(lv):
 	
 	for i in chas:
 		if i != null:
-			hurtChara(i, att.mgiAtk * ENKINDLEBAHAMUT_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 			if lv == 4:
+				hurtChara(i, att.mgiAtk * (ENKINDLEBAHAMUT_PW + 0.60), Chara.HurtType.MGI, Chara.AtkType.SKILL)
 				i.addBuff(b_shaoZhuo.new(20))
+			else:
+				hurtChara(i, att.mgiAtk * ENKINDLEBAHAMUT_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)

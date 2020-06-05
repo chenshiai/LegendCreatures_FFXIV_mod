@@ -9,9 +9,11 @@ func _init():
 
 func _ready():
 	pass
-	
+
+
 func getPath():
 	return Path
+
 
 func testInit():
 	Path = chaData.infoDs["cFFXIV_zTatalu"].dir
@@ -102,6 +104,7 @@ class Calculation:
 			"def": 0,
 			"mgiDef": 0,
 			"lv": 0,
+			"spd": 0,
 			"num": 0
 		}
 
@@ -112,6 +115,7 @@ class Calculation:
 				att["mgiAtk"] += i.att.mgiAtk
 				att["def"] += i.att.def
 				att["mgiDef"] += i.att.mgiDef
+				att["spd"] += i.att.spd
 				att["lv"] += i.lv
 				att["num"] += 1
 
