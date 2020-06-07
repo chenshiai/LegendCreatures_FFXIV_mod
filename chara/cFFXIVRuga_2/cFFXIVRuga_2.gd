@@ -7,9 +7,8 @@ func _extInit():
 	._extInit()
 	chaName = "武僧"
 	attCoe.atkRan = 1
-	attCoe.maxHp = 3
+	attCoe.maxHp = 4
 	attCoe.atk = 4
-	attCoe.mgiAtk = 1
 	attCoe.def = 3.1
 	attCoe.mgiDef = 3.1
 	attAdd.spd += 0.16
@@ -36,7 +35,7 @@ func _onAtkChara(atkInfo:AtkInfo):
 	._onAtkChara(atkInfo)
 	if atkInfo.atkType == Chara.AtkType.NORMAL:
 		addBuff(b_jiSu.new(2))
-		if sys.rndPer(50) && fightGas < 5:
+		if sys.rndPer(50) and fightGas < 5:
 			fightGasUp()
 
 func fightGasUp():

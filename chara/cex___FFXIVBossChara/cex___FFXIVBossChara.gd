@@ -45,14 +45,14 @@ func selfAdaption():
 	if self.team == 2:
 		layer = sys.main.guankaMsg.lvStep - 2
 		allAtt = Utils.Calculation.getEnemyPower(self.team)
-		E_atk = allAtt["atk"]
-		E_mgiAtk = allAtt["mgiAtk"]
-		E_def = allAtt["def"]
-		E_mgiDef = allAtt["mgiDef"]
-		E_maxHp = allAtt["maxHp"]
-		E_spd = allAtt["spd"]
-		E_num = allAtt["num"]
-		E_lv = allAtt["lv"]
+		E_atk = allAtt.atk
+		E_mgiAtk = allAtt.mgiAtk
+		E_def = allAtt.def
+		E_mgiDef = allAtt.mgiDef
+		E_maxHp = allAtt.maxHp
+		E_spd = allAtt.spd
+		E_num = allAtt.num
+		E_lv = allAtt.lv
 		print(E_spd)
 		attInfo.maxHp = (E_atk + E_mgiAtk) * (30 * E_spd / E_num)
 		attInfo.atk = (E_def + E_maxHp / 8) / E_num
@@ -78,7 +78,7 @@ func setTimeAxis(skillAxis):
 
 func _onHurt(atkInfo:AtkInfo):
 	._onHurt(atkInfo)
-	if atkInfo.hurtType == Chara.AtkType.EFF:
+	if atkInfo.atkType == Chara.AtkType.EFF:
 		atkInfo.hurtVal = att.maxHp * 0.005
 
 func _upS():

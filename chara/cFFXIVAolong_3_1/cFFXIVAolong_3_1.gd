@@ -26,7 +26,7 @@ func _onAtkChara(atkInfo):
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_Ninjutsu" && !ninjutsu:
+	if id == "skill_Ninjutsu" and !ninjutsu:
 		ninjutsu = true
 		var sk = getSkill("skill_Ninjutsu")
 		sk.cd = 6

@@ -40,7 +40,7 @@ func stornIII():
 
 func benediction():
 	var chas = getAllChas(2)
-	chas.sort_custom(Utils.Calculation, "sort_MinHp")
+	chas.sort_custom(Utils.Calculation, "sort_MinHpP")
 	if chas[0] != null:
 		chas[0].plusHp(chas[0].att.maxHp)
 	

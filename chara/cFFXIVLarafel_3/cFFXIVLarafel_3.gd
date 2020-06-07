@@ -45,14 +45,14 @@ func _onBattleEnd():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_Verthunder" && aiCha != null:
+	if id == "skill_Verthunder" and aiCha != null:
 		verthunder(true, VERTHUNDER_PW)
 
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)
 	if (atkInfo.atkType == AtkType.NORMAL
-			&& blackMorgen >= REDOUBLEMENT_CAST
-			&& whiteMorgan >= REDOUBLEMENT_CAST):
+			and blackMorgen >= REDOUBLEMENT_CAST
+			and whiteMorgan >= REDOUBLEMENT_CAST):
 		atkInfo.hurtVal *= REDOUBLEMENT_PW
 		atkInfo.isCri = true
 		blackMorgen -= REDOUBLEMENT_CAST
@@ -68,11 +68,11 @@ func verthunder(first, pw):
 	hurtChara(aiCha, att.mgiAtk * pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
 	var n = sys.rndRan(0, 1)
-	if n == 0 && blackMorgen < (MORGEN + MORGEN_MAX):
+	if n == 0 and blackMorgen < (MORGEN + MORGEN_MAX):
 		blackMorgen += MORGEN
 		if blackMorgen > MORGEN_MAX:
 			blackMorgen = MORGEN_MAX
-	elif n == 1 && whiteMorgan < (MORGEN + MORGEN_MAX):
+	elif n == 1 and whiteMorgan < (MORGEN + MORGEN_MAX):
 		whiteMorgan += MORGEN
 		if whiteMorgan > MORGEN_MAX:
 			whiteMorgan = MORGEN_MAX

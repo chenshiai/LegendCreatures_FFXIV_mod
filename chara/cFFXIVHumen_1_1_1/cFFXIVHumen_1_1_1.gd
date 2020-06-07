@@ -14,7 +14,7 @@ func _extInit():
 	evos = []
 	addCdSkill("skill_Decimate", 12)
 	addSkillTxt("[地毁人亡]：ÇÐ12s，对周围2格内的敌人造成[180%]的物理伤害")
-	addSkillTxt("[死斗]：当受到致命伤害时，不会立即死亡（除特定攻击外），持续7s，效果结束后恢复20%的HP")
+	addSkillTxt("[死斗]：濒死时开启，不会死亡(除特定攻击外)，持续7s，然后恢复20%的生命值，最多触发一次")
 
 var baseId = ""
 const DECIMATE_PW = 1.80 # 地毁人亡威力
@@ -43,12 +43,12 @@ func _onHurt(atkInfo:AtkInfo):
 		if !livingDead:
 			atkInfo.hurtVal = 0
 			livingDead = true
-		elif livingDead && deadTime >= 0:
+		elif livingDead and deadTime >= 0:
 			atkInfo.hurtVal = 0
 
 func _upS():
 	._upS()
-	if livingDead && deadTime > 0:
+	if livingDead and deadTime > 0:
 		att.hp = 1
 		deadTime -= 1
 	elif deadTime == 0:

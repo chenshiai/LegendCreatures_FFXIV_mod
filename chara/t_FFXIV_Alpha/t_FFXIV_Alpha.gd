@@ -83,7 +83,7 @@ func clear(bosscha):
 	for i in range(0,8):
 		for j in range(0,5):
 			cha = sys.main.matCha(Vector2(i, j))
-			if cha != null && cha.team != 1 && cha != bosscha:
+			if cha != null and cha.team != 1 and cha != bosscha:
 				sys.main.delMatChara(cha)
 
 func addUnit(id):

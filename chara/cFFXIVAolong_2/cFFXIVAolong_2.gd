@@ -7,9 +7,8 @@ func _extInit():
 	._extInit()
 	chaName = "武士"
 	attCoe.atkRan = 1
-	attCoe.maxHp = 3.3
+	attCoe.maxHp = 4
 	attCoe.atk = 4.2
-	attCoe.mgiAtk = 1
 	attCoe.def = 3
 	attCoe.mgiDef = 2.8
 	attAdd.atkL += 0.10
@@ -91,7 +90,7 @@ func setsugekka(skill_pw):
 	if sys.rndPer(att.cri * 100):
 		pw = 2 + att.criR
 
-	jump(position, aiCha.position)
+	Utils.createShadow(img, position, aiCha.position)
 	normalSpr.position = Vector2(0, -600)
 	yield(reTimer(0.3), "timeout")
 	Utils.createEffect("slashBlue", aiCha.position, Vector2(0,-30), 14)
@@ -107,15 +106,3 @@ func reset():
 	atkCount = 0
 	flash = 0
 	normalSpr.position = Vector2(0, 0)
-
-func jump(startPositon, endPositon):
-	var l:Vector2 = endPositon - startPositon
-	var s = 25
-	var rs = preload("res://core/ying.tscn")
-	var n = l.length()/s
-	for i in range(n):
-		var spr = rs.instance()
-		sys.main.map.add_child(spr)
-		spr.texture = img.texture_normal
-		spr.position = position + s * (i+1) * l.normalized() - Vector2(img.texture_normal.get_width() / 2, img.texture_normal.get_height())
-		spr.init(255/n * i + 100)

@@ -7,9 +7,8 @@ func _extInit():
 	._extInit()
 	chaName = "忍者"
 	attCoe.atkRan = 1
-	attCoe.maxHp = 3
+	attCoe.maxHp = 4
 	attCoe.atk = 4.1
-	attCoe.mgiAtk = 1
 	attCoe.def = 2.8
 	attCoe.mgiDef = 3
 	attAdd.dod += 0.30
@@ -41,7 +40,7 @@ func normalAtkChara(cha):
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_Ninjutsu" && aiCha != null:
+	if id == "skill_Ninjutsu" and aiCha != null:
 		Utils.createEffect("whirlwind", Vector2(position.x, position.y - 1), Vector2(0,-40), 15, 1, false)
 		var n = sys.rndRan(0, 2)
 		if n == 0:
@@ -60,7 +59,7 @@ func fuma():
 	d._initFlyCha(chas[0])
 	yield(d, "onReach")
 
-	if sys.isClass(chas[0], "Chara") && chas[0] != null:
+	if sys.isClass(chas[0], "Chara") and chas[0] != null:
 		hurtChara(chas[0], att.atk * FUMA_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
 # 冰遁之术

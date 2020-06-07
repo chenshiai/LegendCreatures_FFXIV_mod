@@ -8,9 +8,9 @@ func _extInit():
 	chaName = "红叶之诗"
 	lv = 3
 	evos = []
-	addCdSkill("skill_ApexArrow", 8)
+	addCdSkill("skill_ApexArrow", 12)
 	addSkillTxt("[辉煌箭]：被动，普通攻击有20%的概率触发，造成[330%]的物理伤害")
-	addSkillTxt("[绝峰箭]：ÇÐ8s，射出穿透箭对直线上单位造成[200%]的物理伤害，并赋予5层[流血]")
+	addSkillTxt("[绝峰箭]：ÇÐ12s，射出穿透箭对直线上单位造成[200%]的物理伤害，并赋予5层[流血]")
 
 const REFULGENT_PW = 3.30 # 辉煌箭威力
 const APEXARROW_PW = 2 # 绝峰箭威力
@@ -23,7 +23,7 @@ func _onBattleStart():
 
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)
-	if atkInfo.atkType == AtkType.NORMAL && sys.rndPer(20):
+	if atkInfo.atkType == AtkType.NORMAL and sys.rndPer(20):
 		var eff = newEff("numHit", Vector2(30, -60))
 		eff.setText("辉煌箭！", "#fff000")
 		atkInfo.hurtVal *= REFULGENT_PW
@@ -41,6 +41,6 @@ func apexArrow():
 
 func effInCell(cell):
 	var cha = matCha(cell)
-	if cha != null && cha.team != team :
+	if cha != null and cha.team != team :
 		hurtChara(cha, att.atk * APEXARROW_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 		cha.addBuff(b_liuXue.new(5))

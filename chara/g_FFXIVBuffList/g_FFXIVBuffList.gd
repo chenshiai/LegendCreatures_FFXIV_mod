@@ -14,13 +14,7 @@ class b_Abhor:
 		attInit()
 		id = "b_Abhor"
 		isNegetive = false
-		att.mgiDefL = 0.20
-
-	func _connect():
-		masCha.connect("onHurt", self, "run")
-
-	func run(atkInfo:AtkInfo):
-		atkInfo.hurtVal *= 0.90
+		att.mgiDefL = 0.10
 
 # 暗黑布道，减少魔法伤害
 class b_DarkMissionary:
@@ -36,12 +30,10 @@ class b_DarkMissionary:
 
 	func run(atkInfo:AtkInfo):
 		if atkInfo.hurtType == Chara.HurtType.MGI:
-			atkInfo.hurtVal *= 0.80
+			atkInfo.hurtVal *= 0.90
 			
 	func _upS():
 		life = clamp(life, 0, 6)
-		if life <= 1:
-			life = 0
 
 # 至黑之夜，护盾。可以吸收一定数值的伤害
 class b_TheBlackestNight:
@@ -67,6 +59,28 @@ class b_TheBlackestNight:
 		elif total <= 0:
 			total = 0
 
+# 活死人，无敌，但是还是会死
+class b_LivingDeath:
+	extends Buff
+	func _init(dur = 1):
+		attInit()
+		id = "b_LivingDeath"
+		isNegetive = false
+		life = dur
+
+	func _connect():
+		masCha.connect("onHurt", self, "onHurt")
+
+	func onHurt(atkInfo:AtkInfo):
+		atkInfo.hurtVal = 0
+
+	func _upS():
+		life = clamp(life, 0, 10)
+
+	func _del():
+		if life < 0:
+			masCha.hurtChara(masCha, masCha.att.maxHp, Chara.HurtType.REAL)
+
 # 强甲破点突，削弱双抗
 class b_ArmorCrush:
 	extends Buff
@@ -79,8 +93,6 @@ class b_ArmorCrush:
 	
 	func _upS():
 		life = clamp(life, 0, 7)
-		if life <= 1:
-			life = 0
 
 # 战栗，提高最大生命值和治疗量
 class b_Shiver:
@@ -95,8 +107,6 @@ class b_Shiver:
 
 	func _upS():
 		life = clamp(life, 0, 20)
-		if life <= 1:
-			life = 0
 
 # 原初的解放，提高暴击率
 class b_InnerRelease:
@@ -110,8 +120,6 @@ class b_InnerRelease:
 
 	func _upS():
 		life = clamp(life, 0, 8)
-		if life <= 1:
-			life = 0
 
 # 超火流星，无敌
 class b_Superbolide:
@@ -130,8 +138,26 @@ class b_Superbolide:
 
 	func _upS():
 		life = clamp(life, 0, 15)
-		if life <= 1:
-			life = 0
+
+# 光之心，减少魔法伤害
+class b_HeartOfLight:
+	extends Buff
+	func _init(dur = 1):
+		attInit()
+		id = "b_HeartOfLight"
+		life = dur
+		isNegetive = false
+
+	func _connect():
+		masCha.connect("onHurt", self, "run")
+
+	func run(atkInfo:AtkInfo):
+		if atkInfo.hurtType == Chara.HurtType.MGI:
+			atkInfo.hurtVal *= 0.90
+			print("光之心生效！")
+			
+	func _upS():
+		life = clamp(life, 0, 10)
 
 # 舞伴，攻击力提高
 class b_DancingPartner:
@@ -156,8 +182,6 @@ class b_DanceStep:
 
 	func _upS():
 		life = clamp(life, 0, 10)
-		if life <= 1:
-			life = 0
 
 class b_Devilment:
 	extends Buff
@@ -171,8 +195,6 @@ class b_Devilment:
 
 	func _upS():
 		life = clamp(life, 0, 8)
-		if life <= 1:
-			life = 0
 
 # 再生，持续恢复
 class b_Regen:
@@ -187,8 +209,6 @@ class b_Regen:
 	func _upS():
 		masCha.plusHp(hot)
 		life = clamp(life, 0, 18)
-		if life <= 1:
-			life = 0
 
 # 黑魔纹，冷却缩减
 class b_LeyLines:
@@ -202,8 +222,21 @@ class b_LeyLines:
 
 	func _upS():
 		life = clamp(life, 0, 30)
-		if life <= 1:
-			life = 0
+
+# 天语
+class b_Enochian:
+	extends Buff
+	func _init(lv):
+		attInit()
+		id = "b_Enochian"
+		isNegetive = false
+
+	func _connect():
+		masCha.connect("onAtkChara", self, "run")
+	
+	func run(atkInfo):
+		if atkInfo.atkType != Chara.AtkType.EFF:
+			atkInfo.hurtVal *= 1 + (0.05 * (lv - 1))
 
 # 倍增,提高法强
 class b_Manafication:
@@ -217,8 +250,6 @@ class b_Manafication:
 
 	func _upS():
 		life = clamp(life, 0, 10)
-		if life <= 1:
-			life = 0
 
 # 鼓舞，护盾。可以吸收一定数值的伤害
 class b_Adloquium:
@@ -239,8 +270,6 @@ class b_Adloquium:
 
 	func _upS():
 		life = clamp(life, 0, 10)
-		if life <= 1:
-			life = 0
 
 	func onHurt(atkInfo:AtkInfo):
 		if total >= 0:
@@ -273,8 +302,6 @@ class b_SacredSoil:
 	func _upS():
 		masCha.plusHp(hot)
 		life = clamp(life, 0, 10)
-		if life <= 1:
-			life = 0			
 
 # 龙神迸发，提高法强
 class b_Dreadwyrm:
@@ -288,8 +315,6 @@ class b_Dreadwyrm:
 
 	func _upS():
 		life = clamp(life, 0, 8)
-		if life <= 1:
-			life = 0
 
 # 贤者的叙事谣，提高非特效伤害
 class b_Ballad:
@@ -305,12 +330,10 @@ class b_Ballad:
 
 	func _upS():
 		life = clamp(life, 0, 8)
-		if life <= 1:
-			life = 0
 
 	func onAtkChara(atkInfo:AtkInfo):
 		if atkInfo.atkType != Chara.AtkType.EFF: 
-			atkInfo.hurtVal *= 1.05
+			atkInfo.hurtVal *= 1.08
 
 # 光阴神的礼赞凯歌，debuff免疫
 class b_Paean:
@@ -330,8 +353,6 @@ class b_Paean:
 
 	func _upS():
 		life = clamp(life, 0, 3)
-		if life <= 1:
-			life = 0
 
 # 行吟，减伤			
 class b_Troubadour:
@@ -348,7 +369,25 @@ class b_Troubadour:
 	func onHurt(atkInfo:AtkInfo):
 		atkInfo.hurtVal *= 0.90
 
-# 钢铁意志，提高防御，固定减伤
+# 魔人曲。魔法易伤
+class b_RequiemOfTheDevil:
+	extends Buff
+	func _init():
+		attInit()
+		id = "b_RequiemOfTheDevil"
+		isNegetive = false
+	
+	func _connect():
+		var bf = masCha.hasBuff("b_RequiemOfTheDevil")
+		if bf != null:
+			bf.isDel = true
+		masCha.connect("onHurt", self, "run")
+
+	func run(atkInfo:AtkInfo):
+		if atkInfo.hurtType == Chara.HurtType.MGI: 
+			atkInfo.hurtVal *= 1.1
+		
+# 钢铁意志，提高防御
 class b_SteelBelief:
 	extends Buff
 	func _init():
@@ -356,12 +395,6 @@ class b_SteelBelief:
 		id = "b_SteelBelief"
 		isNegetive = false
 		att.defL = 0.10
-
-	func _connect():
-		masCha.connect("onHurt", self, "onHurt")
-
-	func onHurt(atkInfo:AtkInfo):
-		atkInfo.hurtVal *= 0.90
 
 # 安魂祈祷
 class b_Requiescat:
@@ -375,8 +408,35 @@ class b_Requiescat:
 
 	func _upS():
 		life = clamp(life, 0, 15)
-		if life <= 1:
-			life = 0
+
+# 圣光幕帘，护盾。可以吸收一定数值的伤害
+class b_DivineVeil:
+	extends Buff
+	var total = 0
+	func _init(dur = 1, val = 0):
+		attInit()
+		id = "b_DivineVeil"
+		total = val
+		isNegetive = false
+		life = dur
+
+	func _connect():
+		masCha.connect("onHurt", self, "onHurt")
+
+	func _upS():
+		life = clamp(life, 0, 10)
+
+	func onHurt(atkInfo:AtkInfo):
+		if total >= 0:
+			if total > atkInfo.hurtVal:
+				total -= atkInfo.hurtVal
+				atkInfo.hurtVal = 0
+			else:
+				atkInfo.hurtVal -= total
+				total = 0
+		elif total <= 0:
+			total = 0
+
 
 # 野火Buff
 class b_Wildfire:
@@ -390,8 +450,6 @@ class b_Wildfire:
 
 	func _upS():
 		life = clamp(life, 0, 7)
-		if life < 1:
-			life = 0
 
 # 过载			
 class b_Overload:
@@ -419,8 +477,6 @@ class b_Balance:
 
 	func _upS():
 		life = clamp(life, 0, 5)
-		if life <= 1:
-			life = 0
 
 # 放浪神之箭  
 class b_Arrow:
@@ -434,8 +490,6 @@ class b_Arrow:
 
 	func _upS():
 		life = clamp(life, 0, 5)
-		if life <= 1:
-			life = 0
 
 # 战争神之枪     
 class b_Spear:
@@ -449,8 +503,6 @@ class b_Spear:
 
 	func _upS():
 		life = clamp(life, 0, 5)
-		if life <= 1:
-			life = 0
 
 # 世界树之干
 class b_Bole:
@@ -464,8 +516,6 @@ class b_Bole:
 
 	func _upS():
 		life = clamp(life, 0, 5)
-		if life <= 1:
-			life = 0
 
 # 河流神之瓶
 class b_Ewer:
@@ -479,8 +529,6 @@ class b_Ewer:
 
 	func _upS():
 		life = clamp(life, 0, 5)
-		if life <= 1:
-			life = 0
 
 # 建筑神之塔
 class b_Spire:
@@ -494,8 +542,6 @@ class b_Spire:
 
 	func _upS():
 		life = clamp(life, 0, 5)
-		if life <= 1:
-			life = 0
 
 # 吉星
 class b_LuckyStar:
@@ -531,8 +577,6 @@ class b_Night:
 
 	func _upS():
 		life = clamp(life, 0, 10)
-		if life <= 1:
-			life = 0
 
 	func onHurt(atkInfo:AtkInfo):
 		if total >= 0:
@@ -544,6 +588,39 @@ class b_Night:
 				total = 0
 		elif total <= 0:
 			total = 0
+
+# 命运之轮，减少伤害
+class b_Collective:
+	extends Buff
+	func _init(dur = 1):
+		attInit()
+		id = "b_Collective"
+		life = dur
+		isNegetive = false
+
+	func _connect():
+		masCha.connect("onHurt", self, "run")
+
+	func run(atkInfo:AtkInfo):
+		atkInfo.hurtVal *= 0.90
+		print("命运之轮生效")
+			
+	func _upS():
+		life = clamp(life, 0, 18)
+
+
+# 红莲龙血
+class b_LifeOfTheDragon:
+	extends Buff
+	func _init(dur = 1):
+		attInit()
+		id = "b_LifeOfTheDragon"
+		isNegetive = false
+		att.atkL = 0.15
+		life = dur
+
+	func _upS():
+		life = clamp(life, 0, 15)
 
 # 静止不动
 class b_StaticTime:

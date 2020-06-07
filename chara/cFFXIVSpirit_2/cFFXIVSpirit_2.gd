@@ -55,13 +55,13 @@ func drawCard():
 
 	var chas = getAllChas(2)
 	for cha in chas:
-		if cha != null && bf != null:
+		if cha != null and bf != null:
 			cha.addBuff(bf)
 
 # 阳星相位		
 func starPhase(lv):
-	var ailys = getAllChas(2)
-	for cha in ailys:
+	var allys = getAllChas(2)
+	for cha in allys:
 		if cha != null:
 			cha.plusHp(att.mgiAtk * STARPHASE_PW)
 			cha.addBuff(BUFF_LIST.b_Night.new(10, att.mgiAtk * STARPHASE_PW * 1.25))

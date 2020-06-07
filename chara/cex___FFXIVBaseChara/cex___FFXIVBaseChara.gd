@@ -14,13 +14,13 @@ func _connect():
 
 func _extInit():
   ._extInit()
-  chaName = "极限技"
+  chaName = "基础角色"
   attCoe.atkRan = 1
   attCoe.maxHp = 1
-  attCoe.atk = 0
-  attCoe.mgiAtk = 0
-  attCoe.def = 0
-  attCoe.mgiDef = 0
+  attCoe.atk = 1
+  attCoe.mgiAtk = 1
+  attCoe.def = 1
+  attCoe.mgiDef = 1
 
 func _upS():
   ._upS()

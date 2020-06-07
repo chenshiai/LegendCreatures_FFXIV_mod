@@ -24,5 +24,5 @@ func _connect():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_WindBlade" && aiCha != null:
+	if id == "skill_WindBlade" and aiCha != null:
 		aiCha.addBuff(b_zhonDu.new(3))

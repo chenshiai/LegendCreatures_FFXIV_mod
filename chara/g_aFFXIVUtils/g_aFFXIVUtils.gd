@@ -79,6 +79,17 @@ func createUiButton(text, position, target = self, callback = "defaultCallback",
 func defaultCallback():
 	sys.newBaseMsg("测试", "并未连接到任何函数")
 
+func createShadow(img, startPositon:Vector2, endPositon:Vector2, speed = 25):
+	var distance = endPositon - startPositon
+	var rs = preload("res://core/ying.tscn")
+	var n = distance.length() / speed
+	for i in range(n):
+		var spr = rs.instance()
+		sys.main.map.add_child(spr)
+		spr.texture = img.texture_normal
+		spr.position = startPositon + speed * (i + 1) * distance.normalized() - Vector2(img.texture_normal.get_width() / 2, img.texture_normal.get_height())
+		spr.init(255 / n * i + 100)
+
 # 数据处理类
 class Calculation:
 	static func sort_MaxMgiAtk(a, b):
@@ -91,8 +102,13 @@ class Calculation:
 			return true
 		return false
 	
-	static func sort_MinHp(a, b):
+	static func sort_MinHpP(a, b):
 		if (a.att.hp / a.att.maxHp) < (b.att.hp / b.att.maxHp):
+			return true
+		return false
+
+	static func sort_MinHp(a, b):
+		if a.att.hp < b.att.hp:
 			return true
 		return false
 
@@ -110,13 +126,13 @@ class Calculation:
 
 		for i in sys.main.btChas:
 			if i.team != team:
-				att["maxHp"] += i.att.maxHp
-				att["atk"] += i.att.atk
-				att["mgiAtk"] += i.att.mgiAtk
-				att["def"] += i.att.def
-				att["mgiDef"] += i.att.mgiDef
-				att["spd"] += i.att.spd
-				att["lv"] += i.lv
-				att["num"] += 1
+				att.maxHp += i.att.maxHp
+				att.atk += i.att.atk
+				att.mgiAtk += i.att.mgiAtk
+				att.def += i.att.def
+				att.mgiDef += i.att.mgiDef
+				att.spd += i.att.spd
+				att.lv += i.lv
+				att.num += 1
 
 		return att

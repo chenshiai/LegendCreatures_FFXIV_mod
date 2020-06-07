@@ -7,65 +7,70 @@ func _extInit():
 	._extInit()
 	chaName = "龙骑士"
 	attCoe.atkRan = 1
-	attCoe.maxHp = 3.3
-	attCoe.mgiAtk = 1
+	attCoe.maxHp = 4
 	attCoe.atk = 4
 	attCoe.def = 3
 	attCoe.mgiDef = 2.8
 	lv = 2
 	evos = ["cFFXIVSpirit_3_1"]
 	atkEff = "atk_dao"
-	addCdSkill("skill_DragonBlood", 10)
-	addSkillTxt("""[跳跃]：战斗开始时，快速跳到敌方中场
-[苍天龙血]：ÇÐ10s，获得5层狂怒，并使用一次[武神枪]
-[武神枪]：对直线上的敌人造成[360%]的物理伤害""")
+	addCdSkill("skill_HighJump", 13)
+	addCdSkill("skill_DragonBlood", 15)
+	addSkillTxt("""[高跳]：ÇÐ13s，跳起接近目标并攻击,造成[300%]的物理伤害(优先生命值最低的单位，开战使用一次)。攻击后回到原位。
+[苍天龙血]：被动，[高跳]以及[坠星冲]的威力提高[30%]
+[武神枪]：ÇÐ15s，对直线上的敌人造成[400%]的物理伤害""")
 
-const DRAGONBLOOD_PW = 3.60 # 武神枪威力
+const HIGHJUMP_PW = 3.30 # 高跳威力
+const GEIRSKOGUL_PW = 4.00 # 武神枪威力
 
 func _connect():
 	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
-	addBuff(b_kuangNu.new(10))
-
-	yield(reTimer(0.1), "timeout")
-	var mv = Vector2(cell.x, cell.y)
-	if team == 1: mv.x = 6
-	else: mv.x = 1
-	var vs = [Vector2(0, 0), Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, -1), Vector2(1, 1), Vector2(-1, 1), Vector2(-1, -1), Vector2(1, -1)]
-	for i in vs:
-		var v = mv + i
-		if matCha(v) == null && sys.main.isMatin(v):
-			if setCell(v) :
-				var pos = sys.main.map.map_to_world(cell)
-				ying(pos)
-				position = pos
-				aiCha = null
-				break
-
-func ying(pos):
-	var l:Vector2 = pos - position
-	var s = 25
-	var rs = preload("res://core/ying.tscn")
-	var n = l.length()/s
-	for i in range(n):
-		var spr = rs.instance()
-		sys.main.map.add_child(spr)
-		spr.texture = img.texture_normal
-		spr.position = position + s * (i+1) * l.normalized() - Vector2(img.texture_normal.get_width() / 2, img.texture_normal.get_height())
-		spr.init(255/n * i + 100)
+	call_deferred("highJump")
 
 func _castCdSkill(id):
 	._castCdSkill(id)
+	if id == "skill_HighJump":
+		highJump()
 	if id == "skill_DragonBlood" :
-		addBuff(b_kuangNu.new(5))
+		geirskogul()
+
+
+func highJump():
+	var chas = getAllChas(1)
+	chas.sort_custom(Utils.Calculation, "sort_MinHp")
+	var cha = chas[0]
+	if cha != null:
+		aiOn = false
+		normalSpr.position = Vector2(0, -800)
+		Utils.createShadow(img, position, position + Vector2(0, -150), 40)
+		yield(reTimer(0.2), "timeout")
+
+		var x = cha.position.x
+		var y = cha.position.y
+		var deviation = Vector2(x, y) - position
+
+		Utils.createShadow(img, Vector2(x, y - 400), Vector2(x, y), 40)
+		Utils.createEffect("slashBlue", cha.position, Vector2(0, -30), 14, 2)
+		if cha != null:
+			hurtChara(cha, att.atk * HIGHJUMP_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+
+		Utils.createShadow(img, Vector2(x, y), Vector2(x, y) + Vector2(0, -150) - (75 * deviation.normalized()), 40)
+		yield(reTimer(0.3), "timeout")
+		Utils.createShadow(img,  position + Vector2(0, -150), position, 40)
+		normalSpr.position = Vector2(0, 0)
+		aiOn = true
+
+func geirskogul():
+	if aiCha != null:
 		var eff:Eff = newEff("sk_jiGuan", sprcPos)
 		eff.sprLookAt(aiCha.global_position)
 		var chas = lineChas(cell, aiCha.cell, 4)
 		for cha in chas:
 			if cha.team != team :
-				hurtChara(cha, att.atk * DRAGONBLOOD_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+				hurtChara(cha, att.atk * GEIRSKOGUL_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
 func lineChas(aCell, bCell, num):
 	var chas = []

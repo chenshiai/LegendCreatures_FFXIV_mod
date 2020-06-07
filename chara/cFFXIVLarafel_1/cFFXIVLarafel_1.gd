@@ -44,7 +44,7 @@ func _castCdSkill(id):
 # 救疗
 func cureII():
 	var chas = getAllChas(2)
-	chas.sort_custom(Utils.Calculation, "sort_MinHp")
+	chas.sort_custom(Utils.Calculation, "sort_MinHpP")
 
 	if chas[0] != null:
 		Utils.createEffect("healGreen", chas[0].position, Vector2(0, -30), 11, 1)
@@ -63,7 +63,7 @@ func cureIII():
 # 再生
 func regen():
 	var chas = getAllChas(2)
-	chas.sort_custom(Utils.Calculation, "sort_MinHp")
+	chas.sort_custom(Utils.Calculation, "sort_MinHpP")
 
 	if chas[0] != null:
 		chas[0].addBuff(BUFF_LIST.b_Regen.new(10, att.mgiAtk * REGEN_PW))

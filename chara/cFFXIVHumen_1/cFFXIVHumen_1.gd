@@ -7,9 +7,8 @@ func _extInit():
 	._extInit()
 	chaName = "战士"
 	attCoe.atkRan = 1
-	attCoe.maxHp = 4.6
+	attCoe.maxHp = 4.7
 	attCoe.atk = 4
-	attCoe.mgiAtk = 1
 	attCoe.def = 4
 	attCoe.mgiDef = 4
 	lv = 2

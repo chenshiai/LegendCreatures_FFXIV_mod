@@ -13,7 +13,7 @@ func _extInit():
 	attAdd.defL += 0.20
 	lv = 4
 	evos = []
-	addSkillTxt("[为了更强]：被动，物理防御力再提升20%，")
+	addSkillTxt("[神圣领域]：战斗开始时开启无敌，并免疫所有负面效果，持续10s")
 
 var baseId = ""
 

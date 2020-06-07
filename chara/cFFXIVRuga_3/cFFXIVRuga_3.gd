@@ -9,7 +9,6 @@ func _extInit():
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
 	attCoe.atk = 4
-	attCoe.mgiAtk = 1
 	attCoe.def = 2.9
 	attCoe.mgiDef = 3
 	lv = 2
@@ -45,7 +44,7 @@ func _castCdSkill(id):
 
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)
-	if atkInfo.hitCha == fireChara && atkInfo.atkType == AtkType.NORMAL:
+	if atkInfo.hitCha == fireChara and atkInfo.atkType == AtkType.NORMAL:
 		if atkInfo.hitCha.hasBuff("b_Wildfire") != null:
 			fireCount += 1
 		elif atkInfo.hitCha.hasBuff("b_Wildfire") == null:

@@ -7,7 +7,7 @@ func _extInit():
 	._extInit()
 	chaName = "骑士"
 	attCoe.atkRan = 1
-	attCoe.maxHp = 4.3
+	attCoe.maxHp = 4.5
 	attCoe.atk = 3.7
 	attCoe.mgiAtk = 0.5
 	attCoe.def = 5
@@ -17,7 +17,7 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_Grace", 15)
 	addCdSkill("skill_Authority", 10)
-	addSkillTxt("[钢铁信念]：被动，战斗开始后，提高10%的物理防御，受到的伤害减少10%")
+	addSkillTxt("[钢铁信念]：被动，战斗开始后，提高10%的物理防御，受到的伤害减少20%")
 	addSkillTxt("""[深仁厚泽]：ÇÐ15s，为生命最低的友方单位使用治疗魔法，恢复[1200%]法强的生命值
 [王权剑]：ÇÐ10s，对目标造成[350%]的物理伤害""")
 
@@ -40,10 +40,14 @@ func _castCdSkill(id):
 	if id == "skill_Authority":
 		authority()
 
+func _onHurt(atkInfo):
+	._onHurt(atkInfo)
+	atkInfo.hurtVal *= 0.80
+
 # 深仁厚泽		
 func grace():
 	var chas = getAllChas(2)
-	chas.sort_custom(Utils.Calculation, "sort_MinHp")
+	chas.sort_custom(Utils.Calculation, "sort_MinHpP")
 
 	if chas[0] != null:
 		chas[0].plusHp(att.mgiAtk * GRACE_PW)

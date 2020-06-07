@@ -75,6 +75,6 @@ func optimizedFireIII():
 
 func _upS():
 	._upS()
-	if battleDuration > BERSERKERTIME && (battleDuration % 5 == 0):
+	if battleDuration > BERSERKERTIME and (battleDuration % 5 == 0):
 		laserRain()
 		laserRain_pw += 0.3

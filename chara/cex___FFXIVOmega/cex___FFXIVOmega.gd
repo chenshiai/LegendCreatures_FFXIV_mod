@@ -105,6 +105,6 @@ func triangleAttack():
 
 func _upS():
 	._upS()
-	if battleDuration > BERSERKERTIME && (battleDuration % 5 == 0):
+	if battleDuration > BERSERKERTIME and (battleDuration % 5 == 0):
 		atomicRay()
 		atomicRay_pw += 0.3

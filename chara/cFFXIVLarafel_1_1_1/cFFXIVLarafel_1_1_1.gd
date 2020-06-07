@@ -10,10 +10,9 @@ func _extInit():
 	attCoe.mgiAtk = 5
 	attCoe.def = 3.5
 	attCoe.mgiDef = 3.9
-	attAdd.cd += 0.15
 	lv = 4
 	evos = []
-	addSkillTxt("[神速咏唱]：被动，加快自身15%的技能释放速度")
+	# addSkillTxt("[神速咏唱]：被动，加快自身15%的技能释放速度")
 	addCdSkill("skill_Assize", 19)
 	addSkillTxt("[法令]：ÇÐ19s，对周围3格内的敌人造成[270%]法强的魔法伤害，同时为范围内的队友回复[90%]法强的HP")
 
