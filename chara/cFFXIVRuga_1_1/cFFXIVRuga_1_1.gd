@@ -8,10 +8,8 @@ func _extInit():
 	chaName = "冠军之剑"
 	lv = 3
 	evos = []
-	addCdSkill("skill_Requiescat", 27)
 	addCdSkill("skill_DivineVeil", 16)
-	addSkillTxt("[安魂祈祷]：ÇÐ27s，自身魔法强度提高50点，持续15s")
-	addSkillTxt("[圣光幕帘]：ÇÐ16s，技能开启后的5s内，若自身有受到治疗，则为周围其他队友附加护盾，可以抵消[骑士最大生命值10%]的伤害，持续10s")
+	addSkillTxt("[圣光幕帘]：冷却16s，技能开启后的5s内，若自身有受到治疗，则为周围其他队友附加护盾，可以抵消[骑士最大生命值10%]的伤害，持续10s")
 
 
 var hasDivineVeil = false
@@ -25,8 +23,6 @@ func _onBattleStart():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_Requiescat":
-		requiescat()
 	if id == "skill_DivineVeil":
 		divineVeil()
 

@@ -10,7 +10,7 @@ func _extInit():
 	evos = []
 	addCdSkill("skill_ApexArrow", 12)
 	addSkillTxt("[辉煌箭]：被动，普通攻击有20%的概率触发，造成[330%]的物理伤害")
-	addSkillTxt("[绝峰箭]：ÇÐ12s，射出穿透箭对直线上单位造成[200%]的物理伤害，并赋予5层[流血]")
+	addSkillTxt("[绝峰箭]：冷却12s，射出穿透箭对直线上单位造成[200%]的物理伤害，并赋予5层[流血]")
 
 const REFULGENT_PW = 3.30 # 辉煌箭威力
 const APEXARROW_PW = 2 # 绝峰箭威力

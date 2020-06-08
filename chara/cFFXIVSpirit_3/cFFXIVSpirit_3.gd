@@ -16,9 +16,9 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_HighJump", 13)
 	addCdSkill("skill_DragonBlood", 15)
-	addSkillTxt("""[高跳]：ÇÐ13s，跳起接近目标并攻击,造成[300%]的物理伤害(优先生命值最低的单位，开战使用一次)。攻击后回到原位。
+	addSkillTxt("""[高跳]：冷却13s，跳起接近目标并攻击,造成[300%]的物理伤害(优先生命值最低的单位，开战使用一次)。攻击后回到原位。
 [苍天龙血]：被动，[高跳]以及[坠星冲]的威力提高[30%]
-[武神枪]：ÇÐ15s，对直线上的敌人造成[400%]的物理伤害""")
+[武神枪]：冷却15s，对直线上的敌人造成[400%]的物理伤害""")
 
 const HIGHJUMP_PW = 3.30 # 高跳威力
 const GEIRSKOGUL_PW = 4.00 # 武神枪威力

@@ -51,12 +51,26 @@ func setInfo(occupation):
 			masCha.connect("onCastCdSkill", SoulExample, "shinten")
 
 		"cFFXIVAolong_3":
-			name = "忍者之证"
-			info = "灵魂的水晶，刻有历代忍者的记忆和精神。[天地人]"
+			SoulExample = Soul.Ninja.new()
+			var hasSkill = false
+			for skill in masCha.skills:
+				if skill.id == "skill_Dream":
+					hasSkill = true
+			if !hasSkill:
+				masCha.addCdSkill("skill_Dream", 19)
+			SoulExample.setMasCha(masCha)
+			masCha.connect("onCastCdSkill", SoulExample, "dream")
 
 		"cFFXIVHumen_1":
-			name = "战士之证"
-			info = "灵魂的水晶，刻有历代战士的记忆和斗志。[原初的勇猛]"
+			SoulExample = Soul.Warrior.new()
+			SoulExample.setMasCha(masCha)
+			var hasSkill = false
+			for skill in masCha.skills:
+				if skill.id == "skill_Equilibrium":
+					hasSkill = true
+			if !hasSkill:
+				masCha.addCdSkill("skill_Equilibrium", 15)
+			masCha.connect("onCastCdSkill", SoulExample, "heartOfLight")
 
 		"cFFXIVHumen_2":
 			SoulExample = Soul.Gunbreaker.new()
@@ -70,28 +84,52 @@ func setInfo(occupation):
 			masCha.connect("onCastCdSkill", SoulExample, "heartOfLight")
 
 		"cFFXIVHumen_3":
-			name = "舞者之证"
-			info = "灵魂的水晶，刻有历代舞者的记忆和舞蹈。[扇舞·急]"
+			SoulExample = Soul.Dancer.new()
+			SoulExample.setMasCha(masCha)
+			SoulExample.setTeam(masCha.team)
+			sys.main.connect("onAtkChara", SoulExample, "fanDance")
 
 		"cFFXIVLarafel_1":
-			name = "白魔法师之证"
-			info = "灵魂的水晶，刻有历代白魔法师的记忆和圣迹。[神速咏唱]"
+			SoulExample = Soul.WhiteMage.new()
 
 		"cFFXIVLarafel_2":
-			SoulExample = Soul.BlackMage.new(masCha)
+			SoulExample = Soul.BlackMage.new()
+			SoulExample.setMasCha(masCha)
 			sys.main.connect("onBattleStart", SoulExample, "enochian")
 
 		"cFFXIVLarafel_3":
-			name = "赤魔法师之证"
-			info = "灵魂的水晶，刻有历代赤魔法师的记忆和心血。[赤治疗/赤复活]"
+			SoulExample = Soul.RedMage.new()
+			var hasSkill = false
+			for skill in masCha.skills:
+				if skill.id == "skill_Vercure":
+					hasSkill = true
+			if !hasSkill:
+				masCha.addCdSkill("skill_Vercure", 16)
+			SoulExample.setTeam(masCha.team)
+			SoulExample.setMasCha(masCha)
+			masCha.connect("onCastCdSkill", SoulExample, "vercure")
 
 		"cFFXIVNeko_1":
-			name = "学者之证"
-			info = "灵魂的水晶，刻有历代学者的记忆和学识。[连环计]"
+			SoulExample = Soul.Scholar.new()
+			var hasSkill = false
+			for skill in masCha.skills:
+				if skill.id == "skill_ChainStratagem":
+					hasSkill = true
+			if !hasSkill:
+				masCha.addCdSkill("skill_ChainStratagem", 15)
+			SoulExample.setMasCha(masCha)
+			masCha.connect("onCastCdSkill", SoulExample, "chainStratagem")
 
 		"cFFXIVNeko_2":
-			name = "召唤师之证"
-			info = "灵魂的水晶，刻有历代召唤师的记忆和真理。[三重灾祸]"
+			SoulExample = Soul.Summoner.new()
+			var hasSkill = false
+			for skill in masCha.skills:
+				if skill.id == "skill__TriDisaster":
+					hasSkill = true
+			if !hasSkill:
+				masCha.addCdSkill("skill__TriDisaster", 15)
+			SoulExample.setMasCha(masCha)
+			masCha.connect("onCastCdSkill", SoulExample, "triDisaster")
 
 		"cFFXIVNeko_3":
 			SoulExample = Soul.Bard.new()
@@ -99,16 +137,32 @@ func setInfo(occupation):
 			sys.main.connect("onBattleStart", SoulExample, "requiemOfTheDevil")
 
 		"cFFXIVRuga_1":
-			name = "骑士之证"
-			info = "灵魂的水晶，刻有历代骑士的记忆和荣誉。[武装戍卫]"
+			SoulExample = Soul.Paladin.new()
+			var hasSkill = false
+			for skill in masCha.skills:
+				if skill.id == "skill_Requiescat":
+					hasSkill = true
+			if !hasSkill:
+				masCha.addCdSkill("skill_Requiescat", 27)
+			SoulExample.setMasCha(masCha)
+			masCha.connect("onCastCdSkill", SoulExample, "requiescat")
 
 		"cFFXIVRuga_2":
-			name = "武僧之证"
-			info = "灵魂的水晶，刻有历代武僧的记忆和气概。[义结金兰]"
+			SoulExample = Soul.Monk.new()
+			var hasSkill = false
+			for skill in masCha.skills:
+				if skill.id == "skill_Mantra":
+					hasSkill = true
+			if !hasSkill:
+				masCha.addCdSkill("skill_Mantra", 30)
+			SoulExample.setTeam(masCha.team)
+			masCha.connect("onCastCdSkill", SoulExample, "mantra")
 
 		"cFFXIVRuga_3":
-			name = "机工士之证"
-			info = "与其他灵魂水晶不同，这颗水晶上尚未刻下历史的记忆。[后式自走人偶]"
+			SoulExample = Soul.Machinist.new()
+			SoulExample.setMasCha(masCha)
+			SoulExample.setTeam(masCha.team)
+			masCha.connect("onAtkChara", SoulExample, "fireGun")
 
 		"cFFXIVSpirit_1", "cFFXIVSpirit_2":
 			SoulExample = Soul.Astrologian.new()

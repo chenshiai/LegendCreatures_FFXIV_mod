@@ -18,9 +18,9 @@ func _extInit():
 	addCdSkill("skill_CureII", 9)
 	addCdSkill("skill_CureIII", 14)
 	addCdSkill("skill_Regen", 18)
-	addSkillTxt("""[救疗]：ÇÐ9s，为生命最低的友方单位恢复[80%]法强的HP
-[医济]：ÇÐ14s，为全体友方单位恢复[60%]法强的HP，并附加[再生]效果，持续5s""")
-	addSkillTxt("[再生]：ÇÐ18s，为生命最低的友方单位附加再生，每秒恢复[10%]法强的HP，持续10s")
+	addSkillTxt("""[救疗]：冷却9s，为生命最低的友方单位恢复[80%]法强的生命值
+[医济]：冷却14s，为全体友方单位恢复[60%]法强的HP，并附加[再生]效果，持续5s""")
+	addSkillTxt("[再生]：冷却18s，为生命最低的友方单位附加再生，每秒恢复[10%]法强的HP，持续10s")
 
 const CUREII_PW = 0.80 # 救疗威力
 const CUREIII_PW = 0.60 # 医济威力

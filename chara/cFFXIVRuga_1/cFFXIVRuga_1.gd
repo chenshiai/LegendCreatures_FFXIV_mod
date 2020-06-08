@@ -18,8 +18,8 @@ func _extInit():
 	addCdSkill("skill_Grace", 15)
 	addCdSkill("skill_Authority", 10)
 	addSkillTxt("[钢铁信念]：被动，战斗开始后，提高10%的物理防御，受到的伤害减少20%")
-	addSkillTxt("""[深仁厚泽]：ÇÐ15s，为生命最低的友方单位使用治疗魔法，恢复[1200%]法强的生命值
-[王权剑]：ÇÐ10s，对目标造成[350%]的物理伤害""")
+	addSkillTxt("""[深仁厚泽]：冷却15s，为生命最低的友方单位使用治疗魔法，恢复[1200%]法强的生命值
+[王权剑]：冷却10s，对目标造成[350%]的物理伤害""")
 
 const GRACE_PW = 12 # 深仁厚泽威力
 const AUTHORITY_PW = 3.50 # 王权剑威力

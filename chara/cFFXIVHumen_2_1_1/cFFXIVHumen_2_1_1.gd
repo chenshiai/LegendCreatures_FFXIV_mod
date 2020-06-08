@@ -13,7 +13,7 @@ func _extInit():
 	lv = 4
 	evos = []
 	addCdSkill("skill_BlastingZone", 15)
-	addSkillTxt("[爆破领域]：ÇÐ15s，对目标造成[380%]的物理伤害")
+	addSkillTxt("[爆破领域]：冷却15s，对目标造成[380%]的物理伤害")
 
 var baseId = ""
 const BLASTINGZONE_PW = 3.80 # 爆破领域威力

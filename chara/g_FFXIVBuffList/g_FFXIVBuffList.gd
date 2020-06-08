@@ -303,6 +303,23 @@ class b_SacredSoil:
 		masCha.plusHp(hot)
 		life = clamp(life, 0, 10)
 
+# 连环计
+class b_ChainStratagem:
+	extends Buff
+	func _init(dur = 1):
+		attInit()
+		id = "b_ChainStratagem"
+		life = dur
+		isNegetive = false
+	
+	func _connect():
+		masCha.connect("onHurt", self, "run")
+
+	func run(atkInfo:AtkInfo):
+		if sys.rndPer(10):
+			atkInfo.hurtVal *= 2
+			atkInfo.isCri = true
+
 # 龙神迸发，提高法强
 class b_Dreadwyrm:
 	extends Buff
@@ -437,6 +454,17 @@ class b_DivineVeil:
 		elif total <= 0:
 			total = 0
 
+class b_Mantra:
+	extends Buff
+	func _init(dur = 1):
+		attInit()
+		id = "b_Brotherhood"
+		isNegetive = false
+		life = dur
+		att.reHp = 0.10
+
+	func _upS():
+		life = clamp(life, 0, 10)
 
 # 野火Buff
 class b_Wildfire:

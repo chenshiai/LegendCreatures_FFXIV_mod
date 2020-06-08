@@ -13,7 +13,7 @@ func _extInit():
 	lv = 4
 	evos = []
 	addCdSkill("skill_Devilment", 18)
-	addSkillTxt("[进攻之探戈]：ÇÐ18s，自身与舞伴的攻击力提高20%，持续8s")
+	addSkillTxt("[进攻之探戈]：冷却18s，自身与舞伴的攻击力提高20%，持续8s")
 
 var baseId = ""
 

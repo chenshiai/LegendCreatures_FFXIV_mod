@@ -10,7 +10,7 @@ func _extInit():
 	attAdd.mgiAtkL += 0.20
 	evos = []
 	addCdSkill("skill_Horoscope", 25)
-	addSkillTxt("[袖内抽卡]：ÇÐ25s，连续使用三次[抽卡]")
+	addSkillTxt("[袖内抽卡]：冷却25s，连续使用三次[抽卡]")
 	addSkillTxt("[星位合图]：被动，提高20%的法强")
 
 func _connect():

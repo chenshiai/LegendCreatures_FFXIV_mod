@@ -6,6 +6,7 @@ func _init():
 
 class BaseSoul:
 	var BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
+	var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
 	var masTeam
 	var masCha
 	var name = ""
@@ -74,19 +75,18 @@ class Gunbreaker:
 		info = "灵魂的水晶，刻有历代绝枪战士的记忆和觉悟。\n"\
 			+ "[光之心]\n"\
 			+ "一定时间内，令自身和周围队员所受到的魔法伤害减轻10%。\n"\
-			+ "ÇÐ20s，持续10s。"
+			+ "此效果不可叠加。"
+			+ "冷却20s，持续10s。"
 		att.atk = 20
 		att.def = 20
 		att.mgiDef = 10
 
 	func heartOfLight(id):
 		if id == "skill_HeartOfLight":
-			var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
 			var allys = toolman.getAllChas(masTeam)
 			for cha in allys:
 				if cha.team == masTeam:
 					cha.addBuff(BUFF_LIST.b_HeartOfLight.new(10))
-			toolman = null
 			allys = null
 
 class Bard:
@@ -155,7 +155,8 @@ class Astrologian:
 		info = "灵魂的水晶，刻有历代占星术士的记忆和知识。\n"\
 			+ "[命运之轮]\n"\
 			+ "使自身及周围2格范围内的队友所受到的伤害减轻10%。\n"\
-			+ "ÇÐ36s，持续18s"
+			+ "此效果不可叠加。"
+			+ "冷却36s，持续18s"
 
 	func collective(id):
 		if id == "skill_Collective":
@@ -175,7 +176,7 @@ class Samurai:
 		info = "灵魂的水晶，刻有历代武士的记忆和大义。\n"\
 			+ "[必杀剑-震天]\n"\
 			+ "对目标造成[200%]的物理伤害。\n"\
-			+ "ÇÐ8s"
+			+ "冷却8s"
 
 	func shinten(id):
 		if id == "skill_Shinten" and masCha.aiCha != null:
@@ -186,36 +187,155 @@ class Warrior:
 	func _init():
 		name = "战士之证"
 		att.maxHp = 200
+		att.atk = 10
 		info = "灵魂的水晶，刻有历代战士的记忆和斗志。\n"\
-			+ "[摆脱]\n"\
-			+ "为自身和周围队友附加能够抵挡伤害的护盾"
+			+ "[泰然自若]\n"\
+			+ "回复自身[300%]攻击力的生命值。\n"\
+			+ "冷却15s"
 
-# class RedMage:
-# 	extends BaseSoul
+	func equilibrium(id):
+		if id == "skill_Equilibrium":
+			masCha.plusHp(masCha.att.atk * 3)
 
-# class Monk:
-# 	extends BaseSoul
+class RedMage:
+	extends BaseSoul
+	func _init():
+		name = "赤魔法师之证"
+		att.mgiAtk = 10
+		att.atk = 10
+		info = "灵魂的水晶，刻有历代赤魔法师的记忆和心血。\n"\
+			+ "[赤治疗]\n"\
+			+ "为生命最低的友方单位恢复[80%]法强的生命值。\n"\
+			+ "冷却16s"
 
-# class Paladin:
-# 	extends BaseSoul
+	func vercure(id):
+		if id == "skill_Vercure":
+			var chas = toolman.getAllChas(masTeam)
+			chas.sort_custom(Utils.Calculation, "sort_MinHpP")
 
-# class Ninja:
-# 	extends BaseSoul
+			if chas[0] != null:
+				chas[0].plusHp(masCha.att.mgiAtk * 0.8)
 
-# class WhiteMage:
-# 	extends BaseSoul
+class Monk:
+	extends BaseSoul
+	func _init():
+		name = "武僧之证"
+		att.atk = 20
+		att.def = 20
+		info = "灵魂的水晶，刻有历代武僧的记忆和气概。\n"\
+			+ "[真言]\n"\
+			+ "使自身和周围友方单位受到的治疗效果提高10%\n"\
+			+ "冷却30s，持续10s"
 
-# class Scholar:
-# 	extends BaseSoul
+	func mantra(id):
+		if id == "skill_Mantra":
+			var allys = toolman.getAllChas(masTeam)
+			for cha in allys:
+				if cha.team == masTeam:
+					cha.addBuff(BUFF_LIST.b_Mantra.new(10))
+			allys = null
 
-# class Summoner:
-# 	extends BaseSoul
+class Paladin:
+	extends BaseSoul
+	func _init():
+		name = "骑士之证"
+		att.mgiAtk = 10
+		att.def = 20
+		info = "灵魂的水晶，刻有历代骑士的记忆和荣誉。\n"\
+			+ "[安魂祈祷]\n"\
+			+ "自身魔法强度提高50点。\n"\
+			+ "冷却27s，持续15s"
 
-# class Machinist:
-# 	extends BaseSoul
+	func requiescat(id):
+		if id == "skill_Requiescat":
+			masCha.addBuff(BUFF_LIST.b_Requiescat.new(15))
 
-# class Dancer:
-# 	extends BaseSoul
+class Ninja:
+	extends BaseSoul
+	func _init():
+		name = "忍者之证"
+		att.atk = 20
+		att.def = 10
+		att.mgiDef = 10
+		info = "灵魂的水晶，刻有历代忍者的记忆和精神。\n"\
+			+ "[梦幻三段]\n"\
+			+ "对目标连续发动三次普通攻击。\n"\
+			+ "冷却19s"
 
-# class Gunbreaker:
-# 	extends BaseSoul
+	func dream(id):
+		if id == "skill_Dream" and masCha.aiCha != null:
+			masCha.normalAtkChara(masCha.aiCha)
+			masCha.normalAtkChara(masCha.aiCha)
+			masCha.normalAtkChara(masCha.aiCha)
+
+class WhiteMage:
+	extends BaseSoul
+	func _init():
+		name = "白魔法师之证"
+		att.mgiAtk = 20
+		att.cd = 0.15
+		info = "灵魂的水晶，刻有历代白魔法师的记忆和圣迹。\n"\
+			+ "[神速咏唱]\n"\
+			+ "被动，技能冷却速度加快15%。"
+
+class Scholar:
+	extends BaseSoul
+	func _init():
+		name = "学者之证"
+		att.mgiAtk = 20
+		att.mgiDef = 10
+		info = "灵魂的水晶，刻有历代学者的记忆和学识。\n"\
+			+ "[连环计]\n"\
+			+ "对目标施加[连环计]，10%的概率使其受到伤害变为双倍。\n"\
+			+ "冷却15s，持续8s"
+	
+	func chainStratagem(id):
+		if id == "skill_ChainStratagem" and masCha.aiCha != null:
+			masCha.aiCha.addBuff(BUFF_LIST.b_ChainStratagem.new(8))
+
+class Summoner:
+	extends BaseSoul
+	func _init():
+		name = "召唤师之证"
+		att.mgiAtk = 30
+		info = "灵魂的水晶，刻有历代召唤师的记忆和真理。\n"\
+			+ "[三重灾祸]\n"\
+			+ "对目标施加[中毒][流血]。\n"\
+			+ "冷却15s，持续10s"
+
+	func triDisaster(id):
+		if id == "skill__TriDisaster" and masCha.aiCha != null:
+			masCha.aiCha.addBuff(b_liuXue.new(10))
+			masCha.aiCha.addBuff(b_zhonDu.new(10))
+
+class Machinist:
+	extends BaseSoul
+	func _init():
+		name = "机工士之证"
+		att.atk = 30
+		info = "与其他灵魂水晶不同，这颗水晶上尚未刻下历史的记忆。\n"\
+			+ "[火焰喷射器]\n"\
+			+ "被动，普通攻击会对目标及其周围一格的敌人附加2层[烧灼]"
+
+	func fireGun(atkInfo):
+		var chas = toolman.getCellChas(atkInfo.hitCha.cell, 1)
+		for i in chas:
+				if i.team != masTeam:
+					i.addBuff(b_shaoZhuo.new(2))
+
+class Dancer:
+	extends BaseSoul
+	func _init():
+		name = "舞者之证"
+		att.atk = 30
+		info = "灵魂的水晶，刻有历代舞者的记忆和舞蹈。\n"\
+			+ "[扇舞·急]\n"\
+			+ "被动，普通攻击有20%概率触发。\n"\
+			+ "对目标及周围2格敌人造成[100%]的物理伤害。"
+
+	func fanDance(atkInfo):
+		if atkInfo.atkType == Chara.AtkType.NORMAL and sys.rndPer(20):
+			var chas = toolman.getCellChas(aiCha.cell, 2, 1)
+			for i in chas:
+				if i != null and i.team != masTeam: 
+					masCha.hurtChara(i, masCha.att.atk, Chara.HurtType.PHY, Chara.AtkType.SKILL)
