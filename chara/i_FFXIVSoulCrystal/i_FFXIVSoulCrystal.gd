@@ -6,7 +6,7 @@ var SoulExample = null # 当前使用者的灵魂实例
 const Epilogue = "\n来自《最终幻想14》"
 func init():
 	attInit()
-	id = "SoulCrystal"
+	id = "i_FFXIVSoulCrystal"
 	name = "蒙尘的水晶"
 	type = config.EQUITYPE_EQUI
 	price = 500
@@ -20,10 +20,10 @@ const CharaList = ["cFFXIVAolong_1", "cFFXIVAolong_2", "cFFXIVAolong_3",
 	"cFFXIVSpirit_1", "cFFXIVSpirit_2", "cFFXIVSpirit_3"] 
 
 func _connect():
-	print(sys.main.get_node("ui/itemSll/itemGrid"))
 	for item in masCha.items:
-		if item.id == "SoulCrystal":
+		if item.id == "i_FFXIVSoulCrystal":
 			setInfo(null)
+			sys.newBaseMsg("装备无效！", "灵魂水晶最多只有一件可以生效！")
 			return
 
 	for occupation in CharaList:
@@ -34,153 +34,56 @@ func _connect():
 func setInfo(occupation):
 	match occupation:
 		"cFFXIVAolong_1":
-			SoulExample = Soul.DarkKnight.new()
-			sys.main.connect("onBattleStart", SoulExample, "skillInit")
-			masCha.connect("onHurt", SoulExample, "livingDeath")
-			masCha.connect("onPlusHp", SoulExample, "relieve")
+			SoulExample = Soul.DarkKnight.new(masCha)
 
 		"cFFXIVAolong_2":
-			SoulExample = Soul.Samurai.new()
-			var hasSkill = false
-			for skill in masCha.skills:
-				if skill.id == "skill_Shinten":
-					hasSkill = true
-			if !hasSkill:
-				masCha.addCdSkill("skill_Shinten", 8)
-			SoulExample.setMasCha(masCha)
-			masCha.connect("onCastCdSkill", SoulExample, "shinten")
+			SoulExample = Soul.Samurai.new(masCha)
 
 		"cFFXIVAolong_3":
-			SoulExample = Soul.Ninja.new()
-			var hasSkill = false
-			for skill in masCha.skills:
-				if skill.id == "skill_Dream":
-					hasSkill = true
-			if !hasSkill:
-				masCha.addCdSkill("skill_Dream", 19)
-			SoulExample.setMasCha(masCha)
-			masCha.connect("onCastCdSkill", SoulExample, "dream")
+			SoulExample = Soul.Ninja.new(masCha)
 
 		"cFFXIVHumen_1":
-			SoulExample = Soul.Warrior.new()
-			SoulExample.setMasCha(masCha)
-			var hasSkill = false
-			for skill in masCha.skills:
-				if skill.id == "skill_Equilibrium":
-					hasSkill = true
-			if !hasSkill:
-				masCha.addCdSkill("skill_Equilibrium", 15)
-			masCha.connect("onCastCdSkill", SoulExample, "heartOfLight")
+			SoulExample = Soul.Warrior.new(masCha)
 
 		"cFFXIVHumen_2":
-			SoulExample = Soul.Gunbreaker.new()
-			var hasSkill = false
-			for skill in masCha.skills:
-				if skill.id == "skill_HeartOfLight":
-					hasSkill = true
-			if !hasSkill:
-				masCha.addCdSkill("skill_HeartOfLight", 20)
-			SoulExample.setTeam(masCha.team)
-			masCha.connect("onCastCdSkill", SoulExample, "heartOfLight")
+			SoulExample = Soul.Gunbreaker.new(masCha)
 
 		"cFFXIVHumen_3":
-			SoulExample = Soul.Dancer.new()
-			SoulExample.setMasCha(masCha)
-			SoulExample.setTeam(masCha.team)
-			sys.main.connect("onAtkChara", SoulExample, "fanDance")
-
+			SoulExample = Soul.Dancer.new(masCha)
+			
 		"cFFXIVLarafel_1":
-			SoulExample = Soul.WhiteMage.new()
+			SoulExample = Soul.WhiteMage.new(masCha)
 
 		"cFFXIVLarafel_2":
-			SoulExample = Soul.BlackMage.new()
-			SoulExample.setMasCha(masCha)
-			sys.main.connect("onBattleStart", SoulExample, "enochian")
+			SoulExample = Soul.BlackMage.new(masCha)
 
 		"cFFXIVLarafel_3":
-			SoulExample = Soul.RedMage.new()
-			var hasSkill = false
-			for skill in masCha.skills:
-				if skill.id == "skill_Vercure":
-					hasSkill = true
-			if !hasSkill:
-				masCha.addCdSkill("skill_Vercure", 16)
-			SoulExample.setTeam(masCha.team)
-			SoulExample.setMasCha(masCha)
-			masCha.connect("onCastCdSkill", SoulExample, "vercure")
+			SoulExample = Soul.RedMage.new(masCha)
 
 		"cFFXIVNeko_1":
-			SoulExample = Soul.Scholar.new()
-			var hasSkill = false
-			for skill in masCha.skills:
-				if skill.id == "skill_ChainStratagem":
-					hasSkill = true
-			if !hasSkill:
-				masCha.addCdSkill("skill_ChainStratagem", 15)
-			SoulExample.setMasCha(masCha)
-			masCha.connect("onCastCdSkill", SoulExample, "chainStratagem")
+			SoulExample = Soul.Scholar.new(masCha)
 
 		"cFFXIVNeko_2":
-			SoulExample = Soul.Summoner.new()
-			var hasSkill = false
-			for skill in masCha.skills:
-				if skill.id == "skill__TriDisaster":
-					hasSkill = true
-			if !hasSkill:
-				masCha.addCdSkill("skill__TriDisaster", 15)
-			SoulExample.setMasCha(masCha)
-			masCha.connect("onCastCdSkill", SoulExample, "triDisaster")
+			SoulExample = Soul.Summoner.new(masCha)
 
 		"cFFXIVNeko_3":
-			SoulExample = Soul.Bard.new()
-			SoulExample.setTeam(masCha.team)
-			sys.main.connect("onBattleStart", SoulExample, "requiemOfTheDevil")
+			SoulExample = Soul.Bard.new(masCha)
 
 		"cFFXIVRuga_1":
-			SoulExample = Soul.Paladin.new()
-			var hasSkill = false
-			for skill in masCha.skills:
-				if skill.id == "skill_Requiescat":
-					hasSkill = true
-			if !hasSkill:
-				masCha.addCdSkill("skill_Requiescat", 27)
-			SoulExample.setMasCha(masCha)
-			masCha.connect("onCastCdSkill", SoulExample, "requiescat")
+			SoulExample = Soul.Paladin.new(masCha)
 
 		"cFFXIVRuga_2":
-			SoulExample = Soul.Monk.new()
-			var hasSkill = false
-			for skill in masCha.skills:
-				if skill.id == "skill_Mantra":
-					hasSkill = true
-			if !hasSkill:
-				masCha.addCdSkill("skill_Mantra", 30)
-			SoulExample.setTeam(masCha.team)
-			masCha.connect("onCastCdSkill", SoulExample, "mantra")
+			SoulExample = Soul.Monk.new(masCha)
 
 		"cFFXIVRuga_3":
-			SoulExample = Soul.Machinist.new()
-			SoulExample.setMasCha(masCha)
-			SoulExample.setTeam(masCha.team)
-			masCha.connect("onAtkChara", SoulExample, "fireGun")
+			SoulExample = Soul.Machinist.new(masCha)
 
 		"cFFXIVSpirit_1", "cFFXIVSpirit_2":
-			SoulExample = Soul.Astrologian.new()
-			var hasSkill = false
-			for skill in masCha.skills:
-				if skill.id == "skill_Collective":
-					hasSkill = true
-			if !hasSkill:
-				masCha.addCdSkill("skill_Collective", 36)
-			SoulExample.setTeam(masCha.team)
-			SoulExample.setMasCha(masCha)
-			masCha.connect("onCastCdSkill", SoulExample, "collective")
+			SoulExample = Soul.Astrologian.new(masCha)
 
 		"cFFXIVSpirit_3":
-			SoulExample = Soul.Dragoon.new()
-			SoulExample.setMasCha(masCha)
-			sys.main.connect("onBattleStart", SoulExample, "skillInit")
-			masCha.connect("onCastCdSkill", SoulExample, "lifeOfTheDragon")
+			SoulExample = Soul.Dragoon.new(masCha)
+
 		_:
 			setInitAtt()
 	if SoulExample != null:

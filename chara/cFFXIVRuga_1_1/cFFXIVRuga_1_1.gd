@@ -10,7 +10,7 @@ func _extInit():
 	evos = []
 	addCdSkill("skill_DivineVeil", 16)
 	addSkillTxt("[圣光幕帘]：冷却16s，技能开启后的5s内，若自身有受到治疗，则为周围其他队友附加护盾，可以抵消[骑士最大生命值10%]的伤害，持续10s")
-
+	addSkillTxt("[盾阵]：被动，受到攻击时有30%的概率减少40%的伤害。")
 
 var hasDivineVeil = false
 var divineVeilDur = 5
@@ -26,8 +26,10 @@ func _castCdSkill(id):
 	if id == "skill_DivineVeil":
 		divineVeil()
 
-func requiescat():
-	addBuff(BUFF_LIST.b_Requiescat.new(15))
+func _onHurt(atkInfo):
+	._onHurt(atkInfo)
+	if sys.rndPer(30):
+		atkInfo.hurtVal *= 0.60
 
 func divineVeil():
 	hasDivineVeil = true

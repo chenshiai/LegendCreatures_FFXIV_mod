@@ -2,7 +2,7 @@ var handle = sys.get_node("../Control")
 var Path = null
 
 func _init():
-	print("最终幻想14：—————— mod完整性检测中 ——————")
+	print("最终幻想14：—————— 完整性检测中 ——————")
 	call_deferred("testInit")
 	pass
 

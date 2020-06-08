@@ -13,7 +13,7 @@ var limitProgress1 = ImageTexture.new()
 var limitProgress2 = ImageTexture.new()
 
 func _init():
-	print("最终幻想14：—————— LimitBreak功能加载 ——————")
+	print("最终幻想14：—————— 极限技能加载 ——————")
 	pass
 
 func createLimitBreak():

@@ -1,16 +1,20 @@
-var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
-
 func _init():
-	print("最终幻想14：—————— SoulCrystal加载 ——————")
+	print("最终幻想14：—————— 灵魂水晶加载 ——————")
 	pass
 
 class BaseSoul:
+	var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
 	var BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
-	var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
+	var toolman = sys.main.newChara("cFFXIV_zTatalu", 2) # 工具人
+
 	var masTeam
 	var masCha
 	var name = ""
 	var info = ""
+
+	var prevCha = toolman
+	var prevSkill = ""
+	
 	var att = {
 		"maxHp": 0,
 		"atk": 0,
@@ -22,29 +26,48 @@ class BaseSoul:
 		"cd": 0
 	}
 	
-	func setTeam(team):
-		masTeam = team
+	func setCdSkill(name, cd):
+		var hasSkill = false
+		for skill in masCha.skills:
+			if skill.id == name:
+				hasSkill = true
+		if !hasSkill:
+			prevSkill = name
+			prevCha = masCha
+			masCha.addCdSkill(name, cd)
 
-	func setMasCha(cha):
-		masCha = cha
+	func deleteCdSkill():
+		for skill in prevCha.skills:
+			if skill.id == prevSkill:
+				skill = null
+				prevSkill = ""
+				prevCha = null
+				print("删除技能", prevSkill)
 
 class DarkKnight:
 	extends BaseSoul
 	var maxTreatmentVolume = 0
 	var treatmentVolume = 0
 	var switch = true
-
-	func _init():
+	func _init(cha):
+		masCha = cha
+		masTeam = cha.team
 		name = "暗黑骑士之证"
-		att.maxHp = 400
-		att.def = 10
-		att.mgiDef = 20
 		info = "灵魂的水晶，刻有历代暗黑骑士的记忆和灵魂。\n"\
 			+ "[行尸走肉]\n"\
 			+ "一场战斗最多触发一次。\n"\
 			+ "濒死时附加[活死人]状态，免疫死亡(特殊攻击除外)，持续10s。\n"\
 			+ "期间累计受到[50%最大生命]的治疗量后，解除[活死人]状态。\n"\
 			+ "持续时间结束[活死人]尚未解除，则会立即重伤死亡。"
+		att.maxHp = 400
+		att.def = 10
+		att.mgiDef = 20
+		_connect()
+
+	func _connect():
+		sys.main.connect("onBattleStart", self, "skillInit")
+		masCha.connect("onHurt", self, "livingDeath")
+		masCha.connect("onPlusHp", self, "relieve")
 
 	func skillInit():
 		switch = true
@@ -70,16 +93,23 @@ class DarkKnight:
 
 class Gunbreaker:
 	extends BaseSoul
-	func _init():
+	func _init(cha):
+		masCha = cha
+		masTeam = cha.team
 		name = "绝枪战士之证"
 		info = "灵魂的水晶，刻有历代绝枪战士的记忆和觉悟。\n"\
 			+ "[光之心]\n"\
 			+ "一定时间内，令自身和周围队员所受到的魔法伤害减轻10%。\n"\
-			+ "此效果不可叠加。"
+			+ "此效果不可叠加。\n"\
 			+ "冷却20s，持续10s。"
 		att.atk = 20
 		att.def = 20
 		att.mgiDef = 10
+		setCdSkill("skill_HeartOfLight", 20)
+		_connect()
+
+	func _connect():
+		masCha.connect("onCastCdSkill", self, "heartOfLight")
 
 	func heartOfLight(id):
 		if id == "skill_HeartOfLight":
@@ -91,15 +121,21 @@ class Gunbreaker:
 
 class Bard:
 	extends BaseSoul
-	func _init():
+	func _init(cha):
+		masCha = cha
+		masTeam = cha.team
 		name = "吟游诗人之证"
-		att.atk = 30
-		att.cri = 0.20
 		info = "灵魂的水晶，刻有历代吟游诗人的记忆和旋律。\n"\
 			+ "[魔人的安魂曲]\n"\
 			+ "战斗开始时，对所有敌方附加[魔法易伤]状态，\n使其受到的魔法伤害提高10%。\n"\
-			+ "此效果不可叠加\n"\
+			+ "此效果不可叠加。\n"\
 			+ "            ———— 纪念曾经的魔人曲"
+		att.atk = 30
+		att.cri = 0.10
+		_connect()
+
+	func _connect():
+		sys.main.connect("onBattleStart", self, "requiemOfTheDevil")
 
 	func requiemOfTheDevil():
 		for cha in sys.main.btChas:
@@ -110,13 +146,21 @@ class Dragoon:
 	extends BaseSoul
 	var count = 1
 	var Dragon = false
-	func _init():
+
+	func _init(cha):
+		masCha = cha
+		masTeam = cha.team
 		name = "龙骑士之证"
-		att.atk = 30
 		info = "灵魂的水晶，刻有历代龙骑士的记忆和决心。\n"\
 			+ "[红莲龙血]\n"\
 			+ "使用两次[高跳]后，再使用[武神枪]可以进入[红莲龙血]状态。\n"\
-			+ "攻击力提升15%，持续15s。"
+			+ "[红莲龙血]：攻击力提升15%，持续15s。"
+		att.atk = 30
+		_connect()
+
+	func _connect():
+		sys.main.connect("onBattleStart", self, "skillInit")
+		masCha.connect("onCastCdSkill", self, "lifeOfTheDragon")
 
 	func skillInit():
 		count = 1
@@ -135,48 +179,65 @@ class Dragoon:
 class BlackMage:
 	extends BaseSoul
 	func _init(cha):
-		name = "黑魔法师之证"
-		att.mgiAtk = 30
 		masCha = cha
+		masTeam = cha.team
+		name = "黑魔法师之证"
 		info = "灵魂的水晶，刻有历代黑魔法师的记忆和魔力。\n"\
 			+ "[天语]\n"\
 			+ "战斗开始时，为自身附加[天语]效果，提升自身[5%][10%][15%]的伤害。\n"\
 			+ "根据黑魔法师的等级来调整。"
+		att.mgiAtk = 30
+		_connect()
+
+	func _connect():
+		sys.main.connect("onBattleStart", self, "enochian")
 
 	func enochian():
 		masCha.addBuff(BUFF_LIST.b_Enochian.new(masCha.lv))
 
 class Astrologian:
 	extends BaseSoul
-	func _init():
+	func _init(cha):
+		masCha = cha
+		masTeam = cha.team
 		name = "占星术士之证"
-		att.def = 20
-		att.mgiAtk = 15
 		info = "灵魂的水晶，刻有历代占星术士的记忆和知识。\n"\
 			+ "[命运之轮]\n"\
 			+ "使自身及周围2格范围内的队友所受到的伤害减轻10%。\n"\
-			+ "此效果不可叠加。"
+			+ "此效果不可叠加。\n"\
 			+ "冷却36s，持续18s"
+		att.def = 20
+		att.mgiAtk = 15
+		setCdSkill("skill_Collective", 36)
+		_connect()
+
+	func _connect():
+		masCha.connect("onCastCdSkill", self, "collective")
 
 	func collective(id):
 		if id == "skill_Collective":
-			var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
 			var allys = toolman.getCellChas(masCha.cell, 2, masTeam)
 			for cha in allys:
 				if cha.team == masTeam:
 					cha.addBuff(BUFF_LIST.b_Collective.new(18))
-			toolman = null
 			allys = null
 
 class Samurai:
 	extends BaseSoul
-	func _init():
+	func _init(cha):
+		masCha = cha
+		masTeam = cha.team
 		name = "武士之证"
-		att.atk = 30
 		info = "灵魂的水晶，刻有历代武士的记忆和大义。\n"\
 			+ "[必杀剑-震天]\n"\
 			+ "对目标造成[200%]的物理伤害。\n"\
 			+ "冷却8s"
+		att.atk = 30
+		setCdSkill("skill_Shinten", 8)
+		_connect()
+
+	func _connect():
+		masCha.connect("onCastCdSkill", self, "shinten")
 
 	func shinten(id):
 		if id == "skill_Shinten" and masCha.aiCha != null:
@@ -186,12 +247,17 @@ class Warrior:
 	extends BaseSoul
 	func _init():
 		name = "战士之证"
-		att.maxHp = 200
-		att.atk = 10
 		info = "灵魂的水晶，刻有历代战士的记忆和斗志。\n"\
 			+ "[泰然自若]\n"\
 			+ "回复自身[300%]攻击力的生命值。\n"\
 			+ "冷却15s"
+		att.maxHp = 200
+		att.atk = 10
+		setCdSkill("skill_Equilibrium", 15)
+		_connect()
+
+	func _connect():
+		masCha.connect("onCastCdSkill", self, "equilibrium")
 
 	func equilibrium(id):
 		if id == "skill_Equilibrium":
@@ -199,14 +265,21 @@ class Warrior:
 
 class RedMage:
 	extends BaseSoul
-	func _init():
+	func _init(cha):
+		masCha = cha
+		masTeam = cha.team
 		name = "赤魔法师之证"
-		att.mgiAtk = 10
-		att.atk = 10
 		info = "灵魂的水晶，刻有历代赤魔法师的记忆和心血。\n"\
 			+ "[赤治疗]\n"\
 			+ "为生命最低的友方单位恢复[80%]法强的生命值。\n"\
 			+ "冷却16s"
+		att.mgiAtk = 10
+		att.atk = 10
+		setCdSkill("skill_Vercure", 16)
+		_connect()
+
+	func _connect():
+		masCha.connect("onCastCdSkill", self, "vercure")
 
 	func vercure(id):
 		if id == "skill_Vercure":
@@ -218,14 +291,22 @@ class RedMage:
 
 class Monk:
 	extends BaseSoul
-	func _init():
+	func _init(cha):
+		masCha = cha
+		masTeam = cha.team
 		name = "武僧之证"
-		att.atk = 20
-		att.def = 20
 		info = "灵魂的水晶，刻有历代武僧的记忆和气概。\n"\
 			+ "[真言]\n"\
 			+ "使自身和周围友方单位受到的治疗效果提高10%\n"\
 			+ "冷却30s，持续10s"
+		att.atk = 20
+		att.def = 20
+
+		setCdSkill("skill_Mantra", 30)
+		_connect()
+
+	func _connect():
+		masCha.connect("onCastCdSkill", self, "mantra")
 
 	func mantra(id):
 		if id == "skill_Mantra":
@@ -237,14 +318,21 @@ class Monk:
 
 class Paladin:
 	extends BaseSoul
-	func _init():
+	func _init(cha):
+		masCha = cha
+		masTeam = cha.team
 		name = "骑士之证"
-		att.mgiAtk = 10
-		att.def = 20
 		info = "灵魂的水晶，刻有历代骑士的记忆和荣誉。\n"\
 			+ "[安魂祈祷]\n"\
 			+ "自身魔法强度提高50点。\n"\
 			+ "冷却27s，持续15s"
+		att.mgiAtk = 10
+		att.def = 20
+		setCdSkill("skill_Requiescat", 27)
+		_connect()
+
+	func _connect():
+		masCha.connect("onCastCdSkill", self, "requiescat")
 
 	func requiescat(id):
 		if id == "skill_Requiescat":
@@ -252,15 +340,22 @@ class Paladin:
 
 class Ninja:
 	extends BaseSoul
-	func _init():
+	func _init(cha):
+		masCha = cha
+		masTeam = cha.team
 		name = "忍者之证"
-		att.atk = 20
-		att.def = 10
-		att.mgiDef = 10
 		info = "灵魂的水晶，刻有历代忍者的记忆和精神。\n"\
 			+ "[梦幻三段]\n"\
 			+ "对目标连续发动三次普通攻击。\n"\
 			+ "冷却19s"
+		att.atk = 20
+		att.def = 10
+		att.mgiDef = 10
+		setCdSkill("skill_Dream", 19)
+		_connect()
+	
+	func _connect():
+		masCha.connect("onCastCdSkill", self, "dream")
 
 	func dream(id):
 		if id == "skill_Dream" and masCha.aiCha != null:
@@ -270,38 +365,55 @@ class Ninja:
 
 class WhiteMage:
 	extends BaseSoul
-	func _init():
+	func _init(cha):
+		masCha = cha
+		masTeam = cha.team
 		name = "白魔法师之证"
-		att.mgiAtk = 20
-		att.cd = 0.15
 		info = "灵魂的水晶，刻有历代白魔法师的记忆和圣迹。\n"\
 			+ "[神速咏唱]\n"\
 			+ "被动，技能冷却速度加快15%。"
+		att.mgiAtk = 20
+		att.cd = 0.15
 
 class Scholar:
 	extends BaseSoul
-	func _init():
+	func _init(cha):
+		masCha = cha
+		masTeam = cha.team
 		name = "学者之证"
-		att.mgiAtk = 20
-		att.mgiDef = 10
 		info = "灵魂的水晶，刻有历代学者的记忆和学识。\n"\
 			+ "[连环计]\n"\
 			+ "对目标施加[连环计]，10%的概率使其受到伤害变为双倍。\n"\
 			+ "冷却15s，持续8s"
+		att.mgiAtk = 20
+		att.mgiDef = 10
+
+		setCdSkill("skill_ChainStratagem", 15)
+		_connect()
 	
+	func _connect():
+		masCha.connect("onCastCdSkill", self, "chainStratagem")
+
 	func chainStratagem(id):
 		if id == "skill_ChainStratagem" and masCha.aiCha != null:
 			masCha.aiCha.addBuff(BUFF_LIST.b_ChainStratagem.new(8))
 
 class Summoner:
 	extends BaseSoul
-	func _init():
+	func _init(cha):
+		masCha = cha
+		masTeam = cha.team
 		name = "召唤师之证"
-		att.mgiAtk = 30
 		info = "灵魂的水晶，刻有历代召唤师的记忆和真理。\n"\
 			+ "[三重灾祸]\n"\
 			+ "对目标施加[中毒][流血]。\n"\
 			+ "冷却15s，持续10s"
+		att.mgiAtk = 30
+		setCdSkill("skill__TriDisaster", 15)
+		_connect()
+	
+	func _connect():
+		masCha.connect("onCastCdSkill", self, "triDisaster")
 
 	func triDisaster(id):
 		if id == "skill__TriDisaster" and masCha.aiCha != null:
@@ -310,12 +422,18 @@ class Summoner:
 
 class Machinist:
 	extends BaseSoul
-	func _init():
+	func _init(cha):
+		masCha = cha
+		masTeam = cha.team
 		name = "机工士之证"
-		att.atk = 30
 		info = "与其他灵魂水晶不同，这颗水晶上尚未刻下历史的记忆。\n"\
 			+ "[火焰喷射器]\n"\
 			+ "被动，普通攻击会对目标及其周围一格的敌人附加2层[烧灼]"
+		att.atk = 30
+		_connect()
+
+	func _connect():
+		masCha.connect("onAtkChara", self, "fireGun")
 
 	func fireGun(atkInfo):
 		var chas = toolman.getCellChas(atkInfo.hitCha.cell, 1)
@@ -325,17 +443,23 @@ class Machinist:
 
 class Dancer:
 	extends BaseSoul
-	func _init():
+	func _init(cha):
+		masCha = cha
+		masTeam = cha.team
 		name = "舞者之证"
-		att.atk = 30
 		info = "灵魂的水晶，刻有历代舞者的记忆和舞蹈。\n"\
 			+ "[扇舞·急]\n"\
 			+ "被动，普通攻击有20%概率触发。\n"\
 			+ "对目标及周围2格敌人造成[100%]的物理伤害。"
+		att.atk = 30
+		_connect()
+
+	func _connect():
+		masCha.connect("onAtkChara", self, "fanDance")
 
 	func fanDance(atkInfo):
 		if atkInfo.atkType == Chara.AtkType.NORMAL and sys.rndPer(20):
-			var chas = toolman.getCellChas(aiCha.cell, 2, 1)
+			var chas = toolman.getCellChas(masCha.aiCha.cell, 2, 1)
 			for i in chas:
 				if i != null and i.team != masTeam: 
 					masCha.hurtChara(i, masCha.att.atk, Chara.HurtType.PHY, Chara.AtkType.SKILL)

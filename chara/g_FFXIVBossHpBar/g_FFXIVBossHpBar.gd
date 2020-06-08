@@ -6,7 +6,7 @@ var hpBarUnder = ImageTexture.new()
 var hpBarProgress = ImageTexture.new()
 
 func _init():
-	print("最终幻想14：—————— Boss机制加载 ——————")
+	print("最终幻想14：—————— 高难机制加载 ——————")
 	pass
 
 func createHpBar():
