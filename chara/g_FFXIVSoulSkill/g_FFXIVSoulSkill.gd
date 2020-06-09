@@ -3,8 +3,8 @@ func _init():
 	pass
 
 class BaseSoul:
-	var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
-	var BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
+	const Utils = load("g_aFFXIVUtils") # 全局工具
+	const BUFF_LIST = load("g_FFXIVBuffList")
 	var toolman = sys.main.newChara("cFFXIV_zTatalu", 2) # 工具人
 
 	var masTeam
@@ -27,22 +27,22 @@ class BaseSoul:
 	}
 	
 	func setCdSkill(name, cd):
-		var hasSkill = false
 		for skill in masCha.skills:
 			if skill.id == name:
-				hasSkill = true
-		if !hasSkill:
-			prevSkill = name
-			prevCha = masCha
-			masCha.addCdSkill(name, cd)
+				return
 
+		prevSkill = name
+		prevCha = masCha
+		masCha.addCdSkill(name, cd)
+
+	# 删除上一个角色装备的技能
 	func deleteCdSkill():
-		for skill in prevCha.skills:
-			if skill.id == prevSkill:
-				skill = null
-				prevSkill = ""
-				prevCha = null
-				print("删除技能", prevSkill)
+		if prevCha != null:
+			for skill in prevCha.skills:
+				if skill.id == prevSkill:
+					prevCha.skills.erase(skill)
+					prevCha = null
+					print("删除技能", prevSkill)
 
 class DarkKnight:
 	extends BaseSoul

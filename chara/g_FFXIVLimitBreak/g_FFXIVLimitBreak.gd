@@ -1,4 +1,4 @@
-var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
+const Utils = load("g_aFFXIVUtils") # 全局工具
 var allAtt = {}
 
 var limitBreak = null
@@ -17,7 +17,7 @@ func _init():
 	pass
 
 func createLimitBreak():
-	var Path = Utils.getPath()
+	const Path = Utils.getPath()
 	limitBreak = TextureProgress.new() # 极限技UI节点
 
 	limitUnder = Utils.loadImgTexture("/img/limitBreak_under.png")

@@ -1,7 +1,7 @@
 extends Talent
-var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
-var Limit = globalData.infoDs["g_FFXIVLimitBreak"] # 极限技类
-var HpBar = globalData.infoDs["g_FFXIVBossHpBar"] # boss血条类
+var Utils = load("g_aFFXIVUtils") # 全局工具
+var Limit = load("g_FFXIVLimitBreak") # 极限技类
+var HpBar = load("g_FFXIVBossHpBar") # boss血条类
 
 var originBackground # 原版背景
 var layer = 0 # 当前关卡数
@@ -18,7 +18,7 @@ func get_info():
 所有敌方双攻提高%d%%，战斗后额外获得%d金币
 有概率出现强大的BOSS单位！！！
 BOSS战可以使用极限技能了！！！
-来自《最终幻想14》""" % [(0.1 + lv * 0.01) * 100, 25 + lv * 15]
+来自《最终幻想14》""" % [(0.1 + lv * 0.01) * 100, 5 + lv * 5]
 
 func _connect():
 	sys.main.connect("onBattleReady", self, "come")

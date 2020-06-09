@@ -1,6 +1,6 @@
 extends Chara
-const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
-const Utils = globalData.infoDs["g_aFFXIVUtils"]
+const BUFF_LIST = load("g_FFXIVBuffList")
+const Utils = load("g_aFFXIVUtils")
 const OCCUPATION = ["protect", "attack", "treatment"]
 
 func _info():

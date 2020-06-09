@@ -1,9 +1,16 @@
 extends Item
-var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
-var Soul = globalData.infoDs["g_FFXIVSoulSkill"]
+const Utils = load("g_aFFXIVUtils")# 全局工具
+const Soul = load("g_FFXIVSoulSkill")
+const Epilogue = "\n来自《最终幻想14》"
+const CharaList = ["cFFXIVAolong_1", "cFFXIVAolong_2", "cFFXIVAolong_3",
+	"cFFXIVHumen_1", "cFFXIVHumen_2", "cFFXIVHumen_3",
+	"cFFXIVLarafel_1", "cFFXIVLarafel_2", "cFFXIVLarafel_3",
+	"cFFXIVNeko_1", "cFFXIVNeko_2", "cFFXIVNeko_3",
+	"cFFXIVRuga_1", "cFFXIVRuga_2", "cFFXIVRuga_3",
+	"cFFXIVSpirit_1", "cFFXIVSpirit_2", "cFFXIVSpirit_3"] 
+
 var SoulExample = null # 当前使用者的灵魂实例
 
-const Epilogue = "\n来自《最终幻想14》"
 func init():
 	attInit()
 	id = "i_FFXIVSoulCrystal"
@@ -12,18 +19,11 @@ func init():
 	price = 500
 	info = "不知是做何用的水晶，刻有奇怪的印记。%s" % [Epilogue] 
 
-const CharaList = ["cFFXIVAolong_1", "cFFXIVAolong_2", "cFFXIVAolong_3",
-	"cFFXIVHumen_1", "cFFXIVHumen_2", "cFFXIVHumen_3",
-	"cFFXIVLarafel_1", "cFFXIVLarafel_2", "cFFXIVLarafel_3",
-	"cFFXIVNeko_1", "cFFXIVNeko_2", "cFFXIVNeko_3",
-	"cFFXIVRuga_1", "cFFXIVRuga_2", "cFFXIVRuga_3",
-	"cFFXIVSpirit_1", "cFFXIVSpirit_2", "cFFXIVSpirit_3"] 
-
 func _connect():
 	for item in masCha.items:
 		if item.id == "i_FFXIVSoulCrystal":
 			setInfo(null)
-			sys.newBaseMsg("装备无效！", "灵魂水晶最多只有一件可以生效！")
+			print("装备无效！灵魂水晶最多只有一件可以生效！")
 			return
 
 	for occupation in CharaList:
@@ -32,6 +32,9 @@ func _connect():
 			return
 
 func setInfo(occupation):
+	if SoulExample != null:
+		SooulExample.deleteCdSkill()
+
 	match occupation:
 		"cFFXIVAolong_1":
 			SoulExample = Soul.DarkKnight.new(masCha)
