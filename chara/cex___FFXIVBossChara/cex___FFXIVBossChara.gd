@@ -27,7 +27,7 @@ func _extInit():
 	evos = []
 	lv = 1
 	atkEff = "atk_dao"
-	addSkillTxt("[自适应调整]：该单位属性根据敌方战力自适应调整，拥有特定的技能时间轴")
+	addSkillTxt("[自适应]：该单位属性根据敌方战力自适应调整，拥有特定的技能时间轴")
 
 func _connect():
 	._connect()
@@ -86,3 +86,9 @@ func _upS():
 	battleDuration += 1
 	if TimeAxis.has(battleDuration):
 		call_deferred(TimeAxis[battleDuration])
+
+func _onDeath(atkInfo):
+	._onDeath(atkInfo)
+	sys.main.player.plusGold(300)
+	var item = sys.newItem("i_FFXIVSoulCrystal")
+	sys.main.player.addItem(item)

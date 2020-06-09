@@ -16,7 +16,7 @@ func _extInit():
 
 var mustardBomb_pw = 4 # 死刑威力
 var atomicRay_pw = 0.75 # 原子射线威力
-var triangleAttack_pw = 20 # 三角攻击威力
+var triangleAttack_pw = 22 # 三角攻击威力
 
 func _init():
 	var SkillAxis = {
