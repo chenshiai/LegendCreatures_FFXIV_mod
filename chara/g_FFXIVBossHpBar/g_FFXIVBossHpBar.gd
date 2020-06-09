@@ -1,4 +1,4 @@
-const Utils = load("g_aFFXIVUtils") # 全局工具
+var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
 var hpBar = null
 
 var im = Image.new()
@@ -10,7 +10,7 @@ func _init():
 	pass
 
 func createHpBar():
-	const Path = Utils.getPath()
+	var Path = Utils.getPath()
 	hpBar = TextureProgress.new()
 	im.load(Path + "/img/hpbar_under.png")
 	hpBarUnder.create_from_image(im)

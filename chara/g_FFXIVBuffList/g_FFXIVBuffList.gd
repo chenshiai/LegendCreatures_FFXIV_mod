@@ -29,7 +29,6 @@ class BassShield:
 
 	func _connect():
 		masCha.connect("onHurt", self, "run")
-		print("护盾连结成功", BassShield)
 
 	func run(atkInfo:AtkInfo):
 		shieldValue = BuffOption.shield(shieldValue, atkInfo)
@@ -173,7 +172,6 @@ class b_HeartOfLight:
 	func run(atkInfo:AtkInfo):
 		if atkInfo.hurtType == Chara.HurtType.MGI:
 			atkInfo.hurtVal *= 0.90
-			print("光之心生效！")
 			
 	func _upS():
 		life = clamp(life, 0, 10)
@@ -286,7 +284,6 @@ class b_Adloquium:
 
 	func _upS():
 		life = clamp(life, 0, 10)
-		print(self, life)
 
 # 野战治疗阵，减伤，持续恢复
 class b_SacredSoil:
@@ -392,7 +389,6 @@ class b_Troubadour:
 
 	func run(atkInfo:AtkInfo):
 		atkInfo.hurtVal *= 0.90
-		print("行吟生效")
 
 # 魔人曲。魔法易伤
 class b_RequiemOfTheDevil:
@@ -619,7 +615,6 @@ class b_Collective:
 
 	func run(atkInfo:AtkInfo):
 		atkInfo.hurtVal *= 0.90
-		print("命运之轮生效")
 			
 	func _upS():
 		life = clamp(life, 0, 18)

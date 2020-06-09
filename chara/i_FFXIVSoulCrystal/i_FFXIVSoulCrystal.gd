@@ -1,6 +1,6 @@
 extends Item
-const Utils = load("g_aFFXIVUtils")# 全局工具
-const Soul = load("g_FFXIVSoulSkill")
+const Utils = globalData.infoDs["g_aFFXIVUtils"]# 全局工具
+const Soul = globalData.infoDs["g_FFXIVSoulSkill"]
 const Epilogue = "\n来自《最终幻想14》"
 const CharaList = ["cFFXIVAolong_1", "cFFXIVAolong_2", "cFFXIVAolong_3",
 	"cFFXIVHumen_1", "cFFXIVHumen_2", "cFFXIVHumen_3",
@@ -20,6 +20,9 @@ func init():
 	info = "不知是做何用的水晶，刻有奇怪的印记。%s" % [Epilogue] 
 
 func _connect():
+	if SoulExample != null:
+		SoulExample.deleteCdSkill()
+
 	for item in masCha.items:
 		if item.id == "i_FFXIVSoulCrystal":
 			setInfo(null)
@@ -32,9 +35,6 @@ func _connect():
 			return
 
 func setInfo(occupation):
-	if SoulExample != null:
-		SooulExample.deleteCdSkill()
-
 	match occupation:
 		"cFFXIVAolong_1":
 			SoulExample = Soul.DarkKnight.new(masCha)

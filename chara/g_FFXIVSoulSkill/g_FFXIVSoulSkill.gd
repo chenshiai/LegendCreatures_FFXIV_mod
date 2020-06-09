@@ -3,8 +3,8 @@ func _init():
 	pass
 
 class BaseSoul:
-	const Utils = load("g_aFFXIVUtils") # 全局工具
-	const BUFF_LIST = load("g_FFXIVBuffList")
+	const Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
+	const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
 	var toolman = sys.main.newChara("cFFXIV_zTatalu", 2) # 工具人
 
 	var masTeam
@@ -42,7 +42,6 @@ class BaseSoul:
 				if skill.id == prevSkill:
 					prevCha.skills.erase(skill)
 					prevCha = null
-					print("删除技能", prevSkill)
 
 class DarkKnight:
 	extends BaseSoul
@@ -113,9 +112,9 @@ class Gunbreaker:
 
 	func heartOfLight(id):
 		if id == "skill_HeartOfLight":
-			var allys = toolman.getAllChas(masTeam)
+			var allys = masCha.getAllChas(2)
 			for cha in allys:
-				if cha.team == masTeam:
+				if cha != null:
 					cha.addBuff(BUFF_LIST.b_HeartOfLight.new(10))
 			allys = null
 
@@ -138,7 +137,7 @@ class Bard:
 		sys.main.connect("onBattleStart", self, "requiemOfTheDevil")
 
 	func requiemOfTheDevil():
-		for cha in sys.main.btChas:
+		for cha in masCha.getAllChas(1):
 			if cha.team != masTeam:
 				cha.addBuff(BUFF_LIST.b_RequiemOfTheDevil.new())
 
@@ -216,9 +215,9 @@ class Astrologian:
 
 	func collective(id):
 		if id == "skill_Collective":
-			var allys = toolman.getCellChas(masCha.cell, 2, masTeam)
+			var allys = masCha.getCellChas(masCha.cell, 2, 2)
 			for cha in allys:
-				if cha.team == masTeam:
+				if cha != null:
 					cha.addBuff(BUFF_LIST.b_Collective.new(18))
 			allys = null
 
@@ -245,7 +244,9 @@ class Samurai:
 
 class Warrior:
 	extends BaseSoul
-	func _init():
+	func _init(cha):
+		masCha = cha
+		masTeam = cha.team
 		name = "战士之证"
 		info = "灵魂的水晶，刻有历代战士的记忆和斗志。\n"\
 			+ "[泰然自若]\n"\
@@ -283,7 +284,7 @@ class RedMage:
 
 	func vercure(id):
 		if id == "skill_Vercure":
-			var chas = toolman.getAllChas(masTeam)
+			var chas = masCha.getAllChas(2)
 			chas.sort_custom(Utils.Calculation, "sort_MinHpP")
 
 			if chas[0] != null:
@@ -310,9 +311,9 @@ class Monk:
 
 	func mantra(id):
 		if id == "skill_Mantra":
-			var allys = toolman.getAllChas(masTeam)
+			var allys = masCha.getAllChas(2)
 			for cha in allys:
-				if cha.team == masTeam:
+				if cha != null:
 					cha.addBuff(BUFF_LIST.b_Mantra.new(10))
 			allys = null
 
@@ -436,10 +437,11 @@ class Machinist:
 		masCha.connect("onAtkChara", self, "fireGun")
 
 	func fireGun(atkInfo):
-		var chas = toolman.getCellChas(atkInfo.hitCha.cell, 1)
-		for i in chas:
-				if i.team != masTeam:
-					i.addBuff(b_shaoZhuo.new(2))
+		if atkInfo.atkType == Chara.AtkType.NORMAL:
+			var chas = masCha.getCellChas(atkInfo.hitCha.cell, 1, 1)
+			for i in chas:
+					if i != null:
+						i.addBuff(b_shaoZhuo.new(2))
 
 class Dancer:
 	extends BaseSoul
@@ -449,7 +451,7 @@ class Dancer:
 		name = "舞者之证"
 		info = "灵魂的水晶，刻有历代舞者的记忆和舞蹈。\n"\
 			+ "[扇舞·急]\n"\
-			+ "被动，普通攻击有20%概率触发。\n"\
+			+ "被动，普通攻击有30%概率触发。\n"\
 			+ "对目标及周围2格敌人造成[100%]的物理伤害。"
 		att.atk = 30
 		_connect()
@@ -458,8 +460,8 @@ class Dancer:
 		masCha.connect("onAtkChara", self, "fanDance")
 
 	func fanDance(atkInfo):
-		if atkInfo.atkType == Chara.AtkType.NORMAL and sys.rndPer(20):
-			var chas = toolman.getCellChas(masCha.aiCha.cell, 2, 1)
+		if atkInfo.atkType == Chara.AtkType.NORMAL and sys.rndPer(30):
+			var chas = masCha.getCellChas(masCha.aiCha.cell, 2, 1)
 			for i in chas:
-				if i != null and i.team != masTeam: 
+				if i != null:
 					masCha.hurtChara(i, masCha.att.atk, Chara.HurtType.PHY, Chara.AtkType.SKILL)

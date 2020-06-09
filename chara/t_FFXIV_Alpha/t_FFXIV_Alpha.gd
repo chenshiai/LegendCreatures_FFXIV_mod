@@ -1,7 +1,7 @@
 extends Talent
-var Utils = load("g_aFFXIVUtils") # 全局工具
-var Limit = load("g_FFXIVLimitBreak") # 极限技类
-var HpBar = load("g_FFXIVBossHpBar") # boss血条类
+var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
+var Limit = globalData.infoDs["g_FFXIVLimitBreak"] # 极限技类
+var HpBar = globalData.infoDs["g_FFXIVBossHpBar"] # boss血条类
 
 var originBackground # 原版背景
 var layer = 0 # 当前关卡数
