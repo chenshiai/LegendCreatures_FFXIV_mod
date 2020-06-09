@@ -51,7 +51,7 @@ class DarkKnight:
 	func _init(cha):
 		masCha = cha
 		masTeam = cha.team
-		name = "暗黑骑士之证"
+		name = "[color=#432f2e]暗黑骑士之证"
 		info = "灵魂的水晶，刻有历代暗黑骑士的记忆和灵魂。\n"\
 			+ "[行尸走肉]\n"\
 			+ "一场战斗最多触发一次。\n"\
@@ -95,7 +95,7 @@ class Gunbreaker:
 	func _init(cha):
 		masCha = cha
 		masTeam = cha.team
-		name = "绝枪战士之证"
+		name = "[color=#ae9a37]绝枪战士之证"
 		info = "灵魂的水晶，刻有历代绝枪战士的记忆和觉悟。\n"\
 			+ "[光之心]\n"\
 			+ "一定时间内，令自身和周围队员所受到的魔法伤害减轻10%。\n"\
@@ -123,7 +123,7 @@ class Bard:
 	func _init(cha):
 		masCha = cha
 		masTeam = cha.team
-		name = "吟游诗人之证"
+		name = "[color=#9caa42]吟游诗人之证"
 		info = "灵魂的水晶，刻有历代吟游诗人的记忆和旋律。\n"\
 			+ "[魔人的安魂曲]\n"\
 			+ "战斗开始时，对所有敌方附加[魔法易伤]状态，\n使其受到的魔法伤害提高10%。\n"\
@@ -149,7 +149,7 @@ class Dragoon:
 	func _init(cha):
 		masCha = cha
 		masTeam = cha.team
-		name = "龙骑士之证"
+		name = "[color=#4752b8]龙骑士之证"
 		info = "灵魂的水晶，刻有历代龙骑士的记忆和决心。\n"\
 			+ "[红莲龙血]\n"\
 			+ "使用两次[高跳]后，再使用[武神枪]可以进入[红莲龙血]状态。\n"\
@@ -180,7 +180,7 @@ class BlackMage:
 	func _init(cha):
 		masCha = cha
 		masTeam = cha.team
-		name = "黑魔法师之证"
+		name = "[color=#312d3a]黑魔法师之证"
 		info = "灵魂的水晶，刻有历代黑魔法师的记忆和魔力。\n"\
 			+ "[天语]\n"\
 			+ "战斗开始时，为自身附加[天语]效果，提升自身[5%][10%][15%]的伤害。\n"\
@@ -199,7 +199,7 @@ class Astrologian:
 	func _init(cha):
 		masCha = cha
 		masTeam = cha.team
-		name = "占星术士之证"
+		name = "[color=#eba058]占星术士之证"
 		info = "灵魂的水晶，刻有历代占星术士的记忆和知识。\n"\
 			+ "[命运之轮]\n"\
 			+ "使自身及周围2格范围内的队友所受到的伤害减轻10%。\n"\
@@ -226,7 +226,7 @@ class Samurai:
 	func _init(cha):
 		masCha = cha
 		masTeam = cha.team
-		name = "武士之证"
+		name = "[color=#faefd0]武士之证"
 		info = "灵魂的水晶，刻有历代武士的记忆和大义。\n"\
 			+ "[必杀剑-震天]\n"\
 			+ "对目标造成[200%]的物理伤害。\n"\
@@ -247,7 +247,7 @@ class Warrior:
 	func _init(cha):
 		masCha = cha
 		masTeam = cha.team
-		name = "战士之证"
+		name = "[color=#bd555a]战士之证"
 		info = "灵魂的水晶，刻有历代战士的记忆和斗志。\n"\
 			+ "[泰然自若]\n"\
 			+ "回复自身[300%]攻击力的生命值。\n"\
@@ -269,7 +269,7 @@ class RedMage:
 	func _init(cha):
 		masCha = cha
 		masTeam = cha.team
-		name = "赤魔法师之证"
+		name = "[color=#c12957]赤魔法师之证"
 		info = "灵魂的水晶，刻有历代赤魔法师的记忆和心血。\n"\
 			+ "[赤治疗]\n"\
 			+ "为生命最低的友方单位恢复[80%]法强的生命值。\n"\
@@ -295,7 +295,7 @@ class Monk:
 	func _init(cha):
 		masCha = cha
 		masTeam = cha.team
-		name = "武僧之证"
+		name = "[color=#a48a21]武僧之证"
 		info = "灵魂的水晶，刻有历代武僧的记忆和气概。\n"\
 			+ "[真言]\n"\
 			+ "使自身和周围友方单位受到的治疗效果提高10%\n"\
@@ -322,7 +322,7 @@ class Paladin:
 	func _init(cha):
 		masCha = cha
 		masTeam = cha.team
-		name = "骑士之证"
+		name = "[color=#7b9ea4]骑士之证"
 		info = "灵魂的水晶，刻有历代骑士的记忆和荣誉。\n"\
 			+ "[安魂祈祷]\n"\
 			+ "自身魔法强度提高50点。\n"\
@@ -344,7 +344,7 @@ class Ninja:
 	func _init(cha):
 		masCha = cha
 		masTeam = cha.team
-		name = "忍者之证"
+		name = "[color=#6f5e5d]忍者之证"
 		info = "灵魂的水晶，刻有历代忍者的记忆和精神。\n"\
 			+ "[梦幻三段]\n"\
 			+ "对目标连续发动三次普通攻击。\n"\
@@ -369,7 +369,7 @@ class WhiteMage:
 	func _init(cha):
 		masCha = cha
 		masTeam = cha.team
-		name = "白魔法师之证"
+		name = "[color=#c5bc94]白魔法师之证"
 		info = "灵魂的水晶，刻有历代白魔法师的记忆和圣迹。\n"\
 			+ "[神速咏唱]\n"\
 			+ "被动，技能冷却速度加快15%。"
@@ -381,7 +381,7 @@ class Scholar:
 	func _init(cha):
 		masCha = cha
 		masTeam = cha.team
-		name = "学者之证"
+		name = "[color=#5251cb]学者之证"
 		info = "灵魂的水晶，刻有历代学者的记忆和学识。\n"\
 			+ "[连环计]\n"\
 			+ "对目标施加[连环计]，10%的概率使其受到伤害变为双倍。\n"\
@@ -404,7 +404,7 @@ class Summoner:
 	func _init(cha):
 		masCha = cha
 		masTeam = cha.team
-		name = "召唤师之证"
+		name = "[color=#4b8e13]召唤师之证"
 		info = "灵魂的水晶，刻有历代召唤师的记忆和真理。\n"\
 			+ "[三重灾祸]\n"\
 			+ "对目标施加[中毒][流血]。\n"\
@@ -426,7 +426,7 @@ class Machinist:
 	func _init(cha):
 		masCha = cha
 		masTeam = cha.team
-		name = "机工士之证"
+		name = "[color=#6cc7c0]机工士之证"
 		info = "与其他灵魂水晶不同，这颗水晶上尚未刻下历史的记忆。\n"\
 			+ "[火焰喷射器]\n"\
 			+ "被动，普通攻击会对目标及其周围一格的敌人附加2层[烧灼]"
@@ -448,7 +448,7 @@ class Dancer:
 	func _init(cha):
 		masCha = cha
 		masTeam = cha.team
-		name = "舞者之证"
+		name = "[color=#ecb1d7]舞者之证"
 		info = "灵魂的水晶，刻有历代舞者的记忆和舞蹈。\n"\
 			+ "[扇舞·急]\n"\
 			+ "被动，普通攻击有30%概率触发。\n"\

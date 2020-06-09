@@ -1,7 +1,26 @@
 extends Item
 const Utils = globalData.infoDs["g_aFFXIVUtils"]# 全局工具
 const Soul = globalData.infoDs["g_FFXIVSoulSkill"]
-const Epilogue = "\n来自《最终幻想14》"
+const Epilogue = """灵魂水晶，装备给不同的特职会有不同的效果。
+仅限《最终幻想14》的角色，可转变列表如下：
+	[color=#432f2e]暗黑骑士之证
+	[color=#ae9a37]绝枪战士之证
+	[color=#9caa42]吟游诗人之证
+	[color=#4752b8]龙骑士之证
+	[color=#312d3a]黑魔法师之证
+	[color=#eba058]占星术士之证
+	[color=#faefd0]武士之证
+	[color=#bd555a]战士之证
+	[color=#c12957]赤魔法师之证
+	[color=#a48a21]武僧之证
+	[color=#7b9ea4]骑士之证
+	[color=#6f5e5d]忍者之证
+	[color=#c5bc94]白魔法师之证
+	[color=#5251cb]学者之证
+	[color=#4b8e13]召唤师之证
+	[color=#6cc7c0]机工士之证
+	[color=#ecb1d7]舞者之证"""
+
 const CharaList = ["cFFXIVAolong_1", "cFFXIVAolong_2", "cFFXIVAolong_3",
 	"cFFXIVHumen_1", "cFFXIVHumen_2", "cFFXIVHumen_3",
 	"cFFXIVLarafel_1", "cFFXIVLarafel_2", "cFFXIVLarafel_3",
@@ -14,10 +33,10 @@ var SoulExample = null # 当前使用者的灵魂实例
 func init():
 	attInit()
 	id = "i_FFXIVSoulCrystal"
-	name = "蒙尘的水晶"
+	name = "灵魂水晶"
 	type = config.EQUITYPE_EQUI
 	price = 500
-	info = "不知是做何用的水晶，刻有奇怪的印记。%s" % [Epilogue] 
+	info = Epilogue
 
 func _connect():
 	if SoulExample != null:
@@ -93,8 +112,8 @@ func setInfo(occupation):
 		setEquipmentInfo()
 
 func setInitAtt():
-	name = "蒙尘的水晶"
-	info = "不知是做何用的水晶，刻有奇怪的印记。%s" % [Epilogue]
+	name = "灵魂水晶"
+	info = Epilogue
 	att.maxHp = 0
 	att.cd = 0
 	att.atk = 0
