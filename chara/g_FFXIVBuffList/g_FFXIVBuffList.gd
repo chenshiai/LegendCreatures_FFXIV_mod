@@ -452,7 +452,7 @@ class b_Mantra:
 	extends Buff
 	func _init(dur = 1):
 		attInit()
-		id = "b_Brotherhood"
+		id = "b_Mantra"
 		isNegetive = false
 		life = dur
 		att.reHp = 0.10
@@ -618,7 +618,6 @@ class b_Collective:
 			
 	func _upS():
 		life = clamp(life, 0, 18)
-
 
 # 红莲龙血
 class b_LifeOfTheDragon:

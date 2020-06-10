@@ -14,8 +14,10 @@ func _extInit():
 
 var hasDivineVeil = false
 var divineVeilDur = 5
+
 func _connect():
 	._connect()
+	self.connect("onPlusHp", self, "divineVeilTodo")
 
 func _onBattleStart():
 	._onBattleStart()
@@ -34,8 +36,7 @@ func _onHurt(atkInfo):
 func divineVeil():
 	hasDivineVeil = true
 
-func _onPlusHp(val):
-	._onPlusHp(val)
+func divineVeilTodo(val):
 	if hasDivineVeil:
 		hasDivineVeil = false
 		divineVeilDur = 5
@@ -50,8 +51,6 @@ func _upS():
 	._upS()
 	if hasDivineVeil:
 		divineVeilDur -= 1
-		print("圣光幕帘持续中")
 		if divineVeilDur < 0:
 			divineVeilDur = 5
-			print("圣光幕帘结束了")
 			hasDivineVeil = false
