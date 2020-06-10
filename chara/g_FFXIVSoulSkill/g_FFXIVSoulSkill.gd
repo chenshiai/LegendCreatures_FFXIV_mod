@@ -58,7 +58,7 @@ class DarkKnight:
 			+ "濒死时附加[活死人]状态，免疫死亡(特殊攻击除外)，持续10s。\n"\
 			+ "期间累计受到[50%最大生命]的治疗量后，解除[活死人]状态。\n"\
 			+ "持续时间结束[活死人]尚未解除，则会立即重伤死亡。"
-		att.maxHp = 400
+		att.maxHp = 300
 		att.def = 10
 		att.mgiDef = 20
 		_connect()
@@ -101,6 +101,7 @@ class Gunbreaker:
 			+ "一定时间内，令自身和周围队员所受到的魔法伤害减轻10%。\n"\
 			+ "此效果不可叠加。\n"\
 			+ "冷却20s，持续10s。"
+		att.maxHp = 250
 		att.atk = 20
 		att.def = 20
 		att.mgiDef = 10
@@ -129,6 +130,7 @@ class Bard:
 			+ "战斗开始时，对所有敌方附加[魔法易伤]状态，\n使其受到的魔法伤害提高10%。\n"\
 			+ "此效果不可叠加。\n"\
 			+ "            ———— 纪念曾经的魔人曲"
+		att.maxHp = 100
 		att.atk = 30
 		att.cri = 0.10
 		_connect()
@@ -154,6 +156,7 @@ class Dragoon:
 			+ "[红莲龙血]\n"\
 			+ "使用两次[高跳]后，再使用[武神枪]可以进入[红莲龙血]状态。\n"\
 			+ "[红莲龙血]：攻击力提升15%，持续15s。"
+		att.maxHp = 150
 		att.atk = 30
 		_connect()
 
@@ -185,6 +188,7 @@ class BlackMage:
 			+ "[天语]\n"\
 			+ "战斗开始时，为自身附加[天语]效果，提升自身[5%][10%][15%]的伤害。\n"\
 			+ "根据黑魔法师的等级来调整。"
+		att.maxHp = 100
 		att.mgiAtk = 30
 		_connect()
 
@@ -205,6 +209,7 @@ class Astrologian:
 			+ "使自身及周围2格范围内的队友所受到的伤害减轻10%。\n"\
 			+ "此效果不可叠加。\n"\
 			+ "冷却36s，持续18s"
+		att.maxHp = 100
 		att.def = 20
 		att.mgiAtk = 15
 		setCdSkill("skill_Collective", 36)
@@ -231,6 +236,7 @@ class Samurai:
 			+ "[必杀剑-震天]\n"\
 			+ "对目标造成[200%]的物理伤害。\n"\
 			+ "冷却8s"
+		att.maxHp = 150
 		att.atk = 30
 		setCdSkill("skill_Shinten", 8)
 		_connect()
@@ -252,8 +258,10 @@ class Warrior:
 			+ "[泰然自若]\n"\
 			+ "回复自身[300%]攻击力的生命值。\n"\
 			+ "冷却15s"
-		att.maxHp = 200
-		att.atk = 10
+		att.maxHp = 250
+		att.atk = 20
+		att.def = 10
+		att.mgiDef = 10
 		setCdSkill("skill_Equilibrium", 15)
 		_connect()
 
@@ -274,8 +282,9 @@ class RedMage:
 			+ "[赤治疗]\n"\
 			+ "为生命最低的友方单位恢复[80%]法强的生命值。\n"\
 			+ "冷却16s"
-		att.mgiAtk = 10
-		att.atk = 10
+		att.maxHp = 100
+		att.mgiAtk = 15
+		att.atk = 15
 		setCdSkill("skill_Vercure", 16)
 		_connect()
 
@@ -299,11 +308,12 @@ class Monk:
 		info = "灵魂的水晶，刻有历代武僧的记忆和气概。\n"\
 			+ "[真言]\n"\
 			+ "使自身和周围友方单位受到的治疗效果提高10%\n"\
-			+ "冷却30s，持续10s"
+			+ "冷却24s，持续10s"
+		att.maxHp = 150
 		att.atk = 20
 		att.def = 20
 
-		setCdSkill("skill_Mantra", 30)
+		setCdSkill("skill_Mantra", 24)
 		_connect()
 
 	func _connect():
@@ -327,6 +337,7 @@ class Paladin:
 			+ "[安魂祈祷]\n"\
 			+ "自身魔法强度提高50点。\n"\
 			+ "冷却27s，持续15s"
+		att.maxHp = 250
 		att.mgiAtk = 10
 		att.def = 20
 		setCdSkill("skill_Requiescat", 27)
@@ -349,6 +360,7 @@ class Ninja:
 			+ "[梦幻三段]\n"\
 			+ "对目标连续发动三次普通攻击。\n"\
 			+ "冷却19s"
+		att.maxHp = 150
 		att.atk = 20
 		att.def = 10
 		att.mgiDef = 10
@@ -373,6 +385,7 @@ class WhiteMage:
 		info = "灵魂的水晶，刻有历代白魔法师的记忆和圣迹。\n"\
 			+ "[神速咏唱]\n"\
 			+ "被动，技能冷却速度加快15%。"
+		att.maxHp = 100
 		att.mgiAtk = 20
 		att.cd = 0.15
 
@@ -386,6 +399,7 @@ class Scholar:
 			+ "[连环计]\n"\
 			+ "对目标施加[连环计]，10%的概率使其受到伤害变为双倍。\n"\
 			+ "冷却15s，持续8s"
+		att.maxHp = 100
 		att.mgiAtk = 20
 		att.mgiDef = 10
 
@@ -409,6 +423,7 @@ class Summoner:
 			+ "[三重灾祸]\n"\
 			+ "对目标施加[中毒][流血]。\n"\
 			+ "冷却15s，持续10s"
+		att.maxHp = 100
 		att.mgiAtk = 30
 		setCdSkill("skill__TriDisaster", 15)
 		_connect()
@@ -430,6 +445,7 @@ class Machinist:
 		info = "与其他灵魂水晶不同，这颗水晶上尚未刻下历史的记忆。\n"\
 			+ "[火焰喷射器]\n"\
 			+ "被动，普通攻击会对目标及其周围一格的敌人附加2层[烧灼]"
+		att.maxHp = 100
 		att.atk = 30
 		_connect()
 
@@ -453,6 +469,7 @@ class Dancer:
 			+ "[扇舞·急]\n"\
 			+ "被动，普通攻击有30%概率触发。\n"\
 			+ "对目标及周围2格敌人造成[100%]的物理伤害。"
+		att.maxHp = 100
 		att.atk = 30
 		_connect()
 

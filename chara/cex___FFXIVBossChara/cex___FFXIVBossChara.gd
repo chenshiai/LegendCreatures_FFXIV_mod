@@ -27,7 +27,7 @@ func _extInit():
 	evos = []
 	lv = 1
 	atkEff = "atk_dao"
-	addSkillTxt("[自适应]：该单位属性根据敌方战力自适应调整，拥有特定的技能时间轴")
+	addSkillTxt("[自适应]：该单位属性根据敌方战力自适应调整，拥有特定的技能时间轴。击杀后会掉落道具[灵魂水晶]")
 
 func _connect():
 	._connect()
@@ -53,10 +53,9 @@ func selfAdaption():
 		E_spd = allAtt.spd
 		E_num = allAtt.num
 		E_lv = allAtt.lv
-		print(E_spd)
-		attInfo.maxHp = (E_atk + E_mgiAtk) * (30 * E_spd / E_num)
-		attInfo.atk = (E_def + E_maxHp / 8) / E_num
-		attInfo.mgiAtk = (E_mgiDef + E_maxHp / 8) / E_num
+		attInfo.maxHp = (E_atk + E_mgiAtk) * (layer / 2 * E_spd / E_num)
+		attInfo.atk = (E_def + E_maxHp / 8) / E_num + layer * 3
+		attInfo.mgiAtk = (E_mgiDef + E_maxHp / 8) / E_num + layer * 3
 		attInfo.def = (E_atk + layer * 2) / E_num
 		attInfo.mgiDef = (E_mgiAtk + layer * 2) / E_num
 
@@ -78,7 +77,7 @@ func setTimeAxis(skillAxis):
 
 func _onHurt(atkInfo:AtkInfo):
 	._onHurt(atkInfo)
-	if atkInfo.atkType == Chara.AtkType.EFF:
+	if atkInfo.atkType == Chara.AtkType.EFF and  atkInfo.hurtVal > att.maxHp * 0.005:
 		atkInfo.hurtVal = att.maxHp * 0.005
 
 func _upS():

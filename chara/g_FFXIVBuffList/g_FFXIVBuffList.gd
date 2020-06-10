@@ -2,15 +2,12 @@ func _init():
 	print("最终幻想14：—————— 状态列表加载 ——————")
 	pass
 
-
-class BuffOption:
-	# 删除目标身上的buff
-	static func conflict(masCha, buffId):
+class Option:
+	static func conflict(masCha, buffId, buffself):
 		var bf = masCha.hasBuff(buffId)
-		if bf != null:
+		if bf != null and bf != buffself:
 			bf.isDel = true
 
-	# 护盾减伤计算
 	static func shield(total, atkInfo):
 		if total >= 0:
 			if total > atkInfo.hurtVal:
@@ -31,7 +28,22 @@ class BassShield:
 		masCha.connect("onHurt", self, "run")
 
 	func run(atkInfo:AtkInfo):
-		shieldValue = BuffOption.shield(shieldValue, atkInfo)
+		shieldValue = Option.shield(shieldValue, atkInfo)
+
+class ReduceDemage:
+	extends Buff
+	var reduce_type = null
+	var reduce_pw = 0
+
+	func _connect():
+		masCha.connect("onHurt", self, "run")
+
+	func run(atkInfo:AtkInfo):
+		if reduce_type == null:
+			atkInfo.hurtVal *= 1 - reduce_pw
+		elif reduce_type == atkInfo.hurtType:
+			atkInfo.hurtVal *= 1 - reduce_pw
+
 
 # 深恶痛绝，提高魔防
 class b_Abhor:
@@ -44,38 +56,26 @@ class b_Abhor:
 
 # 暗黑布道，减少魔法伤害
 class b_DarkMissionary:
-	extends Buff
+	extends ReduceDemage
 	func _init(dur = 1):
 		attInit()
 		id = "b_DarkMissionary"
 		life = dur
 		isNegetive = false
+		reduce_type = Chara.HurtType.MGI
+		reduce_pw = 0.10
 
-	func _connect():
-		masCha.connect("onHurt", self, "run")
-
-	func run(atkInfo:AtkInfo):
-		if atkInfo.hurtType == Chara.HurtType.MGI:
-			atkInfo.hurtVal *= 0.90
-			
 	func _upS():
 		life = clamp(life, 0, 6)
 
 # 至黑之夜，护盾。可以吸收一定数值的伤害
 class b_TheBlackestNight:
-	extends Buff
-	var total = 0
+	extends BassShield
 	func _init(val = 0):
 		attInit()
 		id = "b_TheBlackestNight"
-		total = val
+		shieldValue = val
 		isNegetive = false
-
-	func _connect():
-		masCha.connect("onHurt", self, "run")
-
-	func run(atkInfo:AtkInfo):
-		total = BuffOption.shield(total, atkInfo)
 
 # 活死人，无敌，但是还是会死
 class b_LivingDeath:
@@ -159,20 +159,15 @@ class b_Superbolide:
 
 # 光之心，减少魔法伤害
 class b_HeartOfLight:
-	extends Buff
+	extends ReduceDemage
 	func _init(dur = 1):
 		attInit()
 		id = "b_HeartOfLight"
 		life = dur
 		isNegetive = false
+		reduce_type = Chara.HurtType.MGI
+		reduce_pw = 0.10
 
-	func _connect():
-		masCha.connect("onHurt", self, "run")
-
-	func run(atkInfo:AtkInfo):
-		if atkInfo.hurtType == Chara.HurtType.MGI:
-			atkInfo.hurtVal *= 0.90
-			
 	func _upS():
 		life = clamp(life, 0, 10)
 
@@ -280,14 +275,14 @@ class b_Adloquium:
 
 	func _connect():
 		._connect()
-		BuffOption.conflict(masCha, "b_Night")
+		Option.conflict(masCha, "b_Night", self)
 
 	func _upS():
 		life = clamp(life, 0, 10)
 
 # 野战治疗阵，减伤，持续恢复
 class b_SacredSoil:
-	extends Buff
+	extends ReduceDemage
 	var hot = 0
 	func _init(dur = 1, val = 0):
 		attInit()
@@ -295,12 +290,7 @@ class b_SacredSoil:
 		hot = val
 		life = dur
 		isNegetive = false
-
-	func _connect():
-		masCha.connect("onHurt", self, "run")
-
-	func run(atkInfo:AtkInfo):
-		atkInfo.hurtVal *= 0.9
+		reduce_pw = 0.10
 
 	func _upS():
 		masCha.plusHp(hot)
@@ -376,19 +366,16 @@ class b_Paean:
 
 # 行吟，减伤			
 class b_Troubadour:
-	extends Buff
+	extends ReduceDemage
 	func _init(dur = 1):
 		attInit()
 		id = "b_Troubadour"
 		isNegetive = false
 		life = dur
+		reduce_pw = 0.10
 
 	func _connect():
-		BuffOption.conflict(masCha, "b_Troubadour")
-		masCha.connect("onHurt", self, "run")
-
-	func run(atkInfo:AtkInfo):
-		atkInfo.hurtVal *= 0.90
+		Option.conflict(masCha, "b_Troubadour", self)
 
 # 魔人曲。魔法易伤
 class b_RequiemOfTheDevil:
@@ -399,7 +386,7 @@ class b_RequiemOfTheDevil:
 		isNegetive = false
 	
 	func _connect():
-		BuffOption.conflict(masCha, "b_RequiemOfTheDevil")
+		Option.conflict(masCha, "b_RequiemOfTheDevil", self)
 		masCha.connect("onHurt", self, "run")
 
 	func run(atkInfo:AtkInfo):
@@ -430,23 +417,16 @@ class b_Requiescat:
 
 # 圣光幕帘，护盾。可以吸收一定数值的伤害
 class b_DivineVeil:
-	extends Buff
-	var total = 0
+	extends BassShield
 	func _init(dur = 1, val = 0):
 		attInit()
 		id = "b_DivineVeil"
-		total = val
+		shieldValue = val
 		isNegetive = false
 		life = dur
 
-	func _connect():
-		masCha.connect("onHurt", self, "run")
-
 	func _upS():
 		life = clamp(life, 0, 10)
-
-	func run(atkInfo:AtkInfo):
-		total = BuffOption.shield(total, atkInfo)
 
 class b_Mantra:
 	extends Buff
@@ -481,7 +461,7 @@ class b_Overload:
 		attInit()
 		id = "b_Overload"
 		isNegetive = false
-		att.atkR = 0.20
+		att.atkL = 0.20
 		life = dur
 
 	func _upS():
@@ -582,39 +562,29 @@ class b_LuckyStar:
 
 # 黑夜领域，护盾。可以吸收一定数值的伤害
 class b_Night:
-	extends Buff
-	var total = 0
+	extends BassShield
 	func _init(dur = 1, val = 0):
 		attInit()
 		id = "b_Night"
-		total = val
+		shieldValue = val
 		isNegetive = false
 		life = dur
 
 	func _connect():
-		BuffOption.conflict(masCha, "b_Adloquium")
-		masCha.connect("onHurt", self, "run")
+		Option.conflict(masCha, "b_Adloquium", self)
 
 	func _upS():
 		life = clamp(life, 0, 10)
 
-	func run(atkInfo:AtkInfo):
-		total = BuffOption.shield(total, atkInfo)
-
 # 命运之轮，减少伤害
 class b_Collective:
-	extends Buff
+	extends ReduceDemage
 	func _init(dur = 1):
 		attInit()
 		id = "b_Collective"
 		life = dur
 		isNegetive = false
-
-	func _connect():
-		masCha.connect("onHurt", self, "run")
-
-	func run(atkInfo:AtkInfo):
-		atkInfo.hurtVal *= 0.90
+		reduce_pw = 0.10
 			
 	func _upS():
 		life = clamp(life, 0, 18)
