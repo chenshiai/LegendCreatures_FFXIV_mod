@@ -11,6 +11,7 @@ func _extInit():
 	addCdSkill("skill_DivineVeil", 26)
 	addSkillTxt("[圣光幕帘]：冷却26s，技能开启后的5s内，若自身有受到治疗，则为周围其他队友附加护盾，可以抵消[骑士最大生命值10%]的伤害，持续10s")
 	addSkillTxt("[盾阵]：被动，受到攻击时有30%的概率减少40%的伤害。")
+	connect("onPlusHp", self, "divineVeilTodo")
 
 var hasDivineVeil = false
 var divineVeilDur = 5
@@ -21,9 +22,9 @@ func _connect():
 func _onBattleStart():
 	._onBattleStart()
 	hasDivineVeil = false
-	if selfExample == null:
-		selfExample = self
-		selfExample.connect("onPlusHp", self, "divineVeilTodo")
+	# if selfExample == null:
+	# 	selfExample = self
+	# 	selfExample.connect("onPlusHp", self, "divineVeilTodo")
 
 func _castCdSkill(id):
 	._castCdSkill(id)
