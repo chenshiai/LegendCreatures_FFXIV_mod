@@ -155,7 +155,7 @@ class b_Superbolide:
 		atkInfo.hurtVal = 0
 
 	func _upS():
-		life = clamp(life, 0, 15)
+		life = clamp(life, 0, 10)
 
 # 光之心，减少魔法伤害
 class b_HeartOfLight:

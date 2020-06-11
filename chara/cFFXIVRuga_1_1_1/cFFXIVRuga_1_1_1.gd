@@ -13,7 +13,7 @@ func _extInit():
 	attAdd.defL += 0.20
 	lv = 4
 	evos = []
-	addSkillTxt("[神圣领域]：战斗开始时开启无敌，并免疫所有负面效果，持续10s")
+	addSkillTxt("[神圣领域]：战斗开始时开启无敌，持续10s")
 
 var baseId = ""
 
@@ -22,3 +22,4 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
+	addBuff(BUFF_LIST.b_Superbolide.new(10))

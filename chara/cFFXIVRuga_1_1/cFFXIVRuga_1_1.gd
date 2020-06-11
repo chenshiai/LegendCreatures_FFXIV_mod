@@ -10,8 +10,9 @@ func _extInit():
 	evos = []
 	addCdSkill("skill_DivineVeil", 26)
 	addSkillTxt("[圣光幕帘]：冷却26s，技能开启后的5s内，若自身有受到治疗，则为周围其他队友附加护盾，可以抵消[骑士最大生命值10%]的伤害，持续10s")
-	addSkillTxt("[盾阵]：被动，受到攻击时有30%的概率减少40%的伤害。")
-	connect("onPlusHp", self, "divineVeilTodo")
+	addSkillTxt("[盾阵]：被动，受到攻击时有30%的概率减少15%的伤害。")
+	if not is_connected("onPlusHp", self, "divineVeilTodo"):
+		connect("onPlusHp", self, "divineVeilTodo")
 
 var hasDivineVeil = false
 var divineVeilDur = 5
@@ -22,9 +23,6 @@ func _connect():
 func _onBattleStart():
 	._onBattleStart()
 	hasDivineVeil = false
-	# if selfExample == null:
-	# 	selfExample = self
-	# 	selfExample.connect("onPlusHp", self, "divineVeilTodo")
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -34,7 +32,7 @@ func _castCdSkill(id):
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)
 	if sys.rndPer(30):
-		atkInfo.hurtVal *= 0.60
+		atkInfo.hurtVal *= 0.85
 
 func over():
 	pass
@@ -48,6 +46,7 @@ func divineVeilTodo(val):
 		divineVeilDur = 5
 
 		var allys = getAllChas(2)
+		allys.shuffle()
 		for cha in allys:
 			if cha != null and cha != self:
 				Utils.createEffect("shield", cha.position, Vector2(0, -30), 7, 1)

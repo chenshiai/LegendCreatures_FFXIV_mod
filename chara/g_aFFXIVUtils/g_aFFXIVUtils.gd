@@ -38,14 +38,14 @@ func backGroundChange(imgPath):
 	sys.main.get_node("scene/bg/bg").set_texture(loadImgTexture(imgPath))
 
 
-func createEffect(effectName:String, position:Vector2, deviation:Vector2, frame = 15, scale = 1, repeat = false): 
+func createEffect(effectName, position, deviation, frame = 15, scale = 1, repeat = false, rotation = deg2rad(0)): 
 	var eff = sys.newEff("animEff", position)
 	var direc = Path + "/effects/" + effectName
 	eff.setImgs(direc, frame, repeat)
 	eff.normalSpr.position = deviation
+	eff.rotation = rotation
 	eff.scale *= scale
 	return eff
-
 
 func createTimeAxis(skillAxis):
 	var timeAxis = {}

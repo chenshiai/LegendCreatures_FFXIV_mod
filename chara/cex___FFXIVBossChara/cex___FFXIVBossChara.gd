@@ -43,7 +43,7 @@ func _onBattleEnd():
 # Boss自适应属性
 func selfAdaption():
 	if self.team == 2:
-		layer = sys.main.guankaMsg.lvStep - 2
+		layer = sys.main.guankaMsg.lvStep + 20
 		allAtt = Utils.Calculation.getEnemyPower(self.team)
 		E_atk = allAtt.atk
 		E_mgiAtk = allAtt.mgiAtk
@@ -53,7 +53,7 @@ func selfAdaption():
 		E_spd = allAtt.spd
 		E_num = allAtt.num
 		E_lv = allAtt.lv
-		attInfo.maxHp = (E_atk + E_mgiAtk) * (layer / 2 * E_spd / E_num)
+		attInfo.maxHp = (E_atk + E_mgiAtk) * (layer / 2 * E_spd) / E_num
 		attInfo.atk = (E_def + E_maxHp / 8) / E_num + layer * 3
 		attInfo.mgiAtk = (E_mgiDef + E_maxHp / 8) / E_num + layer * 3
 		attInfo.def = (E_atk + layer * 2) / E_num
@@ -77,8 +77,25 @@ func setTimeAxis(skillAxis):
 
 func _onHurt(atkInfo:AtkInfo):
 	._onHurt(atkInfo)
-	if atkInfo.atkType == Chara.AtkType.EFF and  atkInfo.hurtVal > att.maxHp * 0.005:
+	if atkInfo.atkType == Chara.AtkType.EFF and atkInfo.hurtVal > att.maxHp * 0.005:
 		atkInfo.hurtVal = att.maxHp * 0.005
+
+func normalAtkChara(cha):
+	var eff = newEff(atkEff, sprcPos)
+	eff._initFlyCha(cha, 500)
+	_onNormalAtk(cha)
+	yield(eff, "onReach")
+	if sys.isClass(cha, "Chara"):
+		atkInfo.rate = 1
+		atkInfo.isCri = false
+		atkInfo.canCri = true
+		if cha.att.maxHp * 0.3 < att.atk:
+			atkInfo.atkVal = att.atk
+		else:
+			atkInfo.atkVal = cha.att.maxHp * 0.3
+		atkInfo.hurtType = HurtType.PHY
+		atkInfo.atkType = AtkType.NORMAL
+		atkRun(cha)
 
 func _upS():
 	._upS()
