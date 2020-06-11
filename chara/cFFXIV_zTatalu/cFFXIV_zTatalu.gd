@@ -32,6 +32,7 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
+	Utils.createEffect("flammingSword", Vector2(350, 400), Vector2(0, -62.5), 11, 4)
 
 func _onDeath(atkInfo):
 	._onDeath(atkInfo)

@@ -1,9 +1,12 @@
 extends "../cex___FFXIVBossChara/cex___FFXIVBossChara.gd"
 const BERSERKERTIME = 120 # 狂暴时间
 
-const SKILL_TXT = """[太阳射线]：死刑，对当前攻击目标造成[未知]法强的小范围魔法伤害
-[激光雨]：对全屏的敌人造成[未知]法强的魔法伤害
-[优化爆炎]：对所有敌人造成一次[未知]法强的小范围魔法伤害"""
+const SKILL_TXT = """
+[夺影]：全屏AOE
+[断罪飞翔]：随机两条竖线或横线
+[裁决之雷]：死刑，附加易伤，读条期间需要换T
+[转阶段·回转火焰剑]，全屏大招
+[富荣直观]：距离衰减AOE"""
 
 func _extInit():
 	._extInit()
