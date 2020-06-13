@@ -20,7 +20,7 @@ var wingedReprobation_pw = 0.75 # 断罪飞翔威力
 var shadowReaver_pw = 1 # 夺影威力
 var flammingSword_pw = 1 # 转阶段·回转火焰剑
 var beatficVision_pw = 2 # 富荣直观
-
+var deviation = Vector2(0, 0)
 func _init():
 	var SkillAxis = {
 		"righteousBolt": [20, 50, 120, 150],
@@ -45,7 +45,7 @@ func _onBattleStart():
 [断罪飞翔]：随机两条竖线或横线进行飞剑攻击，造成[%d%%]的魔法伤害，并附加一层易伤(受伤加重30%%)。
 [裁决之雷]：死刑，对当前目标释放大伤害攻击，造成[%d%%]的魔法伤害，并附加大易伤(平A致命)。
 [转阶段·回转火焰剑]：全屏攻击，造成[%d%%]的魔法伤害
-[富荣直观]：移动至场边，向对面进行冲刺，造成[%d%%]的物理伤害，距离越近的目标受伤越高。
+[富荣直观]：移动至场边，向对面进行冲刺，造成[%d%%]的物理伤害，距离中线越近的目标受伤越高。
 """ % [shadowReaver_pw * 100, wingedReprobation_pw * 100, righteousBolt_pw * 100, flammingSword_pw * 100, beatficVision_pw * 100]
 	upAtt()
 
@@ -155,29 +155,50 @@ func flammingSword():
 	self.isDeath = true
 	self.aiOn = false
 	leftOrRight()
+	yield(reTimer(0.5), "timeout")
+	Utils.createShadow(img,  position + Vector2(0, -250), position, 40)
+	normalSpr.position = Vector2(0, 0)
+
 	Chant.chantStart("转阶段·回转火焰剑！", 10)
+	# Utils.createEffect("flammingSword", Vector2(350, 400), Vector2(0, -62.5), 10, 4)
 	yield(reTimer(10), "timeout")
+	Utils.createEffect("energyStorage", Vector2(350, 0), Vector2(0, 0), 13, 6)
+	yield(reTimer(0.2), "timeout")
+	Utils.createEffect("energyStorage", Vector2(150, 150), Vector2(0, 0), 13, 6)
+	yield(reTimer(0.2), "timeout")
+	Utils.createEffect("energyStorage", Vector2(500, 200), Vector2(0, 0), 13, 6)
+
 	if att.hp <=0:
 		return
+	var chas = getAllChas(1)
 	for i in chas:
 		if i != null:
-			hurtChara(i, att.mgiAtk * shadowReaver_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+			hurtChara(i, att.atk * flammingSword_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+
+	Utils.createEffect("beatficVision", Vector2(350, 150), Vector2(0, -30), 10, 6)
+	yield(reTimer(2), "timeout")
+	self.aiOn = true
+	self.isDeath = false
 
 func beatficVision():
 	self.isDeath = true
 	self.aiOn = false
-	if leftOrRight() == "right":
-		deviation = Vector2(-800, 0)
-	else:
-		deviation = Vector2(800, 0)
+	leftOrRight()
+
+	yield(reTimer(0.5), "timeout")
+	Utils.createShadow(img,  position + Vector2(0, -250), position, 40)
+	var eff = Utils.createEffect("light1", Vector2(position.x, position.y - 1), Vector2(0, -10), 0, 6)
+	normalSpr.position = Vector2(0, 0)
 
 	Chant.chantStart("富荣直观", 3)
 	yield(reTimer(3), "timeout")
+	eff.queue_free()
 	normalSpr.position = deviation
 	Utils.createShadow(img,  position, position + deviation, 40)
 	beatficVisionDamage()
+	Utils.createEffect("beatficVision", Vector2(350, 150), Vector2(0, -30), 10, 6)
 
-	yield(reTimer(1), "timeout")
+	yield(reTimer(2), "timeout")
 	Utils.createShadow(img, position + Vector2(0, -250), position, 40)
 	normalSpr.position = Vector2(0, 0)
 
@@ -197,24 +218,18 @@ func beatficVisionDamage():
 			hurtChara(i, att.atk * beatficVision_pw * pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
 func leftOrRight():
-	var deviation = ""
 	normalSpr.position = Vector2(0, -800)
 	Utils.createShadow(img, position, position + Vector2(0, -250), 40)
 
 	if matCha(Vector2(7, 2)) == null:
 		setCell(Vector2(7, 2))
 		position = sys.main.map.map_to_world(Vector2(7, 2))
-		deviation = "right"
+		deviation = Vector2(-800, 0)
 	else:
 		setCell(Vector2(0, 2))
 		position = sys.main.map.map_to_world(Vector2(0, 2))
-		deviation = "left"
+		deviation = Vector2(800, 0)
 
-	yield(reTimer(0.5), "timeout")
-	Utils.createShadow(img,  position + Vector2(0, -250), position, 40)
-	Utils.createEffect("light", Vector2(position.x, position.y - 1), Vector2(0, -10), 3, 6)
-	normalSpr.position = Vector2(0, 0)
-	return deviation
 
 func _upS():
 	._upS()

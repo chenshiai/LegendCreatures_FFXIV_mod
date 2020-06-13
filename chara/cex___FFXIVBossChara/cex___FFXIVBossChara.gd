@@ -107,6 +107,5 @@ func _upS():
 
 func _onDeath(atkInfo):
 	._onDeath(atkInfo)
-	sys.main.player.plusGold(300)
 	var item = sys.newItem("i_FFXIVSoulCrystal")
 	sys.main.player.addItem(item)
