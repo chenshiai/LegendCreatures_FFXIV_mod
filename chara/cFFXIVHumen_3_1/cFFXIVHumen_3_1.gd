@@ -1,15 +1,12 @@
 extends "../cFFXIVHumen_3/cFFXIVHumen_3.gd"
 
-func _info():
-	pass
-
 func _extInit():
 	._extInit()
 	chaName = "心动之舞"
 	lv = 3
 	evos = []
 	addCdSkill("skill_SaberDance", 13)
-	addSkillTxt("[剑舞]：冷却13s，对目标及周围2格敌人造成[100%]的物理伤害")
+	addSkillTxt(TEXT.format("[剑舞]：冷却13s，对目标及周围2格敌人造成[100%]的{TPhyHurt}"))
 
 const SABERDANCE_PW = 1 # 剑舞威力
 

@@ -16,9 +16,9 @@ func _extInit():
 	evos = ["cFFXIVRuga_2_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_FightGas", 10)
-	addSkillTxt("[迅雷疾风]：被动，增加16%的攻击速度，且在攻击时，获得2层[急速]")
-	addSkillTxt("""[斗气]：被动，每攻击有50%概率获得1点斗气，最大5点，满5点后会立即释放[阴阳斗气斩]，不计入冷却时间
-[阴阳斗气斩]：冷却10s，对目标造成[210%]的物理伤害，消耗斗气提高伤害，每点斗气提高[20%]的倍率，最大[310%]""")
+	addSkillTxt(TEXT.format("[迅雷疾风]：{TPassive}，增加16%的攻击速度，且在攻击时，获得2层[急速]"))
+	addSkillTxt(TEXT.format("""[斗气]：{TPassive}，每攻击有50%概率获得1点斗气，最大5点，满5点后会立即释放[阴阳斗气斩]，不计入冷却时间
+[阴阳斗气斩]：冷却10s，对目标造成[210%]的{TPhyHurt}，消耗斗气提高伤害，每点斗气提高[20%]的倍率，最大[310%]"""))
 
 var fightGas = 0
 const FIGHTGAS_PW = 2.10 # 斗气斩威力

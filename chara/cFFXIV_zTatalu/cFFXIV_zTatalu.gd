@@ -27,11 +27,39 @@ func _extInit():
 哇啊啊！
 救救我啊！""")
 
+# func normalAtkChara(cha):
+# 	toAtk(cha)
+# 	yield(reTimer(0.1), "timeout")
+# 	toAtk(cha)
+# 	yield(reTimer(0.1), "timeout")
+# 	toAtk(cha)
+	
+
+# func toAtk(cha):
+# 	var eff = newEff(atkEff, sprcPos)
+# 	eff._initFlyCha(cha, 500)
+# 	_onNormalAtk(cha)
+# 	yield(eff, "onReach")
+#		if sys.isClass(cha, "Chara"):
+# 		atkInfo.rate = 1
+# 		atkInfo.isCri = false
+# 		atkInfo.canCri = true
+# 		atkInfo.atkVal = att.atk
+# 		atkInfo.hurtType = HurtType.PHY
+# 		atkInfo.atkType = AtkType.NORMAL
+# 		atkRun(cha)
+
 func _connect():
 	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
+	# print(self.atkInfo.rate)
+	# print(self.atkInfo.isCri)
+	# print(self.atkInfo.canCri)
+	# print(self.atkInfo.atkVal)
+	# print(self.atkInfo.hurtType)
+	# print(self.atkInfo.atkType)
 
 func _onDeath(atkInfo):
 	._onDeath(atkInfo)

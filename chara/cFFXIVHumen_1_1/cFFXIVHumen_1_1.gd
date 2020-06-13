@@ -1,7 +1,7 @@
 extends "../cFFXIVHumen_1/cFFXIVHumen_1.gd"
 
-func _info():
-	pass
+const FELLCLEAVE_PW = 3.90 # 裂石飞环威力
+var fc = false # 是否准备就绪	
 
 func _extInit():
 	._extInit()
@@ -10,11 +10,9 @@ func _extInit():
 	evos = []
 	addCdSkill("skill_FellCleave", 4)
 	addCdSkill("skill_InnerRelease", 16)
-	addSkillTxt("[裂石飞环]：冷却4s，下一次普通攻击对目标造成[390%]的物理伤害")
+	addSkillTxt(TEXT.format("[裂石飞环]：冷却4s，下一次普通攻击对目标造成[390%]的{TPhyHurt}"))
 	addSkillTxt("[原初的解放]：冷却16s，获得100%的暴击率提升，持续8s")
 
-const FELLCLEAVE_PW = 3.90 # 裂石飞环威力
-var fc = false # 是否准备就绪	
 
 func _connect():
 	._connect()

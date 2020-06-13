@@ -1,7 +1,9 @@
 extends "../cFFXIVHumen_1_1/cFFXIVHumen_1_1.gd"
 
-func _info():
-	pass
+const DECIMATE_PW = 1.80 # 地毁人亡威力
+var livingDead = false # 死斗是否触发
+var deadTime = 7 # 死斗倒计时
+var baseId = ""
 
 func _extInit():
 	._extInit()
@@ -13,13 +15,8 @@ func _extInit():
 	lv = 4
 	evos = []
 	addCdSkill("skill_Decimate", 12)
-	addSkillTxt("[地毁人亡]：冷却12s，对周围2格内的敌人造成[180%]的物理伤害")
+	addSkillTxt(TEXT.format("[地毁人亡]：冷却12s，对周围2格内的敌人造成[180%]的{TPhyHurt}"))
 	addSkillTxt("[死斗]：濒死时开启，不会死亡(除特定攻击外)，持续7s，然后恢复20%的生命值，最多触发一次")
-
-var baseId = ""
-const DECIMATE_PW = 1.80 # 地毁人亡威力
-var livingDead = false # 死斗是否触发
-var deadTime = 7 # 死斗倒计时
 
 func _connect():
 	._connect()

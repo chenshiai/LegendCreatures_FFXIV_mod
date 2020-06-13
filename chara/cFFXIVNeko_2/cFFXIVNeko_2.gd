@@ -17,9 +17,9 @@ func _extInit():
 	atkEff = "atk_dang"
 	addCdSkill("skill_RuinIII", 4)
 	addCdSkill("skill_Fester", 6)
-	addSkillTxt("""[召唤I]：战斗开始时，随机召唤[迦楼罗之灵/伊弗利特之灵/泰坦之灵]与召唤师共同作战
-[毁荡]：冷却4s，对目标造成[90%]法强的魔法伤害
-[溃烂爆发]：冷却6s，对目标造成[100%]法强的魔法伤害，根据目标当前debuff数量提高伤害，每个提高[30%]威力""")
+	addSkillTxt(TEXT.format("""[召唤I]：战斗开始时，随机召唤[迦楼罗之灵/伊弗利特之灵/泰坦之灵]与召唤师共同作战
+[毁荡]：冷却4s，对目标造成[90%]法强的{TMgiHurt}
+[溃烂爆发]：冷却6s，对目标造成[100%]法强的{TMgiHurt}，根据目标当前debuff数量提高伤害，每个提高[30%]威力"""))
 
 const RUINIII_PW = 0.90 # 毁荡威力
 const FESTER_PW = 1 # 溃烂爆发威力

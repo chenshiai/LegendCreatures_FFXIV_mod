@@ -7,6 +7,8 @@ func _extInit():
 	._extInit()
 	chaName = "东方木人"
 	attCoe.maxHp = 256
+	attCoe.atk = 0
+	attCoe.mgiAtk = 0
 	attCoe.def = 0
 	attCoe.mgiDef = 0
 	lv = 4
@@ -30,6 +32,23 @@ func _onBattleStart():
 	# self.img.texture_focused = im
 	# self.img.texture_click_mask = im
 	# self.img.texture_focused = im
+
+	var chas = getAllChas(2)
+	chas.sort_custom(Utils.Calculation, "sort_MaxMgiAtk")
+	var mgiAtkMaxAlly = chas[0]
+	print("魔攻最高：",mgiAtkMaxAlly.id)
+
+	chas.sort_custom(Utils.Calculation, "sort_MaxAtk")
+	var atkMaxAlly = chas[0]
+	print("物攻最高：",atkMaxAlly.id)
+
+	if mgiAtkMaxAlly != self:
+		mgiAtkMaxAlly.addBuff(BUFF_LIST.b_DancingPartner.new())
+
+	if atkMaxAlly != self and atkMaxAlly != mgiAtkMaxAlly:
+		atkMaxAlly.addBuff(BUFF_LIST.b_DancingPartner.new())
+
+	# addBuff(BUFF_LIST.b_DancingPartner.new())
 
 	aiOn = null
 	aiCha = null

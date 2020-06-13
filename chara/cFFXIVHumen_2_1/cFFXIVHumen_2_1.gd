@@ -1,7 +1,8 @@
 extends "../cFFXIVHumen_2/cFFXIVHumen_2.gd"
 
-func _info():
-	pass
+var SKILL_TXT_1 = TEXT.format("""[续剑]：{TPassive}，攻击速度提高20%
+[血壤]：{TPassive}，普通攻击会附加50%攻击力的{TMgiHurt}
+[超火流星]：{TPassive}，生命值低于10%时，有概率触发。生命值降为1点，10s内免疫任何伤害，最多触发一次""")
 
 func _extInit():
 	._extInit()
@@ -9,9 +10,7 @@ func _extInit():
 	lv = 3
 	attAdd.spd += 0.2
 	evos = []
-	addSkillTxt("""[续剑]：被动，攻击速度提高20%
-[血壤]：被动，普通攻击会附加50%攻击力的魔法伤害
-[超火流星]：被动，生命值低于10%时，有概率触发。生命值降为1点，10s内免疫任何伤害，最多触发一次""")
+	addSkillTxt(SKILL_TXT_1)
 
 var superbolide = true # 是否可以释放火流星
 func _connect():

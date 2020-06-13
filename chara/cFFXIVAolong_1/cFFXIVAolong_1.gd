@@ -1,7 +1,13 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 
-func _info():
-	pass
+const PLUSHP = 0.01 # 恢复量
+const BLOODSPILLER_PW = 2.50 # 血溅倍率
+var atkCount = 0 # 攻击次数
+var darkCount = 0 # 暗黑值
+
+var SKILL_TXT_1 = TEXT.format("""[深恶痛绝]：{TPassive}，战斗开始时，魔法防御提高10%，受到的伤害减少20%
+[噬魂斩]：{TPassive}，第三次普通攻击造成[110%]的伤害，并恢复自身1%的HP
+[血溅]：冷却10s，对目标造成[250%]的{TPhyHurt}""")
 
 func _extInit():
 	._extInit()
@@ -16,14 +22,8 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_Bloodspiller", 10)
 	addSkillTxt("当前暗黑值：0 / 1000")
-	addSkillTxt("""[深恶痛绝]：被动，战斗开始时，魔法防御提高10%，受到的伤害减少20%
-[噬魂斩]：被动，第三次普通攻击造成[110%]的伤害，并恢复自身1%的HP
-[血溅]：冷却10s，对目标造成[250%]的物理伤害""")
+	addSkillTxt(SKILL_TXT_1)
 
-const PLUSHP = 0.01 # 回复量
-const BLOODSPILLER_PW = 2.50 # 血溅倍率
-var atkCount = 0 # 攻击次数
-var darkCount = 0 # 暗黑值
 
 func _connect():
 	._connect()

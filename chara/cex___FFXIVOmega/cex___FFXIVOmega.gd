@@ -1,9 +1,9 @@
 extends "../cex___FFXIVBossChara/cex___FFXIVBossChara.gd"
 const BERSERKERTIME = 140 # 狂暴时间
 
-const SKILL_TXT = """[芥末爆弹]：死刑，对当前攻击目标造成[未知]法强的小范围魔法伤害
-[原子射线]：对全屏的敌人造成[未知]法强的魔法伤害
-[三角攻击]：对全屏的敌人造成[致命]的魔法伤害（会移动至场边释放，届时请使用三段极限技[防护]）"""
+var SKILL_TXT = TEXT.format("""[芥末爆弹]：死刑，对当前攻击目标造成[未知]法强的小范围{TMgiHurt}
+[原子射线]：对全屏的敌人造成[未知]法强的{TMgiHurt}
+[三角攻击]：对全屏的敌人造成[致命]的{TMgiHurt}（会移动至场边释放，届时请使用三段极限技[防护]）""")
 
 func _extInit():
 	._extInit()
@@ -13,6 +13,7 @@ func _extInit():
 	addSkillTxt(SKILL_TXT)
 	addSkillTxt("""[宇宙之光]：战斗时间超过 %d秒后，进入狂暴，每5s释放一次原子射线，每次伤害增加30%%
 [机械构造]：该单位免疫[流血]""" % [BERSERKERTIME])
+	addSkillTxt(TEXT.BOSS_OMEGA)
 
 var mustardBomb_pw = 4 # 死刑威力
 var atomicRay_pw = 0.75 # 原子射线威力
@@ -33,9 +34,14 @@ func _onBattleStart():
 	._onBattleStart()
 	mustardBomb_pw *= (E_lv / E_num)
 	atomicRay_pw *= (E_lv / E_num)
-	skillStrs[1] = """[芥末爆弹]：死刑，对当前攻击目标造成[%d%%]的小范围魔法伤害
-[原子射线]：对全屏的敌人造成[%d%%]法强的魔法伤害
-[三角攻击]：对全屏的敌人造成[致命]的魔法伤害（会移动至场边释放，届时请使用三段极限技[防护]）""" % [mustardBomb_pw * 100, atomicRay_pw * 100]
+	SKILL_TXT = TEXT.format("""[芥末爆弹]：死刑，对当前攻击目标造成[{0}]的小范围{TMgiHurt}
+[原子射线]：对全屏的敌人造成[{1}]法强的{TMgiHurt}
+[三角攻击]：对全屏的敌人造成[致命]的{TMgiHurt}（会移动至场边释放，届时请使用三段极限技[防护]）""",
+		{
+			"0": "%d%%" % [mustardBomb_pw * 100],
+			"1": "%d%%" % [atomicRay_pw * 100]
+		})
+	skillStrs[1] = SKILL_TXT
 	upAtt()
 
 func _onBattleEnd():

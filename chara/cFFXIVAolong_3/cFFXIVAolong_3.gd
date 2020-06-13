@@ -1,7 +1,16 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 
-func _info():
-	pass
+const FUMA_PW = 4.80 # 风魔手里剑威力
+const HYOTON_PW = 0.70 # 冰遁威力
+const KATON_PW = 0.50 # 火遁威力
+
+var SKILL_TXT_1 = TEXT.format("""[攻其不备]：{TPassive}，普通攻击会给目标施加2层[流血]效果
+[隐遁]：{TPassive}，获得30%的闪避，移动速度提高""")
+
+var SKILL_TXT_2 = TEXT.format("""[忍术]：冷却11s，随机释放以下忍术
+[风魔手里剑]：对魔法攻击力最高的一名敌人造成[480%]的{TPhyHurt}
+[冰遁之术]：对周围2格的敌人造成[70%]的{TPhyHurt}，并附加5层[结霜]
+[火遁之术]：对周围2格的敌人造成[50%]的{TPhyHurt}，并附加5层[烧灼]""")
 
 func _extInit():
 	._extInit()
@@ -17,16 +26,9 @@ func _extInit():
 	evos = ["cFFXIVAolong_3_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_Ninjutsu", 11)
-	addSkillTxt("""[攻其不备]：被动，普通攻击会给目标施加2层[流血]效果
-[隐遁]：被动，获得30%的闪避，移动速度提高""")
-	addSkillTxt("""[忍术]：冷却11s，随机释放以下忍术
-[风魔手里剑]：对魔法攻击力最高的一名敌人造成[480%]的物理伤害
-[冰遁之术]：对周围2格的敌人造成[70%]的物理伤害，并附加5层[结霜]
-[火遁之术]：对周围2格的敌人造成[50%]的物理伤害，并附加5层[烧灼]""")
+	addSkillTxt(SKILL_TXT_1)
+	addSkillTxt(SKILL_TXT_2)
 
-const FUMA_PW = 4.80 # 风魔手里剑威力
-const HYOTON_PW = 0.70 # 冰遁威力
-const KATON_PW = 0.50 # 火遁威力
 
 func _connect():
 	._connect()

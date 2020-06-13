@@ -12,8 +12,8 @@ func _extInit():
 	attCoe.mgiDef = 4
 	lv = 4
 	evos = []
-	addSkillTxt("""[和平颂歌]：被动，战斗开始时，为自身和所有队友附加[行吟]，不可叠加
-[行吟]：受到的伤害减少10%""")
+	addSkillTxt(TEXT.format("""[和平颂歌]：{TPassive}，战斗开始时，为自身和所有队友附加[行吟]，不可叠加
+[行吟]：受到的伤害减少10%"""))
 
 var baseId = ""
 

@@ -1,9 +1,9 @@
 extends "../cex___FFXIVBossChara/cex___FFXIVBossChara.gd"
 const BERSERKERTIME = 120 # 狂暴时间
 
-const SKILL_TXT = """[太阳射线]：死刑，对当前攻击目标造成[未知]法强的小范围魔法伤害
-[激光雨]：对全屏的敌人造成[未知]法强的魔法伤害
-[优化爆炎]：对所有敌人造成一次[未知]法强的小范围魔法伤害"""
+var SKILL_TXT = TEXT.format("""[太阳射线]：死刑，对当前攻击目标造成[未知]法强的小范围{TMgiHurt}
+[激光雨]：对全屏的敌人造成[未知]法强的{TMgiHurt}
+[优化爆炎]：对所有敌人造成一次[未知]法强的小范围{TMgiHurt}""")
 
 func _extInit():
 	._extInit()
@@ -12,6 +12,7 @@ func _extInit():
 	addSkillTxt(SKILL_TXT)
 	addSkillTxt("""[宇宙之光]：战斗时间超过 %d秒后，进入狂暴，每5s释放一次激光雨，每次伤害增加30%%
 [防火墙]：该单位免疫[烧灼]""" % [BERSERKERTIME])
+	addSkillTxt(TEXT.BOSS_OMEGA)
 
 var solaRays_pw = 4 # 死刑威力
 var laserRain_pw = 0.75 # 激光雨威力
@@ -33,9 +34,15 @@ func _onBattleStart():
 	solaRays_pw *= (E_lv / E_num)
 	laserRain_pw *= (E_lv / E_num)
 	optimizedFireIII_pw *= (E_lv / E_num)
-	skillStrs[1] = """[太阳射线]：死刑，对当前攻击目标造成[%d%%]法强的小范围魔法伤害
-[激光雨]：对全屏的敌人造成[%d%%]法强的魔法伤害
-[优化爆炎]：对所有敌人造成一次[%d%%]法强的小范围魔法伤害""" % [solaRays_pw * 100, laserRain_pw * 100, optimizedFireIII_pw * 100]
+	SKILL_TXT = TEXT.format("""[太阳射线]：死刑，对当前攻击目标造成[{0}]法强的小范围{TMgiHurt}
+[激光雨]：对全屏的敌人造成[{1}]法强的{TMgiHurt}
+[优化爆炎]：对所有敌人造成一次[{2}]法强的小范围{TMgiHurt}""",
+		{
+			"0": "%d%%" % [solaRays_pw * 100],
+			"1": "%d%%" % [laserRain_pw * 100],
+			"2": "%d%%" % [optimizedFireIII_pw * 100]
+		})
+	skillStrs[1] = SKILL_TXT
 	upAtt()
 
 func _onBattleEnd():
@@ -65,6 +72,10 @@ func laserRain():
 
 # 技能-优化爆炎
 func optimizedFireIII():
+	Chant.chantStart("优化爆炎", 3)
+	yield(reTimer(3), "timeout")
+	if att.hp <=0:
+		return
 	var chas = getAllChas(1)
 	for i in chas:
 		Utils.createEffect("light", i.position, Vector2(0, -10), 15, 1.8)

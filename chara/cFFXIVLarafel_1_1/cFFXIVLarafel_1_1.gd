@@ -1,8 +1,5 @@
 extends "../cFFXIVLarafel_1/cFFXIVLarafel_1.gd"
 
-func _info():
-	pass
-
 func _extInit():
 	._extInit()
 	chaName = "角尊之白"
@@ -11,7 +8,7 @@ func _extInit():
 	addCdSkill("skill_Benediction", 20)
 	addSkillTxt("[天赐祝福]：冷却20s，为生命最低的友方单位恢复至满血，第一次使用后，此技能冷却延长至60s")
 	addCdSkill("skill_StornIII", 4)
-	addSkillTxt("[崩石]：冷却4s，对目标造成[90%]的魔法伤害")
+	addSkillTxt(TEXT.format("[崩石]：冷却4s，对目标造成[90%]的{TMgiHurt}"))
 
 const STORNIII_PW = 0.90 # 崩石威力
 

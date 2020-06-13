@@ -13,7 +13,7 @@ func _extInit():
 	attCoe.mgiDef = 4.5
 	lv = 4
 	evos = []
-	addSkillTxt("[我的梦想，就是拯救世界！]：被动，护盾生成量变为[治疗量的225%]")
+	addSkillTxt(TEXT.format("[我的梦想，就是拯救世界！]：{TPassive}，护盾生成量变为[治疗量的225%]"))
 
 var baseId = ""
 

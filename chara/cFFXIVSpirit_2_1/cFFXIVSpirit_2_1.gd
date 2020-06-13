@@ -8,9 +8,9 @@ func _extInit():
 	chaName = "东天之星-夜"
 	lv = 3
 	evos = []
-	addSkillTxt("""[小奥秘卡]：被动，每次使用[抽卡]后，随机释放以下效果
-[王冠之领主]：对当前目标造成[100%]法强的魔法伤害
-[王冠之贵妇]：为生命值最低的友方单位恢复[100%]法强的HP""")
+	addSkillTxt(TEXT.format("""[小奥秘卡]：{TPassive}，每次使用[抽卡]后，随机释放以下效果
+[王冠之领主]：对当前目标造成[100%]法强的{TMgiHurt}
+[王冠之贵妇]：为生命值最低的友方单位恢复[100%]法强的HP"""))
 
 const LORDOFCROWNS_PW = 1
 const LADYOFCROWNS_PW = 1

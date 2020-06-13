@@ -1,10 +1,10 @@
 extends "../cex___FFXIVBossChara/cex___FFXIVBossChara.gd"
 const BERSERKERTIME = 190 # 狂暴时间
-const SKILL_TXT = """[夺影]：对全屏的敌人造成[未知]的魔法伤害。
-[断罪飞翔]：随机两条竖线或横线进行飞剑攻击，造成[未知]的魔法伤害，并附加一层易伤(受伤加重30%)。
-[裁决之雷]：死刑！！对当前目标释放大伤害攻击，造成[未知]的魔法伤害，并附加大易伤(平A致命)。
-[转阶段·回转火焰剑]：全屏攻击，造成[未知]的物理伤害
-[荣福直观]：移动至场边，向对面进行冲刺，造成[未知]的物理伤害，距离越近的目标受伤越高。"""
+var SKILL_TXT = TEXT.format("""[夺影]：对全屏的敌人造成[未知]的{TMgiHurt}。
+[断罪飞翔]：随机两条竖线或横线进行飞剑攻击，造成[未知]的{TMgiHurt}，并附加一层易伤(受伤加重30%)。
+[裁决之雷]：死刑！！对当前目标释放大伤害攻击，造成[未知]的{TMgiHurt}，并附加大易伤(平A致命)。
+[转阶段·回转火焰剑]：全屏攻击，造成[未知]的{TPhyHurt}
+[荣福直观]：移动至场边，向对面进行冲刺，造成[未知]的{TPhyHurt}，距离越近的目标受伤越高。""")
 
 func _extInit():
 	._extInit()
@@ -13,6 +13,7 @@ func _extInit():
 	addSkillTxt(SKILL_TXT)
 	addSkillTxt("""[创星]：战斗时间超过 %d秒后，狂暴灭团。
 [完美]：该单位免疫[烧灼][失明][结霜]""" % [BERSERKERTIME])
+	addSkillTxt(TEXT.BOSS_INNOCENCE)
 
 var righteousBolt_pw = 4 # 裁决之雷威力
 var wingedReprobation_pw = 0.75 # 断罪飞翔威力
@@ -41,12 +42,19 @@ func _onBattleStart():
 	shadowReaver_pw *= (E_lv / E_num)
 	flammingSword_pw *= (E_lv / E_num)
 	beatficVision_pw *= (E_lv / E_num)
-	skillStrs[1] = """[夺影]：对全屏的敌人造成[%d%%]的魔法伤害。
-[断罪飞翔]：随机两条竖线或横线进行飞剑攻击，造成[%d%%]的魔法伤害，并附加一层易伤(受伤加重30%%)。
-[裁决之雷]：死刑，对当前目标释放大伤害攻击，造成[%d%%]的魔法伤害，并附加大易伤(平A致命)。
-[转阶段·回转火焰剑]：全屏攻击，造成[%d%%]的物理伤害
-[荣福直观]：移动至场边，向对面进行冲刺，造成[%d%%]的物理伤害，距离中线越近的目标受伤越高。
-""" % [shadowReaver_pw * 100, wingedReprobation_pw * 100, righteousBolt_pw * 100, flammingSword_pw * 100, beatficVision_pw * 100]
+	SKILL_TXT = TEXT.format("""[夺影]：对全屏的敌人造成[{0}]的{TMgiHurt}。
+[断罪飞翔]：随机两条竖线或横线进行飞剑攻击，造成[{1}]的{TMgiHurt}，并附加一层易伤(受伤加重30%%)。
+[裁决之雷]：死刑！！对当前目标释放大伤害攻击，造成[{2}]的{TMgiHurt}，并附加大易伤(平A致命)。
+[转阶段·回转火焰剑]：全屏攻击，造成[{3}]的{TPhyHurt}
+[荣福直观]：移动至场边，向对面进行冲刺，造成[{4}]的{TPhyHurt}，距离中线越近的目标受伤越高。""",
+		{
+			"0": "%d%%" % [shadowReaver_pw * 100],
+			"1": "%d%%" % [wingedReprobation_pw * 100],
+			"2": "%d%%" % [righteousBolt_pw * 100],
+			"3": "%d%%" % [flammingSword_pw * 100],
+			"4": "%d%%" % [beatficVision_pw * 100]
+		})
+	skillStrs[1] = SKILL_TXT
 	upAtt()
 
 func _onBattleEnd():
@@ -116,8 +124,7 @@ func wingedReprobation():
 		Utils.createEffect("danger", Vector2(-1, y1 * 100), Vector2(-350, -50), 2, 1, false)
 		Utils.createEffect("danger", Vector2(-1, y2 * 100), Vector2(-350, -50), 2, 1, false)
 		yield(reTimer(4), "timeout")
-		if att.hp <=0:
-			return
+
 		var eff1 = Utils.createEffect("sword", Vector2(0, y1 * 100), Vector2(0, -50), 0)
 		eff1._initFlyPos(Vector2(800, y1 * 100) , 1600) 
 		var eff2 = Utils.createEffect("sword", Vector2(0, y2 * 100), Vector2(0, -50), 0)
@@ -142,7 +149,8 @@ func wingedReprobation():
 func shadowReaver():
 	Chant.chantStart("夺影", 3)
 	yield(reTimer(3), "timeout")
-
+	if att.hp <= 0:
+		return
 	var chas = getAllChas(1)
 	Utils.createEffect("energyStorage", Vector2(350, 0), Vector2(0, 0), 13, 6)
 	yield(reTimer(0.2), "timeout")
@@ -175,7 +183,7 @@ func flammingSword():
 	var eff = Utils.createEffect("light2", Vector2(350, 150), Vector2(0, 0), 0, 4)
 	yield(reTimer(3), "timeout")
 
-	if att.hp <=0:
+	if att.hp <= 0:
 		return
 	var chas = getAllChas(1)
 	for i in chas:
@@ -216,7 +224,7 @@ func beatficVision():
 	self.isDeath = false
 
 func beatficVisionDamage():
-	if att.hp <=0:
+	if att.hp <= 0:
 		return
 	var chas = getAllChas(1)
 	for i in chas:

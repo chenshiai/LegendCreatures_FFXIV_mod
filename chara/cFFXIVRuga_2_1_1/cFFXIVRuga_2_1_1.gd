@@ -13,7 +13,7 @@ func _extInit():
 	attAdd.atkR += 0.25
 	lv = 4
 	evos = []
-	addSkillTxt("[红莲之狂潮]：被动，复国领袖，提升25%的攻击力")
+	addSkillTxt(TEXT.format("[红莲之狂潮]：{TPassive}，复国领袖，提升25%的攻击力"))
 
 var baseId = ""
 func _connect():

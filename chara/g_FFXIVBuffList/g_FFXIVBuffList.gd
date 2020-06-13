@@ -54,7 +54,7 @@ class b_Abhor:
 		isNegetive = false
 		att.mgiDefL = 0.10
 
-# 暗黑布道，减少魔法伤害
+# 暗黑布道，减少{TMgiHurt}
 class b_DarkMissionary:
 	extends ReduceDemage
 	func _init(dur = 1):
@@ -157,7 +157,7 @@ class b_Superbolide:
 	func _upS():
 		life = clamp(life, 0, 10)
 
-# 光之心，减少魔法伤害
+# 光之心，减少{TMgiHurt}
 class b_HeartOfLight:
 	extends ReduceDemage
 	func _init(dur = 1):

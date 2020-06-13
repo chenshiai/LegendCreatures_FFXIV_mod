@@ -1,16 +1,13 @@
 extends "../cFFXIVAolong_1/cFFXIVAolong_1.gd"
 
-func _info():
-	pass
-
 func _extInit():
 	._extInit()
 	chaName = "深渊之暗"
 	lv = 3
 	evos = []
 	addCdSkill("skill_DarkMissionary", 12)
-	addSkillTxt("""[至黑之夜]：造成非特效伤害时会累计暗黑值，达到1000点时，释放可以吸收最大生命值20%伤害的护盾
-[暗黑布道]：冷却12s，使队伍全员受到魔法伤害减少10%，持续6s""")
+	addSkillTxt(TEXT.format("""[至黑之夜]：造成非特效伤害时会累计暗黑值，达到1000点时，释放可以吸收最大生命值20%伤害的护盾
+[暗黑布道]：冷却12s，使队伍全员受到的{TMgiHurt}减少10%，持续6s"""))
 
 func _connect():
 	._connect()

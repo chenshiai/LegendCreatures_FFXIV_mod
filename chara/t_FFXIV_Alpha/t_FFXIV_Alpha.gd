@@ -25,7 +25,7 @@ func _connect():
 	sys.main.connect("onBattleReady", self, "come")
 	sys.main.connect("onBattleStart", self, "run")
 	sys.main.connect("onBattleEnd", self, "reward")
-	sys.main.Player.connect("onAddCha", self, "addChara")
+	# sys.main.Player.connect("onAddCha", self, "addChara")
 	originBackground = sys.main.get_node("scene/bg/bg").get_texture()
 	HpBar.createHpBar()
 	Limit.createLimitBreak()

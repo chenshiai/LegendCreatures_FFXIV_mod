@@ -13,7 +13,7 @@ func _extInit():
 	attAdd.suck += 0.10
 	lv = 4
 	evos = []
-	addSkillTxt("[舍弃苍天的龙骑士]：被动，获得10%的物理吸血")
+	addSkillTxt(TEXT.format("[舍弃苍天的龙骑士]：{TPassive}，获得10%的物理吸血"))
 
 var baseId = ""
 

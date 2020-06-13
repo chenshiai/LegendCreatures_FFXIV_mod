@@ -19,7 +19,7 @@ func _extInit():
 	addCdSkill("skill_Embrace", 12)
 	addSkillTxt("""[鼓舞激励之策]：冷却10s，为生命最低的友方单位恢复[110%]法强的HP，并为其附加[鼓舞]
 [鼓舞]：可以抵消[治疗量125%]的伤害，持续10s，无法与占星术士的[黑夜领域]叠加""")
-	addSkillTxt("""[仙光的拥抱]：被动，小仙女协助作战。每12s，为生命最低的友方单位恢复[40%]法强的HP""")
+	addSkillTxt(TEXT.format("""[仙光的拥抱]：{TPassive}，小仙女协助作战。每12s，为生命最低的友方单位恢复[40%]法强的HP"""))
 
 const ADLOQUIUM_PW = 1.10 # 鼓舞激励之策威力
 const EMBRACE_PW = 0.40 # 仙光的拥抱威力

@@ -3,6 +3,7 @@ const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
 const Utils = globalData.infoDs["g_aFFXIVUtils"]
 const Chant = globalData.infoDs["g_FFXIVChant"]
 const OCCUPATION = ["protect", "attack", "treatment"]
+const TEXT = globalData.infoDs["g_FFXIVText"]
 
 func _info():
   pass

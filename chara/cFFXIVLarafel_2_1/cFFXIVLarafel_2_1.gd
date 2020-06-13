@@ -11,7 +11,7 @@ func _extInit():
 	addCdSkill("skill_LeyLines", 50)
 	addCdSkill("skill_Xenoglossy", 30)
 	addSkillTxt("[黑魔纹]：冷却50s，开局立即释放一次，加快自身15%的技能冷却，持续30s")
-	addSkillTxt("[异言]：冷却30s，对目标造成[750%]法强的魔法伤害")
+	addSkillTxt(TEXT.format("[异言]：冷却30s，对目标造成[750%]法强的{TMgiHurt}"))
 
 const XENOGLOSSY_PW = 7.5 # 异言威力
 

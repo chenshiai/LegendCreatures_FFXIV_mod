@@ -1,7 +1,18 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 
-func _info():
-	pass
+const HIGANBANE_PW = 1.50 # 一个印记威力
+const FIVESWORD_PW = 3.50 # 两个印记威力
+const SETSUGEKKA_PW = 7.20 # 三个印记纷乱雪月花威力
+
+var snow = false # 雪
+var moon = false # 月
+var flower = false # 花
+var atkCount = 0 # 当前攻击次数
+var flash = 0 # 当前闪的数量
+var beforIaijutsu = 0 # 上一次雪月花的威力
+
+var SKILL_TXT_1 = TEXT.format("""[居合术]：每第8次攻击，发动一次[纷乱雪月花]
+[纷乱雪月花]：对目标造成[150%][350%][720%]的{TPhyHurt}，印记种类越多伤害越高，可暴击！""")
 
 func _extInit():
 	._extInit()
@@ -16,20 +27,8 @@ func _extInit():
 	lv = 2
 	evos = ["cFFXIVAolong_2_1"]
 	atkEff = "atk_dao"
-	addSkillTxt("""[雪/月/花]：被动，每2次攻击随机获得[雪][月][花]印记，攻击力提升10%，攻速提升10%""")
-	addSkillTxt("""[居合术]：每第8次攻击，发动一次[纷乱雪月花]
-[纷乱雪月花]：对目标造成[150%][350%][720%]的物理伤害，印记种类越多伤害越高，可暴击""")
-
-const HIGANBANE_PW = 1.50 # 一个印记威力
-const FIVESWORD_PW = 3.50 # 两个印记威力
-const SETSUGEKKA_PW = 7.20 # 三个印记纷乱雪月花威力
-
-var snow = false # 雪
-var moon = false # 月
-var flower = false # 花
-var atkCount = 0 # 当前攻击次数
-var flash = 0 # 当前闪的数量
-var beforIaijutsu = 0 # 上一次雪月花的威力
+	addSkillTxt("""[雪/月/花]：{TPassive}，每2次攻击随机获得[雪][月][花]印记，攻击力提升10%，攻速提升10%""")
+	addSkillTxt(SKILL_TXT_1)
 
 func _connect():
 	._connect()

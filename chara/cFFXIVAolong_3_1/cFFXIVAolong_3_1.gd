@@ -1,7 +1,6 @@
 extends "../cFFXIVAolong_3/cFFXIVAolong_3.gd"
 
-func _info():
-	pass
+var ninjutsu = false # 是否已经降低忍术的cd？
 
 func _extInit():
 	._extInit()
@@ -9,9 +8,8 @@ func _extInit():
 	lv = 3
 	evos = []
 	addCdSkill("skill_Assassinate", 20)
-	addSkillTxt("[生杀予夺]：被动，提高自身伤害20%，第一次使用[忍术]后，之后[忍术]的冷却减少5s")
+	addSkillTxt(TEXT.format("[生杀予夺]：{TPassive}，提高自身伤害20%，第一次使用[忍术]后，之后[忍术]的冷却减少5s"))
 
-var ninjutsu = false # 是否已经降低忍术的cd？
 
 func _connect():
 	._connect()

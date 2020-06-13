@@ -14,7 +14,7 @@ func _extInit():
 	attAdd.mgiAtkL += 0.3
 	lv = 4
 	evos = []
-	addSkillTxt("[最好的学生]：被动，提高30%的法强")
+	addSkillTxt(TEXT.format("[最好的学生]：{TPassive}，提高30%的法强"))
 
 var baseId = ""
 

@@ -15,6 +15,8 @@ var E_num = 1
 var E_lv = 1
 var E_spd = 1
 
+const DefaultTxt = "[自适应]：该单位属性根据敌方战力自适应调整，拥有特定的技能时间轴。击杀后会掉落道具{TItemSoul}"
+
 func _extInit():
 	._extInit()
 	name = "boss模板"
@@ -28,7 +30,7 @@ func _extInit():
 	lv = 1
 	atkEff = "atk_dao"
 	HateTarget = null
-	addSkillTxt("[自适应]：该单位属性根据敌方战力自适应调整，拥有特定的技能时间轴。击杀后会掉落道具[灵魂水晶]")
+	addSkillTxt(DefaultTxt.format(TEXT.config))
 
 func _connect():
 	._connect()
