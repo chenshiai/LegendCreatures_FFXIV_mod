@@ -29,8 +29,9 @@ class BaseSoul:
 	}
 
 	func _init(cha = null):
-		masCha = cha
-		masTeam = cha.team
+		if cha != null:
+			masTeam = cha.team
+			masCha = cha
 
 	func setCdSkill(name, cd):
 		for skill in masCha.skills:
