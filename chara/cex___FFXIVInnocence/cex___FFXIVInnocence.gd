@@ -9,7 +9,7 @@ const SKILL_TXT = """[夺影]：对全屏的敌人造成[未知]的魔法伤害�
 
 func _extInit():
 	._extInit()
-	chaName = "全能神 无瑕灵君"
+	chaName = "无瑕灵君"
 	lv = 4
 	addSkillTxt(SKILL_TXT)
 	addSkillTxt("""[创星]：战斗时间超过 %d秒后，狂暴灭团。
@@ -26,7 +26,7 @@ func _init():
 		"righteousBolt": [20, 50, 120, 150],
 		"wingedReprobation": [15, 30, 45, 60, 75, 95, 110, 125, 140, 155, 170],
 		"shadowReaver": [5, 90, 105, 165],
-		"flammingSword": [80],
+		"flammingSword": [10],
 		"beatficVision": [115, 130, 145]
 	}
 	call_deferred("setTimeAxis", SkillAxis)
@@ -70,6 +70,7 @@ func _onAddBuff(buff:Buff):
 
 func righteousBolt():
 	self.HateTarget = aiCha
+	self.aiOn = false
 	Chant.chantStart("裁决之雷", 5)
 	yield(reTimer(5), "timeout")
 	if att.hp <=0:
@@ -78,6 +79,7 @@ func righteousBolt():
 		Utils.createEffect("shiwan", self.HateTarget.position, Vector2(0, -30), 15, 4)
 		hurtChara(self.HateTarget, att.mgiAtk * righteousBolt_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 		self.HateTarget.addBuff(b_VulnerableLarge.new(15))
+	self.aiOn = true
 
 func wingedReprobation():
 	Chant.chantStart("断罪飞翔", 4)
@@ -159,14 +161,15 @@ func flammingSword():
 	Utils.createShadow(img,  position + Vector2(0, -250), position, 40)
 	normalSpr.position = Vector2(0, 0)
 
-	Chant.chantStart("转阶段·回转火焰剑！", 10)
-	# Utils.createEffect("flammingSword", Vector2(350, 400), Vector2(0, -62.5), 10, 4)
-	yield(reTimer(10), "timeout")
-	Utils.createEffect("energyStorage", Vector2(350, 0), Vector2(0, 0), 13, 6)
-	yield(reTimer(0.2), "timeout")
-	Utils.createEffect("energyStorage", Vector2(150, 150), Vector2(0, 0), 13, 6)
-	yield(reTimer(0.2), "timeout")
-	Utils.createEffect("energyStorage", Vector2(500, 200), Vector2(0, 0), 13, 6)
+	Chant.chantStart("转阶段·回转火焰剑！", 5)
+	Utils.createEffect("flammingSword", Vector2(350, 150), Vector2(0, 0), 12, 4)
+	yield(reTimer(0.5), "timeout")
+	Utils.createEffect("flammingSword", Vector2(350, 125), Vector2(0, 0), 13, 3)
+	yield(reTimer(0.5), "timeout")
+	Utils.createEffect("flammingSword", Vector2(350, 100), Vector2(0, 0), 15, 2)
+
+	var eff = Utils.createEffect("light2", Vector2(350, 150), Vector2(0, 0), 0, 4)
+	yield(reTimer(3), "timeout")
 
 	if att.hp <=0:
 		return
@@ -175,7 +178,8 @@ func flammingSword():
 		if i != null:
 			hurtChara(i, att.atk * flammingSword_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
-	Utils.createEffect("beatficVision", Vector2(350, 150), Vector2(0, -30), 10, 6)
+	Utils.createEffect("beatficVision", Vector2(350, 200), Vector2(0, -30), 10, 4)
+	eff.queue_free()
 	yield(reTimer(2), "timeout")
 	self.aiOn = true
 	self.isDeath = false
@@ -187,7 +191,7 @@ func beatficVision():
 
 	yield(reTimer(0.5), "timeout")
 	Utils.createShadow(img,  position + Vector2(0, -250), position, 40)
-	var eff = Utils.createEffect("light1", Vector2(position.x, position.y - 1), Vector2(0, -10), 0, 6)
+	var eff = Utils.createEffect("light1", Vector2(position.x, position.y - 1), Vector2(0, -20), 0, 6)
 	normalSpr.position = Vector2(0, 0)
 
 	Chant.chantStart("富荣直观", 3)
@@ -196,7 +200,7 @@ func beatficVision():
 	normalSpr.position = deviation
 	Utils.createShadow(img,  position, position + deviation, 40)
 	beatficVisionDamage()
-	Utils.createEffect("beatficVision", Vector2(350, 150), Vector2(0, -30), 10, 6)
+	Utils.createEffect("beatficVision", Vector2(350, 200), Vector2(0, -30), 10, 4)
 
 	yield(reTimer(2), "timeout")
 	Utils.createShadow(img, position + Vector2(0, -250), position, 40)
