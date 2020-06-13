@@ -1,11 +1,10 @@
 extends "../cex___FFXIVBossChara/cex___FFXIVBossChara.gd"
-const BERSERKERTIME = 200 # 狂暴时间
-
+const BERSERKERTIME = 190 # 狂暴时间
 const SKILL_TXT = """[夺影]：对全屏的敌人造成[未知]的魔法伤害。
 [断罪飞翔]：随机两条竖线或横线进行飞剑攻击，造成[未知]的魔法伤害，并附加一层易伤(受伤加重30%)。
 [裁决之雷]：死刑！！对当前目标释放大伤害攻击，造成[未知]的魔法伤害，并附加大易伤(平A致命)。
-[转阶段·回转火焰剑]：全屏攻击，造成[未知]的魔法伤害
-[富荣直观]：移动至场边，向对面进行冲刺，造成[未知]的物理伤害，距离越近的目标受伤越高。"""
+[转阶段·回转火焰剑]：全屏攻击，造成[未知]的物理伤害
+[荣福直观]：移动至场边，向对面进行冲刺，造成[未知]的物理伤害，距离越近的目标受伤越高。"""
 
 func _extInit():
 	._extInit()
@@ -19,15 +18,15 @@ var righteousBolt_pw = 4 # 裁决之雷威力
 var wingedReprobation_pw = 0.75 # 断罪飞翔威力
 var shadowReaver_pw = 1 # 夺影威力
 var flammingSword_pw = 1 # 转阶段·回转火焰剑
-var beatficVision_pw = 2 # 富荣直观
+var beatficVision_pw = 2 # 荣福直观
 var deviation = Vector2(0, 0)
 func _init():
 	var SkillAxis = {
-		"righteousBolt": [20, 50, 120, 150],
-		"wingedReprobation": [15, 30, 45, 60, 75, 95, 110, 125, 140, 155, 170],
-		"shadowReaver": [5, 90, 105, 165],
-		"flammingSword": [10],
-		"beatficVision": [115, 130, 145]
+		"righteousBolt": [20, 60, 120, 160],
+		"wingedReprobation": [10, 30, 50, 70, 90, 130, 170],
+		"shadowReaver": [2, 35, 76, 115, 140],
+		"flammingSword": [100],
+		"beatficVision": [110, 150, 180]
 	}
 	call_deferred("setTimeAxis", SkillAxis)
 
@@ -44,8 +43,8 @@ func _onBattleStart():
 	skillStrs[1] = """[夺影]：对全屏的敌人造成[%d%%]的魔法伤害。
 [断罪飞翔]：随机两条竖线或横线进行飞剑攻击，造成[%d%%]的魔法伤害，并附加一层易伤(受伤加重30%%)。
 [裁决之雷]：死刑，对当前目标释放大伤害攻击，造成[%d%%]的魔法伤害，并附加大易伤(平A致命)。
-[转阶段·回转火焰剑]：全屏攻击，造成[%d%%]的魔法伤害
-[富荣直观]：移动至场边，向对面进行冲刺，造成[%d%%]的物理伤害，距离中线越近的目标受伤越高。
+[转阶段·回转火焰剑]：全屏攻击，造成[%d%%]的物理伤害
+[荣福直观]：移动至场边，向对面进行冲刺，造成[%d%%]的物理伤害，距离中线越近的目标受伤越高。
 """ % [shadowReaver_pw * 100, wingedReprobation_pw * 100, righteousBolt_pw * 100, flammingSword_pw * 100, beatficVision_pw * 100]
 	upAtt()
 
@@ -55,8 +54,8 @@ func _onBattleEnd():
 	righteousBolt_pw = 4 # 裁决之雷威力
 	wingedReprobation_pw = 0.75 # 断罪飞翔威力
 	shadowReaver_pw = 1 # 夺影威力
-	flammingSword_pw = 1.5 # 转阶段·回转火焰剑
-	beatficVision_pw = 0.5# 富荣直观
+	flammingSword_pw = 1.5 # 转阶段·回转火焰剑 威力
+	beatficVision_pw = 0.5# 荣福直观威力
 
 func _onAddBuff(buff:Buff):
 	if buff.id == "b_shaoZhuo":
@@ -161,12 +160,12 @@ func flammingSword():
 	Utils.createShadow(img,  position + Vector2(0, -250), position, 40)
 	normalSpr.position = Vector2(0, 0)
 
-	Chant.chantStart("转阶段·回转火焰剑！", 5)
+	Chant.chantStart("回转火焰剑！", 5)
 	Utils.createEffect("flammingSword", Vector2(350, 150), Vector2(0, 0), 12, 4)
 	yield(reTimer(0.5), "timeout")
-	Utils.createEffect("flammingSword", Vector2(350, 125), Vector2(0, 0), 13, 3)
+	Utils.createEffect("flammingSword", Vector2(350, 125), Vector2(0, 0), 14, 3)
 	yield(reTimer(0.5), "timeout")
-	Utils.createEffect("flammingSword", Vector2(350, 100), Vector2(0, 0), 15, 2)
+	Utils.createEffect("flammingSword", Vector2(350, 100), Vector2(0, 0), 16, 2)
 
 	var eff = Utils.createEffect("light2", Vector2(350, 150), Vector2(0, 0), 0, 4)
 	yield(reTimer(3), "timeout")
@@ -194,7 +193,7 @@ func beatficVision():
 	var eff = Utils.createEffect("light1", Vector2(position.x, position.y - 1), Vector2(0, -20), 0, 6)
 	normalSpr.position = Vector2(0, 0)
 
-	Chant.chantStart("富荣直观", 3)
+	Chant.chantStart("荣福直观", 3)
 	yield(reTimer(3), "timeout")
 	eff.queue_free()
 	normalSpr.position = deviation
@@ -209,7 +208,6 @@ func beatficVision():
 	yield(reTimer(1), "timeout")
 	self.aiOn = true
 	self.isDeath = false
-
 
 func beatficVisionDamage():
 	if att.hp <=0:
@@ -234,11 +232,11 @@ func leftOrRight():
 		position = sys.main.map.map_to_world(Vector2(0, 2))
 		deviation = Vector2(800, 0)
 
-
 func _upS():
 	._upS()
-	if battleDuration > BERSERKERTIME:
+	if battleDuration > BERSERKERTIME and (battleDuration % 5 == 0):
 		shadowReaver()
+		shadowReaver_pw += 0.3
 
 class b_VulnerableSmall:
 	extends Buff
@@ -270,7 +268,7 @@ class b_VulnerableLarge:
 
 	func run(atkInfo):
 		if atkInfo.atkType == Chara.AtkType.NORMAL:
-			atkInfo.hurtVal *= 999
+			atkInfo.hurtVal *= 99
 
 	func _upS():
 		life = clamp(life, 0, 15)

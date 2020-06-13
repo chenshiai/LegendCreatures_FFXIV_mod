@@ -49,11 +49,9 @@ func _onAddBuff(buff:Buff):
 
 # 技能-刀光剑舞
 func swordDance():
-	var chas = getCellChas(aiCha.cell, 1)
 	Utils.createEffect("slash", aiCha.position, Vector2(0, -50), 15)
-	for i in chas:
-		if i != self:
-			hurtChara(i, att.mgiAtk * swordDance_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+	if aiCha != null:
+		hurtChara(aiCha, att.mgiAtk * swordDance_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
 # 技能-激光雨
 func laserRain():

@@ -25,6 +25,7 @@ func _connect():
 	sys.main.connect("onBattleReady", self, "come")
 	sys.main.connect("onBattleStart", self, "run")
 	sys.main.connect("onBattleEnd", self, "reward")
+	sys.main.Player.connect("onAddCha", self, "addChara")
 	originBackground = sys.main.get_node("scene/bg/bg").get_texture()
 	HpBar.createHpBar()
 	Limit.createLimitBreak()
@@ -65,7 +66,7 @@ func come():
 			HpBar.setValue(100)
 			probability = PROBABILITY
 			clear(null)
-			var n = sys.rndRan(0, 2)
+			var n = sys.rndRan(0, 3)
 			match n:
 				0:
 					Utils.backGroundChange("/img/SpaceTimeSlit.png")
@@ -76,6 +77,9 @@ func come():
 				2:
 					Utils.backGroundChange("/img/SpaceTimeSlit1.png")
 					addUnit("cex___FFXIVOmega")
+				3:
+					Utils.backGroundChange("/img/PerfectThrone.png")
+					addUnit("cex___FFXIVInnocence")
 		else:
 			probability += 1
 

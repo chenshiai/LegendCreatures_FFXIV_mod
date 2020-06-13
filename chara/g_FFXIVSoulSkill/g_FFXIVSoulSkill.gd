@@ -27,7 +27,11 @@ class BaseSoul:
 		"pen": 0,
 		"mgiPen": 0
 	}
-	
+
+	func _init(cha = null):
+		masCha = cha
+		masTeam = cha.team
+
 	func setCdSkill(name, cd):
 		for skill in masCha.skills:
 			if skill.id == name:
@@ -51,8 +55,7 @@ class DarkKnight:
 	var treatmentVolume = 0
 	var switch = true
 	func _init(cha):
-		masCha = cha
-		masTeam = cha.team
+		._init(cha)
 		name = "[color=#432f2e]暗黑骑士之证"
 		info = "灵魂的水晶，刻有历代暗黑骑士的记忆和灵魂。\n"\
 			+ "[行尸走肉]\n"\
@@ -95,8 +98,7 @@ class DarkKnight:
 class Gunbreaker:
 	extends BaseSoul
 	func _init(cha):
-		masCha = cha
-		masTeam = cha.team
+		._init(cha)
 		name = "[color=#ae9a37]绝枪战士之证"
 		info = "灵魂的水晶，刻有历代绝枪战士的记忆和觉悟。\n"\
 			+ "[光之心]\n"\
@@ -124,8 +126,7 @@ class Gunbreaker:
 class Bard:
 	extends BaseSoul
 	func _init(cha):
-		masCha = cha
-		masTeam = cha.team
+		._init(cha)
 		name = "[color=#9caa42]吟游诗人之证"
 		info = "灵魂的水晶，刻有历代吟游诗人的记忆和旋律。\n"\
 			+ "[魔人的安魂曲]\n"\
@@ -151,8 +152,7 @@ class Dragoon:
 	var Dragon = false
 
 	func _init(cha):
-		masCha = cha
-		masTeam = cha.team
+		._init(cha)
 		name = "[color=#4752b8]龙骑士之证"
 		info = "灵魂的水晶，刻有历代龙骑士的记忆和决心。\n"\
 			+ "[红莲龙血]\n"\
@@ -183,8 +183,7 @@ class Dragoon:
 class BlackMage:
 	extends BaseSoul
 	func _init(cha):
-		masCha = cha
-		masTeam = cha.team
+		._init(cha)
 		name = "[color=#312d3a]黑魔法师之证"
 		info = "灵魂的水晶，刻有历代黑魔法师的记忆和魔力。\n"\
 			+ "[天语]\n"\
@@ -204,8 +203,7 @@ class BlackMage:
 class Astrologian:
 	extends BaseSoul
 	func _init(cha):
-		masCha = cha
-		masTeam = cha.team
+		._init(cha)
 		name = "[color=#eba058]占星术士之证"
 		info = "灵魂的水晶，刻有历代占星术士的记忆和知识。\n"\
 			+ "[命运之轮]\n"\
@@ -232,8 +230,7 @@ class Astrologian:
 class Samurai:
 	extends BaseSoul
 	func _init(cha):
-		masCha = cha
-		masTeam = cha.team
+		._init(cha)
 		name = "[color=#faefd0]武士之证"
 		info = "灵魂的水晶，刻有历代武士的记忆和大义。\n"\
 			+ "[必杀剑-震天]\n"\
@@ -254,8 +251,7 @@ class Samurai:
 class Warrior:
 	extends BaseSoul
 	func _init(cha):
-		masCha = cha
-		masTeam = cha.team
+		._init(cha)
 		name = "[color=#bd555a]战士之证"
 		info = "灵魂的水晶，刻有历代战士的记忆和斗志。\n"\
 			+ "[泰然自若]\n"\
@@ -278,8 +274,7 @@ class Warrior:
 class RedMage:
 	extends BaseSoul
 	func _init(cha):
-		masCha = cha
-		masTeam = cha.team
+		._init(cha)
 		name = "[color=#c12957]赤魔法师之证"
 		info = "灵魂的水晶，刻有历代赤魔法师的记忆和心血。\n"\
 			+ "[赤治疗]\n"\
@@ -305,8 +300,7 @@ class RedMage:
 class Monk:
 	extends BaseSoul
 	func _init(cha):
-		masCha = cha
-		masTeam = cha.team
+		._init(cha)
 		name = "[color=#a48a21]武僧之证"
 		info = "灵魂的水晶，刻有历代武僧的记忆和气概。\n"\
 			+ "[真言]\n"\
@@ -333,8 +327,7 @@ class Monk:
 class Paladin:
 	extends BaseSoul
 	func _init(cha):
-		masCha = cha
-		masTeam = cha.team
+		._init(cha)
 		name = "[color=#7b9ea4]骑士之证"
 		info = "灵魂的水晶，刻有历代骑士的记忆和荣誉。\n"\
 			+ "[安魂祈祷]\n"\
@@ -356,8 +349,7 @@ class Paladin:
 class Ninja:
 	extends BaseSoul
 	func _init(cha):
-		masCha = cha
-		masTeam = cha.team
+		._init(cha)
 		name = "[color=#6f5e5d]忍者之证"
 		info = "灵魂的水晶，刻有历代忍者的记忆和精神。\n"\
 			+ "[梦幻三段]\n"\
@@ -382,8 +374,7 @@ class Ninja:
 class WhiteMage:
 	extends BaseSoul
 	func _init(cha):
-		masCha = cha
-		masTeam = cha.team
+		._init(cha)
 		name = "[color=#c5bc94]白魔法师之证"
 		info = "灵魂的水晶，刻有历代白魔法师的记忆和圣迹。\n"\
 			+ "[神速咏唱]\n"\
@@ -395,8 +386,7 @@ class WhiteMage:
 class Scholar:
 	extends BaseSoul
 	func _init(cha):
-		masCha = cha
-		masTeam = cha.team
+		._init(cha)
 		name = "[color=#5251cb]学者之证"
 		info = "灵魂的水晶，刻有历代学者的记忆和学识。\n"\
 			+ "[连环计]\n"\
@@ -419,8 +409,7 @@ class Scholar:
 class Summoner:
 	extends BaseSoul
 	func _init(cha):
-		masCha = cha
-		masTeam = cha.team
+		._init(cha)
 		name = "[color=#4b8e13]召唤师之证"
 		info = "灵魂的水晶，刻有历代召唤师的记忆和真理。\n"\
 			+ "[三重灾祸]\n"\
@@ -442,8 +431,7 @@ class Summoner:
 class Machinist:
 	extends BaseSoul
 	func _init(cha):
-		masCha = cha
-		masTeam = cha.team
+		._init(cha)
 		name = "[color=#6cc7c0]机工士之证"
 		info = "与其他灵魂水晶不同，这颗水晶上尚未刻下历史的记忆。\n"\
 			+ "[火焰喷射器]\n"\
@@ -465,8 +453,7 @@ class Machinist:
 class Dancer:
 	extends BaseSoul
 	func _init(cha):
-		masCha = cha
-		masTeam = cha.team
+		._init(cha)
 		name = "[color=#ecb1d7]舞者之证"
 		info = "灵魂的水晶，刻有历代舞者的记忆和舞蹈。\n"\
 			+ "[扇舞·急]\n"\
