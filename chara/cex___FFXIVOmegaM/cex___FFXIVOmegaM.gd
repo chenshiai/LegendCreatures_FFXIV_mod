@@ -72,6 +72,7 @@ func optimizedFireIII():
 		for j in cha:
 			if j != self:
 				hurtChara(j, att.mgiAtk * optimizedFireIII_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+		yield(reTimer(0.1), "timeout")
 
 func _upS():
 	._upS()

@@ -23,7 +23,9 @@ class BaseSoul:
 		"mgiDef": 0,
 		"cri": 0,
 		"spd": 0,
-		"cd": 0
+		"cd": 0,
+		"pen": 0,
+		"mgiPen": 0
 	}
 	
 	func setCdSkill(name, cd):
@@ -190,6 +192,7 @@ class BlackMage:
 			+ "根据黑魔法师的等级来调整。"
 		att.maxHp = 100
 		att.mgiAtk = 30
+		att.mgiPen = 30
 		_connect()
 
 	func _connect():

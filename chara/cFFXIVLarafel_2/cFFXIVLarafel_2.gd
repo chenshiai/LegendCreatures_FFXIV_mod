@@ -16,11 +16,11 @@ func _extInit():
 	evos = ["cFFXIVLarafel_2_1"]
 	atkEff = "atk_dang"
 	addCdSkill("skill_FireIII", 26)
-	addCdSkill("skill_Freeze", 6)
+	addCdSkill("skill_Freeze", 4)
 	addSkillTxt("""[星极火]：被动，[爆炎]释放后，后续的[爆炎]伤害增加30%，延长[玄冰]的冷却
 [灵极冰]：被动，使用[玄冰]后降低[爆炎]的冷却三次，重置[爆炎]的伤害提升阶段""")
 	addSkillTxt("""[爆炎]：冷却26s，对目标造成[240%]的魔法伤害
-[玄冰]：冷却6s，对目标及周围一格的敌人造成[100%]的魔法伤害""")
+[玄冰]：冷却4s，对目标及周围一格的敌人造成[100%]的魔法伤害""")
 
 const FIRE_PW = 0.30 # 星极火倍率
 const FREEZE_MAX = 3 # 灵极冰最大值

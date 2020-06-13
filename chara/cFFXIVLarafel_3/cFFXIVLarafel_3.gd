@@ -18,15 +18,15 @@ func _extInit():
 	addCdSkill("skill_Verthunder", 8)
 	addSkillTxt("白魔元：0 / 100	黑魔元：0 / 100")
 	addSkillTxt("""[连续咏唱]：被动，攻击型技能会连续释放两次（只触发一次CD效果）
-[赤闪雷/赤疾风]：冷却8s，对目标造成[110%]法强的魔法伤害，随机获得[黑/白]魔元15点
+[赤闪雷/赤疾风]：冷却8s，对目标造成[120%]法强的魔法伤害，随机获得[黑/白]魔元15点
 [魔连攻]：被动，攻击时同时消耗25点黑白魔元，使此次物理攻击造成[500%]的伤害""")
 
 const MORGEN = 15 # 释放魔法获得魔元数量
 const MORGEN_MAX = 100 # 魔元上限
-const VERTHUNDER_PW = 1.10 # 魔法威力
+const VERTHUNDER_PW = 1.20 # 魔法威力
 const REDOUBLEMENT_PW = 5 # 魔连攻威力
 const REDOUBLEMENT_CAST = 25 # 魔连攻消耗魔元值
-const VERFLARE_PW = 2.20 # 赤核爆威力
+const VERFLARE_PW = 2.40 # 赤核爆威力
 
 var blackMorgen = 0 # 黑魔元
 var whiteMorgan = 0 # 白魔元

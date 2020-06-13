@@ -67,22 +67,7 @@ func geirskogul():
 	if aiCha != null:
 		var eff:Eff = newEff("sk_jiGuan", sprcPos)
 		eff.sprLookAt(aiCha.global_position)
-		var chas = lineChas(cell, aiCha.cell, 4)
+		var chas = Utils.lineChas(cell, aiCha.cell, 4)
 		for cha in chas:
 			if cha.team != team :
 				hurtChara(cha, att.atk * GEIRSKOGUL_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
-
-func lineChas(aCell, bCell, num):
-	var chas = []
-	var aPos = sys.main.map.map_to_world(aCell)
-	var bPos = sys.main.map.map_to_world(bCell)
-	var n = (bPos - aPos).normalized()
-	var oldCell = null
-	for i in range(num):
-		aPos += n * 100
-		var ac = sys.main.map.world_to_map(aPos)
-		if oldCell != ac :
-			oldCell = ac
-			if matCha(ac) != null:
-				chas.append(matCha(ac))
-	return chas

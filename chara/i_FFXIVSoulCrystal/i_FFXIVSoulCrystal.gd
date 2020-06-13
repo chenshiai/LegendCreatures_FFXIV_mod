@@ -122,6 +122,8 @@ func setInitAtt():
 	att.def = 0
 	att.mgiDef = 0
 	att.spd = 0
+	att.mgiPen = 0
+	att.pen - 0
 	SoulExample = null
 			
 func setEquipmentInfo():
@@ -135,3 +137,5 @@ func setEquipmentInfo():
 	att.def = SoulExample.att.def
 	att.mgiDef = SoulExample.att.mgiDef
 	att.spd = SoulExample.att.spd
+	att.mgiPen = SoulExample.att.mgiPen
+	att.pen - SoulExample.att.pen

@@ -3,7 +3,7 @@ extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 var layer # 关卡数
 var battleDuration = 0 # 战斗时间
 var TimeAxis = {} # 时间轴
-
+var HateTarget# 暂存boss当前仇恨目标
 # 敌方全部属性总和字典
 var allAtt = {}
 var E_maxHp = 1
@@ -27,6 +27,7 @@ func _extInit():
 	evos = []
 	lv = 1
 	atkEff = "atk_dao"
+	HateTarget = null
 	addSkillTxt("[自适应]：该单位属性根据敌方战力自适应调整，拥有特定的技能时间轴。击杀后会掉落道具[灵魂水晶]")
 
 func _connect():
@@ -35,6 +36,7 @@ func _connect():
 func _onBattleStart():
 	._onBattleStart()
 	selfAdaption()
+	Chant.createChantBar()
 
 func _onBattleEnd():
 	._onBattleEnd()

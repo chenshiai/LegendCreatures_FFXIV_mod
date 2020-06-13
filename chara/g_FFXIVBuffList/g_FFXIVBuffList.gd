@@ -321,7 +321,7 @@ class b_Dreadwyrm:
 		id = "b_Dreadwyrm"
 		life = dur
 		isNegetive = false
-		att.mgiAtkL = 0.10
+		att.mgiAtkL = 0.20
 
 	func _upS():
 		life = clamp(life, 0, 8)

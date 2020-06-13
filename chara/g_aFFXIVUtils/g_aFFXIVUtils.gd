@@ -21,7 +21,7 @@ func testInit():
 		pass
 	else:
 		var label = Label.new()
-		label.text = "最终幻想14：BUFF列表读取失败！请在创意工坊内重新订阅"
+		label.text = "最终幻想14：MOD文件路径读取失败，请在创意工坊内重新订阅。"
 		print(label.text)
 		handle.add_child(label)
 
@@ -89,6 +89,22 @@ func createShadow(img, startPositon:Vector2, endPositon:Vector2, speed = 25):
 		spr.texture = img.texture_normal
 		spr.position = startPositon + speed * (i + 1) * distance.normalized() - Vector2(img.texture_normal.get_width() / 2, img.texture_normal.get_height())
 		spr.init(255 / n * i + 100)
+
+func lineChas(aCell, bCell, num):
+	var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
+	var chas = []
+	var aPos = sys.main.map.map_to_world(aCell)
+	var bPos = sys.main.map.map_to_world(bCell)
+	var n = (bPos - aPos).normalized()
+	var oldCell = null
+	for i in range(num):
+		var ac = sys.main.map.world_to_map(aPos)
+		aPos += n * 100
+		if oldCell != ac :
+			oldCell = ac
+			if toolman.matCha(ac) != null:
+				chas.append(toolman.matCha(ac))
+	return chas
 
 # 数据处理类
 class Calculation:
