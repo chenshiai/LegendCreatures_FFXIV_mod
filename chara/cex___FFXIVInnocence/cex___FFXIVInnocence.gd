@@ -20,6 +20,7 @@ var shadowReaver_pw = 1 # 夺影威力
 var flammingSword_pw = 1 # 转阶段·回转火焰剑
 var beatficVision_pw = 2 # 荣福直观
 var deviation = Vector2(0, 0)
+
 func _init():
 	var SkillAxis = {
 		"righteousBolt": [20, 60, 120, 160],
@@ -67,6 +68,7 @@ func _onAddBuff(buff:Buff):
 	if buff.id == "b_jieShuang":
 		buff.isDel = true
 
+# 裁决之雷
 func righteousBolt():
 	self.HateTarget = aiCha
 	self.aiOn = false
@@ -80,6 +82,7 @@ func righteousBolt():
 		self.HateTarget.addBuff(b_VulnerableLarge.new(15))
 	self.aiOn = true
 
+# 断罪飞翔
 func wingedReprobation():
 	Chant.chantStart("断罪飞翔", 4)
 	var type = sys.rndRan(0, 1)
@@ -135,6 +138,7 @@ func wingedReprobation():
 			hurtChara(cha, att.mgiAtk * wingedReprobation_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 			addBuff(b_VulnerableSmall.new(15))
 
+# 夺影
 func shadowReaver():
 	Chant.chantStart("夺影", 3)
 	yield(reTimer(3), "timeout")
@@ -152,6 +156,7 @@ func shadowReaver():
 		if i != null:
 			hurtChara(i, att.mgiAtk * flammingSword_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
+# 回转火焰剑
 func flammingSword():
 	self.isDeath = true
 	self.aiOn = false
@@ -183,6 +188,7 @@ func flammingSword():
 	self.aiOn = true
 	self.isDeath = false
 
+# 荣福直观
 func beatficVision():
 	self.isDeath = true
 	self.aiOn = false

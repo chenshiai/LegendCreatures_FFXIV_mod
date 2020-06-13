@@ -18,13 +18,22 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
+	# var path = self.direc
+	# var im = Image.new()
+	# var imt = ImageTexture.new()
+	# im.load(path + "cFFXIV_zTatalu/cha.png")
+	# imt.create_from_image(im)
+	# self.img.texture_normal = imt
+	# self.img.texture_pressed = im
+	# self.img.texture_hover = im
+	# self.img.texture_disabled = im
+	# self.img.texture_focused = im
+	# self.img.texture_click_mask = im
+	# self.img.texture_focused = im
+
 	aiOn = null
 	aiCha = null
-	addBuff(BUFF_LIST.b_Adloquium.new(10, 800))
-	yield(reTimer(5), "timeout")
-	addBuff(BUFF_LIST.b_Adloquium.new(10, 800))
-	yield(reTimer(25), "timeout")
-	addBuff(BUFF_LIST.b_Adloquium.new(10, 800))
+
 func _onDeath(atkInfo):
 	._onDeath(atkInfo)
 	isDeath = false
