@@ -29,7 +29,7 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
-	addBuff(BUFF_LIST.b_SteelBelief.new())
+	BUFF_LIST.b_SteelBelief.new(self)
 	Utils.createEffect("defense", position, Vector2(0,-60), 14)
 
 

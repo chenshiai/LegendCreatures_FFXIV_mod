@@ -31,7 +31,7 @@ func _onAtkChara(atkInfo:AtkInfo):
 		skillStrs[0] = "当前暗黑值：%d / 1000" % [darkCount]
 		if darkCount >= 1000:
 			darkCount = 0
-			addBuff(BUFF_LIST.b_TheBlackestNight.new(att.maxHp * 0.20))
+			BUFF_LIST.b_TheBlackestNight.new(att.maxHp * 0.20, self)
 			Utils.createEffect("shield", position, Vector2(0,-30), 14)
 
 # 暗黑布道			

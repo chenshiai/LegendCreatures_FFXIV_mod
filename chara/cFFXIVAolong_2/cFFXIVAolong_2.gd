@@ -11,7 +11,7 @@ var atkCount = 0 # 当前攻击次数
 var flash = 0 # 当前闪的数量
 var beforIaijutsu = 0 # 上一次雪月花的威力
 
-var SKILL_TXT_1 = TEXT.format("""[居合术]：每第8次攻击，发动一次[纷乱雪月花]
+var SKILL_TXT_1 = TEXT.format("""[居合术]：每第6次攻击，发动一次[纷乱雪月花]
 [纷乱雪月花]：对目标造成[150%][350%][720%]的{TPhyHurt}，印记种类越多伤害越高，可暴击！""")
 
 func _extInit():
@@ -27,7 +27,7 @@ func _extInit():
 	lv = 2
 	evos = ["cFFXIVAolong_2_1"]
 	atkEff = "atk_dao"
-	addSkillTxt("""[雪/月/花]：{TPassive}，每2次攻击随机获得[雪][月][花]印记，攻击力提升10%，攻速提升10%""")
+	addSkillTxt(TEXT.format("[雪/月/花]：{TPassive}，每2次攻击随机获得[雪][月][花]印记，攻击力提升10%，攻速提升10%"))
 	addSkillTxt(SKILL_TXT_1)
 
 func _connect():
@@ -40,7 +40,7 @@ func _onBattleEnd():
 func normalAtkChara(cha):
 	.normalAtkChara(cha)
 	atkCount += 1
-	if atkCount == 8:
+	if atkCount == 6:
 		atkCount = 0
 		iaijutsu()
 	elif atkCount % 2 == 0:

@@ -64,8 +64,8 @@ func starPhase(lv):
 	for cha in allys:
 		if cha != null:
 			cha.plusHp(att.mgiAtk * STARPHASE_PW)
-			cha.addBuff(BUFF_LIST.b_LuckyStar.new(8, att.mgiAtk * 0.15))
+			BUFF_LIST.b_LuckyStar.new(8, att.mgiAtk * 0.15, cha)
 			if lv == 4:
-				cha.addBuff(BUFF_LIST.b_Night.new(10, att.mgiAtk * STARPHASE_PW * 1.25))
+				BUFF_LIST.b_Night.new(10, att.mgiAtk * STARPHASE_PW * 1.25, cha)
 			yield(reTimer(0.1), "timeout")
 			

@@ -3,7 +3,7 @@ extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 var layer # 关卡数
 var battleDuration = 0 # 战斗时间
 var TimeAxis = {} # 时间轴
-var HateTarget# 暂存boss当前仇恨目标
+var HateTarget # 暂存boss当前仇恨目标
 # 敌方全部属性总和字典
 var allAtt = {}
 var E_maxHp = 1
@@ -30,7 +30,7 @@ func _extInit():
 	lv = 1
 	atkEff = "atk_dao"
 	HateTarget = null
-	addSkillTxt(DefaultTxt.format(TEXT.config))
+	addSkillTxt(TEXT.format(DefaultTxt))
 
 func _connect():
 	._connect()

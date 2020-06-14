@@ -22,4 +22,4 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
-	addBuff(BUFF_LIST.b_Superbolide.new(10))
+	BUFF_LIST.b_Superbolide.new(10, self)

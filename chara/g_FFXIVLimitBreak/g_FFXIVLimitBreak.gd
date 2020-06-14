@@ -4,6 +4,8 @@ var allAtt = {}
 var limitBreak = null
 var limitBreakLevel:float = 0 # 极限技等级
 var limitBreakVal:float = 0 # 攒满极限技所需要的点数
+var limitBreakNow:float = 0 # 已有极限点数
+
 
 var im = Image.new()
 var limitUnder = ImageTexture.new()
@@ -39,6 +41,13 @@ func createLimitBreak():
 	Utils.createUiButton("进攻", Vector2(1140, 305), self, "limit_attack", {})
 	Utils.createUiButton("治疗", Vector2(1140, 360), self, "limit_treatment", {})
 
+	sys.newBaseMsg("极限技使用说明", """极限技，是可以扭转战局的绝招。
+使用后会清空极限槽，请务必看清战场情况。
+极限技可分为三种效果：
+[防护]：短时间内给玩家单位减伤。
+[进攻]：对敌方单体造成极大伤害。
+[治疗]：为玩家单位恢复体力。
+等级越高效果越强！！！""")
 
 func initLimitValue():
 	allAtt = Utils.Calculation.getEnemyPower(2)
@@ -47,6 +56,7 @@ func initLimitValue():
 
 func resetLimit():
 	limitBreakLevel = 0
+	limitBreakNow = 0
 	limitBreak.value = 0
 	limitBreak.texture_progress = limitProgress0
 
@@ -65,7 +75,8 @@ func nowLimitBreak(value):
 
 func limitBreakUp(atkInfo):
 	if limitBreak.value < 100:
-		limitBreak.value +=  clamp(atkInfo.atkVal * 100.0 / limitBreakVal, 2, 5)
+		limitBreakNow += atkInfo.atkVal
+		limitBreak.value =  limitBreakNow * 100 / limitBreakVal
 		nowLimitBreak(limitBreak.value)
 	pass
 
@@ -94,7 +105,7 @@ func limit_attack():
 			if i != null and i.team == 2:
 				toolman.hurtChara(i, (allAtt["atk"] + allAtt["mgiAtk"]) * lv, Chara.HurtType.REAL, Chara.AtkType.SKILL)
 				Utils.createEffect("fireII", i.position, Vector2(0, -40), 15, 4)
-				pass
+				return
 	else:
 		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")
 

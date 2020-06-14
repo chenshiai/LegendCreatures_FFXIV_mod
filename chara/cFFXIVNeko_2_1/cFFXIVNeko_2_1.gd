@@ -27,7 +27,7 @@ func _castCdSkill(id):
 		enkindleBahamut(self.lv)
 
 func dreadwyrm():
-	addBuff(BUFF_LIST.b_Dreadwyrm.new(8))
+	BUFF_LIST.b_Dreadwyrm.new(8, self)
 
 func enkindleBahamut(lv):
 	var cell = aiCha.cell

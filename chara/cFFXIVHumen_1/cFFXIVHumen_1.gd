@@ -31,7 +31,7 @@ func _onBattleStart():
 
 func shiver():
 	plusHp(att.maxHp * 0.20)
-	addBuff(BUFF_LIST.b_Shiver.new(20))
+	BUFF_LIST.b_Shiver.new(20, self)
 	var eff = newEff("numHit", Vector2(30, -60))
 	eff.setText("战栗！", "#3cff00")
 

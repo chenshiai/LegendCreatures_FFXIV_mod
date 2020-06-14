@@ -30,8 +30,8 @@ func _castCdSkill(id):
 
 # 进攻探戈
 func devilment():
-	addBuff(BUFF_LIST.b_Devilment.new(8))
-	atkMaxAlly.addBuff(BUFF_LIST.b_Devilment.new(8))
-	mgiAtkMaxAlly.addBuff(BUFF_LIST.b_Devilment.new(8))
+	BUFF_LIST.b_Devilment.new(8)
+	BUFF_LIST.b_Devilment.new(8, atkMaxAlly)
+	BUFF_LIST.b_Devilment.new(8, mgiAtkMaxAlly)
 	var eff = newEff("numHit", Vector2(-40, -60))
 	eff.setText("进攻之探戈！", "#ff008a")

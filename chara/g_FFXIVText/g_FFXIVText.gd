@@ -1,19 +1,20 @@
 func format(text, config = {}):
-  var Text = text.format(self.config)
+  var Text = text.format(self.Config)
   return Text.format(config)
 
-const config = {
+var Config = {
   "TItemSoul": "[color=#f6ff00][灵魂水晶][/color]",
-  "TMgiHurt": "[color=#00e4ff]魔法伤害[/color]",
-  "TPhyHurt": "[color=#ff7522]物理伤害[/color]",
-  "TRealHurt": "[color=#ffffff]真实伤害[/color]",
-  "TPassive": "[color=#e5e5e5]被动[/color]"
+  "TMgiHurt": "[color=%s]魔法伤害[/color]" % [COLOR.MGI],
+  "TPhyHurt": "[color=%s]物理伤害[/color]" % [COLOR.PHY],
+  "TRealHurt": "[color=%s]真实伤害[/color]" % [COLOR.REAL],
+  "TPassive": "[color=%s]被动[/color]" % [COLOR.PASSIVE]
 }
 
 const COLOR = {
   "PHY": "#ff7522",
   "MGI": "#00e4ff",
-  "PASSIVE": "#e5e5e5"
+  "PASSIVE": "#e5e5e5",
+  "REAL": "#ffffff"
 }
 
 const BOSS_INNOCENCE = """[color=#ffffff]

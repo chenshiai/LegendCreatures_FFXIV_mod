@@ -2,13 +2,12 @@ extends Talent
 func init():
 	name = "队伍编制"
 
-
 func _connect():
 	sys.main.connect("onBattleStart", self, "run")
 	player.connect("onAddTalent", self, "population")
 	player.connect("onPlusLv", self, "population")
 
-func population(talent:Talent = null):
+func population(talent = null):
 	player.renKou = 10
 
 func run():

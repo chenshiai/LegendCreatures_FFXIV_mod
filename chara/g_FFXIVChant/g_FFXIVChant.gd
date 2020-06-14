@@ -33,7 +33,7 @@ func createChantBar():
 	sys.main.get_node("ui").add_child(chantBar)
 
 	laber.text = skillName
-	laber.rect_position = Vector2(380, 50)
+	laber.rect_position = Vector2(500, 50)
 	sys.main.get_node("ui").add_child(laber)
 	laber.visible = false
 

@@ -27,7 +27,7 @@ func _castCdSkill(id):
 		fc = true
 
 	if id == "skill_InnerRelease":
-		addBuff(BUFF_LIST.b_InnerRelease.new(8))
+		BUFF_LIST.b_InnerRelease.new(8, self)
 		var eff = newEff("numHit", Vector2(-30, -60))
 		eff.setText("原初的解放！", "#ff0000")
 

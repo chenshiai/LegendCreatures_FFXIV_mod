@@ -145,7 +145,7 @@ class Bard:
 	func requiemOfTheDevil():
 		for cha in masCha.getAllChas(1):
 			if cha.team != masTeam:
-				cha.addBuff(BUFF_LIST.b_RequiemOfTheDevil.new())
+				BUFF_LIST.b_RequiemOfTheDevil.new(cha)
 
 class Dragoon:
 	extends BaseSoul

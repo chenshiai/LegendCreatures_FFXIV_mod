@@ -16,7 +16,7 @@ func _extInit():
 	addSkillTxt(TEXT.BOSS_INNOCENCE)
 
 var righteousBolt_pw = 4 # 裁决之雷威力
-var wingedReprobation_pw = 0.75 # 断罪飞翔威力
+var wingedReprobation_pw = 1.2 # 断罪飞翔威力
 var shadowReaver_pw = 1 # 夺影威力
 var flammingSword_pw = 1 # 转阶段·回转火焰剑
 var beatficVision_pw = 2 # 荣福直观

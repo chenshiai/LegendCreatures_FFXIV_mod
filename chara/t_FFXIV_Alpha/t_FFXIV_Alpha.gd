@@ -2,8 +2,7 @@ extends Talent
 var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
 var Limit = globalData.infoDs["g_FFXIVLimitBreak"] # 极限技类
 var HpBar = globalData.infoDs["g_FFXIVBossHpBar"] # boss血条类
-var Chant = globalData.infoDs["g_FFXIVChant"]
-
+var FFXIVControl = globalData.infoDs["g_FFXIVControl"]
 var originBackground # 原版背景
 var layer = 0 # 当前关卡数
 
@@ -29,13 +28,7 @@ func _connect():
 	originBackground = sys.main.get_node("scene/bg/bg").get_texture()
 	HpBar.createHpBar()
 	Limit.createLimitBreak()
-	sys.newBaseMsg("极限技使用说明", """极限技，是可以扭转战局的绝招。
-使用后会清空极限槽，请务必看清战场情况。
-极限技可分为三种效果：
-[防护]：短时间内给玩家单位减伤。
-[进攻]：对敌方单体造成极大伤害。
-[治疗]：为玩家单位恢复体力。
-等级越高效果越强！！！""")
+	FFXIVControl.createRetreat()
 
 class Bf:
 	extends Buff

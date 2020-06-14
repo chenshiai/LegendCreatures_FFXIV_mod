@@ -20,38 +20,20 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
+	aiOn = null
+	aiCha = null
 	# var path = self.direc
 	# var im = Image.new()
 	# var imt = ImageTexture.new()
 	# im.load(path + "cFFXIV_zTatalu/cha.png")
 	# imt.create_from_image(im)
-	# self.img.texture_normal = imt
-	# self.img.texture_pressed = im
-	# self.img.texture_hover = im
-	# self.img.texture_disabled = im
-	# self.img.texture_focused = im
-	# self.img.texture_click_mask = im
-	# self.img.texture_focused = im
+	BUFF_LIST.b_Adloquium.new(10, 800, self)
+	yield(reTimer(5), "timeout")
 
-	var chas = getAllChas(2)
-	chas.sort_custom(Utils.Calculation, "sort_MaxMgiAtk")
-	var mgiAtkMaxAlly = chas[0]
-	print("魔攻最高：",mgiAtkMaxAlly.id)
+	BUFF_LIST.b_Adloquium.new(10, 800, self)
+	yield(reTimer(12), "timeout")
+	BUFF_LIST.b_Adloquium.new(10, 800, self)
 
-	chas.sort_custom(Utils.Calculation, "sort_MaxAtk")
-	var atkMaxAlly = chas[0]
-	print("物攻最高：",atkMaxAlly.id)
-
-	if mgiAtkMaxAlly != self:
-		mgiAtkMaxAlly.addBuff(BUFF_LIST.b_DancingPartner.new())
-
-	if atkMaxAlly != self and atkMaxAlly != mgiAtkMaxAlly:
-		atkMaxAlly.addBuff(BUFF_LIST.b_DancingPartner.new())
-
-	# addBuff(BUFF_LIST.b_DancingPartner.new())
-
-	aiOn = null
-	aiCha = null
 
 func _onDeath(atkInfo):
 	._onDeath(atkInfo)

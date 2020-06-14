@@ -42,12 +42,12 @@ func setDancePartner():
 	atkMaxAlly = chas[0]
 
 	if mgiAtkMaxAlly != self:
-		mgiAtkMaxAlly.addBuff(BUFF_LIST.b_DancingPartner.new())
+		BUFF_LIST.b_DancingPartner.new(mgiAtkMaxAlly)
 
 	if atkMaxAlly != self and atkMaxAlly != mgiAtkMaxAlly:
-		atkMaxAlly.addBuff(BUFF_LIST.b_DancingPartner.new())
+		BUFF_LIST.b_DancingPartner.new(atkMaxAlly)
 
-	addBuff(BUFF_LIST.b_DancingPartner.new())
+	BUFF_LIST.b_DancingPartner.new(self)
 
 # 标准舞步
 func danceStep():
@@ -56,8 +56,8 @@ func danceStep():
 		if i != null: 
 			hurtChara(i, att.atk * DANCESTEP_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 	
-	addBuff(BUFF_LIST.b_DanceStep.new(10))
-	atkMaxAlly.addBuff(BUFF_LIST.b_DanceStep.new(10))
-	mgiAtkMaxAlly.addBuff(BUFF_LIST.b_DanceStep.new(10))
+	BUFF_LIST.b_DanceStep.new(10, self)
+	BUFF_LIST.b_DanceStep.new(10, atkMaxAlly)
+	BUFF_LIST.b_DanceStep.new(10, mgiAtkMaxAlly)
 	var eff = newEff("numHit", Vector2(-10, -60))
 	eff.setText("标准舞步！", "#ff008a")

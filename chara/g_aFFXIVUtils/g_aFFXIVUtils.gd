@@ -117,7 +117,12 @@ class Calculation:
 		if a.att.atk > b.att.atk:
 			return true
 		return false
-	
+
+	static func sort_MaxDefAndMgiDef(a, b):
+		if (a.att.def + a.att.mgiDef) > (b.att.def + b.att.mgiDef):
+			return true
+		return false
+
 	static func sort_MinHpP(a, b):
 		if (a.att.hp / a.att.maxHp) < (b.att.hp / b.att.maxHp):
 			return true
