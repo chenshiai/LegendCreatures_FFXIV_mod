@@ -143,9 +143,11 @@ class Bard:
 		sys.main.connect("onBattleStart", self, "requiemOfTheDevil")
 
 	func requiemOfTheDevil():
-		for cha in masCha.getAllChas(1):
-			if cha.team != masTeam:
-				BUFF_LIST.b_RequiemOfTheDevil.new(cha)
+		if sys.main.btChas.has(masCha):
+			for cha in masCha.getAllChas(1):
+				if cha.team != masTeam:
+					BUFF_LIST.b_RequiemOfTheDevil.new(cha)
+
 
 class Dragoon:
 	extends BaseSoul
@@ -199,7 +201,7 @@ class BlackMage:
 		sys.main.connect("onBattleStart", self, "enochian")
 
 	func enochian():
-		masCha.addBuff(BUFF_LIST.b_Enochian.new(masCha.lv))
+		BUFF_LIST.b_Enochian.new(masCha.lv, masCha)
 
 class Astrologian:
 	extends BaseSoul
