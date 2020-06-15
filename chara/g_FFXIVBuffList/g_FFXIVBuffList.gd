@@ -3,6 +3,7 @@ func _init():
 	pass
 
 class BaseBuff extends Buff:
+	var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
 	# 当我不想对在角色文件中使用addBuff的时候，我会把角色传到buff里面使用addBuff()
 	func addBuff(cha):
 		if cha != null:
@@ -30,14 +31,11 @@ class BassShield extends BaseBuff:
 		masCha.connect("onHurt", self, "run")
 
 	func run(atkInfo:AtkInfo):
-		if shieldValue >= 0:
-			if shieldValue > atkInfo.hurtVal:
-				shieldValue -= atkInfo.hurtVal
-				atkInfo.hurtVal = 0
-			else:
-				atkInfo.hurtVal -= shieldValue
-				shieldValue = 0
-		elif shieldValue <= 0:
+		if shieldValue > atkInfo.hurtVal:
+			shieldValue -= atkInfo.hurtVal
+			atkInfo.hurtVal = 0
+		else:
+			atkInfo.hurtVal -= shieldValue
 			shieldValue = 0
 
 		if shieldValue <= 0:
@@ -68,7 +66,8 @@ class b_Abhor:
 		att.mgiDefL = 0.10
 		addBuff(cha)
 
-# 暗黑布道，减少{TMgiHurt}
+
+# 暗黑布道，减少魔法伤害
 class b_DarkMissionary:
 	extends ReduceDemage
 	func _init(dur = 1, cha = null):
@@ -666,3 +665,22 @@ class b_StaticTime:
 	func _del():
 		._del()
 		masCha.aiOn = oriAi
+
+class b_Test:
+	extends Buff
+	func _init(lv):
+		attInit()
+		id = "test"
+		life = lv
+		att.atk = 100
+		
+	func _connect():
+		var direc = masCha.direc
+		eff = sys.newEff("animEff", masCha.position)
+		eff.setImgs(direc + '你图片的文件地址', 15, false)
+		# eff.normalSpr.position = Vector2(0, 0)
+		# eff.rotation = deg2rad(0)
+		# eff.scale *= 1
+
+	func _process(a):
+		eff.position = masCha.position
