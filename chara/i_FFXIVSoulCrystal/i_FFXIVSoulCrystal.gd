@@ -26,7 +26,7 @@ const CharaList = ["cFFXIVAolong_1", "cFFXIVAolong_2", "cFFXIVAolong_3",
 	"cFFXIVLarafel_1", "cFFXIVLarafel_2", "cFFXIVLarafel_3",
 	"cFFXIVNeko_1", "cFFXIVNeko_2", "cFFXIVNeko_3",
 	"cFFXIVRuga_1", "cFFXIVRuga_2", "cFFXIVRuga_3",
-	"cFFXIVSpirit_1", "cFFXIVSpirit_2", "cFFXIVSpirit_3"] 
+	"cFFXIVSpirit_1", "cFFXIVSpirit_2", "cFFXIVSpirit_3", "c"]
 
 var SoulExample = null # 当前使用者的灵魂实例
 
@@ -106,12 +106,14 @@ func setInfo(occupation):
 		"cFFXIVSpirit_3":
 			SoulExample = Soul.Dragoon.new(masCha)
 
-		_:
+		"c":
 			setInitAtt()
+
 	if SoulExample != null:
 		setEquipmentInfo()
 
 func setInitAtt():
+	SoulExample = null
 	name = "灵魂水晶"
 	info = Epilogue
 	att.maxHp = 0
@@ -124,7 +126,6 @@ func setInitAtt():
 	att.spd = 0
 	att.mgiPen = 0
 	att.pen - 0
-	SoulExample = null
 			
 func setEquipmentInfo():
 	name = SoulExample.name

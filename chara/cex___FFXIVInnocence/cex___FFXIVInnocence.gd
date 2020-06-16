@@ -174,6 +174,7 @@ func flammingSword():
 	normalSpr.position = Vector2(0, 0)
 
 	Chant.chantStart("回转火焰剑！", 5)
+	yield(reTimer(1), "timeout")
 	Utils.createEffect("flammingSword", Vector2(350, 150), Vector2(0, 0), 12, 4)
 	yield(reTimer(0.5), "timeout")
 	Utils.createEffect("flammingSword", Vector2(350, 125), Vector2(0, 0), 14, 3)
@@ -240,11 +241,11 @@ func leftOrRight():
 	if matCha(Vector2(7, 2)) == null:
 		setCell(Vector2(7, 2))
 		position = sys.main.map.map_to_world(Vector2(7, 2))
-		deviation = Vector2(-800, 0)
+		deviation = Vector2(-1200, 0)
 	else:
 		setCell(Vector2(0, 2))
 		position = sys.main.map.map_to_world(Vector2(0, 2))
-		deviation = Vector2(800, 0)
+		deviation = Vector2(1200, 0)
 
 func _upS():
 	._upS()
