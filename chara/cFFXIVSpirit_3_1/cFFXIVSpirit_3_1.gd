@@ -20,10 +20,6 @@ func _connect():
 func _onBattleStart():
 	._onBattleStart()
 
-func _onBattleEnd():
-	._onBattleEnd()
-	normalSpr.position = Vector2(0, 0)
-
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Stardiver":

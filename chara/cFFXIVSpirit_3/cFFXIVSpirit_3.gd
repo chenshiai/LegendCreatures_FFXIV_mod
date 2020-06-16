@@ -16,7 +16,7 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_HighJump", 13)
 	addCdSkill("skill_DragonBlood", 15)
-	addSkillTxt(TEXT.format("""[高跳]：冷却13s，跳起接近目标并攻击,造成[300%]的{TPhyHurt}(优先生命值最低的单位，开战使用一次)。攻击后回到原位。
+	addSkillTxt(TEXT.format("""[高跳]：冷却13s，跳起接近敌方生命最低的目标并攻击，造成[300%]的{TPhyHurt}(开战使用一次，但不触发CD效果)。攻击后回到原位。
 [苍天龙血]：{TPassive}，[高跳]以及[坠星冲]的威力提高[30%]
 [武神枪]：冷却15s，对直线上的敌人造成[400%]的{TPhyHurt}"""))
 
@@ -29,6 +29,10 @@ func _connect():
 func _onBattleStart():
 	._onBattleStart()
 	call_deferred("highJump")
+
+func _onBattleEnd():
+	._onBattleEnd()
+	normalSpr.position = Vector2(0, 0)
 
 func _castCdSkill(id):
 	._castCdSkill(id)
