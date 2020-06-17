@@ -56,5 +56,4 @@ func stardiver():
 	normalSpr.position = Vector2(0, 0)
 	var chas = getCellChas(cell, 2)
 	for i in chas:
-		if i != null: 
-			hurtChara(i, att.atk * STARDIVER_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+		FFHurtChara(i, att.atk * STARDIVER_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)

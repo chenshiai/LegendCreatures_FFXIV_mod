@@ -5,6 +5,7 @@ func _info():
 
 func _extInit():
 	._extInit()
+	OCCUPATION = "DistanceDPS"
 	chaName = "机工士"
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -48,21 +49,23 @@ func _onAtkChara(atkInfo):
 		if atkInfo.hitCha.hasBuff("b_Wildfire") != null:
 			fireCount += 1
 		elif atkInfo.hitCha.hasBuff("b_Wildfire") == null:
-			if aiCha != null:
-				hurtChara(aiCha, att.atk * WILDFIRE_PW * fireCount, Chara.HurtType.PHY, Chara.AtkType.SKILL)
-				Utils.createEffect("blast", aiCha.position, Vector2(0,-40), 15, 1)
+			FFHurtChara(aiCha, att.atk * WILDFIRE_PW * fireCount, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+			Utils.createEffect("blast", aiCha.position, Vector2(0,-40), 15, 1)
 			fireCount = 0
 			fireChara = null
 
 # 车式浮空炮
 func autoturret(addCount):
-	if aiCha != null:
-		if addCount:
-			autoCount += 1
-		hurtChara(aiCha, att.atk * AUTOTURRET_PW, Chara.HurtType.PHY, Chara.AtkType.EFF)
+	if addCount:
+		autoCount += 1
+
 	if autoCount > 4:
 		autoCount = 0
 		addBuff(BUFF_LIST.b_Overload.new(13))
+		
+	FFHurtChara(aiCha, att.atk * AUTOTURRET_PW, Chara.HurtType.PHY, Chara.AtkType.EFF)
+
+	
 
 # 野火		
 func wildfire():

@@ -2,6 +2,7 @@ extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 
 func _extInit():
 	._extInit()
+	OCCUPATION = "MagicDPS"
 	chaName = "黑魔法师"
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -50,9 +51,8 @@ func _castCdSkill(id):
 func fireIII():
 	Utils.createEffect("fireIII", aiCha.position, Vector2(0, -50), 15)
 	yield(reTimer(0.5), "timeout")
-	if aiCha != null:
-		hurtChara(aiCha, att.mgiAtk * (FIREIII_PW + FIRE_PW * fire), Chara.HurtType.MGI, Chara.AtkType.SKILL)
-		enhanced()
+	FFHurtChara(aiCha, att.mgiAtk * (FIREIII_PW + FIRE_PW * fire), Chara.HurtType.MGI, Chara.AtkType.SKILL)
+	enhanced()
 
 # 消耗灵极心，提高火阶段，减少火3cd，重置冰cd
 func enhanced():
@@ -75,5 +75,4 @@ func freezeIII():
 	var cell = aiCha.cell
 	var chas = getCellChas(cell, 1)
 	for i in chas:
-		if i != null: 
-			hurtChara(i, att.mgiAtk * FREEZE_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+		FFHurtChara(i, att.mgiAtk * FREEZE_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)

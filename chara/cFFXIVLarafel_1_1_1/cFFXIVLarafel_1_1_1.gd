@@ -39,5 +39,4 @@ func assize():
 
 	var enmy = getCellChas(self.cell, 3)
 	for cha in enmy:
-		if cha != null:
-			hurtChara(cha, att.mgiAtk * STORNIII_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+		FFHurtChara(cha, att.mgiAtk * STORNIII_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)

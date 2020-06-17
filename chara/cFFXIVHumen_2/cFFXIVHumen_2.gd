@@ -2,6 +2,7 @@ extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 
 func _extInit():
 	._extInit()
+	OCCUPATION = "MeleeDPS"
 	chaName = "绝枪战士"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4.5
@@ -13,7 +14,7 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_BowShock", 9)
 	addSkillTxt(TEXT.format("""[王室亲卫]：{TPassive}，受到的伤害减少20%
-[弓形冲波]：冷却9s，对周围1格的敌人造成[260%]的{TPhyHurt}，并附加4层[烧灼]"""))
+[弓形冲波]：冷却9s，对周围2格的敌人造成[260%]的{TPhyHurt}，并附加4层[烧灼]"""))
 
 const BOWSHOCK_PW = 2.60 # 弓形冲波威力
 
@@ -30,11 +31,10 @@ func _castCdSkill(id):
 
 # 弓形冲波
 func bowShock():
-	var chas = getCellChas(cell, 1)
+	var chas = getCellChas(cell, 2, 1)
 	for i in chas:
-		if i != self:
-			hurtChara(i, att.atk * BOWSHOCK_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
-			i.addBuff(b_shaoZhuo.new(4))
+		FFHurtChara(i, att.atk * BOWSHOCK_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+		i.addBuff(b_shaoZhuo.new(4))
 
 func _onHurt(atkInfo:AtkInfo):
 	._onHurt(atkInfo)

@@ -24,5 +24,4 @@ func _onBattleStart():
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_BlastingZone":
-		if aiCha != null:
-			hurtChara(aiCha, att.atk * BLASTINGZONE_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+		FFHurtChara(aiCha, att.atk * BLASTINGZONE_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)

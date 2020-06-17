@@ -5,6 +5,7 @@ func _info():
 
 func _extInit():
 	._extInit()
+	OCCUPATION = "MeleeDPS"
 	chaName = "武僧"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4
@@ -49,6 +50,5 @@ func _castCdSkill(id):
 		fightGasAtk()
 
 func fightGasAtk():
-	if aiCha != null:
-		hurtChara(aiCha, att.atk * (FIGHTGAS_PW + FIGHTGAS_N_PW * fightGas), Chara.HurtType.PHY, Chara.AtkType.SKILL)
-		fightGas = 0
+	FFHurtChara(aiCha, att.atk * (FIGHTGAS_PW + FIGHTGAS_N_PW * fightGas), Chara.HurtType.PHY, Chara.AtkType.SKILL)
+	fightGas = 0

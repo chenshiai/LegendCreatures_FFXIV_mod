@@ -34,5 +34,4 @@ func leyLines():
 
 func xenoglossy():
 	Utils.createEffect("melanositis", aiCha.position, Vector2(0, -50), 7, 2)
-	if aiCha != null:
-		hurtChara(aiCha, att.mgiAtk * XENOGLOSSY_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+	FFHurtChara(aiCha, att.mgiAtk * XENOGLOSSY_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)

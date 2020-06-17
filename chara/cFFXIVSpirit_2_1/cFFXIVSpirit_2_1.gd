@@ -39,6 +39,4 @@ func _castCdSkill(id):
 			var d:Eff = newEff("sk_feiDang",sprcPos)
 			d._initFlyCha(aiCha)
 			yield(d, "onReach")
-			if aiCha != null:
-				hurtChara(aiCha, att.mgiAtk * LORDOFCROWNS_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
-
+			FFHurtChara(aiCha, att.mgiAtk * LORDOFCROWNS_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)

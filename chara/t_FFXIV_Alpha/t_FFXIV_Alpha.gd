@@ -15,16 +15,18 @@ func init():
 
 func get_info():
 	return """从此刻开始体验经过夸大的激昂战斗
-所有敌方双攻提高%d%%，战斗后额外获得%d金币
+玩家最大生命值提高%d点，所有敌方双攻提高%d%%，
+战斗后额外获得%d金币，恢复%d点生命
 有概率出现强大的BOSS单位！！！
 BOSS战可以使用极限技能了！！！
-来自《最终幻想14》""" % [(0.1 + lv * 0.01) * 100, 5 + lv * 5]
+来自《最终幻想14》""" % [lv * 4 + 20, (0.1 + lv * 0.01) * 100, 5 + lv * 5, lv]
 
 func _connect():
+	sys.main.player.maxHp += lv * 4+20
+	sys.main.player.plusHp(lv * 4 + 20)
 	sys.main.connect("onBattleReady", self, "come")
 	sys.main.connect("onBattleStart", self, "run")
 	sys.main.connect("onBattleEnd", self, "reward")
-	# sys.main.Player.connect("onAddCha", self, "addChara")
 	originBackground = sys.main.get_node("scene/bg/bg").get_texture()
 	HpBar.createHpBar()
 	Limit.createLimitBreak()
@@ -46,7 +48,9 @@ func run():
 			i.addBuff(Bf.new(lv))
 
 func reward():
-	player.plusGold(25 + lv * 15)
+	if sys.main.player.hp <= sys.main.player.maxHp - lv:
+		sys.main.player.plusHp(lv)
+	sys.main.player.plusGold(25 + lv * 15)
 	sys.main.get_node("scene/bg/bg").set_texture(originBackground)
 	HpBar.setVisible(false)
 	Limit.resetLimit()

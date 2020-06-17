@@ -11,6 +11,7 @@ var SKILL_TXT_1 = TEXT.format("""[深恶痛绝]：{TPassive}，战斗开始时�
 
 func _extInit():
 	._extInit()
+	OCCUPATION = "MeleeDPS"
 	chaName = "暗黑骑士"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 5
@@ -49,9 +50,8 @@ func _onAtkChara(atkInfo:AtkInfo):
 		if atkCount == 3:
 			atkCount = 0
 			atkInfo.atkVal *= 1.1
-			plusHp(att.maxHp * PLUSHP, true)
+			plusHp(att.maxHp * PLUSHP)
 
 # 血溅
 func bloodspiller():
-	if aiCha != null:
-		hurtChara(aiCha, att.atk * BLOODSPILLER_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+	FFHurtChara(aiCha, att.atk * BLOODSPILLER_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)

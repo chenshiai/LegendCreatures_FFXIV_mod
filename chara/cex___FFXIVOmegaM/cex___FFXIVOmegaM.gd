@@ -10,7 +10,7 @@ func _extInit():
 	chaName = "欧米茄M"
 	lv = 4
 	addSkillTxt(SKILL_TXT)
-	addSkillTxt("""[宇宙之光]：战斗时间超过 %d秒后，进入狂暴，每5s释放一次激光雨，每次伤害增加30%%
+	addSkillTxt("""[宇宙之光]：战斗时间超过 %d秒后，进入狂暴，每5s释放一次激光雨，每次伤害增加60%%
 [防火墙]：该单位免疫[烧灼]""" % [BERSERKERTIME])
 	addSkillTxt(TEXT.BOSS_OMEGA)
 
@@ -34,7 +34,7 @@ func _onBattleStart():
 	swordDance_pw *= (E_lv / E_num)
 	laserRain_pw *= (E_lv / E_num)
 	optimizedFireIII_pw *= (E_lv / E_num)
-	SKILL_TXT = TEXT.format("""[刀光剑舞]：死刑，对当前攻击目标造成[0]的单体{TPhyHurt}
+	SKILL_TXT = TEXT.format("""[刀光剑舞]：死刑，对当前攻击目标造成[{0}]的单体{TPhyHurt}
 [激光雨]：对全屏的敌人造成[{1}]法强的{TMgiHurt}
 [优化爆炎]：对所有敌人造成一次[{2}]法强的小范围{TMgiHurt}""",
 		{
@@ -56,9 +56,14 @@ func _onAddBuff(buff:Buff):
 
 # 技能-刀光剑舞
 func swordDance():
-	Utils.createEffect("slash", aiCha.position, Vector2(0, -50), 15)
-	if aiCha != null:
-		hurtChara(aiCha, att.mgiAtk * swordDance_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+	self.HateTarget = aiCha
+	Chant.chantStart("刀光剑舞", 3)
+	yield(reTimer(3), "timeout")
+	if att.hp <= 0:
+		return
+	Utils.createEffect("slash", self.HateTarget.position, Vector2(0, -50), 15)
+	if self.HateTarget != null:
+		hurtChara(self.HateTarget, att.mgiAtk * swordDance_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
 # 技能-激光雨
 func laserRain():
@@ -87,4 +92,4 @@ func _upS():
 	._upS()
 	if battleDuration > BERSERKERTIME and (battleDuration % 5 == 0):
 		laserRain()
-		laserRain_pw += 0.3
+		laserRain_pw += 0.6

@@ -10,7 +10,7 @@ func _extInit():
 	chaName = "欧米茄F"
 	lv = 4
 	addSkillTxt(SKILL_TXT)
-	addSkillTxt("""[宇宙之光]：战斗时间超过 %d秒后，进入狂暴，每5s释放一次激光雨，每次伤害增加30%%
+	addSkillTxt("""[宇宙之光]：战斗时间超过 %d秒后，进入狂暴，每5s释放一次激光雨，每次伤害增加60%%
 [防火墙]：该单位免疫[烧灼]""" % [BERSERKERTIME])
 	addSkillTxt(TEXT.BOSS_OMEGA)
 
@@ -56,8 +56,13 @@ func _onAddBuff(buff:Buff):
 
 # 技能-太阳射线
 func solarRays():
-	var chas = getCellChas(aiCha.cell, 1)
-	Utils.createEffect("blastYellow", aiCha.position, Vector2(0, -50), 15)
+	self.HateTarget = aiCha
+	Chant.chantStart("太阳射线", 3)
+	yield(reTimer(3), "timeout")
+	if att.hp <= 0:
+		return
+	var chas = getCellChas(self.HateTarget.cell, 1)
+	Utils.createEffect("blastYellow", self.HateTarget.position, Vector2(0, -50), 15)
 	for i in chas:
 		if i != self:
 			hurtChara(i, att.mgiAtk * solaRays_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
@@ -89,4 +94,4 @@ func _upS():
 	._upS()
 	if battleDuration > BERSERKERTIME and (battleDuration % 5 == 0):
 		laserRain()
-		laserRain_pw += 0.3
+		laserRain_pw += 0.6

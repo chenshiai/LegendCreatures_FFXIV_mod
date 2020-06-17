@@ -251,7 +251,7 @@ func _upS():
 	._upS()
 	if battleDuration > BERSERKERTIME and (battleDuration % 5 == 0):
 		shadowReaver()
-		shadowReaver_pw += 0.3
+		shadowReaver_pw += 20
 
 class b_VulnerableSmall:
 	extends Buff

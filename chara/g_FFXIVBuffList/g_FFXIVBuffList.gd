@@ -1,7 +1,3 @@
-func _init():
-	print("最终幻想14：—————— 状态列表加载 ——————")
-	pass
-
 class BaseBuff extends Buff:
 	var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
 	# 当我不想对在角色文件中使用addBuff的时候，我会把角色传到buff里面使用addBuff()

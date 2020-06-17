@@ -5,6 +5,7 @@ func _info():
 
 func _extInit():
 	._extInit()
+	OCCUPATION = "MeleeDPS"
 	chaName = "战士"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4.7

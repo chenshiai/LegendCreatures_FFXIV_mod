@@ -14,6 +14,7 @@ var SKILL_TXT_2 = TEXT.format("""[忍术]：冷却11s，随机释放以下忍术
 
 func _extInit():
 	._extInit()
+	OCCUPATION = "MeleeDPS"
 	chaName = "忍者"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4
@@ -61,22 +62,18 @@ func fuma():
 	var d:Eff = newEff("sk_4_1_2", sprcPos)
 	d._initFlyCha(chas[0])
 	yield(d, "onReach")
-
-	if sys.isClass(chas[0], "Chara") and chas[0] != null:
-		hurtChara(chas[0], att.atk * FUMA_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+	FFHurtChara(chas[0], att.atk * FUMA_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
 # 冰遁之术
 func hyoton():
-	var chas = getCellChas(cell, 2)
+	var chas = getCellChas(cell, 2, 1)
 	for i in chas:
-		if i != null:
-			hurtChara(i, att.atk * HYOTON_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
-			i.addBuff(b_jieShuang.new(5))
+		FFHurtChara(i, att.atk * HYOTON_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+		i.addBuff(b_jieShuang.new(5))
 
 # 火遁之术			
 func katon():
-	var chas = getCellChas(cell, 2)
+	var chas = getCellChas(cell, 2, 1)
 	for i in chas:
-		if i != self:
-			hurtChara(i, att.atk * KATON_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
-			i.addBuff(b_shaoZhuo.new(5))
+		FFHurtChara(i, att.atk * KATON_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+		i.addBuff(b_shaoZhuo.new(5))

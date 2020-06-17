@@ -2,6 +2,7 @@ extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 
 func _extInit():
 	._extInit()
+	OCCUPATION = "DistanceDPS"
 	chaName = "舞者"
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -53,9 +54,8 @@ func setDancePartner():
 func danceStep():
 	var chas = getCellChas(cell, 3)
 	for i in chas:
-		if i != null: 
-			hurtChara(i, att.atk * DANCESTEP_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
-	
+		FFHurtChara(i, att.atk * DANCESTEP_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+
 	BUFF_LIST.b_DanceStep.new(10, self)
 	BUFF_LIST.b_DanceStep.new(10, atkMaxAlly)
 	BUFF_LIST.b_DanceStep.new(10, mgiAtkMaxAlly)

@@ -11,7 +11,7 @@ func _extInit():
 	lv = 4
 	moveSpeed += 200
 	addSkillTxt(SKILL_TXT)
-	addSkillTxt("""[宇宙之光]：战斗时间超过 %d秒后，进入狂暴，每5s释放一次原子射线，每次伤害增加30%%
+	addSkillTxt("""[宇宙之光]：战斗时间超过 %d秒后，进入狂暴，每5s释放一次原子射线，每次伤害增加60%%
 [机械构造]：该单位免疫[流血]""" % [BERSERKERTIME])
 	addSkillTxt(TEXT.BOSS_OMEGA)
 
@@ -56,8 +56,13 @@ func _onAddBuff(buff:Buff):
 
 # 技能-芥末爆弹
 func mustardBomb():
-	var chas = getCellChas(aiCha.cell, 1)
-	Utils.createEffect("blastYellow", aiCha.position, Vector2(0, -50), 15)
+	self.HateTarget = aiCha
+	Chant.chantStart("芥末爆弹", 3)
+	yield(reTimer(3), "timeout")
+	if att.hp <= 0:
+		return
+	var chas = getCellChas(self.HateTarget.cell, 1)
+	Utils.createEffect("blastYellow", self.HateTarget.position, Vector2(0, -50), 15)
 	for i in chas:
 		if i != self:
 			hurtChara(i, att.mgiAtk * mustardBomb_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
@@ -114,4 +119,4 @@ func _upS():
 	._upS()
 	if battleDuration > BERSERKERTIME and (battleDuration % 5 == 0):
 		atomicRay()
-		atomicRay_pw += 0.3
+		atomicRay_pw += 0.6

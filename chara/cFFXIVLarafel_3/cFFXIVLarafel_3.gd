@@ -5,6 +5,7 @@ func _info():
 
 func _extInit():
 	._extInit()
+	OCCUPATION = "DistanceDPS"
 	chaName = "赤魔法师"
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -65,7 +66,7 @@ func verthunder(first, pw):
 	var d:Eff = newEff("sk_feiDang", sprcPos)
 	d._initFlyCha(aiCha)
 	yield(d, "onReach")
-	hurtChara(aiCha, att.mgiAtk * pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+	FFHurtChara(aiCha, att.mgiAtk * pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
 	var n = sys.rndRan(0, 1)
 	if n == 0 and blackMorgen < (MORGEN + MORGEN_MAX):

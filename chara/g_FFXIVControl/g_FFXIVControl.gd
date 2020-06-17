@@ -1,4 +1,5 @@
 var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
+var TEXT = globalData.infoDs["g_bFFXIVText"]
 var PlayChas = []
 var ChangeSwitch = false
 
@@ -12,11 +13,11 @@ func createRetreat():
 	sys.main.connect("onBattleStart", self, "getTankChas")
 	sys.main.connect("onBattleEnd", self, "closeSelf")
 	Utils.createUiButton("退避", Vector2(1140, 425), self, "changeHateTarget", {})
-	sys.newBaseMsg("退避使用说明", """选择玩家双防较高的两名单位作为[坦克]
-点击[退避]按钮后，会转移所有敌人的仇恨到其中一个[坦克]身上。
-若两名[坦克]都阵亡，[退避]将无法生效！
-注意：被转移仇恨的目标头上会出现红色感叹号[!]""")
+	Utils.createUiButton("说明", Vector2(1140, 485), self, "showInfo", {})
 	
+
+func showInfo():
+	sys.newBaseMsg(TEXT.Retreat.title, TEXT.Retreat.content)
 
 func changeHateTarget():
 	if !ChangeSwitch:

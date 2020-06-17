@@ -1,4 +1,5 @@
 var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
+var TEXT = globalData.infoDs["g_bFFXIVText"]
 var allAtt = {}
 
 var limitBreak = null
@@ -13,6 +14,11 @@ var limitProgress = ImageTexture.new()
 var limitProgress0 = ImageTexture.new()
 var limitProgress1 = ImageTexture.new()
 var limitProgress2 = ImageTexture.new()
+
+
+var infomation = null
+var textGrid = null
+
 
 func _init():
 	print("最终幻想14：—————— 极限技能加载 ——————")
@@ -41,13 +47,24 @@ func createLimitBreak():
 	Utils.createUiButton("进攻", Vector2(1140, 305), self, "limit_attack", {})
 	Utils.createUiButton("治疗", Vector2(1140, 360), self, "limit_treatment", {})
 
-	sys.newBaseMsg("极限技使用说明", """极限技，是可以扭转战局的绝招。
-使用后会清空极限槽，请务必看清战场情况。
-极限技可分为三种效果：
-[防护]：短时间内给玩家单位减伤。
-[进攻]：对敌方单体造成极大伤害。
-[治疗]：为玩家单位恢复体力。
-等级越高效果越强！！！""")
+	infomation = sys.newMsg("jiangLiMsg")
+	infomation.get_node("Panel/Label").text = TEXT.LimitBreakInfomation.title
+	infomation.get_node("Panel/Button").connect("pressed", self, "MsgOk")
+	textGrid = Label.new()
+	textGrid.text = TEXT.LimitBreakInfomation.content
+	infomation.get_node("Panel/CenterContainer").add_child(textGrid)
+	infomation.show()
+
+func MsgOk():
+	pass
+
+# 	sys.newBaseMsg("极限技使用说明", """极限技，是可以扭转战局的绝招。
+# 使用后会清空极限槽，请务必看清战场情况。
+# 极限技可分为三种效果：
+# [防护]：短时间内给玩家单位减伤。
+# [进攻]：对敌方单体造成极大伤害。
+# [治疗]：为玩家单位恢复体力。
+# 等级越高效果越强！！！""")
 
 func initLimitValue():
 	allAtt = Utils.Calculation.getEnemyPower(2)
@@ -86,10 +103,10 @@ func limit_protect():
 		var lv = limitBreakLevel
 		yield(sys.get_tree().create_timer(0.5), "timeout")
 		resetLimit()
-		for i in sys.main.btChas:
-			if i != null and i.team == 1:
-				i.addBuff(limit_protect.new(lv))
-				Utils.createEffect("shield2", i.position, Vector2(0, -30), 14, 1)
+		for cha in sys.main.btChas:
+			if cha != null and cha.team == 1:
+				cha.addBuff(limit_protect.new(lv))
+				Utils.createEffect("shield2", cha.position, Vector2(0, -30), 14, 1)
 				yield(sys.get_tree().create_timer(0.1), "timeout")
 	else:
 		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")
@@ -101,10 +118,10 @@ func limit_attack():
 		var lv = limitBreakLevel
 		yield(sys.get_tree().create_timer(0.5), "timeout")
 		resetLimit()
-		for i in sys.main.btChas:
-			if i != null and i.team == 2:
-				toolman.hurtChara(i, (allAtt["atk"] + allAtt["mgiAtk"]) * lv, Chara.HurtType.REAL, Chara.AtkType.SKILL)
-				Utils.createEffect("fireII", i.position, Vector2(0, -40), 15, 4)
+		for cha in sys.main.btChas:
+			if cha != null and cha.team == 2:
+				toolman.hurtChara(cha, (allAtt["atk"] + allAtt["mgiAtk"]) * lv, Chara.HurtType.REAL, Chara.AtkType.SKILL)
+				Utils.createEffect("fireII", cha.position, Vector2(0, -40), 15, 4)
 				return
 	else:
 		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")
@@ -116,10 +133,14 @@ func limit_treatment():
 		healStep = (healStep * healStep * 0.5 + 1.5 * healStep + 1) / 10
 		yield(sys.get_tree().create_timer(0.5), "timeout")
 		resetLimit()
-		for i in sys.main.btChas:
-			if i != null and i.team == 1:
-				i.plusHp(i.att.maxHp * healStep)
-				Utils.createEffect("heal", i.position, Vector2(0, -30), 7, 2)
+		for cha in sys.main.btChas:
+			if cha != null and cha.team == 1:
+				if cha.isDeath and healStep == 3:
+					# cha.isDeath = false
+					cha.revive(cha.att.maxHp)
+
+				cha.plusHp(cha.att.maxHp * healStep)
+				Utils.createEffect("heal", cha.position, Vector2(0, -30), 7, 2)
 				yield(sys.get_tree().create_timer(0.1), "timeout")
 	else:
 		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")

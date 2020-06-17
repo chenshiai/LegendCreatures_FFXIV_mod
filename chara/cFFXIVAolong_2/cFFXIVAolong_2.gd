@@ -16,6 +16,7 @@ var SKILL_TXT_1 = TEXT.format("""[居合术]：每第6次攻击，发动一次[�
 
 func _extInit():
 	._extInit()
+	OCCUPATION = "MeleeDPS"
 	chaName = "武士"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4
@@ -93,8 +94,7 @@ func setsugekka(skill_pw):
 	normalSpr.position = Vector2(0, -600)
 	yield(reTimer(0.3), "timeout")
 	Utils.createEffect("slash2", aiCha.position, Vector2(0,-30), 10, 1.3)
-	if aiCha != null:
-		hurtChara(aiCha, att.atk * skill_pw * pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+	FFHurtChara(aiCha, att.atk * skill_pw * pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 	normalSpr.position = Vector2(0, 0)
 
 # 重置所有状态

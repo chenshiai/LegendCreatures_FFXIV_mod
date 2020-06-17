@@ -1,4 +1,5 @@
-extends Chara
+extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
+
 #覆盖的初始化
 func _info():
 	pass
@@ -17,7 +18,10 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("5",5)#添加cd技能
 	addSkillTxt("[光之加护]：每5秒，获得5层[狂怒][抵御]")
-	addSkillTxt("[进化分支]：[防护]骑士，[进攻]武僧，[进攻]机工士")
+	addSkillTxt(TEXT.format("""[进化分支]
+[{TProtect}]骑士
+[{TAttack}]武僧
+[{TAttack}]机工士"""))
 
 #进入战斗初始化，事件连接在这里初始化
 func _connect():

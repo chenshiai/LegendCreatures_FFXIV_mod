@@ -5,6 +5,7 @@ func _info():
 
 func _extInit():
 	._extInit()
+	OCCUPATION = "MeleeDPS"
 	chaName = "龙骑士"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4
@@ -58,8 +59,7 @@ func highJump():
 
 		Utils.createShadow(img, Vector2(x, y - 400), Vector2(x, y), 40)
 		Utils.createEffect("slashBlue", cha.position, Vector2(0, -30), 14, 2)
-		if cha != null:
-			hurtChara(cha, att.atk * HIGHJUMP_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+		FFHurtChara(cha, att.atk * HIGHJUMP_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
 		Utils.createShadow(img, Vector2(x, y), Vector2(x, y) + Vector2(0, -150) - (75 * deviation.normalized()), 40)
 		yield(reTimer(0.3), "timeout")
@@ -74,4 +74,4 @@ func geirskogul():
 		var chas = Utils.lineChas(cell, aiCha.cell, 4)
 		for cha in chas:
 			if cha.team != team :
-				hurtChara(cha, att.atk * GEIRSKOGUL_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+				FFHurtChara(cha, att.atk * GEIRSKOGUL_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)

@@ -5,6 +5,7 @@ func _info():
 
 func _extInit():
 	._extInit()
+	OCCUPATION = "MeleeDPS"
 	chaName = "骑士"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4.5
@@ -55,5 +56,4 @@ func grace():
 
 # 王权剑		
 func authority():
-	if aiCha != null:
-		hurtChara(aiCha, att.atk * AUTHORITY_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+	FFHurtChara(aiCha, att.atk * AUTHORITY_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)

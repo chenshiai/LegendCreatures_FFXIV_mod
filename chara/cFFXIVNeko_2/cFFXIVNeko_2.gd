@@ -5,6 +5,7 @@ func _info():
 
 func _extInit():
 	._extInit()
+	OCCUPATION = "MagicDPS"
 	chaName = "召唤师"
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -45,8 +46,7 @@ func ruinIII():
 	var d:Eff = newEff("sk_feiDang", sprcPos)
 	d._initFlyCha(aiCha)
 	yield(d, "onReach")
-	if aiCha != null:
-		hurtChara(aiCha, att.mgiAtk * RUINIII_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+	FFHurtChara(aiCha, att.mgiAtk * RUINIII_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
 # 溃烂爆发	
 func fester():
@@ -57,9 +57,7 @@ func fester():
 	for bf in aiCha.buffs:
 		if bf.isNegetive:
 			sf += 1
-
-	if aiCha != null:
-		hurtChara(aiCha, att.mgiAtk * (FESTER_PW + FESTER_N_PW * sf), Chara.HurtType.MGI, Chara.AtkType.SKILL)
+	FFHurtChara(aiCha, att.mgiAtk * (FESTER_PW + FESTER_N_PW * sf), Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
 func summon(lv):
 	var n = sys.rndRan(0, 2)
