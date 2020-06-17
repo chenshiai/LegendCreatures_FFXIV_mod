@@ -92,7 +92,7 @@ func setsugekka(skill_pw):
 	Utils.createShadow(img, position, aiCha.position)
 	normalSpr.position = Vector2(0, -600)
 	yield(reTimer(0.3), "timeout")
-	Utils.createEffect("slashBlue", aiCha.position, Vector2(0,-30), 14)
+	Utils.createEffect("slash2", aiCha.position, Vector2(0,-30), 10, 1.3)
 	if aiCha != null:
 		hurtChara(aiCha, att.atk * skill_pw * pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 	normalSpr.position = Vector2(0, 0)

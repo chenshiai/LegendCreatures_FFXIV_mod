@@ -48,7 +48,7 @@ func _castCdSkill(id):
 
 # 火三
 func fireIII():
-	Utils.createEffect("fire", aiCha.position, Vector2(0,-40), 7)
+	Utils.createEffect("fireIII", aiCha.position, Vector2(0, -50), 15)
 	yield(reTimer(0.5), "timeout")
 	if aiCha != null:
 		hurtChara(aiCha, att.mgiAtk * (FIREIII_PW + FIRE_PW * fire), Chara.HurtType.MGI, Chara.AtkType.SKILL)

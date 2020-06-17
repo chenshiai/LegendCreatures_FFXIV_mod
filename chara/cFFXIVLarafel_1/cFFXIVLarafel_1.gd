@@ -47,7 +47,7 @@ func cureII():
 	chas.sort_custom(Utils.Calculation, "sort_MinHpP")
 
 	if chas[0] != null:
-		Utils.createEffect("healGreen", chas[0].position, Vector2(0, -30), 11, 1)
+		Utils.createEffect("recovery1", chas[0].position, Vector2(0, -30), 15, 1)
 		chas[0].plusHp(att.mgiAtk * CUREII_PW)
 
 # 医济		

@@ -6,8 +6,8 @@ var FFXIVControl = globalData.infoDs["g_FFXIVControl"]
 var originBackground # 原版背景
 var layer = 0 # 当前关卡数
 
-const PROBABILITY = 15 # boss出现的基本概率
-const BOSS_LAYER = 27 # 在多少关之后概率动态调整
+const PROBABILITY = 100 # boss出现的基本概率
+const BOSS_LAYER = 2 # 在多少关之后概率动态调整
 var probability = PROBABILITY # Boss出现的动态概率
 
 func init():

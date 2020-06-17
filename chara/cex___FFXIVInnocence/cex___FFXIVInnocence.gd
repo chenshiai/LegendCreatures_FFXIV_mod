@@ -85,7 +85,7 @@ func righteousBolt():
 	if att.hp <=0:
 		return
 	if self.HateTarget != null:
-		Utils.createEffect("shiwan", self.HateTarget.position, Vector2(0, -30), 15, 4)
+		Utils.createEffect("thunder", self.HateTarget.position, Vector2(0, -140), 15, 1)
 		hurtChara(self.HateTarget, att.mgiAtk * righteousBolt_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 		self.HateTarget.addBuff(b_VulnerableLarge.new(15))
 	self.aiOn = true
