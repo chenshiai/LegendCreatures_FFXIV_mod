@@ -40,12 +40,8 @@ func createLimitBreak():
 
 	limitBreak.value = 0
 	limitBreak.visible = true
-	limitBreak.rect_position = Vector2(380, 528)
+	limitBreak.rect_position = Vector2(380, 526)
 	sys.main.get_node("ui").add_child(limitBreak)
-
-	Utils.createUiButton("防护", Vector2(1140, 250), self, "limit_protect", {})
-	Utils.createUiButton("进攻", Vector2(1140, 305), self, "limit_attack", {})
-	Utils.createUiButton("治疗", Vector2(1140, 360), self, "limit_treatment", {})
 
 	infomation = sys.newMsg("jiangLiMsg")
 	infomation.get_node("Panel/Label").text = TEXT.LimitBreakInfomation.title

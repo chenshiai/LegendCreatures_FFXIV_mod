@@ -7,8 +7,8 @@ const TEXT = globalData.infoDs["g_bFFXIVText"]
 var OCCUPATION = "Default"
 var BallisticSpeed = {
 	"MeleeDPS": 500,
-	"MagicDPS": 700,
-	"DistanceDPS": 1000,
+	"MagicDPS": 300,
+	"DistanceDPS": 800,
 	"Default": 450,
 }
 

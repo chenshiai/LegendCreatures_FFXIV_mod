@@ -56,6 +56,11 @@ func normalAtkChara(cha):
 func _castCdSkill(id):
 	._castCdSkill(id)
 		
+func _onAtkInfo(atkInfo: AtkInfo):
+	._onAtkInfo(atkInfo)
+	if atkInfo.atkType == Chara.AtkType.SKILL:
+		atkInfo.canCri = true
+
 func iaijutsu():
 	if flash == 1:
 		setsugekka(HIGANBANE_PW)
@@ -86,15 +91,11 @@ func getFlash(name):
 
 # 纷乱雪月花
 func setsugekka(skill_pw):
-	var pw = 1
-	if sys.rndPer(att.cri * 100):
-		pw = 2 + att.criR
-
 	Utils.createShadow(img, position, aiCha.position)
 	normalSpr.position = Vector2(0, -600)
 	yield(reTimer(0.3), "timeout")
 	Utils.createEffect("slash2", aiCha.position, Vector2(0,-30), 10, 1.3)
-	FFHurtChara(aiCha, att.atk * skill_pw * pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+	FFHurtChara(aiCha, att.atk * skill_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 	normalSpr.position = Vector2(0, 0)
 
 # 重置所有状态

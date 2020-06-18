@@ -1,20 +1,13 @@
 var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
 var TEXT = globalData.infoDs["g_bFFXIVText"]
+
 var PlayChas = []
 var ChangeSwitch = false
 
-func _init():
-	print("最终幻想14：—————— 仇恨机制加载 ——————")
-	pass
-
-
-
-func createRetreat():
+func initRetreat():
 	sys.main.connect("onBattleStart", self, "getTankChas")
 	sys.main.connect("onBattleEnd", self, "closeSelf")
-	Utils.createUiButton("退避", Vector2(1140, 425), self, "changeHateTarget", {})
-	Utils.createUiButton("说明", Vector2(1140, 485), self, "showInfo", {})
-	
+	print("初始化退避连结")
 
 func showInfo():
 	sys.newBaseMsg(TEXT.Retreat.title, TEXT.Retreat.content)
@@ -24,7 +17,11 @@ func changeHateTarget():
 		sys.newBaseMsg("无法退避", "战斗尚未开始。或下一场战斗开始后可以使用。")
 		return
 
-	changeMainFeud()
+	if PlayChas[1] and !PlayChas[1].isDeath:
+		var t = PlayChas[1]
+		PlayChas[1] = PlayChas[0]
+		PlayChas[0] = t
+	
 	if !PlayChas[0].isDeath:
 		Utils.createEffect("hateFeud", PlayChas[0].position, Vector2(0, -100), 10)
 		for i in sys.main.btChas:
@@ -32,14 +29,8 @@ func changeHateTarget():
 				i.aiCha = PlayChas[0]
 
 
-func changeMainFeud():
-	var t = PlayChas[1]
-	if t.isDeath:
-		return
-	PlayChas[1] = PlayChas[0]
-	PlayChas[0] = t
-
 func getTankChas():
+	print("开战选坦克")
 	ChangeSwitch = true
 	PlayChas = []
 
@@ -51,4 +42,5 @@ func getTankChas():
 	PlayChas.resize(2)
 
 func closeSelf():
+	print("开启退避")
 	ChangeSwitch = false

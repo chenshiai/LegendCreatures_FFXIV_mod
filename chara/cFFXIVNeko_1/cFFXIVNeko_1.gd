@@ -45,7 +45,7 @@ func adloquium(pw, hudun = false):
 	chas.sort_custom(Utils.Calculation, "sort_MinHpP")
 
 	if chas[0] != null:
-		chas[0].plusHp(att.mgiAtk * pw)
+		chas[0].plusHp(att.mgiAtk * pw, false)
 		if hudun:
 			BUFF_LIST.b_Adloquium.new(10, att.mgiAtk * pw * shield_pw, chas[0])
 			Utils.createEffect("shield", chas[0].position, Vector2(0,-30), 7)

@@ -59,6 +59,7 @@ func createUiButton(text, position, target = self, callback = "defaultCallback",
 	var button = Button.new()
 	button.text = text
 	button.rect_position = position
+	button.connect("pressed", target, callback)
 
 	if config.has("set_size"):
 		button.set_size = config["set_size"]
@@ -70,10 +71,10 @@ func createUiButton(text, position, target = self, callback = "defaultCallback",
 		button.margin_top = config["margin_top"]
 	if config.has("margin_bottom"):
 		button.margin_bottom = config["margin_bottom"]
-
-	button.connect("pressed", target, callback)
-	sys.main.get_node("ui").add_child(button)
-	return button
+	if config.has("return") and config["return"]:
+		return button
+	else:
+		sys.main.get_node("ui").add_child(button)
 
 
 func defaultCallback():
@@ -157,3 +158,24 @@ class Calculation:
 				att.num += 1
 
 		return att
+
+class FileHelper:
+	static func scan(path:String) -> Array:
+		var file_name := ""
+		var files := []
+		var dir := Directory.new()
+		if dir.open(path) != OK:
+			print("Failed to open:"+path)
+		else:
+			dir.list_dir_begin(true)
+			file_name = dir.get_next()
+			while file_name!="":
+				if dir.current_is_dir():
+					var sub_path = path+"/"+file_name
+					files += scan(sub_path)
+				else:
+					var name := path+"/"+file_name
+					files.push_back(name)
+				file_name = dir.get_next()
+			dir.list_dir_end()
+		return files

@@ -43,4 +43,4 @@ func benediction():
 	var sk = getSkill("skill_Benediction")
 	sk.cd = 60
 	skillStrs[2] = "[天赐祝福]：冷却60s，为生命最低的友方单位恢复至满血（已经使用过一次）"
-	Utils.createEffect("heal", position, Vector2(0, -30), 7)
+	# Utils.createEffect("heal", position, Vector2(0, -30), 7)
