@@ -58,14 +58,6 @@ func createLimitBreak():
 func MsgOk():
 	pass
 
-# 	sys.newBaseMsg("极限技使用说明", """极限技，是可以扭转战局的绝招。
-# 使用后会清空极限槽，请务必看清战场情况。
-# 极限技可分为三种效果：
-# [防护]：短时间内给玩家单位减伤。
-# [进攻]：对敌方单体造成极大伤害。
-# [治疗]：为玩家单位恢复体力。
-# 等级越高效果越强！！！""")
-
 func initLimitValue():
 	allAtt = Utils.Calculation.getEnemyPower(2)
 	limitBreakVal = (allAtt["atk"] + allAtt["mgiAtk"]) * 30

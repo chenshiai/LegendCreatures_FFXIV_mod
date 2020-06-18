@@ -26,15 +26,6 @@ var AtkSpd = {
 	"Default": 0
 }
 
-func _info():
-	pass
-
-func _ready():
-	pass
-
-func _connect():
-	._connect()
-
 func _extInit():
 	._extInit()
 	chaName = "基础角色"
