@@ -12,7 +12,7 @@ func _extInit():
 	attCoe.mgiDef = 4
 	lv = 4
 	evos = []
-	addSkillTxt(TEXT.format("[仗剑行侠]：{TPassive}，是恶皆斩，斩杀一名敌人后恢复[5%]的HP"))
+	addSkillTxt(TEXT.format("[仗剑行侠]：『{TPassive}』是恶皆斩，斩杀一名敌人后恢复[5%]的HP"))
 
 var baseId = ""
 

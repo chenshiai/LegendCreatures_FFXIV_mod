@@ -18,9 +18,9 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_Verthunder", 8)
 	addSkillTxt("白魔元：0 / 100	黑魔元：0 / 100")
-	addSkillTxt(TEXT.format("""[连续咏唱]：{TPassive}，攻击型技能会连续释放两次（只触发一次CD效果）
+	addSkillTxt(TEXT.format("""[连续咏唱]：『{TPassive}』攻击型技能会连续释放两次（只触发一次CD效果）
 [赤闪雷/赤疾风]：冷却8s，对目标造成[120%]法强的{TMgiHurt}，随机获得[黑/白]魔元15点
-[魔连攻]：{TPassive}，攻击时同时消耗25点黑白魔元，使此次物理攻击造成[500%]的伤害"""))
+[魔连攻]：『{TPassive}』攻击时同时消耗25点黑白魔元，使此次物理攻击造成[500%]的伤害"""))
 
 const MORGEN = 15 # 释放魔法获得魔元数量
 const MORGEN_MAX = 100 # 魔元上限

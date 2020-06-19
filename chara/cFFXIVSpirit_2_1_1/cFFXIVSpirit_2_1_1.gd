@@ -12,7 +12,7 @@ func _extInit():
 	attCoe.mgiDef = 3.9
 	lv = 4
 	evos = []
-	addSkillTxt(TEXT.format("[天星交错]：{TPassive}，阳星相位现在会附加[持续恢复]的效果"))
+	addSkillTxt(TEXT.format("[天星交错]：『{TPassive}』阳星相位现在会附加[持续恢复]的效果"))
 
 var baseId = ""
 

@@ -12,7 +12,7 @@ func _extInit():
 	attCoe.mgiDef = 3.9
 	lv = 4
 	evos = []
-	# addSkillTxt("[神速咏唱]：{TPassive}，加快自身15%的技能释放速度")
+	# addSkillTxt("[神速咏唱]：『{TPassive}』加快自身15%的技能释放速度")
 	addCdSkill("skill_Assize", 19)
 	addSkillTxt(TEXT.format("[法令]：冷却19s，对周围3格内的敌人造成[270%]法强的{TMgiHurt}，同时为范围内的队友恢复[90%]法强的HP"))
 

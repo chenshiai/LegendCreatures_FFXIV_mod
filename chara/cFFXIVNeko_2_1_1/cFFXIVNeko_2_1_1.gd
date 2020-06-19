@@ -13,7 +13,7 @@ func _extInit():
 	attCoe.mgiDef = 4.3
 	lv = 4
 	evos = []
-	addSkillTxt(TEXT.format("[不死鸟附体]：{TPassive}，[龙神迸发]变为[不死鸟迸发]，伤害变为[760%]的同时会给目标附加20层[烧灼]"))
+	addSkillTxt(TEXT.format("[不死鸟附体]：『{TPassive}』[龙神迸发]变为[不死鸟迸发]，伤害变为[760%]的同时会给目标附加20层[烧灼]"))
 var baseId = ""
 
 func _connect():

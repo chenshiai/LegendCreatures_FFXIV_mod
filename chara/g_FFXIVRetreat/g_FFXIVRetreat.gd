@@ -7,7 +7,6 @@ var ChangeSwitch = false
 func initRetreat():
 	sys.main.connect("onBattleStart", self, "getTankChas")
 	sys.main.connect("onBattleEnd", self, "closeSelf")
-	print("初始化退避连结")
 
 func showInfo():
 	sys.newBaseMsg(TEXT.Retreat.title, TEXT.Retreat.content)
@@ -30,7 +29,6 @@ func changeHateTarget():
 
 
 func getTankChas():
-	print("开战选坦克")
 	ChangeSwitch = true
 	PlayChas = []
 

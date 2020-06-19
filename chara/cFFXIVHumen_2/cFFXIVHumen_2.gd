@@ -13,7 +13,7 @@ func _extInit():
 	evos = ["cFFXIVHumen_2_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_BowShock", 9)
-	addSkillTxt(TEXT.format("""[王室亲卫]：{TPassive}，受到的伤害减少20%
+	addSkillTxt(TEXT.format("""[王室亲卫]：『{TPassive}』受到的伤害减少20%
 [弓形冲波]：冷却9s，对周围2格的敌人造成[260%]的{TPhyHurt}，并附加4层[烧灼]"""))
 
 const BOWSHOCK_PW = 2.60 # 弓形冲波威力
