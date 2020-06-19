@@ -24,3 +24,5 @@ class LightHard:
 		att.defL = 0.1 + lv * 0.01
 		att.mgiDefL = 0.1 + lv * 0.01
 		self.lv = lv
+
+		# sys.main.get_node("ui/player/GridContainer").add_child(preload("res://ui/talentBtn/talentBtn.tscn").instance())
