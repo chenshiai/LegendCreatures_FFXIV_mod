@@ -16,7 +16,7 @@ func _extInit():
 	evos = ["cFFXIV_Kaluro_1"]
 	atkEff = "atk_dang"
 	addCdSkill("skill_WindBlade", 5)#添加cd技能
-	addSkillTxt("[烈风刃]：冷却时间5s，对目标附加3层[中毒]")
+	addSkillTxt("[烈风刃]：冷却5s，对目标附加3层[中毒]")
 
 #进入战斗初始化，事件连接在这里初始化
 func _connect():

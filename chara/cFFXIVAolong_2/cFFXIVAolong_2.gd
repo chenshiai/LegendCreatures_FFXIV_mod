@@ -58,7 +58,7 @@ func _castCdSkill(id):
 		
 func _onAtkInfo(atkInfo: AtkInfo):
 	._onAtkInfo(atkInfo)
-	if atkInfo.atkType == Chara.AtkType.SKILL:
+	if atkInfo.atkCha == self and atkInfo.atkType == Chara.AtkType.SKILL:
 		atkInfo.canCri = true
 
 func iaijutsu():

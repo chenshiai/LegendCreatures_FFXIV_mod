@@ -13,11 +13,12 @@ func _extInit():
 	lv = 2
 	evos = ["cFFXIVHumen_3_1"]
 	atkEff = "atk_dao"
-	addCdSkill("skill_DanceStep", 35)
-	addSkillTxt(TEXT.format("[闭式舞姿]：『{TPassive}』战斗开始时，选择物攻最高与魔攻最高的队友作为舞伴，提高他们与自己的攻击力10%，可以叠加，无法以自己为目标"))
-	addSkillTxt(TEXT.format("[标准舞步]：冷却35s，对三格内的敌人造成[1000%]的{TPhyHurt}，同时舞伴与自己的攻击力再提升10%，持续10s"))
+	addCdSkill("skill_DanceStep", 23)
+	addSkillTxt(TEXT.format("[伶俐]：『{TPassive}』技能可以产生暴击")
+	addSkillTxt(TEXT.format("[闭式舞姿]：『{TPassive}』战斗开始时，选择物攻最高与魔攻最高的队友作为舞伴，提高他们与自己的攻击力10%"))
+	addSkillTxt(TEXT.format("[标准舞步]：冷却23s，对三格内的敌人造成[600%]的{TPhyHurt}，同时舞伴与自己的攻击力再提升10%，持续10s"))
 
-const DANCESTEP_PW = 10 # 标准舞步威力
+const DANCESTEP_PW = 6 # 标准舞步威力
 var atkMaxAlly = null # 攻击力最高的队友
 var mgiAtkMaxAlly = null # 法强最高的队友
 
@@ -32,6 +33,11 @@ func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_DanceStep":
 		danceStep()
+
+func _onAtkInfo(atkInfo: AtkInfo):
+	._onAtkInfo(atkInfo)
+	if atkInfo.atkCha == self and atkInfo.atkType == Chara.AtkType.SKILL:
+		atkInfo.canCri = true
 
 # 寻找舞伴		
 func setDancePartner():

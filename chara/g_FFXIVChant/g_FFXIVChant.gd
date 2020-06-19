@@ -1,7 +1,6 @@
 var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
 var chantBar = null
 
-var im = Image.new()
 var chantBarUnder = ImageTexture.new()
 var chantBarProgress = ImageTexture.new()
 var laber = null
@@ -19,12 +18,11 @@ func createChantBar():
 	var Path = Utils.getPath()
 	chantBar = TextureProgress.new()
 	laber = Label.new()
-	im.load(Path + "/img/chantBar_under.png")
-	chantBarUnder.create_from_image(im)
+
+	chantBarUnder = Utils.loadImgTexture("/img/chantBar_under.png")
 	chantBar.texture_under = chantBarUnder
 
-	im.load(Path + "/img/chantBar_progress.png")
-	chantBarProgress.create_from_image(im)
+	chantBarProgress = Utils.loadImgTexture("/img/chantBar_progress.png")
 	chantBar.texture_progress = chantBarProgress
 
 	chantBar.value = 0
@@ -41,6 +39,7 @@ func chantStart(text, duration):
 	chantBar.set_visible(true)
 	laber.visible = true
 	laber.text = "%s %.1f" % [text, duration]
+
 	var n = duration
 	for i in range(n * 10):
 		yield(sys.get_tree().create_timer(0.1), "timeout")

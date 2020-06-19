@@ -65,8 +65,6 @@ func autoturret(addCount):
 		
 	FFHurtChara(aiCha, att.atk * AUTOTURRET_PW, Chara.HurtType.PHY, Chara.AtkType.EFF)
 
-	
-
 # 野火		
 func wildfire():
 	if aiCha != null:

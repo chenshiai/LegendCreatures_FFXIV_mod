@@ -1,4 +1,5 @@
 var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
+var Chant = globalData.infoDs["g_FFXIVChant"]
 var TEXT = globalData.infoDs["g_bFFXIVText"]
 var allAtt = {}
 
@@ -7,8 +8,6 @@ var limitBreakLevel:float = 0 # 极限技等级
 var limitBreakVal:float = 0 # 攒满极限技所需要的点数
 var limitBreakNow:float = 0 # 已有极限点数
 
-
-var im = Image.new()
 var limitUnder = ImageTexture.new()
 var limitProgress = ImageTexture.new()
 var limitProgress0 = ImageTexture.new()
@@ -123,13 +122,10 @@ func limit_treatment():
 		resetLimit()
 		for cha in sys.main.btChas:
 			if cha != null and cha.team == 1:
-				if cha.isDeath and healStep == 3:
-					# cha.isDeath = false
-					cha.revive(cha.att.maxHp)
-
-				cha.plusHp(cha.att.maxHp * healStep)
-				Utils.createEffect("heal", cha.position, Vector2(0, -30), 7, 2)
-				yield(sys.get_tree().create_timer(0.1), "timeout")
+				if !cha.isDeath:
+					cha.plusHp(cha.att.maxHp * healStep)
+					Utils.createEffect("heal", cha.position, Vector2(0, -30), 7, 2)
+					yield(sys.get_tree().create_timer(0.1), "timeout")
 	else:
 		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")
 

@@ -1,4 +1,6 @@
 extends Talent
+var TEXT = globalData.infoDs["g_bFFXIVText"]
+
 func init():
 	name = "队伍编制"
 
@@ -24,11 +26,7 @@ func run():
 				cha.addBuff(LightTeam.new(lv))
 
 func get_info():
-	return """根据当前上场人数提供额外加成
-轻锐小队：4-7人，所有友方单位基础面板提高%d%%
-满编小队：8人及以上，所有友方单位基础面板提高%d%%
-[注意]：最大人口数量将被固定为10
-来自《最终幻想14》""" % [(0.05 + lv * 0.01) * 100, (0.1 + lv * 0.02) * 100]
+	return TEXT.T_TEAM % [(0.05 + lv * 0.01) * 100, (0.1 + lv * 0.02) * 100]
 
 class LightTeam:
 	extends Buff

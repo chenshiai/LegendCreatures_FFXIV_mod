@@ -16,7 +16,7 @@ func _extInit():
 	evos = ["cFFXIV_Titan_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_RockBuster", 5)#添加cd技能
-	addSkillTxt("[碎岩]：冷却时间5s，为周围2格的友军附加3层[抵御]")
+	addSkillTxt("[碎岩]：冷却5s，为周围2格的友军附加3层[抵御]")
 
 #进入战斗初始化，事件连接在这里初始化
 func _connect():
@@ -24,7 +24,7 @@ func _connect():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "5_1":
-		var chas = getCellChas(cell, 2)
+	if id == "skill_RockBuster":
+		var chas = getCellChas(cell, 2, 2)
 		for i in chas:
 				i.addBuff(b_diYu.new(3))
