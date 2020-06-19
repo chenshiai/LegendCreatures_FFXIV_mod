@@ -70,7 +70,7 @@ func nowLimitBreak(value):
 	if value >= 100:
 		limitBreak.texture_progress = limitProgress
 		limitBreakLevel = 3
-	elif value >= 67:
+	elif value >= 66:
 		limitBreak.texture_progress = limitProgress2
 		limitBreakLevel = 2
 	elif value >= 33:

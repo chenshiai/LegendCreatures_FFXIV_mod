@@ -1,5 +1,6 @@
 extends Talent
 var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
+var TEXT = globalData.infoDs["g_bFFXIVText"]
 var Limit = globalData.infoDs["g_FFXIVLimitBreak"] # 极限技类
 var HpBar = globalData.infoDs["g_FFXIVBossHpBar"] # boss血条类
 var Retreat = globalData.infoDs["g_FFXIVRetreat"] # 退避机制
@@ -8,7 +9,7 @@ var FFXIVControl = globalData.infoDs["g_zFFXIVControl"] # 控制面板
 var originBackground # 原版背景
 var layer = 0 # 当前关卡数
 
-const PROBABILITY = 15 # boss出现的基本概率
+const PROBABILITY = 15 # Boss出现的基本概率
 const BOSS_LAYER = 27 # 在多少关之后概率动态调整
 var probability = PROBABILITY # Boss出现的动态概率
 
@@ -16,12 +17,7 @@ func init():
 	name = "Raid战斗记录"
 
 func get_info():
-	return """从此刻开始体验经过夸大的激昂战斗
-玩家最大生命值提高%d点，所有敌方双攻提高%d%%，
-战斗后额外获得%d金币，恢复%d点生命
-有概率出现强大的BOSS单位！！！
-BOSS战可以使用极限技能了！！！
-来自《最终幻想14》""" % [lv * 4 + 20, (0.1 + lv * 0.01) * 100, 5 + lv * 5, lv]
+	return TEXT.T_RAID % [lv * 4 + 20, (0.1 + lv * 0.01) * 100, lv, 5 + lv * 5]
 
 func _connect():
 	sys.main.player.maxHp += lv * 4+20
@@ -53,7 +49,7 @@ func run():
 func reward():
 	if sys.main.player.hp <= sys.main.player.maxHp - lv:
 		sys.main.player.plusHp(lv)
-	sys.main.player.plusGold(25 + lv * 15)
+	sys.main.player.plusGold(5 + lv * 5)
 	sys.main.get_node("scene/bg/bg").set_texture(originBackground)
 	HpBar.setVisible(false)
 	Limit.resetLimit()
