@@ -1,7 +1,6 @@
 extends Chara
 const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
 const Utils = globalData.infoDs["g_aFFXIVUtils"]
-const Chant = globalData.infoDs["g_FFXIVChant"]
 const TEXT = globalData.infoDs["g_bFFXIVText"]
 
 var OCCUPATION = "Default"

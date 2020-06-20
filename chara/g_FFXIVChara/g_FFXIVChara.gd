@@ -1,5 +1,7 @@
 var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
 
+var DeathList = []
+
 const BossList = [
   {
     "id": "cex___FFXIVOmegaF",
@@ -18,6 +20,20 @@ const BossList = [
     "backgronud": "/img/PerfectThrone.png"
   }
 ]
+
+func openDeathList():
+  sys.main.connect("onCharaDel", self, "appendDeathCha")
+  sys.main.connect("onBattleEnd", self, "initDeathCha")
+
+func getDeathList():
+  return DeathList
+
+func appendDeathCha(cha: Chara):
+  if cha.team == 1 and !cha.isSumm:
+    DeathList.append(cha)
+
+func initDeathCha():
+  DeathList = []
 
 func rndRanBoss():
   var n = sys.rndRan(0, 3)

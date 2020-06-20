@@ -9,9 +9,10 @@ var FFXIVControl = globalData.infoDs["g_zFFXIVControl"] # 控制面板
 
 var originBackground # 原版背景
 var layer = 0 # 当前关卡数
+var lastLayer = 0 # 上一次出现boss的层数
 
-const PROBABILITY = 15 # Boss出现的基本概率
-const BOSS_LAYER = 27 # 在多少关之后概率动态调整
+const PROBABILITY = 100 # Boss出现的基本概率
+const BOSS_LAYER = 2 # 在多少关之后概率动态调整
 var probability = PROBABILITY # Boss出现的动态概率
 
 func init():
@@ -31,6 +32,8 @@ func _connect():
 	Limit.createLimitBreak()
 	Retreat.initRetreat()
 	FFXIVControl.createControl()
+	FFChara.openDeathList()
+	print(Utils.FileHelper.scan("res://audio"))
 
 class Bf:
 	extends Buff
@@ -57,8 +60,9 @@ func reward():
 
 func come():
 	layer = sys.main.guankaMsg.lvStep - 2
-	if layer > BOSS_LAYER:
+	if layer > BOSS_LAYER and layer != lastLayer:
 		if sys.rndPer(probability):
+			lastLayer = layer
 			probability = PROBABILITY
 			HpBar.setVisible(true)
 			HpBar.setValue(100)

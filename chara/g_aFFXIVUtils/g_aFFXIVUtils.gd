@@ -1,5 +1,6 @@
 var handle = sys.get_node("../Control")
 var Path = null
+var Chant = null
 
 func _init():
 	print("最终幻想14：—————— 完整性检测中 ——————")
@@ -7,18 +8,11 @@ func _init():
 	pass
 
 
-func _ready():
-	pass
-
-
-func getPath():
-	return Path
-
-
 func testInit():
 	Path = chaData.infoDs["cFFXIV_zTatalu"].dir
 	if Path != null:
-		pass
+		print("最终幻想14：—————— 魔法正在咏唱 ——————")
+		Chant = load(Path + "/FFXIVClass/Chant/Chant.gd")
 	else:
 		var label = Label.new()
 		label.text = "最终幻想14：MOD文件路径读取失败，请在创意工坊内重新订阅。"
@@ -46,6 +40,7 @@ func createEffect(effectName, position, deviation, frame = 15, scale = 1, repeat
 	eff.rotation = rotation
 	eff.scale *= scale
 	return eff
+
 
 func createTimeAxis(skillAxis):
 	var timeAxis = {}
@@ -80,6 +75,7 @@ func createUiButton(text, position, target = self, callback = "defaultCallback",
 func defaultCallback():
 	sys.newBaseMsg("测试", "并未连接到任何函数")
 
+
 func createShadow(img, startPositon:Vector2, endPositon:Vector2, speed = 25):
 	var distance = endPositon - startPositon
 	var rs = preload("res://core/ying.tscn")
@@ -90,6 +86,7 @@ func createShadow(img, startPositon:Vector2, endPositon:Vector2, speed = 25):
 		spr.texture = img.texture_normal
 		spr.position = startPositon + speed * (i + 1) * distance.normalized() - Vector2(img.texture_normal.get_width() / 2, img.texture_normal.get_height())
 		spr.init(255 / n * i + 100)
+
 
 func lineChas(aCell, bCell, num):
 	var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
@@ -159,22 +156,23 @@ class Calculation:
 
 		return att
 
+# 文件路径遍历
 class FileHelper:
 	static func scan(path:String) -> Array:
 		var file_name := ""
 		var files := []
 		var dir := Directory.new()
 		if dir.open(path) != OK:
-			print("Failed to open:"+path)
+			print("Failed to open:" + path)
 		else:
 			dir.list_dir_begin(true)
 			file_name = dir.get_next()
-			while file_name!="":
+			while file_name != "":
 				if dir.current_is_dir():
-					var sub_path = path+"/"+file_name
+					var sub_path = path + "/" + file_name
 					files += scan(sub_path)
 				else:
-					var name := path+"/"+file_name
+					var name := path + "/" + file_name
 					files.push_back(name)
 				file_name = dir.get_next()
 			dir.list_dir_end()

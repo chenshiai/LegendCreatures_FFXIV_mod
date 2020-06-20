@@ -64,7 +64,7 @@ func _onAtkChara(atkInfo):
 # 赤闪雷/赤疾风
 func verthunder(first, pw):
 	var d:Eff = newEff("sk_feiDang", sprcPos)
-	d._initFlyCha(aiCha)
+	d._initFlyCha(aiCha, 1000)
 	yield(d, "onReach")
 	FFHurtChara(aiCha, att.mgiAtk * pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 

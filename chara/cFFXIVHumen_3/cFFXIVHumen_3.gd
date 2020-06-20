@@ -14,7 +14,7 @@ func _extInit():
 	evos = ["cFFXIVHumen_3_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_DanceStep", 23)
-	addSkillTxt(TEXT.format("[伶俐]：『{TPassive}』技能可以产生暴击")
+	addSkillTxt(TEXT.format("[伶俐]：『{TPassive}』技能可以产生暴击"))
 	addSkillTxt(TEXT.format("[闭式舞姿]：『{TPassive}』战斗开始时，选择物攻最高与魔攻最高的队友作为舞伴，提高他们与自己的攻击力10%"))
 	addSkillTxt(TEXT.format("[标准舞步]：冷却23s，对三格内的敌人造成[600%]的{TPhyHurt}，同时舞伴与自己的攻击力再提升10%，持续10s"))
 

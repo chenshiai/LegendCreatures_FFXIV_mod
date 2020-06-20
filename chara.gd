@@ -5,7 +5,7 @@ set_rotation_degrees
 set_scale
 get_position
 get_rotation
-get_rotation_degrees
+get_rotation_degrees 0
 get_scale
 rotate
 move_local_x
@@ -226,6 +226,7 @@ set_message_translation
 can_translate_messages
 tr
 is_queued_for_deletion
+
 _init
 _info
 _onBattleStart
@@ -361,12 +362,12 @@ custom_multiplayer
 process_priority
 CanvasItem
 Visibility
-visible
+visible false
 modulate
 self_modulate
-show_behind_parent
-show_on_top
-light_mask
+show_behind_parent false
+show_on_top true
+light_mask 1
 Material
 material
 use_parent_material
@@ -375,7 +376,7 @@ Transform
 position
 rotation
 rotation_degrees
-scale
+scale (1, 1)
 transform
 global_position
 global_rotation
@@ -387,39 +388,40 @@ z_index
 z_as_relative
 script
 Script Variables
+
 className
 cell
 mPos
 inputMove
 actLv
 dire
-stopTime
+stopTime 0
 masCha
 spr
 anim
 normalSpr
-atkBox
-sePlay
-pauseTimer
+atkBox null
+sePlay null
+pauseTimer Timer
 nowAnim
 nowTime
 ifDownInfo
 ifFallInfo
 atkInfo
-defStatus
+defStatus 0
 atkIng
 oldState
-ghostTime
-ghostOn
+ghostTime 0
+ghostOn false
 airTime
 downBl
 fallBl
 shine
 moveSpeed
 team
-aiCha
+aiCha Node2D
 oldCell
-aiOn
+aiOn true
 att
 attInfo
 attCoe

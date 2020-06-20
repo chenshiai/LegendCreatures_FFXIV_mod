@@ -42,17 +42,17 @@ func _onBattleStart():
 	shadowReaver_pw *= (E_lv / E_num)
 	flammingSword_pw *= (E_lv / E_num)
 	beatficVision_pw *= (E_lv / E_num)
-	SKILL_TXT = TEXT.format("""[夺影]：对全屏的敌人造成[{0}]的{TMgiHurt}。
-[断罪飞翔]：随机两条竖线或横线进行飞剑攻击，造成[{1}]的{TMgiHurt}，并附加一层易伤(受伤加重30%%)。
-[裁决之雷]：死刑！！对当前目标释放大伤害攻击，造成[{2}]的{TMgiHurt}，并附加大易伤(平A致命)。
-[转阶段·回转火焰剑]：全屏攻击，造成[{3}]的{TPhyHurt}
-[荣福直观]：移动至场边，向对面进行冲刺，造成[{4}]的{TPhyHurt}，距离中线越近的目标受伤越高。""",
+	SKILL_TXT = TEXT.format("""[夺影]：对全屏的敌人造成[{0}]点{TMgiHurt}。
+[断罪飞翔]：随机两条竖线或横线进行飞剑攻击，造成[{1}]点{TMgiHurt}，并附加一层易伤(受伤加重30%%)。
+[裁决之雷]：死刑！！对当前目标释放大伤害攻击，造成[{2}]点{TMgiHurt}，并附加大易伤(平A致命)。
+[转阶段·回转火焰剑]：全屏攻击，造成[{3}]点{TPhyHurt}
+[荣福直观]：移动至场边，向对面进行冲刺，造成[{4}]点{TPhyHurt}，距离中线越近的目标受伤越高。""",
 		{
-			"0": "%d%%" % [shadowReaver_pw * 100],
-			"1": "%d%%" % [wingedReprobation_pw * 100],
-			"2": "%d%%" % [righteousBolt_pw * 100],
-			"3": "%d%%" % [flammingSword_pw * 100],
-			"4": "%d%%" % [beatficVision_pw * 100]
+			"0": "%d" % [shadowReaver_pw * att.mgiAtk],
+			"1": "%d" % [wingedReprobation_pw * att.mgiAtk],
+			"2": "%d" % [righteousBolt_pw * att.mgiAtk],
+			"3": "%d" % [flammingSword_pw * att.atk],
+			"4": "%d" % [beatficVision_pw * att.atk]
 		})
 	skillStrs[1] = SKILL_TXT
 	upAtt()

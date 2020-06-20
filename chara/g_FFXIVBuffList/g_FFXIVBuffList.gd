@@ -11,7 +11,6 @@ class BaseBuff extends Buff:
 		if bf != null and bf != self:
 			bf.isDel = true
 
-
 class BassShield extends BaseBuff:
 	var shieldValue = 0
 
@@ -37,7 +36,6 @@ class BassShield extends BaseBuff:
 		if shieldValue <= 0:
 			self.isDel = true
 
-
 class ReduceDemage extends BaseBuff:
 	var reduce_type = null
 	var reduce_pw = 0
@@ -51,7 +49,6 @@ class ReduceDemage extends BaseBuff:
 		elif reduce_type == atkInfo.hurtType:
 			atkInfo.hurtVal *= 1 - reduce_pw
 
-
 # 深恶痛绝，提高魔防
 class b_Abhor:
 	extends BaseBuff
@@ -61,7 +58,6 @@ class b_Abhor:
 		isNegetive = false
 		att.mgiDefL = 0.10
 		addBuff(cha)
-
 
 # 暗黑布道，减少魔法伤害
 class b_DarkMissionary:

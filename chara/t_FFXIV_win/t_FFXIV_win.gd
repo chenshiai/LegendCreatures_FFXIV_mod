@@ -1,4 +1,5 @@
 extends Talent
+var TEXT = globalData.infoDs["g_bFFXIVText"]
 
 func init():
 	name = "光之加护"
@@ -12,7 +13,7 @@ func run():
 			i.addBuff(LightHard.new(lv))
 
 func get_info():
-	return "战斗开始后，己方所有角色双抗提高 %d%%\n“海德林的光之信徒啊！随着这黑暗的要塞一起消失吧！” ———— 拉哈布雷亚\n来自《最终幻想14》" % [(0.1 + lv * 0.01)*100]
+	return TEXT.T_LIGHT % [(0.1 + lv * 0.01)*100]
 
 class LightHard:
 	extends Buff

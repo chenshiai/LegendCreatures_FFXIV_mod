@@ -34,12 +34,13 @@ func _onBattleStart():
 	._onBattleStart()
 	mustardBomb_pw *= (E_lv / E_num)
 	atomicRay_pw *= (E_lv / E_num)
-	SKILL_TXT = TEXT.format("""[芥末爆弹]：死刑，对当前攻击目标造成[{0}]的小范围{TMgiHurt}
-[原子射线]：对全屏的敌人造成[{1}]法强的{TMgiHurt}
-[三角攻击]：对全屏的敌人造成[致命]的{TMgiHurt}（会移动至场边释放，届时请使用三段极限技[防护]）""",
+	SKILL_TXT = TEXT.format("""[芥末爆弹]：死刑，对当前攻击目标造成[{0}]点小范围{TMgiHurt}
+[原子射线]：对全屏的敌人造成[{1}]点{TMgiHurt}
+[三角攻击]：对全屏的敌人造成[{2}]点{TMgiHurt}（会移动至场边释放，届时请使用三段极限技[防护]）""",
 		{
-			"0": "%d%%" % [mustardBomb_pw * 100],
-			"1": "%d%%" % [atomicRay_pw * 100]
+			"0": "%d" % [mustardBomb_pw * att.mgiAtk],
+			"1": "%d" % [atomicRay_pw * att.mgiAtk],
+			"2": "%d" % [triangleAttack_pw * att.mgiAtk]
 		})
 	skillStrs[1] = SKILL_TXT
 	upAtt()
@@ -91,7 +92,8 @@ func triangleAttack():
 	yield(reTimer(1.4), "timeout")
 	setCell(Vector2(7, 2))
 
-	Chant.chantStart("三角攻击", 2)
+	Chant.chantStart("三角攻击", 5)
+	yield(reTimer(5), "timeout")
 	for i in range(10):
 		normalSpr.position = Vector2(0, -2)
 		yield(reTimer(0.1), "timeout")

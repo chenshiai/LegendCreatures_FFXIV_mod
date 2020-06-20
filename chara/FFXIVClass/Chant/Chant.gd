@@ -1,6 +1,7 @@
-var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
-var chantBar = null
+extends "../BaseClass.gd"
 
+var chantBar = null
+var position = Vector2(380, 45)
 var chantBarUnder = ImageTexture.new()
 var chantBarProgress = ImageTexture.new()
 var laber = null
@@ -9,13 +10,14 @@ var allTime = 0
 var nowTime = 0
 var skillName = "测试文案"
 
-
-func _init():
-	print("最终幻想14：—————— 魔法正在咏唱 ——————")
+func _init(position = null):
+	createChantBar(position)
 	pass
 
-func createChantBar():
-	var Path = Utils.getPath()
+func createChantBar(position):
+	position = position
+	if position == null:
+		position = Vector2(380, 45)
 	chantBar = TextureProgress.new()
 	laber = Label.new()
 
@@ -27,11 +29,11 @@ func createChantBar():
 
 	chantBar.value = 0
 	chantBar.visible = false
-	chantBar.rect_position = Vector2(380, 45)
+	chantBar.rect_position = position
 	sys.main.get_node("ui").add_child(chantBar)
 
 	laber.text = skillName
-	laber.rect_position = Vector2(500, 50)
+	laber.rect_position = position + Vector2(120, 5)
 	sys.main.get_node("ui").add_child(laber)
 	laber.visible = false
 

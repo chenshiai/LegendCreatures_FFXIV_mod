@@ -1,5 +1,6 @@
 var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
-var Chant = globalData.infoDs["g_FFXIVChant"]
+var Chant
+
 var TEXT = globalData.infoDs["g_bFFXIVText"]
 var allAtt = {}
 
@@ -18,13 +19,11 @@ var limitProgress2 = ImageTexture.new()
 var infomation = null
 var textGrid = null
 
-
 func _init():
-	print("最终幻想14：—————— 极限技能加载 ——————")
 	pass
 
 func createLimitBreak():
-	var Path = Utils.getPath()
+	Chant = Utils.Chant.new(Vector2(380, 480))
 	limitBreak = TextureProgress.new() # 极限技UI节点
 
 	limitUnder = Utils.loadImgTexture("/img/limitBreak_under.png")
@@ -42,6 +41,7 @@ func createLimitBreak():
 	limitBreak.rect_position = Vector2(380, 526)
 	sys.main.get_node("ui").add_child(limitBreak)
 
+func showLimitInfo():
 	infomation = sys.newMsg("jiangLiMsg")
 	infomation.get_node("Panel/Label").text = TEXT.LimitBreakInfomation.title
 	infomation.get_node("Panel/Button").connect("pressed", self, "MsgOk")
@@ -49,6 +49,7 @@ func createLimitBreak():
 	textGrid.text = TEXT.LimitBreakInfomation.content
 	infomation.get_node("Panel/CenterContainer").add_child(textGrid)
 	infomation.show()
+
 
 func MsgOk():
 	pass
@@ -88,6 +89,7 @@ func limitBreakUp(atkInfo):
 func limit_protect():
 	if limitBreakLevel != 0:
 		var lv = limitBreakLevel
+		Chant.chantStart("极限技-防护", 1)
 		yield(sys.get_tree().create_timer(0.5), "timeout")
 		resetLimit()
 		for cha in sys.main.btChas:
@@ -103,6 +105,7 @@ func limit_attack():
 	if limitBreakLevel != 0:
 		var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
 		var lv = limitBreakLevel
+		Chant.chantStart("极限技-进攻", 1)
 		yield(sys.get_tree().create_timer(0.5), "timeout")
 		resetLimit()
 		for cha in sys.main.btChas:
@@ -118,14 +121,19 @@ func limit_treatment():
 	if limitBreakLevel != 0:
 		var healStep = limitBreakLevel
 		healStep = (healStep * healStep * 0.5 + 1.5 * healStep + 1) / 10
+		Chant.chantStart("极限技-治疗", 1)
 		yield(sys.get_tree().create_timer(0.5), "timeout")
 		resetLimit()
 		for cha in sys.main.btChas:
 			if cha != null and cha.team == 1:
 				if !cha.isDeath:
 					cha.plusHp(cha.att.maxHp * healStep)
-					Utils.createEffect("heal", cha.position, Vector2(0, -30), 7, 2)
-					yield(sys.get_tree().create_timer(0.1), "timeout")
+				elif healStep == 3:
+					cha.isDeath = false
+					cha.anim.play("del", 100)
+					cha.plusHp(cha.att.maxHp)
+					cha.revive()
+				yield(sys.get_tree().create_timer(0.1), "timeout")
 	else:
 		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")
 

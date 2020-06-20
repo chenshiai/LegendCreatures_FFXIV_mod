@@ -1,4 +1,5 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
+var Chant = Utils.Chant.new()
 
 var layer # 关卡数
 var battleDuration = 0 # 战斗时间
@@ -38,7 +39,6 @@ func _connect():
 func _onBattleStart():
 	._onBattleStart()
 	selfAdaption()
-	Chant.createChantBar()
 
 func _onBattleEnd():
 	._onBattleEnd()
@@ -57,7 +57,7 @@ func selfAdaption():
 		E_spd = allAtt.spd
 		E_num = allAtt.num
 		E_lv = allAtt.lv
-		attInfo.maxHp = (E_atk + E_mgiAtk) * (layer / 2 * E_spd) / E_num
+		attInfo.maxHp = (E_atk + E_mgiAtk) * layer / E_num
 		attInfo.atk = (E_def + E_maxHp / 8) / E_num + layer * 3
 		attInfo.mgiAtk = (E_mgiDef + E_maxHp / 8) / E_num + layer * 3
 		attInfo.def = (E_atk + layer * 2) / E_num
@@ -82,7 +82,8 @@ func setTimeAxis(skillAxis):
 func _onHurt(atkInfo:AtkInfo):
 	._onHurt(atkInfo)
 	if atkInfo.atkType == Chara.AtkType.EFF and atkInfo.hurtVal > att.maxHp * 0.005:
-		atkInfo.hurtVal = att.maxHp * 0.005
+		print(1 - (att.def + att.mgiDef) / (att.def + att.mgiDef + 200))
+		atkInfo.hurtVal = att.maxHp * 0.005 * (1 - (att.def + att.mgiDef) / (att.def + att.mgiDef + 200))
 
 func normalAtkChara(cha):
 	var eff = newEff(atkEff, sprcPos)

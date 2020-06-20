@@ -6,18 +6,14 @@ var hpBarUnder = ImageTexture.new()
 var hpBarProgress = ImageTexture.new()
 
 func _init():
-	print("最终幻想14：—————— 高难机制加载 ——————")
 	pass
 
 func createHpBar():
-	var Path = Utils.getPath()
 	hpBar = TextureProgress.new()
-	im.load(Path + "/img/hpbar_under.png")
-	hpBarUnder.create_from_image(im)
+	hpBarUnder = Utils.loadImgTexture("/img/hpbar_under.png")
 	hpBar.texture_under = hpBarUnder
 
-	im.load(Path + "/img/hpbar_progress.png")
-	hpBarProgress.create_from_image(im)
+	hpBarProgress = Utils.loadImgTexture("/img/hpbar_progress.png")
 	hpBar.texture_progress = hpBarProgress
 
 	hpBar.value = 100
