@@ -16,7 +16,7 @@ var E_num = 1
 var E_lv = 1
 var E_spd = 1
 
-const DefaultTxt = "[自适应]：该单位属性根据敌方战力自适应调整，拥有特定的技能时间轴。击杀后会掉落道具{TItemSoul}"
+const DefaultTxt = "{c_base}[自适应]：该单位属性根据敌方战力自适应调整，拥有特定的技能时间轴。击杀后会掉落道具{TItemSoul}{/c}"
 
 func _extInit():
 	._extInit()
@@ -77,12 +77,10 @@ func reset():
 
 func setTimeAxis(skillAxis):
 	TimeAxis = Utils.createTimeAxis(skillAxis)
-	print("最终幻想14：Boss时间轴已创建")
 
 func _onHurt(atkInfo:AtkInfo):
 	._onHurt(atkInfo)
 	if atkInfo.atkType == Chara.AtkType.EFF and atkInfo.hurtVal > att.maxHp * 0.005:
-		print(1 - (att.def + att.mgiDef) / (att.def + att.mgiDef + 200))
 		atkInfo.hurtVal = att.maxHp * 0.005 * (1 - (att.def + att.mgiDef) / (att.def + att.mgiDef + 200))
 
 func normalAtkChara(cha):

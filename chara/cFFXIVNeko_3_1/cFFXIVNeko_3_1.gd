@@ -9,7 +9,7 @@ func _extInit():
 	lv = 3
 	evos = []
 	addCdSkill("skill_ApexArrow", 12)
-	addSkillTxt(TEXT.format("""[辉煌箭]：『{TPassive}』普通攻击有20%的概率触发，造成[330%]的{TPhyHurt}
+	addSkillTxt(TEXT.format("""[辉煌箭]：{TPassive}普通攻击有20%的概率触发，造成[330%]的{TPhyHurt}
 [绝峰箭]：冷却12s，射出穿透箭对直线上单位造成[200%]的{TPhyHurt}，并赋予5层[流血]"""))
 
 const REFULGENT_PW = 3.30 # 辉煌箭威力

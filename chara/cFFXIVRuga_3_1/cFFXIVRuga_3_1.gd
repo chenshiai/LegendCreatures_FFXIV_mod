@@ -11,7 +11,7 @@ func _extInit():
 	evos = []
 	addCdSkill("skill_Drill", 12)
 	addSkillTxt(TEXT.format("[钻头]：冷却12s，对目标造成[400%]的{TPhyHurt}"))
-	addSkillTxt(TEXT.format("[枪管加热]：『{TPassive}』自身攻击力提高15%"))
+	addSkillTxt(TEXT.format("[枪管加热]：{TPassive}自身攻击力提高15%"))
 
 const DRILL_PW = 4 # 钻头威力
 

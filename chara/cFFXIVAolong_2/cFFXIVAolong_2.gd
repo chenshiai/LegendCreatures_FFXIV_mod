@@ -28,7 +28,7 @@ func _extInit():
 	lv = 2
 	evos = ["cFFXIVAolong_2_1"]
 	atkEff = "atk_dao"
-	addSkillTxt(TEXT.format("[雪/月/花]：『{TPassive}』每2次攻击随机获得[雪][月][花]印记，攻击力提升10%，攻速提升10%"))
+	addSkillTxt(TEXT.format("[雪/月/花]：{TPassive}每2次攻击随机获得[雪][月][花]印记，攻击力提升10%，攻速提升10%"))
 	addSkillTxt(SKILL_TXT_1)
 
 func _connect():

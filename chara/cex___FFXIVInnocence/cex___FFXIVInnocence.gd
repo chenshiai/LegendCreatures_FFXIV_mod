@@ -1,10 +1,12 @@
 extends "../cex___FFXIVBossChara/cex___FFXIVBossChara.gd"
 const BERSERKERTIME = 190 # 狂暴时间
-var SKILL_TXT = TEXT.format("""[夺影]：对全屏的敌人造成[未知]的{TMgiHurt}。
-[断罪飞翔]：随机两条竖线或横线进行飞剑攻击，造成[未知]的{TMgiHurt}，并附加一层易伤(受伤加重30%)。
-[裁决之雷]：死刑！！对当前目标释放大伤害攻击，造成[未知]的{TMgiHurt}，并附加大易伤(平A致命)。
+var SKILL_TXT = TEXT.format("""{c_base}
+[夺影]：对全屏的敌人造成[未知]的{TMgiHurt}。
+[断罪飞翔]：随机两条竖线或横线进行飞剑攻击，造成[未知]的{TMgiHurt}，并附加{c_buff}易伤{/c}(受伤加重30%)。
+[裁决之雷]：{TDeath}对当前目标释放大伤害攻击，造成[未知]的{TMgiHurt}，并附加{c_buff}大易伤{/c}(平A致命)。
 [转阶段·回转火焰剑]：全屏攻击，造成[未知]的{TPhyHurt}
-[荣福直观]：移动至场边，向对面进行冲刺，造成[未知]的{TPhyHurt}，距离中线越近的目标受伤越高。""")
+[荣福直观]：移动至场边，向对面进行冲刺，造成[未知]的{TPhyHurt}，距离中线越近的目标受伤越高。{/c}
+""")
 
 func _extInit():
 	._extInit()
@@ -42,17 +44,19 @@ func _onBattleStart():
 	shadowReaver_pw *= (E_lv / E_num)
 	flammingSword_pw *= (E_lv / E_num)
 	beatficVision_pw *= (E_lv / E_num)
-	SKILL_TXT = TEXT.format("""[夺影]：对全屏的敌人造成[{0}]点{TMgiHurt}。
-[断罪飞翔]：随机两条竖线或横线进行飞剑攻击，造成[{1}]点{TMgiHurt}，并附加一层易伤(受伤加重30%%)。
-[裁决之雷]：死刑！！对当前目标释放大伤害攻击，造成[{2}]点{TMgiHurt}，并附加大易伤(平A致命)。
-[转阶段·回转火焰剑]：全屏攻击，造成[{3}]点{TPhyHurt}
-[荣福直观]：移动至场边，向对面进行冲刺，造成[{4}]点{TPhyHurt}，距离中线越近的目标受伤越高。""",
+	SKILL_TXT = TEXT.format("""{c_base}
+[夺影]：对全屏的敌人造成{c_mgi}{0}{/c}魔法伤害。
+[断罪飞翔]：随机两条竖线或横线进行飞剑攻击，造成{c_mgi}{1}{/c}魔法伤害，并附加{c_buff}易伤{/c}(受伤加重30%)。
+[裁决之雷]：{TDeath}对当前目标释放大伤害攻击，造成{c_mgi}{2}{/c}魔法伤害，并附加{c_buff}大易伤{/c}(平A致命)。
+[转阶段·回转火焰剑]：全屏攻击，造成{c_phy}{3}{/c}物理伤害
+[荣福直观]：移动至场边，向对面进行冲刺，造成{c_phy}{4}{/c}物理伤害，距离中线越近的目标受伤越高。{/c}
+""",
 		{
-			"0": "%d" % [shadowReaver_pw * att.mgiAtk],
-			"1": "%d" % [wingedReprobation_pw * att.mgiAtk],
-			"2": "%d" % [righteousBolt_pw * att.mgiAtk],
-			"3": "%d" % [flammingSword_pw * att.atk],
-			"4": "%d" % [beatficVision_pw * att.atk]
+			"0": "%d%%[%d]" % [shadowReaver_pw * 100,  shadowReaver_pw * att.mgiAtk],
+			"1": "%d%%[%d]" % [wingedReprobation_pw * 100, wingedReprobation_pw * att.mgiAtk],
+			"2": "%d%%[%d]" % [righteousBolt_pw * 100, righteousBolt_pw * att.mgiAtk],
+			"3": "%d%%[%d]" % [flammingSword_pw * 100, flammingSword_pw * att.atk],
+			"4": "%d%%[%d]" % [beatficVision_pw * 100, beatficVision_pw * att.atk]
 		})
 	skillStrs[1] = SKILL_TXT
 	upAtt()

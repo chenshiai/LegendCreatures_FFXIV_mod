@@ -1,7 +1,7 @@
 extends "../cex___FFXIVBossChara/cex___FFXIVBossChara.gd"
 const BERSERKERTIME = 120 # 狂暴时间
 
-var SKILL_TXT = TEXT.format("""[刀光剑舞]：死刑，对当前攻击目标造成[未知]的单体{TPhyHurt}
+var SKILL_TXT = TEXT.format("""[刀光剑舞]：{TDeath}对当前攻击目标造成[未知]的单体{TPhyHurt}
 [激光雨]：对全屏的敌人造成[未知]法强的{TMgiHurt}
 [优化爆炎]：对所有敌人造成一次[未知]法强的小范围{TMgiHurt}""")
 
@@ -34,7 +34,7 @@ func _onBattleStart():
 	swordDance_pw *= (E_lv / E_num)
 	laserRain_pw *= (E_lv / E_num)
 	optimizedFireIII_pw *= (E_lv / E_num)
-	SKILL_TXT = TEXT.format("""[刀光剑舞]：死刑，对当前攻击目标造成[{0}]的单体{TPhyHurt}
+	SKILL_TXT = TEXT.format("""[刀光剑舞]：{TDeath}对当前攻击目标造成[{0}]的单体{TPhyHurt}
 [激光雨]：对全屏的敌人造成[{1}]法强的{TMgiHurt}
 [优化爆炎]：对所有敌人造成一次[{2}]法强的小范围{TMgiHurt}""",
 		{

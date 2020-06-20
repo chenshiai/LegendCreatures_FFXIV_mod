@@ -1,7 +1,7 @@
 extends "../cex___FFXIVBossChara/cex___FFXIVBossChara.gd"
 const BERSERKERTIME = 140 # 狂暴时间
 
-var SKILL_TXT = TEXT.format("""[芥末爆弹]：死刑，对当前攻击目标造成[未知]法强的小范围{TMgiHurt}
+var SKILL_TXT = TEXT.format("""[芥末爆弹]：{TDeath}对当前攻击目标造成[未知]法强的小范围{TMgiHurt}
 [原子射线]：对全屏的敌人造成[未知]法强的{TMgiHurt}
 [三角攻击]：对全屏的敌人造成[致命]的{TMgiHurt}（会移动至场边释放，届时请使用三段极限技[防护]）""")
 
@@ -34,7 +34,7 @@ func _onBattleStart():
 	._onBattleStart()
 	mustardBomb_pw *= (E_lv / E_num)
 	atomicRay_pw *= (E_lv / E_num)
-	SKILL_TXT = TEXT.format("""[芥末爆弹]：死刑，对当前攻击目标造成[{0}]点小范围{TMgiHurt}
+	SKILL_TXT = TEXT.format("""[芥末爆弹]：{TDeath}对当前攻击目标造成[{0}]点小范围{TMgiHurt}
 [原子射线]：对全屏的敌人造成[{1}]点{TMgiHurt}
 [三角攻击]：对全屏的敌人造成[{2}]点{TMgiHurt}（会移动至场边释放，届时请使用三段极限技[防护]）""",
 		{

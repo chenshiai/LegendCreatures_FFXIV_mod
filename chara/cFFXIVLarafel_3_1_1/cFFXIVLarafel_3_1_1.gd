@@ -13,7 +13,7 @@ func _extInit():
 	attCoe.mgiDef = 4.3
 	lv = 4
 	evos = []
-	addSkillTxt(TEXT.format("[抗争之力]：『{TPassive}』当黑白魔元失衡时（差距大于30），则量少魔元的获得量提高10点"))
+	addSkillTxt(TEXT.format("[抗争之力]：{TPassive}当黑白魔元失衡时（差距大于30），则量少魔元的获得量提高10点"))
 
 var baseId = ""
 const MORGEN_UP = 10

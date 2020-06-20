@@ -9,7 +9,7 @@ func _extInit():
 	attCoe.mgiDef = 6.5
 	lv = 4
 	evos = []
-	addSkillTxt(TEXT.format("[掠影示现]：『{TPassive}』令英雄的掠影变为实体与自身并肩作战，与本体同步攻击，造成本体的[30%]的伤害，自身最大生命值提高"))
+	addSkillTxt(TEXT.format("[掠影示现]：{TPassive}令英雄的掠影变为实体与自身并肩作战，与本体同步攻击，造成本体的[30%]的伤害，自身最大生命值提高"))
 
 var baseId = ""
 

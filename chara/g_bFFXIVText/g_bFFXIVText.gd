@@ -3,24 +3,38 @@ func format(text, config = {}):
   return Text.format(config)
 
 var Config = {
+  "c_base": "[color=%s]" % [COLOR.BASE],
+  "c_buff": "[color=%s]" % [COLOR.BUFF],
+  "c_mgi": "[color=%s]" % [COLOR.C_MGI],
+  "c_phy": "[color=%s]" % [COLOR.C_PHY],
+  "c_pas": "[color=%s]" % [COLOR.PASSIVE],
+  "c_Tmgi": "[color=%s]" % [COLOR.MGI],
+  "c_Tphy": "[color=%s]" % [COLOR.PHY],
+  "/c": "[/color]",
   "TItemSoul": "[color=#f6ff00][灵魂水晶][/color]",
+  "TDeath": "[color=%s]死刑！！[/color]" % [COLOR.DEATH],
   "TMgiHurt": "[color=%s]魔法伤害[/color]" % [COLOR.MGI],
   "TPhyHurt": "[color=%s]物理伤害[/color]" % [COLOR.PHY],
   "TRealHurt": "[color=%s]真实伤害[/color]" % [COLOR.REAL],
-  "TPassive": "[color=%s]被动[/color]" % [COLOR.PASSIVE],
+  "TPassive": "[color=%s]『被动』[/color]" % [COLOR.PASSIVE],
   "TProtect": "[color=%s]防护[/color]" % [COLOR.PROTECT],
   "TAttack": "[color=%s]进攻[/color]" % [COLOR.ATTACK],
-  "TTreatment": "[color=%s]治疗[/color]" % [COLOR.TREATMENT],
+  "TTreatment": "[color=%s]治疗[/color]" % [COLOR.TREATMENT]
 }
 
 const COLOR = {
+  "BASE": "#eeeeee",
+  "BUFF": "#fff66e",
   "PHY": "#ff7522",
+  "C_PHY": "#ffb386",
   "MGI": "#00e4ff",
-  "PASSIVE": "#e5e5e5",
+  "C_MGI": "#83f2ff",
+  "PASSIVE": "#a9a9a9",
   "REAL": "#ffffff",
-  "PROTECT": "#00b4ff",
-  "ATTACK": "#ff0909",
-  "TREATMENT": "#43ff09"
+  "PROTECT": "#79d8ff",
+  "ATTACK": "#ff7e7e",
+  "TREATMENT": "#9cff7d",
+  "DEATH": "#ff7e7e"
 }
 
 const LimitBreakInfomation = {

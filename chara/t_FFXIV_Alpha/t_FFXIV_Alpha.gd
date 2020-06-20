@@ -5,7 +5,7 @@ var Limit = globalData.infoDs["g_FFXIVLimitBreak"] # 极限技类
 var HpBar = globalData.infoDs["g_FFXIVBossHpBar"] # boss血条类
 var FFChara = globalData.infoDs["g_FFXIVChara"] # 角色相关类
 var Retreat = globalData.infoDs["g_FFXIVRetreat"] # 退避机制
-var FFXIVControl = globalData.infoDs["g_zFFXIVControl"] # 控制面板
+var FFControl = globalData.infoDs["g_zFFXIVControl"] # 控制面板
 
 var originBackground # 原版背景
 var layer = 0 # 当前关卡数
@@ -31,9 +31,8 @@ func _connect():
 	HpBar.createHpBar()
 	Limit.createLimitBreak()
 	Retreat.initRetreat()
-	FFXIVControl.createControl()
+	FFControl.createControl()
 	FFChara.openDeathList()
-	print(Utils.FileHelper.scan("res://audio"))
 
 class Bf:
 	extends Buff

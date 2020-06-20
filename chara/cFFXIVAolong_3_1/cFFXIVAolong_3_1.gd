@@ -8,7 +8,7 @@ func _extInit():
 	lv = 3
 	evos = []
 	addCdSkill("skill_Assassinate", 20)
-	addSkillTxt(TEXT.format("[生杀予夺]：『{TPassive}』提高自身伤害20%，第一次使用[忍术]后，之后[忍术]的冷却减少5s"))
+	addSkillTxt(TEXT.format("[生杀予夺]：{TPassive}提高自身伤害20%，第一次使用[忍术]后，之后[忍术]的冷却减少5s"))
 
 
 func _connect():
