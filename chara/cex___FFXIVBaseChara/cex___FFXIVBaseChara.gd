@@ -34,6 +34,9 @@ func _extInit():
 	attCoe.mgiAtk = 1
 	attCoe.def = 1
 	attCoe.mgiDef = 1
+
+func _onBattleStart():
+	._onBattleStart()
 	attAdd.spd = AtkSpd[OCCUPATION]
 
 func getAtkVal():
@@ -41,7 +44,7 @@ func getAtkVal():
 		"MeleeDPS": 
 			return att.atk
 		"MagicDPS":
-			return att.mgiAtk * 0.6
+			return att.mgiAtk
 		"DistanceDPS":
 			return att.atk * 1.1
 		"Default":

@@ -29,7 +29,6 @@ class BaseSoul:
 	}
 
 	func _init(cha = null):
-		print("BaseSoul初始化")
 		if cha != null:
 			masTeam = cha.team
 			masCha = cha

@@ -124,10 +124,10 @@ func select_area(cha, mapArea, area):
 
 func showLimitInfo():
 	infomation = sys.newMsg("jiangLiMsg")
-	infomation.get_node("Panel/Label").text = TEXT.LimitBreakInfomation.title
+	infomation.get_node("Panel/Label").text = TEXT.Instructions.title
 	infomation.get_node("Panel/Button").connect("pressed", self, "MsgOk")
 	textGrid = Label.new()
-	textGrid.text = TEXT.LimitBreakInfomation.content
+	textGrid.text = TEXT.Instructions.content
 	infomation.get_node("Panel/CenterContainer").add_child(textGrid)
 	infomation.show()
 

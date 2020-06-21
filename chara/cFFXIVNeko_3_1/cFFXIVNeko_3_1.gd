@@ -41,6 +41,6 @@ func apexArrow():
 
 func effInCell(cell):
 	var cha = matCha(cell)
-	if cha.team != team:
+	if cha != null and cha.team != team:
 		FFHurtChara(cha, att.atk * APEXARROW_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 		cha.addBuff(b_liuXue.new(5))
