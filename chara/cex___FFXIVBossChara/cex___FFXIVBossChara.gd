@@ -16,7 +16,8 @@ var E_num = 1
 var E_lv = 1
 var E_spd = 1
 
-const DefaultTxt = "{c_base}[自适应]：该单位属性根据敌方战力自适应调整，拥有特定的技能时间轴。击杀后会掉落道具{TItemSoul}{/c}"
+const DefaultTxt = """{c_base}[自适应]：该单位属性根据敌方战力自适应调整，拥有特定的技能时间轴。
+战胜了的话也许会有意料之外的收获！？{/c}"""
 
 func _extInit():
 	._extInit()

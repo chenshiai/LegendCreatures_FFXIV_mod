@@ -10,6 +10,12 @@ var Config = {
 	"c_pas": "[color=%s]" % [COLOR.PASSIVE],
 	"c_Tmgi": "[color=%s]" % [COLOR.MGI],
 	"c_Tphy": "[color=%s]" % [COLOR.PHY],
+	"c_balance": "[color=%s]" % [COLOR.BALANCE],
+	"c_arrow": "[color=%s]" % [COLOR.ARROW],
+	"c_spear": "[color=%s]" % [COLOR.SPEAR],
+	"c_bole": "[color=%s]" % [COLOR.BOLE],
+	"c_ewer": "[color=%s]" % [COLOR.EWER],
+	"c_spire": "[color=%s]" % [COLOR.SPIRE],
 	"/c": "[/color]",
 	"TItemSoul": "[color=#f6ff00][灵魂水晶][/color]",
 	"TDeath": "[color=%s]死刑！！[/color]" % [COLOR.DEATH],
@@ -34,7 +40,13 @@ const COLOR = {
 	"PROTECT": "#79d8ff",
 	"ATTACK": "#ff7e7e",
 	"TREATMENT": "#9cff7d",
-	"DEATH": "#ff7e7e"
+	"DEATH": "#ff7e7e",
+	"BALANCE": "#ff4848",
+	"ARROW": "#86d1f4",
+	"SPEAR": "#8693f4",
+	"BOLE": "#80f87d",
+	"EWER": "#229fff",
+	"SPIRE": "#fcda72"
 }
 
 const Instructions = {

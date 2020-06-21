@@ -16,9 +16,10 @@ func _extInit():
 	lv = 2
 	evos = ["cFFXIVSpirit_1_1"]
 	atkEff = "atk_dang"
-	addCdSkill("skill_DrawCard", 8)
-	addSkillTxt("""[抽卡]：冷却8s，随机抽取一张卡施加效果给全部队友，持续5s。太阳神之衡[攻击力20%]；放浪神之箭[攻速20%]；
-战争神之枪[暴击20%]；世界树之干[物防20%]；河流神之瓶[冷却20%]；建筑神之塔[魔防20%]""")
+	addCdSkill("skill_DrawCard", 20)
+	addSkillTxt(TEXT.format("""[抽卡]：冷却20s，随机抽取一张卡施加效果给全部队友，持续20s。此技能开局释放一次，不记入CD
+{c_balance}太阳神之衡{/c}[双攻提升20%]；{c_arrow}放浪神之箭{/c}[攻击速度20%]；{c_spear}战争神之枪{/c}[暴击增加20%]；
+{c_bole}世界树之干{/c}[物防提升20%]；{c_ewer}河流神之瓶{/c}[冷却缩减20%]；{c_spire}建筑神之塔{/c}[魔防提升20%]。"""))
 	addCdSkill("skill_StarPhase", 18)
 	addSkillTxt(TEXT.format("""[阳星相位]：冷却18s，恢复全场友军[60%]法强的HP
 [白昼学派]：{TPassive}阳星相位会给目标施加持续恢复效果，每秒恢复[15%]法强的HP，持续8秒"""))
@@ -30,6 +31,7 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
+	drawCard()
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -42,17 +44,23 @@ func drawCard():
 	var n = sys.rndRan(0, 5)
 	var bf = null
 	if n == 0:
-		bf = BUFF_LIST.b_Balance.new(5)
+		Utils.createEffect("Arcana_01", position, Vector2(0, -240), 14, 0.5)
+		bf = BUFF_LIST.b_Balance.new(20)
 	elif n == 1:
-		bf = BUFF_LIST.b_Arrow.new(5)
+		Utils.createEffect("Arcana_02", position, Vector2(0, -240), 14, 0.5)
+		bf = BUFF_LIST.b_Arrow.new(20)
 	elif n == 2:
-		bf = BUFF_LIST.b_Spear.new(5)
+		Utils.createEffect("Arcana_03", position, Vector2(0, -240), 14, 0.5)
+		bf = BUFF_LIST.b_Spear.new(20)
 	elif n == 3:
-		bf = BUFF_LIST.b_Bole.new(5)
+		Utils.createEffect("Arcana_04", position, Vector2(0, -240), 14, 0.5)
+		bf = BUFF_LIST.b_Bole.new(20)
 	elif n == 4:
-		bf = BUFF_LIST.b_Ewer.new(5)
+		Utils.createEffect("Arcana_05", position, Vector2(0, -240), 14, 0.5)
+		bf = BUFF_LIST.b_Ewer.new(20)
 	elif n == 5:
-		bf = BUFF_LIST.b_Spire.new(5)
+		Utils.createEffect("Arcana_06", position, Vector2(0, -240), 14, 0.5)
+		bf = BUFF_LIST.b_Spire.new(20)
 
 	var chas = getAllChas(2)
 	for cha in chas:
@@ -62,11 +70,13 @@ func drawCard():
 # 阳星相位		
 func starPhase(lv):
 	var allys = getAllChas(2)
+	allys.shuffle()
 	for cha in allys:
 		if cha != null:
 			cha.plusHp(att.mgiAtk * STARPHASE_PW)
 			BUFF_LIST.b_LuckyStar.new(8, att.mgiAtk * 0.15, cha)
 			if lv == 4:
 				BUFF_LIST.b_Night.new(10, att.mgiAtk * STARPHASE_PW * 1.25, cha)
+				Utils.createEffect("ePcr_mgiPZ", cha.position, Vector2(0,-30), 14)
 			yield(reTimer(0.1), "timeout")
 			

@@ -1,5 +1,7 @@
 class BaseBuff extends Buff:
 	var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
+	var shieldBar:TextureProgress = null
+	var shieldBarValue = 0
 	# 当我不想对在角色文件中使用addBuff的时候，我会把角色传到buff里面使用addBuff()
 	func addBuff(cha):
 		if cha != null:
@@ -35,6 +37,7 @@ class BassShield extends BaseBuff:
 
 		if shieldValue <= 0:
 			self.isDel = true
+
 
 class ReduceDemage extends BaseBuff:
 	var reduce_type = null
@@ -503,11 +506,12 @@ class b_Balance:
 		id = "b_Balance"
 		isNegetive = false
 		att.atkL = 0.20
+		att.mgiAtkL = 0.20
 		life = dur
 		addBuff(cha)
 
 	func _upS():
-		life = clamp(life, 0, 5)
+		life = clamp(life, 0, 20)
 
 # 放浪神之箭  
 class b_Arrow:
@@ -521,7 +525,7 @@ class b_Arrow:
 		addBuff(cha)
 
 	func _upS():
-		life = clamp(life, 0, 5)
+		life = clamp(life, 0, 20)
 
 # 战争神之枪     
 class b_Spear:
@@ -535,7 +539,7 @@ class b_Spear:
 		addBuff(cha)
 
 	func _upS():
-		life = clamp(life, 0, 5)
+		life = clamp(life, 0, 20)
 
 # 世界树之干
 class b_Bole:
@@ -549,7 +553,7 @@ class b_Bole:
 		addBuff(cha)
 
 	func _upS():
-		life = clamp(life, 0, 5)
+		life = clamp(life, 0, 20)
 
 # 河流神之瓶
 class b_Ewer:
@@ -563,7 +567,7 @@ class b_Ewer:
 		addBuff(cha)
 
 	func _upS():
-		life = clamp(life, 0, 5)
+		life = clamp(life, 0, 20)
 
 # 建筑神之塔
 class b_Spire:
@@ -577,7 +581,7 @@ class b_Spire:
 		addBuff(cha)
 
 	func _upS():
-		life = clamp(life, 0, 5)
+		life = clamp(life, 0, 20)
 
 # 吉星
 class b_LuckyStar:
@@ -681,3 +685,10 @@ class b_Test:
 
 	func _process(a):
 		eff.position = masCha.position
+
+
+# 添加A_buff，判断目标是否持有【护盾基类buff】，没有则创建一个护盾槽，挂在角色节点上
+# 添加B_buff，判断目标是有持有【护盾基类buff】，有，则将护盾值累加在护盾槽
+# 当B_buff消失，目标护盾槽减少b_buff的剩余护盾值
+
+# 当任意护盾buff的护盾值更新，都要触发目标护盾槽值的变化

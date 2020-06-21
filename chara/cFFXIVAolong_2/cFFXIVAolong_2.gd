@@ -11,6 +11,8 @@ var atkCount = 0 # 当前攻击次数
 var flash = 0 # 当前闪的数量
 var beforIaijutsu = 0 # 上一次雪月花的威力
 
+signal swordPpressure
+
 var SKILL_TXT_1 = TEXT.format("""[居合术]：每第6次攻击，发动一次[纷乱雪月花]
 [纷乱雪月花]：对目标造成[150%][350%][720%]的{TPhyHurt}，印记种类越多伤害越高，可暴击！""")
 
@@ -71,6 +73,7 @@ func iaijutsu():
 	elif flash == 3:
 		setsugekka(SETSUGEKKA_PW)
 		beforIaijutsu = SETSUGEKKA_PW
+	yield(reTimer(0.3), "timeout")
 	reset()
 
 # 获得对应的印记
@@ -91,8 +94,9 @@ func getFlash(name):
 
 # 纷乱雪月花
 func setsugekka(skill_pw):
+	emit_signal("swordPpressure")
 	Utils.createShadow(img, position, aiCha.position)
-	normalSpr.position = Vector2(0, -600)
+	normalSpr.position = (aiCha.position - position).normalized() * 70
 	yield(reTimer(0.3), "timeout")
 	Utils.createEffect("slash2", aiCha.position, Vector2(0,-30), 10, 1.3)
 	FFHurtChara(aiCha, att.atk * skill_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
