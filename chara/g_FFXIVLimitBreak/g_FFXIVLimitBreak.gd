@@ -15,10 +15,6 @@ var limitProgress0 = ImageTexture.new()
 var limitProgress1 = ImageTexture.new()
 var limitProgress2 = ImageTexture.new()
 
-
-var infomation = null
-var textGrid = null
-
 func _init():
 	pass
 
@@ -27,32 +23,23 @@ func createLimitBreak():
 	limitBreak = TextureProgress.new() # 极限技UI节点
 
 	limitUnder = Utils.loadImgTexture("/img/limitBreak_under.png")
-	limitBreak.texture_under = limitUnder
 
 	limitProgress0 = Utils.loadImgTexture("/img/limitBreak_progress0.png")
-	limitBreak.texture_progress = limitProgress0
 
 	limitProgress1 = Utils.loadImgTexture("/img/limitBreak_progress1.png")
 	limitProgress2 = Utils.loadImgTexture("/img/limitBreak_progress2.png")
 	limitProgress = Utils.loadImgTexture("/img/limitBreak_progress.png")
 
-	limitBreak.value = 0
-	limitBreak.visible = true
-	limitBreak.rect_position = Vector2(380, 526)
+	limitBreak.set_under_texture(limitUnder)
+	limitBreak.set_progress_texture(limitProgress0)
+	limitBreak.set_max(1000)
+	limitBreak.set_step(0.01)
+	limitBreak.set_min(0)
+	limitBreak.set_value(0)
+	limitBreak.set_visible(true)
+	limitBreak.set_position(Vector2(380, 526))
 	sys.main.get_node("ui").add_child(limitBreak)
 
-func showLimitInfo():
-	infomation = sys.newMsg("jiangLiMsg")
-	infomation.get_node("Panel/Label").text = TEXT.LimitBreakInfomation.title
-	infomation.get_node("Panel/Button").connect("pressed", self, "MsgOk")
-	textGrid = Label.new()
-	textGrid.text = TEXT.LimitBreakInfomation.content
-	infomation.get_node("Panel/CenterContainer").add_child(textGrid)
-	infomation.show()
-
-
-func MsgOk():
-	pass
 
 func initLimitValue():
 	allAtt = Utils.Calculation.getEnemyPower(2)
@@ -62,26 +49,26 @@ func initLimitValue():
 func resetLimit():
 	limitBreakLevel = 0
 	limitBreakNow = 0
-	limitBreak.value = 0
-	limitBreak.texture_progress = limitProgress0
+	limitBreak.set_value(0)
+	limitBreak.set_progress_texture(limitProgress0)
 
 
 func nowLimitBreak(value):
-	if value >= 100:
-		limitBreak.texture_progress = limitProgress
+	if value >= 1000:
+		limitBreak.set_progress_texture(limitProgress)
 		limitBreakLevel = 3
-	elif value >= 66:
-		limitBreak.texture_progress = limitProgress2
+	elif value >= 667:
+		limitBreak.set_progress_texture(limitProgress2)
 		limitBreakLevel = 2
-	elif value >= 33:
-		limitBreak.texture_progress = limitProgress1
+	elif value >= 333:
+		limitBreak.set_progress_texture(limitProgress1)
 		limitBreakLevel = 1
 
 
 func limitBreakUp(atkInfo):
-	if limitBreak.value < 100:
+	if limitBreak.value < 1000:
 		limitBreakNow += atkInfo.atkVal
-		limitBreak.value =  limitBreakNow * 100 / limitBreakVal
+		limitBreak.set_value(limitBreakNow * 1000 / limitBreakVal)
 		nowLimitBreak(limitBreak.value)
 	pass
 
@@ -90,7 +77,7 @@ func limit_protect():
 	if limitBreakLevel != 0:
 		var lv = limitBreakLevel
 		Chant.chantStart("极限技-防护", 1)
-		yield(sys.get_tree().create_timer(0.5), "timeout")
+		yield(sys.get_tree().create_timer(1), "timeout")
 		resetLimit()
 		for cha in sys.main.btChas:
 			if cha != null and cha.team == 1:
@@ -106,7 +93,7 @@ func limit_attack():
 		var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
 		var lv = limitBreakLevel
 		Chant.chantStart("极限技-进攻", 1)
-		yield(sys.get_tree().create_timer(0.5), "timeout")
+		yield(sys.get_tree().create_timer(1), "timeout")
 		resetLimit()
 		for cha in sys.main.btChas:
 			if cha != null and cha.team == 2:
@@ -122,7 +109,7 @@ func limit_treatment():
 		var healStep = limitBreakLevel
 		healStep = (healStep * healStep * 0.5 + 1.5 * healStep + 1) / 10
 		Chant.chantStart("极限技-治疗", 1)
-		yield(sys.get_tree().create_timer(0.5), "timeout")
+		yield(sys.get_tree().create_timer(1), "timeout")
 		resetLimit()
 		for cha in sys.main.btChas:
 			if cha != null and cha.team == 1:

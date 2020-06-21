@@ -5,7 +5,7 @@ var Limit = globalData.infoDs["g_FFXIVLimitBreak"] # 极限技类
 var HpBar = globalData.infoDs["g_FFXIVBossHpBar"] # boss血条类
 var FFChara = globalData.infoDs["g_FFXIVChara"] # 角色相关类
 var Retreat = globalData.infoDs["g_FFXIVRetreat"] # 退避机制
-var FFControl = globalData.infoDs["g_zFFXIVControl"] # 控制面板
+var FFControl # 控制面板
 
 var originBackground # 原版背景
 var layer = 0 # 当前关卡数
@@ -22,7 +22,7 @@ func get_info():
 	return TEXT.T_RAID % [lv * 4 + 20, (0.1 + lv * 0.01) * 100, lv, 5 + lv * 5]
 
 func _connect():
-	sys.main.player.maxHp += lv * 4+20
+	sys.main.player.maxHp += lv * 4 + 20
 	sys.main.player.plusHp(lv * 4 + 20)
 	sys.main.connect("onBattleReady", self, "come")
 	sys.main.connect("onBattleStart", self, "run")
@@ -31,8 +31,10 @@ func _connect():
 	HpBar.createHpBar()
 	Limit.createLimitBreak()
 	Retreat.initRetreat()
-	FFControl.createControl()
 	FFChara.openDeathList()
+
+	FFControl = Utils.FFControl.new()
+	FFControl.createControl()
 
 class Bf:
 	extends Buff
@@ -54,7 +56,7 @@ func reward():
 		sys.main.player.plusHp(lv)
 	sys.main.player.plusGold(5 + lv * 5)
 	sys.main.get_node("scene/bg/bg").set_texture(originBackground)
-	HpBar.setVisible(false)
+	HpBar.hidden()
 	Limit.resetLimit()
 
 func come():
@@ -63,8 +65,7 @@ func come():
 		if sys.rndPer(probability):
 			lastLayer = layer
 			probability = PROBABILITY
-			HpBar.setVisible(true)
-			HpBar.setValue(100)
+			HpBar.show()
 
 			var cha = FFChara.rndRanBoss()
 			cha.connect("onHurtEnd", HpBar, "hpDown")

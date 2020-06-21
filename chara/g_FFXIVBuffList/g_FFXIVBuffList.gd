@@ -657,6 +657,11 @@ class b_StaticTime:
 	func _del():
 		._del()
 		masCha.aiOn = oriAi
+		masCha.isMoveIng = false
+
+	func _upS():
+		masCha.isMoveIng = true
+		life = clamp(life, 0, 2)
 
 class b_Test:
 	extends Buff

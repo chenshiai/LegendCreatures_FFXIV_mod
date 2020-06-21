@@ -1,6 +1,8 @@
 var handle = sys.get_node("../Control")
 var Path = null
 var Chant = null
+var Keyboard = null
+var FFControl = null
 
 func _init():
 	print("最终幻想14：—————— 完整性检测中 ——————")
@@ -11,8 +13,9 @@ func _init():
 func testInit():
 	Path = chaData.infoDs["cFFXIV_zTatalu"].dir
 	if Path != null:
-		print("最终幻想14：—————— 魔法正在咏唱 ——————")
 		Chant = load(Path + "/FFXIVClass/Chant/Chant.gd")
+		Keyboard = load(Path + "/FFXIVClass/Keyboard/Keyboard.gd")
+		FFControl = load(Path + "/FFXIVClass/Control/Control.gd")
 	else:
 		var label = Label.new()
 		label.text = "最终幻想14：MOD文件路径读取失败，请在创意工坊内重新订阅。"
@@ -50,11 +53,25 @@ func createTimeAxis(skillAxis):
 	return timeAxis
 
 
-func createUiButton(text, position, target = self, callback = "defaultCallback", config = {}):
+func createUiButton(
+		text,
+		position,
+		target = self,
+		callback = "defaultCallback",
+		config = {
+			"args": [],
+			"return": false
+		}
+	):
+	# 这个默认值过于愚蠢
+	var args = []
+	if config.has("args"):
+		args = config.args
+	
 	var button = Button.new()
 	button.text = text
 	button.rect_position = position
-	button.connect("pressed", target, callback)
+	button.connect("pressed", target, callback, args)
 
 	if config.has("set_size"):
 		button.set_size = config["set_size"]
