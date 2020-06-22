@@ -40,6 +40,7 @@ func _connect():
 func _onBattleStart():
 	._onBattleStart()
 	selfAdaption()
+	reward = true
 
 func _onBattleEnd():
 	._onBattleEnd()

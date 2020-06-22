@@ -125,12 +125,15 @@ func select_area(cha, mapArea, area):
 			"right_top": select_area(cha, mapArea, "right_bottom")
 
 func showLimitInfo():
-	textGrid = Label.new()
+	textGrid = RichTextLabel.new()
+	textGrid.rect_min_size = Vector2(1000, 400)
+	textGrid.margin_left = 50
+	textGrid.margin_top = 80
 	textGrid.bbcode_enabled = true
 	textGrid.bbcode_text = TEXT.Instructions.content
 	infomation = sys.newMsg("jiangLiMsg")
 	infomation.get_node("Panel/Label").text = TEXT.Instructions.title
-	infomation.get_node("Panel/CenterContainer").add_child(textGrid)
+	infomation.get_node("Panel").add_child(textGrid)
 	infomation.get_node("Panel/Button").connect("pressed", self, "MsgOk")
 	infomation.show()
 
