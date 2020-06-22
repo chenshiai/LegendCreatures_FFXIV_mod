@@ -6,7 +6,7 @@ func _info():
 func _extInit():
 	._extInit()
 	chaName = "东方木人"
-	attCoe.maxHp = 256
+	attCoe.maxHp = 1
 	attCoe.atk = 0
 	attCoe.mgiAtk = 0
 	attCoe.def = 0
@@ -39,5 +39,5 @@ func _onBattleStart():
 func _onDeath(atkInfo):
 	._onDeath(atkInfo)
 	isDeath = false
-	plusHp(att.maxHp * 1)
+	plusHp(att.maxHp * 1, false)
 	

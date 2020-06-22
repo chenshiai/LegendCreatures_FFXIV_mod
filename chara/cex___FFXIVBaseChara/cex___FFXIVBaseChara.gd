@@ -18,12 +18,6 @@ var FFHurtType = {
 	"Default": HurtType.PHY
 }
 
-var AtkSpd = {
-	"MeleeDPS": 0,
-	"MagicDPS": -0.4,
-	"DistanceDPS": 0.2,
-	"Default": 0
-}
 
 func _extInit():
 	._extInit()
@@ -37,14 +31,13 @@ func _extInit():
 
 func _onBattleStart():
 	._onBattleStart()
-	attAdd.spd = AtkSpd[OCCUPATION]
 
 func getAtkVal():
 	match OCCUPATION:
 		"MeleeDPS": 
 			return att.atk
 		"MagicDPS":
-			return att.mgiAtk
+			return att.mgiAtk * 0.5
 		"DistanceDPS":
 			return att.atk * 1.1
 		"Default":

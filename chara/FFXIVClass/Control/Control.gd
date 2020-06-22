@@ -1,5 +1,6 @@
 extends "../BaseClass.gd"
 
+var Keyboard
 var ControlPanel # 控制面板节点
 var SwitchButton # 开关节点
 var PlayerChas = [] # 被控制的角色列表
@@ -14,18 +15,19 @@ var textGrid
 
 func _init():
 	print("最终幻想14：—————— 控制面板加载 ——————")
-	setConfig()
+	set_config()
+	keyboard_connect()
 	pass
 
 
 func createControl():
-	SwitchButton = Utils.draw_ui_button("展开", Vector2(1073, 495), self, "switch", {"return": true})
-	sys.main.get_node("ui").add_child(SwitchButton)
-	randerPanel()
 	sys.main.connect("onBattleStart", self, "moveControlInit")
 	sys.main.connect("onBattleEnd", self, "controlFree")
+	SwitchButton = Utils.draw_ui_button("展开", Vector2(1073, 495), self, "switch", {"return": true})
+	sys.main.get_node("ui").add_child(SwitchButton)
+	render_panel()
 
-func randerPanel():
+func render_panel():
 	ControlPanel = NinePatchRect.new()
 	ControlPanel.rect_position = Vector2(400, 430)
 
@@ -124,7 +126,8 @@ func select_area(cha, mapArea, area):
 
 func showLimitInfo():
 	textGrid = Label.new()
-	textGrid.text = TEXT.Instructions.content
+	textGrid.bbcode_enabled = true
+	textGrid.bbcode_text = TEXT.Instructions.content
 	infomation = sys.newMsg("jiangLiMsg")
 	infomation.get_node("Panel/Label").text = TEXT.Instructions.title
 	infomation.get_node("Panel/CenterContainer").add_child(textGrid)
@@ -134,7 +137,27 @@ func showLimitInfo():
 func MsgOk():
 	pass
 
-func setConfig():
+func keyboard_connect():
+	Keyboard = Utils.Keyboard.new()
+	sys.main.add_child(Keyboard)
+	# 先就这样，懒得封装
+	Keyboard.connect("key_w", self, "horizontal_move", [Vector2(0, -1)])
+	Keyboard.connect("key_a", self, "horizontal_move", [Vector2(-1, 0)])
+	Keyboard.connect("key_s", self, "horizontal_move", [Vector2(0, 1)])
+	Keyboard.connect("key_d", self, "horizontal_move", [Vector2(1, 0)])
+	
+	Keyboard.connect("key_t", self, "complex_move", ["parallel"])
+	Keyboard.connect("key_q", self, "complex_move", ["aggregate_left"])
+	Keyboard.connect("key_r", self, "complex_move", ["scatter"])
+	Keyboard.connect("key_e", self, "complex_move", ["aggregate_right"])
+
+	Keyboard.connect("key_z", Limit, "limit_treatment")
+	Keyboard.connect("key_x", Limit, "limit_attack")
+	Keyboard.connect("key_v", Retreat, "changeHateTarget")
+	Keyboard.connect("key_c", Limit, "limit_protect")
+
+
+func set_config():
 	ButtonConfig = [
 		{
 			"text": "说明书",

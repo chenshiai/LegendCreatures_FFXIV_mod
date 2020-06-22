@@ -1,3 +1,5 @@
+extends Node
+
 var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
 var Limit = globalData.infoDs["g_FFXIVLimitBreak"] # 极限技类
 var Retreat = globalData.infoDs["g_FFXIVRetreat"] # 退避机制

@@ -39,8 +39,9 @@ func rndRanBoss():
   var n = sys.rndRan(0, 3)
   clear(null)
   Utils.background_change(BossList[n].backgronud)
-  var cha = addUnit(BossList[n].id, Vector2(6, 2))
+  var cha = add_unit(BossList[n].id, Vector2(6, 2), 2)
   return cha
+
 
 func clear(bosscha):
 	var cha
@@ -50,9 +51,9 @@ func clear(bosscha):
 			if cha != null and cha.team != 1 and cha != bosscha:
 				sys.main.delMatChara(cha)
 
-func addUnit(id, position):
+func add_unit(id, position, team = 2):
 	var cha
-	cha = sys.main.newChara(id, 2)
+	cha = sys.main.newChara(id, team)
 	sys.main.map.add_child(cha)
 	sys.main.setMatCha(position, cha)
 	cha.isDeath = true

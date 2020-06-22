@@ -1,6 +1,7 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 var Chant = Utils.Chant.new()
 
+var reward = true # 是否开启死亡奖励
 var layer # 关卡数
 var battleDuration = 0 # 战斗时间
 var TimeAxis = {} # 时间轴
@@ -16,8 +17,7 @@ var E_num = 1
 var E_lv = 1
 var E_spd = 1
 
-const DefaultTxt = """{c_base}[自适应]：该单位属性根据敌方战力自适应调整，拥有特定的技能时间轴。
-战胜了的话也许会有意料之外的收获！？{/c}"""
+const DefaultTxt = """{c_base}[自适应]：该单位属性根据敌方战力自适应调整，拥有特定的技能时间轴。{/c}"""
 
 func _extInit():
 	._extInit()
@@ -58,12 +58,11 @@ func selfAdaption():
 		E_spd = allAtt.spd
 		E_num = allAtt.num
 		E_lv = allAtt.lv
-		attInfo.maxHp = (E_atk + E_mgiAtk) * layer * 1.5 / E_num
+		attInfo.maxHp = (E_atk + E_mgiAtk) * layer * 2 / E_num
 		attInfo.atk = (E_def + E_maxHp / 8) / E_num + layer * 3
 		attInfo.mgiAtk = (E_mgiDef + E_maxHp / 8) / E_num + layer * 3
 		attInfo.def = (E_atk + layer * 2) / E_num
 		attInfo.mgiDef = (E_mgiAtk + layer * 2) / E_num
-
 		upAtt()
 
 # 战后重置属性
@@ -107,7 +106,31 @@ func _upS():
 	if TimeAxis.has(battleDuration):
 		call_deferred(TimeAxis[battleDuration])
 
+func _onAtkChara(atkInfo):
+	._onAtkChara(atkInfo)
+	var tarCha = atkInfo.hitCha
+	if atkInfo.hurtVal >= tarCha.att.hp and tarCha.team == 1:
+		var count = 0
+		for cha in getAllChas(1):
+			if !cha.isDeath:
+				count += 1
+
+		if count == 1:
+			atkInfo.hurtVal = 0
+			reward = false
+			FFHurtChara(self, att.maxHp * 2, Chara.HurtType.REAL, Chara.AtkType.SKILL)
+		else:
+			match tarCha.lv:
+				1: sys.main.player.hp += 1
+				2: sys.main.player.hp += 2
+				3: sys.main.player.hp += 5
+				4: sys.main.player.hp += 7
+
 func _onDeath(atkInfo):
 	._onDeath(atkInfo)
-	var item = sys.newItem("i_FFXIVSoulCrystal")
-	sys.main.player.addItem(item)
+	if reward:
+		var item = sys.newItem("i_FFXIVSoulCrystal")
+		sys.main.player.addItem(item)
+	else:
+		yield(reTimer(3), "timeout")
+		sys.newBaseMsg(TEXT.Insurance.title, TEXT.Insurance.content)
