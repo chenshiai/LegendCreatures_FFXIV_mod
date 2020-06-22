@@ -43,7 +43,7 @@ func createLimitBreak():
 
 func initLimitValue():
 	allAtt = Utils.Calculation.getEnemyPower(2)
-	limitBreakVal = (allAtt["atk"] + allAtt["mgiAtk"]) * 30
+	limitBreakVal = (allAtt["atk"] + allAtt["mgiAtk"]) * 50
 
 
 func resetLimit():

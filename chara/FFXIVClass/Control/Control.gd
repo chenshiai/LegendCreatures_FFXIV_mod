@@ -62,7 +62,7 @@ func order_throttle():
 func delay():
 	for cha in PlayerChas:
 		if cha.hasBuff("b_StaticTime"):
-			BUFF_LIST.b_StaticTime.new(2, cha)
+			BUFF_LIST.b_StaticTime.new(1, cha)
 
 # 定点移动，让角色向目标点移动，true表示移动成功，false表示移动失败
 func movement(cha, cell) -> bool:
@@ -123,12 +123,12 @@ func select_area(cha, mapArea, area):
 			"right_top": select_area(cha, mapArea, "right_bottom")
 
 func showLimitInfo():
-	infomation = sys.newMsg("jiangLiMsg")
-	infomation.get_node("Panel/Label").text = TEXT.Instructions.title
-	infomation.get_node("Panel/Button").connect("pressed", self, "MsgOk")
 	textGrid = Label.new()
 	textGrid.text = TEXT.Instructions.content
+	infomation = sys.newMsg("jiangLiMsg")
+	infomation.get_node("Panel/Label").text = TEXT.Instructions.title
 	infomation.get_node("Panel/CenterContainer").add_child(textGrid)
+	infomation.get_node("Panel/Button").connect("pressed", self, "MsgOk")
 	infomation.show()
 
 func MsgOk():

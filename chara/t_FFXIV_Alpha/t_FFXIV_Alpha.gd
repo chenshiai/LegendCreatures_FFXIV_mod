@@ -19,7 +19,7 @@ func init():
 	name = "Raid战斗记录"
 
 func get_info():
-	return TEXT.T_RAID % [lv * 4 + 20, (0.1 + lv * 0.01) * 100, lv, 5 + lv * 5]
+	return TEXT.T_RAID % [lv * 4 + 20, (0.05 + lv * 0.01) * 100, lv, 5 + lv * 5]
 
 func _connect():
 	sys.main.player.maxHp += lv * 4 + 20
@@ -36,20 +36,20 @@ func _connect():
 	FFControl = Utils.FFControl.new()
 	FFControl.createControl()
 
-class Bf:
+class Raid:
 	extends Buff
 	func _init(lv):
 		attInit()
 		self.lv = lv
 		isNegetive = false
-		att.atkL += 0.1 + lv * 0.01
-		att.mgiAtkL += 0.1 + lv * 0.01
+		att.atkL = 0.05 + lv * 0.01
+		att.mgiAtkL = 0.05 + lv * 0.01
 
 func run():
 	Limit.initLimitValue()
 	for i in sys.main.btChas:
 		if i.team == 2:
-			i.addBuff(Bf.new(lv))
+			i.addBuff(Raid.new(lv))
 
 func reward():
 	if sys.main.player.hp <= sys.main.player.maxHp - lv:
