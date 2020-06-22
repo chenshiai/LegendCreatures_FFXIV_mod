@@ -29,7 +29,7 @@ func _connect():
 	sys.main.connect("onBattleEnd", self, "reward")
 	originBackground = sys.main.get_node("scene/bg/bg").get_texture()
 	HpBar.createHpBar()
-	Limit.createLimitBreak()
+	Limit.draw_limitBreak()
 	Retreat.initRetreat()
 	FFChara.openDeathList()
 
@@ -46,7 +46,7 @@ class Bf:
 		att.mgiAtkL += 0.1 + lv * 0.01
 
 func run():
-	Limit.initLimitValue()
+	Limit.init_limitBreak()
 	for i in sys.main.btChas:
 		if i.team == 2:
 			i.addBuff(Bf.new(lv))
@@ -57,7 +57,7 @@ func reward():
 	sys.main.player.plusGold(5 + lv * 5)
 	sys.main.get_node("scene/bg/bg").set_texture(originBackground)
 	HpBar.hidden()
-	Limit.resetLimit()
+	Limit.reset_limitBreak()
 
 func come():
 	layer = sys.main.guankaMsg.lvStep - 2
@@ -69,7 +69,7 @@ func come():
 
 			var cha = FFChara.rndRanBoss()
 			cha.connect("onHurtEnd", HpBar, "hpDown")
-			cha.connect("onAtkChara", Limit, "limitBreakUp")
+			cha.connect("onAtkChara", Limit, "limitBreak_up")
 
 		else:
 			probability += 1

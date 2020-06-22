@@ -32,7 +32,7 @@ func _onAtkChara(atkInfo:AtkInfo):
 		if darkCount >= 1000:
 			darkCount = 0
 			BUFF_LIST.b_TheBlackestNight.new(att.maxHp * 0.20, self)
-			Utils.createEffect("ePcr_phyPZ", position, Vector2(0,-30), 15)
+			Utils.draw_effect("ePcr_phyPZ", position, Vector2(0,-30), 15)
 
 # 暗黑布道			
 func darkMissionary():

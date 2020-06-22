@@ -50,20 +50,20 @@ func highJump():
 	if cha != null:
 		aiOn = false
 		normalSpr.position = Vector2(0, -800)
-		Utils.createShadow(img, position, position + Vector2(0, -150), 40)
+		Utils.draw_shadow(img, position, position + Vector2(0, -150), 40)
 		yield(reTimer(0.2), "timeout")
 
 		var x = cha.position.x
 		var y = cha.position.y
 		var deviation = Vector2(x, y) - position
 
-		Utils.createShadow(img, Vector2(x, y - 400), Vector2(x, y), 40)
-		Utils.createEffect("slashBlue", cha.position, Vector2(0, -30), 14, 2)
+		Utils.draw_shadow(img, Vector2(x, y - 400), Vector2(x, y), 40)
+		Utils.draw_effect("slashBlue", cha.position, Vector2(0, -30), 14, 2)
 		FFHurtChara(cha, att.atk * HIGHJUMP_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
-		Utils.createShadow(img, Vector2(x, y), Vector2(x, y) + Vector2(0, -150) - (75 * deviation.normalized()), 40)
+		Utils.draw_shadow(img, Vector2(x, y), Vector2(x, y) + Vector2(0, -150) - (75 * deviation.normalized()), 40)
 		yield(reTimer(0.3), "timeout")
-		Utils.createShadow(img,  position + Vector2(0, -150), position, 40)
+		Utils.draw_shadow(img,  position + Vector2(0, -150), position, 40)
 		normalSpr.position = Vector2(0, 0)
 		aiOn = true
 

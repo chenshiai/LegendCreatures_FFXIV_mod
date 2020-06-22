@@ -10,10 +10,10 @@ func _init():
 
 func createHpBar():
 	hpBar = TextureProgress.new()
-	hpBarUnder = Utils.loadImgTexture("/img/hpbar_under.png")
+	hpBarUnder = Utils.load_texture("/img/hpbar_under.png")
 	hpBar.set_under_texture(hpBarUnder)
 
-	hpBarProgress = Utils.loadImgTexture("/img/hpbar_progress.png")
+	hpBarProgress = Utils.load_texture("/img/hpbar_progress.png")
 	hpBar.set_progress_texture(hpBarProgress)
 
 	hpBar.set_max(10000)

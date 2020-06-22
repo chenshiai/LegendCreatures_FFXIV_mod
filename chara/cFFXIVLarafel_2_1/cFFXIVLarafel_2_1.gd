@@ -33,5 +33,5 @@ func leyLines():
 	addBuff(BUFF_LIST.b_LeyLines.new(30))
 
 func xenoglossy():
-	Utils.createEffect("melanositis", aiCha.position, Vector2(0, -50), 7, 2)
+	Utils.draw_effect("melanositis", aiCha.position, Vector2(0, -50), 7, 2)
 	FFHurtChara(aiCha, att.mgiAtk * XENOGLOSSY_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)

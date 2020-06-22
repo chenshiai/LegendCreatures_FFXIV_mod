@@ -27,7 +27,7 @@ func _onHurt(atkInfo):
 			atkInfo.hurtVal = 0
 			superbolide = false
 			BUFF_LIST.b_Superbolide.new(10, self)
-			Utils.createEffect("shieldBlue", position, Vector2(0, -20), 14, 2)
+			Utils.draw_effect("shieldBlue", position, Vector2(0, -20), 14, 2)
 			yield(reTimer(0.5), "timeout")
 			att.hp = 1
 

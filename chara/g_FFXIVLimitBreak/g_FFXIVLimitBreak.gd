@@ -18,17 +18,17 @@ var limitProgress2 = ImageTexture.new()
 func _init():
 	pass
 
-func createLimitBreak():
-	Chant = Utils.Chant.new(Vector2(380, 480))
+func draw_limitBreak():
+	Chant = Utils.Chant.new(Vector2(400, 400))
 	limitBreak = TextureProgress.new() # 极限技UI节点
 
-	limitUnder = Utils.loadImgTexture("/img/limitBreak_under.png")
+	limitUnder = Utils.load_texture("/img/limitBreak_under.png")
 
-	limitProgress0 = Utils.loadImgTexture("/img/limitBreak_progress0.png")
+	limitProgress0 = Utils.load_texture("/img/limitBreak_progress0.png")
 
-	limitProgress1 = Utils.loadImgTexture("/img/limitBreak_progress1.png")
-	limitProgress2 = Utils.loadImgTexture("/img/limitBreak_progress2.png")
-	limitProgress = Utils.loadImgTexture("/img/limitBreak_progress.png")
+	limitProgress1 = Utils.load_texture("/img/limitBreak_progress1.png")
+	limitProgress2 = Utils.load_texture("/img/limitBreak_progress2.png")
+	limitProgress = Utils.load_texture("/img/limitBreak_progress.png")
 
 	limitBreak.set_under_texture(limitUnder)
 	limitBreak.set_progress_texture(limitProgress0)
@@ -41,19 +41,19 @@ func createLimitBreak():
 	sys.main.get_node("ui").add_child(limitBreak)
 
 
-func initLimitValue():
+func init_limitBreak():
 	allAtt = Utils.Calculation.getEnemyPower(2)
 	limitBreakVal = (allAtt["atk"] + allAtt["mgiAtk"]) * 30
 
 
-func resetLimit():
+func reset_limitBreak():
 	limitBreakLevel = 0
 	limitBreakNow = 0
 	limitBreak.set_value(0)
 	limitBreak.set_progress_texture(limitProgress0)
 
 
-func nowLimitBreak(value):
+func set_limitBreak_level(value):
 	if value >= 1000:
 		limitBreak.set_progress_texture(limitProgress)
 		limitBreakLevel = 3
@@ -65,11 +65,11 @@ func nowLimitBreak(value):
 		limitBreakLevel = 1
 
 
-func limitBreakUp(atkInfo):
+func limitBreak_up(atkInfo):
 	if limitBreak.value < 1000:
 		limitBreakNow += atkInfo.atkVal
 		limitBreak.set_value(limitBreakNow * 1000 / limitBreakVal)
-		nowLimitBreak(limitBreak.value)
+		set_limitBreak_level(limitBreak.value)
 	pass
 
 
@@ -78,11 +78,11 @@ func limit_protect():
 		var lv = limitBreakLevel
 		Chant.chantStart("极限技-防护", 1)
 		yield(sys.get_tree().create_timer(1), "timeout")
-		resetLimit()
+		reset_limitBreak()
 		for cha in sys.main.btChas:
 			if cha != null and cha.team == 1:
 				cha.addBuff(limit_protect.new(lv))
-				Utils.createEffect("shield2", cha.position, Vector2(0, -30), 14, 1)
+				Utils.draw_effect("shield2", cha.position, Vector2(0, -30), 14, 1)
 				yield(sys.get_tree().create_timer(0.1), "timeout")
 	else:
 		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")
@@ -94,11 +94,11 @@ func limit_attack():
 		var lv = limitBreakLevel
 		Chant.chantStart("极限技-进攻", 1)
 		yield(sys.get_tree().create_timer(1), "timeout")
-		resetLimit()
+		reset_limitBreak()
 		for cha in sys.main.btChas:
 			if cha != null and cha.team == 2:
 				toolman.hurtChara(cha, (allAtt["atk"] + allAtt["mgiAtk"]) * lv, Chara.HurtType.REAL, Chara.AtkType.SKILL)
-				Utils.createEffect("fireII", cha.position, Vector2(0, -40), 15, 4)
+				Utils.draw_effect("fireII", cha.position, Vector2(0, -40), 15, 4)
 				return
 	else:
 		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")
@@ -110,7 +110,7 @@ func limit_treatment():
 		healStep = (healStep * healStep * 0.5 + 1.5 * healStep + 1) / 10
 		Chant.chantStart("极限技-治疗", 1)
 		yield(sys.get_tree().create_timer(1), "timeout")
-		resetLimit()
+		reset_limitBreak()
 		for cha in sys.main.btChas:
 			if cha != null and cha.team == 1:
 				if !cha.isDeath:

@@ -44,22 +44,22 @@ func drawCard():
 	var n = sys.rndRan(0, 5)
 	var bf = null
 	if n == 0:
-		Utils.createEffect("Arcana_01", position, Vector2(0, -240), 14, 0.5)
+		Utils.draw_effect("Arcana_01", position, Vector2(0, -240), 14, 0.5)
 		bf = BUFF_LIST.b_Balance.new(20)
 	elif n == 1:
-		Utils.createEffect("Arcana_02", position, Vector2(0, -240), 14, 0.5)
+		Utils.draw_effect("Arcana_02", position, Vector2(0, -240), 14, 0.5)
 		bf = BUFF_LIST.b_Arrow.new(20)
 	elif n == 2:
-		Utils.createEffect("Arcana_03", position, Vector2(0, -240), 14, 0.5)
+		Utils.draw_effect("Arcana_03", position, Vector2(0, -240), 14, 0.5)
 		bf = BUFF_LIST.b_Spear.new(20)
 	elif n == 3:
-		Utils.createEffect("Arcana_04", position, Vector2(0, -240), 14, 0.5)
+		Utils.draw_effect("Arcana_04", position, Vector2(0, -240), 14, 0.5)
 		bf = BUFF_LIST.b_Bole.new(20)
 	elif n == 4:
-		Utils.createEffect("Arcana_05", position, Vector2(0, -240), 14, 0.5)
+		Utils.draw_effect("Arcana_05", position, Vector2(0, -240), 14, 0.5)
 		bf = BUFF_LIST.b_Ewer.new(20)
 	elif n == 5:
-		Utils.createEffect("Arcana_06", position, Vector2(0, -240), 14, 0.5)
+		Utils.draw_effect("Arcana_06", position, Vector2(0, -240), 14, 0.5)
 		bf = BUFF_LIST.b_Spire.new(20)
 
 	var chas = getAllChas(2)
@@ -74,7 +74,7 @@ func starPhase(lv):
 	for cha in allys:
 		if cha != null:
 			cha.plusHp(att.mgiAtk * STARPHASE_PW)
-			Utils.createEffect("ePcr_mgiPZ", cha.position, Vector2(0,-30), 14)
+			Utils.draw_effect("ePcr_mgiPZ", cha.position, Vector2(0,-30), 14)
 			BUFF_LIST.b_Night.new(10, att.mgiAtk * STARPHASE_PW * 1.25, cha)
 			if lv == 4:
 				BUFF_LIST.b_LuckyStar.new(8, att.mgiAtk * 0.15, cha)

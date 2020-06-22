@@ -95,10 +95,10 @@ func getFlash(name):
 # 纷乱雪月花
 func setsugekka(skill_pw):
 	emit_signal("swordPpressure")
-	Utils.createShadow(img, position, aiCha.position)
+	Utils.draw_shadow(img, position, aiCha.position)
 	normalSpr.position = (aiCha.position - position).normalized() * 70
 	yield(reTimer(0.3), "timeout")
-	Utils.createEffect("slash2", aiCha.position, Vector2(0,-30), 10, 1.3)
+	Utils.draw_effect("slash2", aiCha.position, Vector2(0,-30), 10, 1.3)
 	FFHurtChara(aiCha, att.atk * skill_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 	normalSpr.position = Vector2(0, 0)
 

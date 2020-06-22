@@ -62,14 +62,14 @@ func solarRays():
 	if att.hp <= 0:
 		return
 	var chas = getCellChas(self.HateTarget.cell, 1)
-	Utils.createEffect("blastYellow", self.HateTarget.position, Vector2(0, -50), 15)
+	Utils.draw_effect("blastYellow", self.HateTarget.position, Vector2(0, -50), 15)
 	for i in chas:
 		if i != self:
 			hurtChara(i, att.mgiAtk * solaRays_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
 # 技能-激光雨
 func laserRain():
-	Utils.createEffect("lightBlue", Vector2(position.x, position.y - 1), Vector2(0, -10), 15, 10)
+	Utils.draw_effect("lightBlue", Vector2(position.x, position.y - 1), Vector2(0, -10), 15, 10)
 	var chas = getAllChas(1)
 	for i in chas:
 		if i != null:
@@ -83,7 +83,7 @@ func optimizedFireIII():
 		return
 	var chas = getAllChas(1)
 	for i in chas:
-		Utils.createEffect("light", i.position, Vector2(0, -10), 15, 1.8)
+		Utils.draw_effect("light", i.position, Vector2(0, -10), 15, 1.8)
 		var cha = getCellChas(i.cell, 1)
 		for j in cha:
 			if j != self:

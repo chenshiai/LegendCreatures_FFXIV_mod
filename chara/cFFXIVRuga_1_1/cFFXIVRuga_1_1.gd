@@ -49,7 +49,7 @@ func divineVeilTodo(val):
 		allys.shuffle()
 		for cha in allys:
 			if cha != null and cha != self:
-				Utils.createEffect("ePcr_pingZhang", cha.position, Vector2(0, -30), 7, 1)
+				Utils.draw_effect("ePcr_pingZhang", cha.position, Vector2(0, -30), 7, 1)
 				cha.addBuff(BUFF_LIST.b_DivineVeil.new(10, att.maxHp * 0.1))
 				yield(reTimer(0.1), "timeout")
 

@@ -19,7 +19,7 @@ func _init():
 
 
 func createControl():
-	SwitchButton = Utils.createUiButton("展开", Vector2(1073, 495), self, "switch", {"return": true})
+	SwitchButton = Utils.draw_ui_button("展开", Vector2(1073, 495), self, "switch", {"return": true})
 	sys.main.get_node("ui").add_child(SwitchButton)
 	randerPanel()
 	sys.main.connect("onBattleStart", self, "moveControlInit")
@@ -30,7 +30,7 @@ func randerPanel():
 	ControlPanel.rect_position = Vector2(400, 430)
 
 	for button in ButtonConfig:
-		var bt = Utils.createUiButton(button.text, button.position, button.target, button.callback, button.config)
+		var bt = Utils.draw_ui_button(button.text, button.position, button.target, button.callback, button.config)
 		ControlPanel.add_child(bt)
 
 	sys.main.get_node("ui").add_child(ControlPanel)

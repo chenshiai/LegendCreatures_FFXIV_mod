@@ -31,7 +31,7 @@ func stardiver():
 	yield(reTimer(0.2), "timeout")
 
 	normalSpr.position = Vector2(0, -450)
-	Utils.createShadow(img, Vector2(0, 0), normalSpr.position, 40)
+	Utils.draw_shadow(img, Vector2(0, 0), normalSpr.position, 40)
 	yield(reTimer(0.4), "timeout")
 
 	var cha = rndChas(getAllChas(1), 1)

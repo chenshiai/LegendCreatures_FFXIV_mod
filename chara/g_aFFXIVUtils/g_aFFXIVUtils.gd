@@ -23,7 +23,7 @@ func testInit():
 		handle.add_child(label)
 
 
-func loadImgTexture(imgPath):
+func load_texture(imgPath):
 	var im = Image.new()
 	var imt = ImageTexture.new()
 	im.load(Path + imgPath)
@@ -31,11 +31,11 @@ func loadImgTexture(imgPath):
 	return imt
 
 
-func backGroundChange(imgPath):
-	sys.main.get_node("scene/bg/bg").set_texture(loadImgTexture(imgPath))
+func background_change(imgPath):
+	sys.main.get_node("scene/bg/bg").set_texture(load_texture(imgPath))
 
 
-func createEffect(effectName, position, deviation, frame = 15, scale = 1, repeat = false, rotation = deg2rad(0)): 
+func draw_effect(effectName, position, deviation, frame = 15, scale = 1, repeat = false, rotation = deg2rad(0)): 
 	var eff = sys.newEff("animEff", position)
 	var direc = Path + "/effects/" + effectName
 	eff.setImgs(direc, frame, repeat)
@@ -45,7 +45,7 @@ func createEffect(effectName, position, deviation, frame = 15, scale = 1, repeat
 	return eff
 
 
-func createTimeAxis(skillAxis):
+func create_timeAxis(skillAxis):
 	var timeAxis = {}
 	for skillName in skillAxis:
 		for timePoint in skillAxis[skillName]:
@@ -53,7 +53,7 @@ func createTimeAxis(skillAxis):
 	return timeAxis
 
 
-func createUiButton(
+func draw_ui_button(
 		text,
 		position,
 		target = self,
@@ -93,7 +93,7 @@ func defaultCallback():
 	sys.newBaseMsg("测试", "并未连接到任何函数")
 
 
-func createShadow(img, startPositon:Vector2, endPositon:Vector2, speed = 25):
+func draw_shadow(img, startPositon:Vector2, endPositon:Vector2, speed = 25):
 	var distance = endPositon - startPositon
 	var rs = preload("res://core/ying.tscn")
 	var n = distance.length() / speed

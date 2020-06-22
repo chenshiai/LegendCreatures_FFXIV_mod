@@ -49,7 +49,7 @@ func _castCdSkill(id):
 
 # 火三
 func fireIII():
-	Utils.createEffect("fireIII", aiCha.position, Vector2(0, -50), 15)
+	Utils.draw_effect("fireIII", aiCha.position, Vector2(0, -50), 15)
 	yield(reTimer(0.5), "timeout")
 	FFHurtChara(aiCha, att.mgiAtk * (FIREIII_PW + FIRE_PW * fire), Chara.HurtType.MGI, Chara.AtkType.SKILL)
 	enhanced()

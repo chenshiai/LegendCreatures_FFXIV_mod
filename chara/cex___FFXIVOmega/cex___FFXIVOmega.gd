@@ -63,14 +63,14 @@ func mustardBomb():
 	if att.hp <= 0:
 		return
 	var chas = getCellChas(self.HateTarget.cell, 1)
-	Utils.createEffect("blastYellow", self.HateTarget.position, Vector2(0, -50), 15)
+	Utils.draw_effect("blastYellow", self.HateTarget.position, Vector2(0, -50), 15)
 	for i in chas:
 		if i != self:
 			hurtChara(i, att.mgiAtk * mustardBomb_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
 # 技能-原子射线
 func atomicRay():
-	Utils.createEffect("lightBlue", Vector2(position.x, position.y - 1), Vector2(0, -10), 15, 10)
+	Utils.draw_effect("lightBlue", Vector2(position.x, position.y - 1), Vector2(0, -10), 15, 10)
 	var chas = getAllChas(1)
 	for i in chas:
 		if i != null:
@@ -101,11 +101,11 @@ func triangleAttack():
 		yield(reTimer(0.1), "timeout")
 	normalSpr.position = Vector2(0, 0)
 
-	Utils.createEffect("sanjiao", Vector2(300, 350), Vector2(0, -30), 7, 3)
+	Utils.draw_effect("sanjiao", Vector2(300, 350), Vector2(0, -30), 7, 3)
 	yield(reTimer(0.2), "timeout")
-	Utils.createEffect("sanjiao", Vector2(300, 120), Vector2(0, -30), 9, 3)
+	Utils.draw_effect("sanjiao", Vector2(300, 120), Vector2(0, -30), 9, 3)
 	yield(reTimer(0.2), "timeout")
-	Utils.createEffect("sanjiao", Vector2(400, 225), Vector2(0, -30), 13, 3)
+	Utils.draw_effect("sanjiao", Vector2(400, 225), Vector2(0, -30), 13, 3)
 	
 	var chas = getAllChas(1)
 	for i in chas:

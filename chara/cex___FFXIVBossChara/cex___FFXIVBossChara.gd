@@ -77,7 +77,7 @@ func reset():
 	att.mgiDef = 1
 
 func setTimeAxis(skillAxis):
-	TimeAxis = Utils.createTimeAxis(skillAxis)
+	TimeAxis = Utils.create_timeAxis(skillAxis)
 
 func _onHurt(atkInfo:AtkInfo):
 	._onHurt(atkInfo)

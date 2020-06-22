@@ -89,7 +89,7 @@ func righteousBolt():
 	if att.hp <=0:
 		return
 	if self.HateTarget != null:
-		Utils.createEffect("thunder", self.HateTarget.position, Vector2(0, -140), 15, 1)
+		Utils.draw_effect("thunder", self.HateTarget.position, Vector2(0, -140), 15, 1)
 		hurtChara(self.HateTarget, att.mgiAtk * righteousBolt_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 		self.HateTarget.addBuff(b_VulnerableLarge.new(15))
 	self.aiOn = true
@@ -107,13 +107,13 @@ func wingedReprobation():
 		var x1 = vertical.pop_front()
 		var x2 = vertical.pop_back()
 		
-		Utils.createEffect("danger", Vector2(x1 * 100, -1), Vector2(-300, 0), 2, 1, false, deg2rad(90))
-		Utils.createEffect("danger", Vector2(x2 * 100, -1), Vector2(-300, 0), 2, 1, false, deg2rad(90))
+		Utils.draw_effect("danger", Vector2(x1 * 100, -1), Vector2(-300, 0), 2, 1, false, deg2rad(90))
+		Utils.draw_effect("danger", Vector2(x2 * 100, -1), Vector2(-300, 0), 2, 1, false, deg2rad(90))
 		yield(reTimer(4), "timeout")
 
-		var eff1 = Utils.createEffect("sword", Vector2(x1 * 100, 0), Vector2(0, -50), 0)
+		var eff1 = Utils.draw_effect("sword", Vector2(x1 * 100, 0), Vector2(0, -50), 0)
 		eff1._initFlyPos(Vector2(x1 * 100, 500), 1600)
-		var eff2 = Utils.createEffect("sword", Vector2(x2 * 100, 0), Vector2(0, -50), 0)
+		var eff2 = Utils.draw_effect("sword", Vector2(x2 * 100, 0), Vector2(0, -50), 0)
 		eff2._initFlyPos(Vector2(x2 * 100, 500), 1600)
 
 		chas1 = Utils.lineChas( Vector2(x1, 0), Vector2(x1, 5), 5)
@@ -125,13 +125,13 @@ func wingedReprobation():
 		var y1 = transverse.pop_front()
 		var y2 = transverse.pop_back()
 		
-		Utils.createEffect("danger", Vector2(-1, y1 * 100), Vector2(-350, -50), 2, 1, false)
-		Utils.createEffect("danger", Vector2(-1, y2 * 100), Vector2(-350, -50), 2, 1, false)
+		Utils.draw_effect("danger", Vector2(-1, y1 * 100), Vector2(-350, -50), 2, 1, false)
+		Utils.draw_effect("danger", Vector2(-1, y2 * 100), Vector2(-350, -50), 2, 1, false)
 		yield(reTimer(4), "timeout")
 
-		var eff1 = Utils.createEffect("sword", Vector2(0, y1 * 100), Vector2(0, -50), 0)
+		var eff1 = Utils.draw_effect("sword", Vector2(0, y1 * 100), Vector2(0, -50), 0)
 		eff1._initFlyPos(Vector2(800, y1 * 100) , 1600) 
-		var eff2 = Utils.createEffect("sword", Vector2(0, y2 * 100), Vector2(0, -50), 0)
+		var eff2 = Utils.draw_effect("sword", Vector2(0, y2 * 100), Vector2(0, -50), 0)
 		eff2._initFlyPos(Vector2(800, y2 * 100) , 1600)
 		
 		chas1 = Utils.lineChas(Vector2(0, y1), Vector2(8, y1), 9)
@@ -156,11 +156,11 @@ func shadowReaver():
 	if att.hp <= 0:
 		return
 	var chas = getAllChas(1)
-	Utils.createEffect("energyStorage", Vector2(350, 0), Vector2(0, 0), 13, 6)
+	Utils.draw_effect("energyStorage", Vector2(350, 0), Vector2(0, 0), 13, 6)
 	yield(reTimer(0.2), "timeout")
-	Utils.createEffect("energyStorage", Vector2(150, 150), Vector2(0, 0), 13, 6)
+	Utils.draw_effect("energyStorage", Vector2(150, 150), Vector2(0, 0), 13, 6)
 	yield(reTimer(0.2), "timeout")
-	Utils.createEffect("energyStorage", Vector2(500, 200), Vector2(0, 0), 13, 6)
+	Utils.draw_effect("energyStorage", Vector2(500, 200), Vector2(0, 0), 13, 6)
 
 	if att.hp <=0:
 		return
@@ -174,18 +174,18 @@ func flammingSword():
 	self.aiOn = false
 	leftOrRight()
 	yield(reTimer(0.5), "timeout")
-	Utils.createShadow(img,  position + Vector2(0, -250), position, 40)
+	Utils.draw_shadow(img,  position + Vector2(0, -250), position, 40)
 	normalSpr.position = Vector2(0, 0)
 
 	Chant.chantStart("回转火焰剑！", 5)
 	yield(reTimer(1), "timeout")
-	Utils.createEffect("flammingSword", Vector2(350, 150), Vector2(0, 0), 12, 4)
+	Utils.draw_effect("flammingSword", Vector2(350, 150), Vector2(0, 0), 12, 4)
 	yield(reTimer(0.5), "timeout")
-	Utils.createEffect("flammingSword", Vector2(350, 125), Vector2(0, 0), 14, 3)
+	Utils.draw_effect("flammingSword", Vector2(350, 125), Vector2(0, 0), 14, 3)
 	yield(reTimer(0.5), "timeout")
-	Utils.createEffect("flammingSword", Vector2(350, 100), Vector2(0, 0), 16, 2)
+	Utils.draw_effect("flammingSword", Vector2(350, 100), Vector2(0, 0), 16, 2)
 
-	var eff = Utils.createEffect("light2", Vector2(350, 150), Vector2(0, 0), 0, 4)
+	var eff = Utils.draw_effect("light2", Vector2(350, 150), Vector2(0, 0), 0, 4)
 	yield(reTimer(3), "timeout")
 
 	if att.hp <= 0:
@@ -195,7 +195,7 @@ func flammingSword():
 		if i != null:
 			hurtChara(i, att.atk * flammingSword_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
-	Utils.createEffect("beatficVision", Vector2(350, 200), Vector2(0, -30), 10, 4)
+	Utils.draw_effect("beatficVision", Vector2(350, 200), Vector2(0, -30), 10, 4)
 	eff.queue_free()
 	yield(reTimer(2), "timeout")
 	self.aiOn = true
@@ -208,20 +208,20 @@ func beatficVision():
 	leftOrRight()
 
 	yield(reTimer(0.5), "timeout")
-	Utils.createShadow(img,  position + Vector2(0, -250), position, 40)
-	var eff = Utils.createEffect("light1", Vector2(position.x, position.y - 1), Vector2(0, -20), 0, 6)
+	Utils.draw_shadow(img,  position + Vector2(0, -250), position, 40)
+	var eff = Utils.draw_effect("light1", Vector2(position.x, position.y - 1), Vector2(0, -20), 0, 6)
 	normalSpr.position = Vector2(0, 0)
 
 	Chant.chantStart("荣福直观", 3)
 	yield(reTimer(3), "timeout")
 	eff.queue_free()
 	normalSpr.position = deviation
-	Utils.createShadow(img,  position, position + deviation, 40)
+	Utils.draw_shadow(img,  position, position + deviation, 40)
 	beatficVisionDamage()
-	Utils.createEffect("beatficVision", Vector2(350, 200), Vector2(0, -30), 10, 4)
+	Utils.draw_effect("beatficVision", Vector2(350, 200), Vector2(0, -30), 10, 4)
 
 	yield(reTimer(2), "timeout")
-	Utils.createShadow(img, position + Vector2(0, -250), position, 40)
+	Utils.draw_shadow(img, position + Vector2(0, -250), position, 40)
 	normalSpr.position = Vector2(0, 0)
 
 	yield(reTimer(1), "timeout")
@@ -240,7 +240,7 @@ func beatficVisionDamage():
 
 func leftOrRight():
 	normalSpr.position = Vector2(0, -800)
-	Utils.createShadow(img, position, position + Vector2(0, -250), 40)
+	Utils.draw_shadow(img, position, position + Vector2(0, -250), 40)
 
 	if matCha(Vector2(7, 2)) == null:
 		setCell(Vector2(7, 2))

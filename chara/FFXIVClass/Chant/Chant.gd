@@ -21,10 +21,10 @@ func createChantBar(position):
 	chantBar = TextureProgress.new()
 	laber = Label.new()
 
-	chantBarUnder = Utils.loadImgTexture("/img/chantBar_under.png")
+	chantBarUnder = Utils.load_texture("/img/chantBar_under.png")
 	chantBar.texture_under = chantBarUnder
 
-	chantBarProgress = Utils.loadImgTexture("/img/chantBar_progress.png")
+	chantBarProgress = Utils.load_texture("/img/chantBar_progress.png")
 	chantBar.texture_progress = chantBarProgress
 
 	chantBar.value = 0

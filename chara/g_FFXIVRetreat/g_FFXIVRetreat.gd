@@ -15,7 +15,7 @@ func changeHateTarget():
 
 	for cha in PlayerChas:
 		if cha != nowTank and !cha.isDeath:
-			Utils.createEffect("hateFeud", cha.position, Vector2(0, -50), 10, 1.5)
+			Utils.draw_effect("hateFeud", cha.position, Vector2(0, -50), 10, 1.5)
 			for i in sys.main.btChas:
 				if i != null and !i.isDeath and i.team == 2:
 					i.aiCha = cha

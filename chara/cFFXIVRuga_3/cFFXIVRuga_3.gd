@@ -50,7 +50,7 @@ func _onAtkChara(atkInfo):
 			fireCount += 1
 		elif atkInfo.hitCha.hasBuff("b_Wildfire") == null:
 			FFHurtChara(aiCha, att.atk * WILDFIRE_PW * fireCount, Chara.HurtType.PHY, Chara.AtkType.SKILL)
-			Utils.createEffect("blast", aiCha.position, Vector2(0,-40), 15, 1)
+			Utils.draw_effect("blast", aiCha.position, Vector2(0,-40), 15, 1)
 			fireCount = 0
 			fireChara = null
 

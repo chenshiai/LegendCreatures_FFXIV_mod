@@ -38,7 +38,7 @@ func initDeathCha():
 func rndRanBoss():
   var n = sys.rndRan(0, 3)
   clear(null)
-  Utils.backGroundChange(BossList[n].backgronud)
+  Utils.background_change(BossList[n].backgronud)
   var cha = addUnit(BossList[n].id, Vector2(6, 2))
   return cha
 
