@@ -13,7 +13,7 @@ func run():
 			i.addBuff(LightHard.new(lv))
 
 func get_info():
-	return TEXT.T_LIGHT % [(0.1 + lv * 0.01)*100]
+	return TEXT.T_LIGHT
 
 class LightHard:
 	extends Buff
@@ -22,8 +22,8 @@ class LightHard:
 		attInit()
 		id = "LightHard"
 		isNegetive = false
-		att.defL = 0.1 + lv * 0.01
-		att.mgiDefL = 0.1 + lv * 0.01
+		att.defL = 0.15
+		att.mgiDefL = 0.15
 		self.lv = lv
 
 		# sys.main.get_node("ui/player/GridContainer").add_child(preload("res://ui/talentBtn/talentBtn.tscn").instance())

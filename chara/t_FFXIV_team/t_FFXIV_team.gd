@@ -26,7 +26,7 @@ func run():
 				cha.addBuff(LightTeam.new(lv))
 
 func get_info():
-	return TEXT.T_TEAM % [(0.05 + lv * 0.01) * 100, (0.1 + lv * 0.02) * 100]
+	return TEXT.T_TEAM
 
 class LightTeam:
 	extends Buff
@@ -34,11 +34,11 @@ class LightTeam:
 		attInit()
 		self.lv = lv
 		isNegetive = false
-		att.maxHpL = 0.05 + lv * 0.01
-		att.atkL = 0.05 + lv * 0.01
-		att.mgiAtkL = 0.05 + lv * 0.01
-		att.defL = 0.05 + lv * 0.01
-		att.mgiDefL = 0.05 + lv * 0.01
+		att.maxHpL = 0.1
+		att.atkL = 0.1
+		att.mgiAtkL = 0.1
+		att.defL = 0.1
+		att.mgiDefL = 0.1
 
 class FullTeam:
 	extends Buff
@@ -46,8 +46,8 @@ class FullTeam:
 		attInit()
 		isNegetive = false
 		self.lv = lv
-		att.maxHpL = 0.1 + lv * 0.02
-		att.atkL = 0.1 + lv * 0.02
-		att.mgiAtkL = 0.1 + lv * 0.02
-		att.defL = 0.1 + lv * 0.02
-		att.mgiDefL = 0.1 + lv * 0.02
+		att.maxHpL = 0.2
+		att.atkL = 0.2
+		att.mgiAtkL = 0.2
+		att.defL = 0.2
+		att.mgiDefL = 0.2
