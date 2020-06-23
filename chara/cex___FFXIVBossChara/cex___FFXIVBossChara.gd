@@ -112,6 +112,12 @@ func _onAtkChara(atkInfo):
 	var tarCha = atkInfo.hitCha
 	if atkInfo.hurtVal >= tarCha.att.hp and tarCha.team == 1:
 		var count = 0
+		match tarCha.lv:
+			1: sys.main.player.hp += 2
+			2: sys.main.player.hp += 5
+			3: sys.main.player.hp += 10
+			4: sys.main.player.hp += 15
+
 		for cha in getAllChas(1):
 			if !cha.isDeath:
 				count += 1
@@ -121,12 +127,6 @@ func _onAtkChara(atkInfo):
 			tarCha.newChara("cex___FFXIVSummon", tarCha.cell)
 			sys.newBaseMsg(TEXT.Insurance.title, TEXT.Insurance.content)
 			FFHurtChara(self, att.maxHp * 2, Chara.HurtType.REAL, Chara.AtkType.SKILL)
-		else:
-			match tarCha.lv:
-				1: sys.main.player.hp += 1
-				2: sys.main.player.hp += 2
-				3: sys.main.player.hp += 5
-				4: sys.main.player.hp += 7
 
 func _onDeath(atkInfo):
 	._onDeath(atkInfo)

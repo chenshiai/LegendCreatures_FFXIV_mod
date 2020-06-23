@@ -28,8 +28,7 @@ func _castCdSkill(id):
 
 	if id == "skill_InnerRelease":
 		BUFF_LIST.b_InnerRelease.new(8, self)
-		var eff = newEff("numHit", Vector2(-30, -60))
-		eff.setText("原初的解放！", "#ff0000")
+		Utils.draw_efftext("原初的解放", position, Vector2(0, -30), "#ff0000")
 
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)

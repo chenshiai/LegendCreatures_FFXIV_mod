@@ -3,7 +3,7 @@ var Path = null
 var Chant = null
 var Keyboard = null
 var FFControl = null
-
+var FFMusic = null
 func _init():
 	print("最终幻想14：—————— 完整性检测中 ——————")
 	call_deferred("testInit")
@@ -16,6 +16,7 @@ func testInit():
 		Chant = load(Path + "/FFXIVClass/Chant/Chant.gd")
 		Keyboard = load(Path + "/FFXIVClass/Keyboard/Keyboard.gd")
 		FFControl = load(Path + "/FFXIVClass/Control/Control.gd")
+		FFMusic = load(Path + "/FFXIVClass/music/musicControl.gd")
 	else:
 		var label = Label.new()
 		label.text = "最终幻想14：MOD文件路径读取失败，请在创意工坊内重新订阅。"
@@ -44,6 +45,17 @@ func draw_effect(effectName, position, deviation, frame = 15, scale = 1, repeat 
 	eff.scale *= scale
 	return eff
 
+func draw_efftext(text, position, deviation, color = "#ffffff", speed = 0.25):
+	var eff = sys.newEff("numHit", position)
+	var dev = 0
+	eff.normalSpr.position = deviation
+	eff.scale.x *= -1
+	eff.setText(text, color)
+	eff.anim.set_speed_scale(speed)
+	while dev < 5:
+		dev += 1
+		eff.normalSpr.position = deviation + Vector2(0, -5) * dev
+		yield(sys.get_tree().create_timer(0.1), "timeout")
 
 func create_timeAxis(skillAxis):
 	var timeAxis = {}

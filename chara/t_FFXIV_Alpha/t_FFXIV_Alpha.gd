@@ -6,7 +6,7 @@ var HpBar = globalData.infoDs["g_FFXIVBossHpBar"] # boss血条类
 var FFChara = globalData.infoDs["g_FFXIVChara"] # 角色相关类
 var Retreat = globalData.infoDs["g_FFXIVRetreat"] # 退避机制
 var FFControl # 控制面板
-
+var FFMusic
 var originBackground # 原版背景
 var layer = 0 # 当前关卡数
 var lastLayer = 0 # 上一次出现boss的层数
@@ -27,7 +27,6 @@ func _connect():
 	sys.main.connect("onBattleReady", self, "come")
 	sys.main.connect("onBattleStart", self, "run")
 	sys.main.connect("onBattleEnd", self, "reward")
-	originBackground = sys.main.get_node("scene/bg/bg").get_texture()
 	HpBar.createHpBar()
 	Limit.draw_limitBreak()
 	Retreat.initRetreat()
@@ -35,6 +34,8 @@ func _connect():
 
 	FFControl = Utils.FFControl.new()
 	FFControl.createControl()
+	FFMusic = Utils.FFMusic.new()
+	FFMusic.play()
 
 class Raid:
 	extends Buff
@@ -46,14 +47,12 @@ class Raid:
 		att.mgiAtkL = 0.05 + lv * 0.01
 
 func run():
-	print(sys.main.num, sys.main.isAiStart)
 	Limit.init_limitBreak()
 	for i in sys.main.btChas:
 		if i.team == 2:
 			i.addBuff(Raid.new(lv))
 
 func reward():
-	print(sys.main.num, sys.main.isAiStart)
 	if sys.main.player.hp <= sys.main.player.maxHp - lv:
 		sys.main.player.plusHp(lv)
 	sys.main.player.plusGold(5 + lv * 5)
@@ -62,7 +61,7 @@ func reward():
 	Limit.reset_limitBreak()
 
 func come():
-	print(sys.main.num, sys.main.isAiStart)
+	originBackground = sys.main.get_node("scene/bg/bg").get_texture()
 	layer = sys.main.guankaMsg.lvStep - 2
 	if layer > BOSS_LAYER and layer != lastLayer:
 		if sys.rndPer(probability):
