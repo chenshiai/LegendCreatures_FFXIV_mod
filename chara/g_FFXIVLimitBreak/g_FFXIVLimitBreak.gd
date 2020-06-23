@@ -107,6 +107,11 @@ func limit_attack():
 func limit_treatment():
 	if limitBreakLevel != 0:
 		var healStep = limitBreakLevel
+		var canRevive = false
+
+		if healStep == 3:
+			canRevive = true
+		
 		healStep = (healStep * healStep * 0.5 + 1.5 * healStep + 1) / 10
 		Chant.chantStart("极限技-治疗", 1)
 		yield(sys.get_tree().create_timer(1), "timeout")
@@ -115,11 +120,11 @@ func limit_treatment():
 			if cha != null and cha.team == 1:
 				if !cha.isDeath:
 					cha.plusHp(cha.att.maxHp * healStep)
-				elif healStep == 3:
+				elif canRevive:
 					cha.isDeath = false
 					cha.anim.play("del", 100)
 					cha.plusHp(cha.att.maxHp)
-					cha.revive()
+					cha.revive(cha.att.maxHp)
 				yield(sys.get_tree().create_timer(0.1), "timeout")
 	else:
 		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")
