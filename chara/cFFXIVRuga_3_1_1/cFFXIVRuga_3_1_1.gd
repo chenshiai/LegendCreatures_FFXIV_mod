@@ -14,7 +14,7 @@ func _extInit():
 	evos = []
 	addSkillTxt("[机工士的明天！]：车式浮空炮增加至三个，多出的浮空炮不会累计攻击次数")
 
-var baseId = ""
+
 
 func _connect():
 	._connect() #保留继承的处理

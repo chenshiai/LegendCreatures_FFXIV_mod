@@ -1,4 +1,4 @@
-extends Chara
+extends "../cex___FFXIVSummon/cex___FFXIVSummon.gd"
 
 func _info():
 	pass
@@ -13,7 +13,7 @@ func _extInit():
 	attCoe.def = 2
 	attCoe.mgiDef = 2
 	lv = 2
-	evos = ["cFFXIV_Kaluro_1"]
+	evos = ["cFFXIV_Summon2_1"]
 	atkEff = "atk_dang"
 	addCdSkill("skill_WindBlade", 5)#添加cd技能
 	addSkillTxt("[烈风刃]：冷却5s，对目标附加3层[中毒]")

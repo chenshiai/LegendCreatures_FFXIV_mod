@@ -80,7 +80,7 @@ func limit_protect():
 		yield(sys.get_tree().create_timer(1), "timeout")
 		reset_limitBreak()
 		for cha in sys.main.btChas:
-			if cha != null and cha.team == 1:
+			if cha != null and cha.team == 1 and !cha.isDeath:
 				cha.addBuff(limit_protect.new(lv))
 				Utils.draw_effect("shield2", cha.position, Vector2(0, -30), 14, 1)
 				yield(sys.get_tree().create_timer(0.1), "timeout")
@@ -96,7 +96,7 @@ func limit_attack():
 		yield(sys.get_tree().create_timer(1), "timeout")
 		reset_limitBreak()
 		for cha in sys.main.btChas:
-			if cha != null and cha.team == 2:
+			if cha != null and cha.team == 2 and !cha.isDeath:
 				toolman.hurtChara(cha, (allAtt["atk"] + allAtt["mgiAtk"]) * lv, Chara.HurtType.REAL, Chara.AtkType.SKILL)
 				Utils.draw_effect("fireII", cha.position, Vector2(0, -40), 15, 4)
 				return

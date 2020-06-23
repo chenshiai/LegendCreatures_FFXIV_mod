@@ -16,7 +16,7 @@ func _extInit():
 	evos = []
 	addSkillTxt(TEXT.format("[最好的学生]：{TPassive}提高30%的法强"))
 
-var baseId = ""
+
 
 func _connect():
 	._connect()

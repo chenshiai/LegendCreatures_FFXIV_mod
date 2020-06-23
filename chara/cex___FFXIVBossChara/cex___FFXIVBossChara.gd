@@ -117,8 +117,9 @@ func _onAtkChara(atkInfo):
 				count += 1
 
 		if count == 1:
-			atkInfo.hurtVal = 0
 			reward = false
+			tarCha.newChara("cex___FFXIVSummon", tarCha.cell)
+			sys.newBaseMsg(TEXT.Insurance.title, TEXT.Insurance.content)
 			FFHurtChara(self, att.maxHp * 2, Chara.HurtType.REAL, Chara.AtkType.SKILL)
 		else:
 			match tarCha.lv:
@@ -132,6 +133,4 @@ func _onDeath(atkInfo):
 	if reward:
 		var item = sys.newItem("i_FFXIVSoulCrystal")
 		sys.main.player.addItem(item)
-	else:
-		yield(reTimer(3), "timeout")
-		sys.newBaseMsg(TEXT.Insurance.title, TEXT.Insurance.content)
+	

@@ -63,15 +63,15 @@ func summon(lv):
 	var n = sys.rndRan(0, 2)
 	var summonCha = ""
 	if n == 0 :
-		summonCha = "cFFXIV_Evlet"
+		summonCha = "cFFXIV_Summon1"
 	elif n == 1:
-		summonCha = "cFFXIV_Kaluro"
+		summonCha = "cFFXIV_Summon2"
 	elif n == 2:
-		summonCha = "cFFXIV_Titan"
+		summonCha = "cFFXIV_Summon3"
 
 	if lv == 3:
 		summonCha += "_1"
 	elif lv == 4:
-		summonCha += "_11"
+		summonCha += "_1_1"
 
 	newChara(summonCha, self.cell)

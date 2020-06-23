@@ -1,4 +1,5 @@
-extends Chara
+extends "../cex___FFXIVSummon/cex___FFXIVSummon.gd"
+
 func _info():
 	pass
 func _extInit():
@@ -11,7 +12,7 @@ func _extInit():
 	attCoe.def = 2.5
 	attCoe.mgiDef = 2.5
 	lv = 2
-	evos = ["cFFXIV_Evlet_1"]
+	evos = ["cFFXIV_Summon1_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_BurningStrike", 5)
 	addSkillTxt("[燃火强袭]：冷却5s，对目标附加3层[烧灼]")

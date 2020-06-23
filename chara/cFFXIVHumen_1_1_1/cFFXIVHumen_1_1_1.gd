@@ -3,7 +3,7 @@ extends "../cFFXIVHumen_1_1/cFFXIVHumen_1_1.gd"
 const DECIMATE_PW = 1.80 # 地毁人亡威力
 var livingDead = false # 死斗是否触发
 var deadTime = 7 # 死斗倒计时
-var baseId = ""
+
 
 func _extInit():
 	._extInit()

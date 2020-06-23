@@ -1,4 +1,4 @@
-extends Chara
+extends "../cex___FFXIVSummon/cex___FFXIVSummon.gd"
 
 func _info():
 	pass
@@ -13,7 +13,7 @@ func _extInit():
 	attCoe.def = 2.5
 	attCoe.mgiDef = 2.5
 	lv = 2
-	evos = ["cFFXIV_Titan_1"]
+	evos = ["cFFXIV_Summon3_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_RockBuster", 5)#添加cd技能
 	addSkillTxt("[碎岩]：冷却5s，为周围2格的友军附加3层[抵御]")

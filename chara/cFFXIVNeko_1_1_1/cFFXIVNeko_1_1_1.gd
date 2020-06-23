@@ -15,7 +15,7 @@ func _extInit():
 	evos = []
 	addSkillTxt(TEXT.format("[我的梦想，就是拯救世界！]：{TPassive}护盾生成量变为[治疗量的225%]"))
 
-var baseId = ""
+
 
 func _connect():
 	._connect()

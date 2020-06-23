@@ -15,7 +15,7 @@ func _extInit():
 	evos = []
 	addSkillTxt(TEXT.format("[舍弃苍天的龙骑士]：{TPassive}获得10%的物理吸血"))
 
-var baseId = ""
+
 
 func _connect():
 	._connect()

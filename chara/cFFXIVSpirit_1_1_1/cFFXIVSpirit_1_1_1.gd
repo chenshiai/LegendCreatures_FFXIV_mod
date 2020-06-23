@@ -14,7 +14,7 @@ func _extInit():
 	evos = []
 	addSkillTxt(TEXT.format("[天星交错]：{TPassive}阳星相位现在会附加[黑夜领域]的效果"))
 
-var baseId = ""
+
 
 func _connect():
 	._connect()

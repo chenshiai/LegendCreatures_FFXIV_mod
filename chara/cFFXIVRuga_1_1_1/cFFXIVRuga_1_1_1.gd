@@ -16,7 +16,7 @@ func _extInit():
 	addSkillTxt("[神圣领域]：战斗开始时开启无敌，持续10s，之后每70s使用一次")
 	addCdSkill("skill_Superbolide", 70)
 
-var baseId = ""
+
 
 func _connect():
 	._connect()

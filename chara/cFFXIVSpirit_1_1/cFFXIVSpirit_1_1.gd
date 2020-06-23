@@ -23,7 +23,7 @@ func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Horoscope":
 		var eff = newEff("numHit", Vector2(30, -60))
-		eff.setText("袖内抽卡！")
+		eff.setText("袖内抽卡！", "#ffffff")
 		for i in range(3):
 			drawCard()
 			yield(reTimer(0.5), "timeout")

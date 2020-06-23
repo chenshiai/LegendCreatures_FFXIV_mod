@@ -92,7 +92,7 @@ func triangleAttack():
 	yield(reTimer(1.4), "timeout")
 	setCell(Vector2(7, 2))
 
-	Chant.chantStart("三角攻击", 5)
+	Chant.chantStart("三角攻击", 7)
 	yield(reTimer(5), "timeout")
 	for i in range(10):
 		normalSpr.position = Vector2(0, -2)

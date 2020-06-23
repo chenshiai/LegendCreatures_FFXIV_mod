@@ -1,8 +1,11 @@
-extends "../cFFXIV_Evlet/cFFXIV_Evlet.gd"
+extends "../cFFXIV_Summon3/cFFXIV_Summon3.gd"
+
 func _info():
 	pass
+
 func _extInit():
 	._extInit()
+	chaName = "泰坦之灵"
 	lv = 4
 	evos = []
 

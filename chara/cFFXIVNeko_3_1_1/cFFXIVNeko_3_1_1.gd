@@ -15,7 +15,7 @@ func _extInit():
 	addSkillTxt(TEXT.format("""[和平颂歌]：{TPassive}战斗开始时，为自身和所有队友附加[行吟]，不可叠加
 [行吟]：受到的伤害减少10%"""))
 
-var baseId = ""
+
 
 func _connect():
 	._connect()

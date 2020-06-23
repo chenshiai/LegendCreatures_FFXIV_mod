@@ -19,7 +19,7 @@ func _extInit():
 		connect("swordPpressure", self, "Shoha")
 
 const SHOHA_PW = 4 # 照破威力	
-var baseId = ""
+
 
 func _connect():
 	._connect()

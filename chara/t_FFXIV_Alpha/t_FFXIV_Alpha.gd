@@ -46,12 +46,14 @@ class Raid:
 		att.mgiAtkL = 0.05 + lv * 0.01
 
 func run():
+	print(sys.main.num, sys.main.isAiStart)
 	Limit.init_limitBreak()
 	for i in sys.main.btChas:
 		if i.team == 2:
 			i.addBuff(Raid.new(lv))
 
 func reward():
+	print(sys.main.num, sys.main.isAiStart)
 	if sys.main.player.hp <= sys.main.player.maxHp - lv:
 		sys.main.player.plusHp(lv)
 	sys.main.player.plusGold(5 + lv * 5)
@@ -60,6 +62,7 @@ func reward():
 	Limit.reset_limitBreak()
 
 func come():
+	print(sys.main.num, sys.main.isAiStart)
 	layer = sys.main.guankaMsg.lvStep - 2
 	if layer > BOSS_LAYER and layer != lastLayer:
 		if sys.rndPer(probability):

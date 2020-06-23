@@ -1,12 +1,12 @@
-extends "../cFFXIV_Titan/cFFXIV_Titan.gd"
+extends "../cFFXIV_Summon2_1/cFFXIV_Summon2_1.gd"
 
 func _info():
 	pass
 
 func _extInit():
 	._extInit()
-	chaName = "泰坦之灵"
-	lv = 3
+	chaName = "迦楼罗之灵"
+	lv = 4
 	evos = []
 
 func _connect():

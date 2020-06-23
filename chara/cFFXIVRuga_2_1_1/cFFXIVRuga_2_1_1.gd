@@ -15,7 +15,7 @@ func _extInit():
 	evos = []
 	addSkillTxt(TEXT.format("[红莲极意]：{TPassive}复国领袖，提升25%的攻击力"))
 
-var baseId = ""
+
 func _connect():
 	._connect()
 

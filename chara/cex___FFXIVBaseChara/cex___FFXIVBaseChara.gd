@@ -2,8 +2,9 @@ extends Chara
 const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
 const Utils = globalData.infoDs["g_aFFXIVUtils"]
 const TEXT = globalData.infoDs["g_bFFXIVText"]
-
+var baseId = ""
 var OCCUPATION = "Default"
+
 var BallisticSpeed = {
 	"MeleeDPS": 500,
 	"MagicDPS": 300,

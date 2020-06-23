@@ -25,7 +25,7 @@ func _castCdSkill(id):
 
 func manafication():
 	var eff = newEff("numHit", Vector2(30, -60))
-	eff.setText("倍增！")
+	eff.setText("倍增！", "#ffffff")
 	blackMorgen *= 2
 	whiteMorgan *= 2
 	if blackMorgen > MORGEN_MAX:

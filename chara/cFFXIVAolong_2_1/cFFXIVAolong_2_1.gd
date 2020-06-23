@@ -21,6 +21,6 @@ func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Tsubame":
 		var eff = newEff("numHit", Vector2(-30, -72))
-		eff.setText("燕回返！")
+		eff.setText("燕回返！", "#ffffff")
 		setsugekka(beforIaijutsu)
 

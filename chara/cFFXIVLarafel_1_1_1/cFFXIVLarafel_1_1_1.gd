@@ -16,7 +16,7 @@ func _extInit():
 	addCdSkill("skill_Assize", 19)
 	addSkillTxt(TEXT.format("[法令]：冷却19s，对周围3格内的敌人造成[270%]法强的{TMgiHurt}，同时为范围内的队友恢复[90%]法强的HP"))
 
-var baseId = ""
+
 const ASSIZE_PW = 2.70 # 法令伤害威力
 const ASSIZE_HEAL_PW = 0.90 # 法令治疗威力
 

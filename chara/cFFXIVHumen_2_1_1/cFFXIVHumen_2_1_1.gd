@@ -12,7 +12,7 @@ func _extInit():
 	addCdSkill("skill_BlastingZone", 15)
 	addSkillTxt(TEXT.format("[爆破领域]：冷却15s，对目标造成[380%]的{TPhyHurt}"))
 
-var baseId = ""
+
 const BLASTINGZONE_PW = 3.80 # 爆破领域威力
 
 func _connect():
