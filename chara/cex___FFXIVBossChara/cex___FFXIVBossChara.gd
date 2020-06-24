@@ -1,5 +1,5 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
-var Chant = Utils.Chant.new()
+var Chant = Utils.FFXIVClass.Chant.new()
 
 var reward = true # 是否开启死亡奖励
 var layer # 关卡数
@@ -107,22 +107,16 @@ func _upS():
 	if TimeAxis.has(battleDuration):
 		call_deferred(TimeAxis[battleDuration])
 
-func _onAtkChara(atkInfo):
-	._onAtkChara(atkInfo)
+func _onKillChara(atkInfo):
+	._onKillChara(atkInfo)
 	var tarCha = atkInfo.hitCha
-	if atkInfo.hurtVal >= tarCha.att.hp and tarCha.team == 1:
+	if tarCha.team == 1:
 		var count = 0
-		match tarCha.lv:
-			1: sys.main.player.hp += 2
-			2: sys.main.player.hp += 5
-			3: sys.main.player.hp += 10
-			4: sys.main.player.hp += 15
-
 		for cha in getAllChas(1):
 			if !cha.isDeath:
 				count += 1
 
-		if count == 1:
+		if count == 0:
 			reward = false
 			tarCha.newChara("cex___FFXIVSummon", tarCha.cell)
 			sys.newBaseMsg(TEXT.Insurance.title, TEXT.Insurance.content)

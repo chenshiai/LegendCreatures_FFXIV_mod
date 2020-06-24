@@ -3,5 +3,5 @@
 而是在Utils类加载中获取引用地址，在需要的时候从Utils里面new出来就可以使用
 例如
 ```js
-var Chant = Utils.Chant.new()
+var Chant = Utils.FFXIVClass.Chant.new()
 ```

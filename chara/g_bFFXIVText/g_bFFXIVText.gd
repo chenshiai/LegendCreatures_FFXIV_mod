@@ -1,3 +1,7 @@
+func _init():
+	config.bfDir["易伤"] = "debuff，不可驱散，携带者受到的伤害增加30%。"
+	config.bfDir["物理耐性下降·大"] = "debuff，不可驱散，携带者受到普通攻击的伤害提高99倍。"
+
 func format(text, config = {}):
 	var Text = text.format(self.Config)
 	return Text.format(config)
@@ -89,6 +93,8 @@ const T_TEAM = """根据当前上场人数提供额外加成。
 
 const T_LIGHT = """战斗开始后，己方所有角色双抗提高15%
 “海德林的光之信徒啊！随着这黑暗的要塞一起消失吧！” ———— 拉哈布雷亚\n来自《最终幻想14》"""
+
+const BOSS_DEFAULT = "{c_base}[自适应]：该单位属性根据敌方战力自适应调整，拥有特定的技能时间轴。{/c}"
 
 const BOSS_INNOCENCE = """[color=#ffffff]
 决定第一世界命运的大决战

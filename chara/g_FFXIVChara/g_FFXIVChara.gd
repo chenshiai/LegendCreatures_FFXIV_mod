@@ -1,46 +1,58 @@
 var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
 
 var DeathList = []
+var FFControl
 
 const BossList = [
-  {
-    "id": "cex___FFXIVOmegaF",
-    "backgronud": "/img/SpaceTimeSlit.png"
-  },
-  {
-    "id": "cex___FFXIVOmegaM",
-    "backgronud": "/img/SpaceTimeSlit.png"
-  },
-  {
-    "id": "cex___FFXIVOmega",
-    "backgronud": "/img/SpaceTimeSlit1.png"
-  },
-  {
-    "id": "cex___FFXIVInnocence",
-    "backgronud": "/img/PerfectThrone.png"
-  }
+	{
+		"id": "cex___FFXIVOmegaF",
+		"backgronud": "/img/SpaceTimeSlit.png",
+		"position": Vector2(6, 2)
+	},
+	{
+		"id": "cex___FFXIVOmegaM",
+		"backgronud": "/img/SpaceTimeSlit.png",
+		"position": Vector2(6, 2)
+	},
+	{
+		"id": "cex___FFXIVOmega",
+		"backgronud": "/img/SpaceTimeSlit1.png",
+		"position": Vector2(6, 2)
+	},
+	{
+		"id": "cex___FFXIVInnocence",
+		"backgronud": "/img/PerfectThrone.png",
+		"position": Vector2(6, 2)
+	},
+	{
+		"id": "cex___FFXIVDragon",
+		"backgronud": "/img/CrystallizationSpace.png",
+		"position": Vector2(4, 0)
+	}
 ]
 
 func openDeathList():
-  sys.main.connect("onCharaDel", self, "appendDeathCha")
-  sys.main.connect("onBattleEnd", self, "initDeathCha")
+	sys.main.connect("onCharaDel", self, "appendDeathCha")
+	sys.main.connect("onBattleEnd", self, "initDeathCha")
 
 func getDeathList():
-  return DeathList
+	return DeathList
 
 func appendDeathCha(cha: Chara):
-  if cha.team == 1 and !cha.isSumm:
-    DeathList.append(cha)
+	if cha.team == 1 and !cha.isSumm:
+		DeathList.append(cha)
 
 func initDeathCha():
-  DeathList = []
+	DeathList = []
 
 func rndRanBoss():
-  var n = sys.rndRan(0, 3)
-  clear(null)
-  Utils.background_change(BossList[n].backgronud)
-  var cha = add_unit(BossList[n].id, Vector2(6, 2), 2)
-  return cha
+	var n = sys.rndRan(0, 4)
+	clear(null)
+	Utils.background_change(BossList[4].backgronud)
+	var cha = add_unit(BossList[4].id, BossList[4].position, 2)
+	FFControl = Utils.initFFControl()
+	FFControl.FFMusic.play(Utils.Path + "/FFXIVClass/musicControl/DragonFantasy1.ogg.oggstr")
+	return cha
 
 
 func clear(bosscha):

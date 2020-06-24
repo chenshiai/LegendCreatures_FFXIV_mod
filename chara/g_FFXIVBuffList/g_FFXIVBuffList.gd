@@ -108,7 +108,7 @@ class b_LivingDeath:
 
 	func _del():
 		if life < 0:
-			masCha.hurtChara(masCha, masCha.att.maxHp, Chara.HurtType.REAL)
+			masCha.att.hp = 1
 
 # 强甲破点突，削弱双抗
 class b_ArmorCrush:

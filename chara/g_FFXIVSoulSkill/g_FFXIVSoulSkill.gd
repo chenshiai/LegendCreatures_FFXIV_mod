@@ -1,7 +1,3 @@
-func _init():
-	print("最终幻想14：—————— 灵魂水晶加载 ——————")
-	pass
-
 class BaseSoul:
 	const Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
 	const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]

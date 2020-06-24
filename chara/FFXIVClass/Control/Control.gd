@@ -4,6 +4,9 @@ var Keyboard
 var ControlPanel # 控制面板节点
 var SwitchButton # 开关节点
 var PlayerChas = [] # 被控制的角色列表
+var Limit
+var HpBar # boss血条类
+var FFMusic
 
 var ButtonConfig
 var MapArea
@@ -15,12 +18,17 @@ var textGrid
 
 func _init():
 	print("最终幻想14：—————— 控制面板加载 ——————")
-	set_config()
-	keyboard_connect()
+	createControl()
 	pass
 
 
 func createControl():
+	Limit = Utils.FFXIVClass.LimitBreak.new()
+	HpBar = Utils.FFXIVClass.BossHpBar.new()
+	FFMusic = Utils.FFXIVClass.FFMusic.new()
+	set_config()
+	keyboard_connect()
+
 	sys.main.connect("onBattleStart", self, "moveControlInit")
 	sys.main.connect("onBattleEnd", self, "controlFree")
 	SwitchButton = Utils.draw_ui_button("展开", Vector2(1073, 495), self, "switch", {"return": true})
@@ -141,7 +149,7 @@ func MsgOk():
 	pass
 
 func keyboard_connect():
-	Keyboard = Utils.Keyboard.new()
+	Keyboard = Utils.FFXIVClass.Keyboard.new()
 	sys.main.add_child(Keyboard)
 	# 先就这样，懒得封装
 	Keyboard.connect("key_w", self, "horizontal_move", [Vector2(0, -1)])

@@ -1,28 +1,32 @@
 var handle = sys.get_node("../Control")
 var Path = null
-var Chant = null
-var Keyboard = null
+var FFXIVClass = null
 var FFControl = null
-var FFMusic = null
+
 func _init():
 	print("最终幻想14：—————— 完整性检测中 ——————")
 	call_deferred("testInit")
 	pass
 
-
 func testInit():
 	Path = chaData.infoDs["cFFXIV_zTatalu"].dir
+	print(chaData.infoDs.keys())
+
 	if Path != null:
-		Chant = load(Path + "/FFXIVClass/Chant/Chant.gd")
-		Keyboard = load(Path + "/FFXIVClass/Keyboard/Keyboard.gd")
-		FFControl = load(Path + "/FFXIVClass/Control/Control.gd")
-		FFMusic = load(Path + "/FFXIVClass/music/musicControl.gd")
+		FFXIVClass = load(Path + "/FFXIVClass/FFXIVClass.gd").new()
 	else:
 		var label = Label.new()
 		label.text = "最终幻想14：MOD文件路径读取失败，请在创意工坊内重新订阅。"
-		print(label.text)
 		handle.add_child(label)
 
+func initFFControl():
+	if FFControl == null:
+		FFControl = FFXIVClass.FFControl.new()
+		sys.main.connect("tree_exited", self, "gameExit")
+	return FFControl
+
+func gameExit():
+	FFControl = null
 
 func load_texture(imgPath):
 	var im = Image.new()
