@@ -5,13 +5,11 @@ var FFControl = null
 
 func _init():
 	print("最终幻想14：—————— 完整性检测中 ——————")
-	call_deferred("testInit")
+	call_deferred("dataInit")
 	pass
 
-func testInit():
+func dataInit():
 	Path = chaData.infoDs["cFFXIV_zTatalu"].dir
-	print(chaData.infoDs.keys())
-
 	if Path != null:
 		FFXIVClass = load(Path + "/FFXIVClass/FFXIVClass.gd").new()
 	else:
@@ -25,21 +23,31 @@ func initFFControl():
 		sys.main.connect("tree_exited", self, "gameExit")
 	return FFControl
 
+# 返回标题释放控制器实例
 func gameExit():
 	FFControl = null
 
-func load_texture(imgPath):
+
+# 如果是mod本体图片加载，则自动拼接Path
+# 如果不是mod本体图片加载，则imgPath应当为完整的绝对路径
+func load_texture(imgPath, local = true):
 	var im = Image.new()
 	var imt = ImageTexture.new()
-	im.load(Path + imgPath)
+
+	if local:
+		im.load(Path + imgPath)
+	else:
+		im.load(imgPath)
 	imt.create_from_image(im)
 	return imt
 
 
-func background_change(imgPath):
-	sys.main.get_node("scene/bg/bg").set_texture(load_texture(imgPath))
+# 更换背景
+func background_change(imgPath, local = true):
+	sys.main.get_node("scene/bg/bg").set_texture(load_texture(imgPath, local))
 
 
+# 创建本体的自定义特效
 func draw_effect(effectName, position, deviation, frame = 15, scale = 1, repeat = false, rotation = deg2rad(0)): 
 	var eff = sys.newEff("animEff", position)
 	var direc = Path + "/effects/" + effectName
@@ -49,18 +57,33 @@ func draw_effect(effectName, position, deviation, frame = 15, scale = 1, repeat 
 	eff.scale *= scale
 	return eff
 
-func draw_efftext(text, position, deviation, color = "#ffffff", speed = 0.25):
+
+# 创建非本体的自定义特效
+func draw_effect_out(effdirec, position, deviation, frame = 15, scale = 1, repeat = false, rotation = deg2rad(0)): 
+	var eff = sys.newEff("animEff", position)
+	eff.setImgs(effdirec, frame, repeat)
+	eff.normalSpr.position = deviation
+	eff.rotation = rotation
+	eff.scale *= scale
+	return eff
+
+
+# 浮动文字特效
+func draw_efftext(text, position, deviation, color = "#ffffff", speed = 0):
 	var eff = sys.newEff("numHit", position)
 	var dev = 0
 	eff.normalSpr.position = deviation
 	eff.scale.x *= -1
 	eff.setText(text, color)
-	eff.anim.set_speed_scale(speed)
-	while dev < 5:
+	eff.anim.set_speed_scale(0)
+	while dev < 10:
 		dev += 1
-		eff.normalSpr.position = deviation + Vector2(0, -5) * dev
+		eff.normalSpr.position = deviation + Vector2(0, -3) * dev
 		yield(sys.get_tree().create_timer(0.1), "timeout")
+	eff.queue_free()
 
+
+# 创建Boss时间轴
 func create_timeAxis(skillAxis):
 	var timeAxis = {}
 	for skillName in skillAxis:
@@ -69,6 +92,7 @@ func create_timeAxis(skillAxis):
 	return timeAxis
 
 
+# 绘制按钮UI
 func draw_ui_button(
 		text,
 		position,
@@ -109,6 +133,7 @@ func defaultCallback():
 	sys.newBaseMsg("测试", "并未连接到任何函数")
 
 
+# 绘制残影
 func draw_shadow(img, startPositon:Vector2, endPositon:Vector2, speed = 25):
 	var distance = endPositon - startPositon
 	var rs = preload("res://core/ying.tscn")
@@ -121,6 +146,7 @@ func draw_shadow(img, startPositon:Vector2, endPositon:Vector2, speed = 25):
 		spr.init(255 / n * i + 100)
 
 
+# 获取直线范围的角色
 func lineChas(aCell, bCell, num):
 	var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
 	var chas = []

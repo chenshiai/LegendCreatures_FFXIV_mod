@@ -1,6 +1,6 @@
 extends "../BaseClass.gd"
 
-var Keyboard
+var Keyboard # 键盘监听实例
 var ControlPanel # 控制面板节点
 var SwitchButton # 开关节点
 var PlayerChas = [] # 被控制的角色列表
@@ -23,17 +23,19 @@ func _init():
 
 
 func createControl():
-	Limit = Utils.FFXIVClass.LimitBreak.new()
-	HpBar = Utils.FFXIVClass.BossHpBar.new()
-	FFMusic = Utils.FFXIVClass.FFMusic.new()
+	Limit = Utils.FFXIVClass.LimitBreak.new() # 创建极限技实例
+	HpBar = Utils.FFXIVClass.BossHpBar.new() # 创建血条实例
+	FFMusic = Utils.FFXIVClass.FFMusic.new() # 创建音乐控制实例
 	set_config()
 	keyboard_connect()
 
 	sys.main.connect("onBattleStart", self, "moveControlInit")
 	sys.main.connect("onBattleEnd", self, "controlFree")
+
 	SwitchButton = Utils.draw_ui_button("展开", Vector2(1073, 495), self, "switch", {"return": true})
 	sys.main.get_node("ui").add_child(SwitchButton)
 	render_panel()
+
 
 func render_panel():
 	ControlPanel = NinePatchRect.new()
@@ -45,6 +47,7 @@ func render_panel():
 
 	sys.main.get_node("ui").add_child(ControlPanel)
 	switch()
+
 
 func switch():
 	ControlPanel.visible = !ControlPanel.visible
@@ -62,17 +65,20 @@ func moveControlInit():
 func controlFree():
 	PlayerChas = [] # 清空友方单位列表
 
+
 # 节流冷却
 func order_throttle():
 	throttle = true
 	yield(sys.get_tree().create_timer(1), "timeout")
 	throttle = false
 
+
 # 延时定点
 func delay():
 	for cha in PlayerChas:
 		if cha.hasBuff("b_StaticTime"):
 			BUFF_LIST.b_StaticTime.new(1, cha)
+
 
 # 定点移动，让角色向目标点移动，true表示移动成功，false表示移动失败
 func movement(cha, cell) -> bool:
@@ -85,10 +91,12 @@ func movement(cha, cell) -> bool:
 	else:
 		return false
 
+
 # 水平的移动指令
 func horizontal_move(direction: Vector2):
 	for cha in PlayerChas:
 		movement(cha, cha.cell + direction)
+
 
 # 复杂的移动指令
 func complex_move(mapArea):
@@ -99,14 +107,15 @@ func complex_move(mapArea):
 	order_throttle() # 开启节流，下达指令
 	for cha in PlayerChas:
 		if cha.cell.x <= 3:
-			if cha.cell.y >= 2:
+			if cha.cell.y > 2:
 				select_area(cha, mapArea, "left_bottom")
 			else:
 				select_area(cha, mapArea, "left_top")
-		elif cha.cell.y >= 2:
+		elif cha.cell.y > 2:
 			select_area(cha, mapArea, "right_bottom")
 		else:
 			select_area(cha, mapArea, "right_top")
+
 
 # 选择当前区域内最近地点移动
 func select_area(cha, mapArea, area):
@@ -127,10 +136,11 @@ func select_area(cha, mapArea, area):
 	else:
 		# 此处不留爷，自有留爷处。当前区域没有位置了，前往下一个区域
 		match area:
-			"left_bottom": select_area(cha, mapArea, "left_top")
-			"left_top": select_area(cha, mapArea, "right_top")
-			"right_bottom": select_area(cha, mapArea, "left_bottom")
-			"right_top": select_area(cha, mapArea, "right_bottom")
+			"left_bottom": select_area(cha, mapArea, "right_bottom")
+			"left_top": select_area(cha, mapArea, "left_bottom")
+			"right_bottom": select_area(cha, mapArea, "right_top")
+			"right_top": select_area(cha, mapArea, "left_top")
+
 
 func showLimitInfo():
 	textGrid = RichTextLabel.new()
@@ -147,6 +157,7 @@ func showLimitInfo():
 
 func MsgOk():
 	pass
+
 
 func keyboard_connect():
 	Keyboard = Utils.FFXIVClass.Keyboard.new()
@@ -304,10 +315,10 @@ func set_config():
 
 	MapArea = {
 		"scatter": {
-			"left_top": [Vector2(0, 1), Vector2(2, 0)],
-			"left_bottom": [Vector2(0, 3), Vector2(1, 4), Vector2(3, 4)],
-			"right_top": [Vector2(4, 0), Vector2(6, 0), Vector2(7, 1)],
-			"right_bottom": [Vector2(5, 4), Vector2(7, 3)]
+			"left_top": [Vector2(0, 1), Vector2(1, 0), Vector2(3, 0)],
+			"left_bottom": [Vector2(0, 3), Vector2(2, 4)],
+			"right_top": [Vector2(5, 0), Vector2(7, 1)],
+			"right_bottom": [Vector2(4, 4), Vector2(6, 4), Vector2(7, 3)]
 		},
 		"parallel": {
 			"left_top": [Vector2(0, 0), Vector2(1, 0), Vector2(2, 0), Vector2(3, 0)],
@@ -316,15 +327,15 @@ func set_config():
 			"right_bottom": [Vector2(4, 4), Vector2(5, 4), Vector2(6, 4), Vector2(7, 4)]
 		},
 		"aggregate_left": {
-			"left_top": [Vector2(2, 0), Vector2(1, 1), Vector2(2, 1)],
-			"left_bottom": [Vector2(0, 2), Vector2(1, 2), Vector2(1, 3)],
-			"right_top": [Vector2(2, 2), Vector2(2, 3), Vector2(2, 4)],
-			"right_bottom": [Vector2(3, 1), Vector2(3, 2), Vector2(3, 3)]
+			"left_top": [Vector2(1, 1), Vector2(2, 1), Vector2(1, 2), Vector2(2, 2)],
+			"left_bottom": [Vector2(1, 2), Vector2(2, 2), Vector2(1, 3), Vector2(2, 3)],
+			"right_top": [Vector2(2, 1), Vector2(3, 1), Vector2(2, 2), Vector2(3, 2)],
+			"right_bottom": [Vector2(2, 2), Vector2(3, 2), Vector2(2, 3), Vector2(3, 3)]
 		},
 		"aggregate_right": {
-			"right_top": [Vector2(5, 0), Vector2(5, 1), Vector2(5, 1)],
-			"right_bottom": [Vector2(6, 2), Vector2(7, 2), Vector2(6, 3)],
-			"left_bottom": [Vector2(5, 2), Vector2(5, 3), Vector2(5, 4)],
-			"left_top": [Vector2(4, 1), Vector2(4, 2), Vector2(4, 3)]
+			"right_top": [Vector2(5, 1), Vector2(6, 1), Vector2(5, 2), Vector2(6, 2)],
+			"right_bottom": [Vector2(6, 2), Vector2(5, 2), Vector2(6, 3), Vector2(5, 3)],
+			"left_bottom": [Vector2(5, 2), Vector2(5, 3), Vector2(4, 2), Vector2(4, 3)],
+			"left_top": [Vector2(4, 1), Vector2(4, 2), Vector2(5, 1), Vector2(5, 2)]
 		},
 	}

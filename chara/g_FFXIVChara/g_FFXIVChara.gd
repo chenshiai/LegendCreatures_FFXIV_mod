@@ -1,35 +1,20 @@
 var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
-
+var BossList = []
 var DeathList = []
 var FFControl
 
-const BossList = [
-	{
-		"id": "cex___FFXIVOmegaF",
-		"backgronud": "/img/SpaceTimeSlit.png",
-		"position": Vector2(6, 2)
-	},
-	{
-		"id": "cex___FFXIVOmegaM",
-		"backgronud": "/img/SpaceTimeSlit.png",
-		"position": Vector2(6, 2)
-	},
-	{
-		"id": "cex___FFXIVOmega",
-		"backgronud": "/img/SpaceTimeSlit1.png",
-		"position": Vector2(6, 2)
-	},
-	{
-		"id": "cex___FFXIVInnocence",
-		"backgronud": "/img/PerfectThrone.png",
-		"position": Vector2(6, 2)
-	},
-	{
-		"id": "cex___FFXIVDragon",
-		"backgronud": "/img/CrystallizationSpace.png",
-		"position": Vector2(4, 0)
-	}
-]
+func _init():
+		print("最终幻想14：—————— 讨伐歼灭读取 ——————")
+		call_deferred("dataInit")
+
+func dataInit():
+	for id in chaData.infoDs.keys():
+		if id.begins_with("cex___FFBoss"):
+			var BossPath = chaData.infoDs[id].dir
+			var FFConfig = load("%s/%s/FFConfig.gd" % [BossPath, id])
+			BossList.append(FFConfig.BossInfo)
+			print("最终幻想14：《%s》√ " % [FFConfig.BossInfo.crusade])
+
 
 func openDeathList():
 	sys.main.connect("onCharaDel", self, "appendDeathCha")
@@ -46,12 +31,9 @@ func initDeathCha():
 	DeathList = []
 
 func rndRanBoss():
-	var n = sys.rndRan(0, 4)
+	var n = sys.rndRan(0, BossList.size() - 1)
 	clear(null)
-	Utils.background_change(BossList[4].backgronud)
-	var cha = add_unit(BossList[4].id, BossList[4].position, 2)
-	FFControl = Utils.initFFControl()
-	FFControl.FFMusic.play(Utils.Path + "/FFXIVClass/musicControl/DragonFantasy1.ogg.oggstr")
+	var cha = add_unit(BossList[n].id, BossList[n].position, 2)
 	return cha
 
 

@@ -142,12 +142,12 @@ func wingedReprobation():
 	for cha in chas1:
 		if cha.team != team :
 			hurtChara(cha, att.mgiAtk * wingedReprobation_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
-			addBuff(b_VulnerableSmall.new(15))
+			cha.addBuff(b_VulnerableSmall.new(15))
 
 	for cha in chas2:
 		if cha.team != team :
 			hurtChara(cha, att.mgiAtk * wingedReprobation_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
-			addBuff(b_VulnerableSmall.new(15))
+			cha.addBuff(b_VulnerableSmall.new(15))
 
 # 夺影
 func shadowReaver():

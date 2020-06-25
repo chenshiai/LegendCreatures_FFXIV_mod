@@ -1,9 +1,14 @@
+# 最终幻想14 Boss模板文件
+# 版本号 0.0.2
 extends Chara
 const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
 const Utils = globalData.infoDs["g_aFFXIVUtils"]
 const TEXT = globalData.infoDs["g_bFFXIVText"]
-var baseId = ""
+var Retreat = globalData.infoDs["g_FFXIVRetreat"] # 退避机制
+var FFControl = null
+var Path = ""
 
+var baseId = ""
 var reward = true # 是否开启死亡奖励
 var layer # 当前关卡数
 var battleDuration = 0 # 战斗时间
@@ -83,7 +88,7 @@ func FFHurtChara(target, atkVal, hurtType, atkType):
 # Boss自适应属性
 func selfAdaption():
 	if self.team == 2:
-		layer = sys.main.guankaMsg.lvStep + 20
+		layer = sys.main.guankaMsg.lvStep + 40
 		allAtt = Utils.Calculation.getEnemyPower(self.team)
 		E_atk = allAtt.atk
 		E_mgiAtk = allAtt.mgiAtk
@@ -93,7 +98,7 @@ func selfAdaption():
 		E_spd = allAtt.spd
 		E_num = allAtt.num
 		E_lv = allAtt.lv
-		attInfo.maxHp = (E_atk + E_mgiAtk) * layer * 2 / E_num
+		attInfo.maxHp = (E_atk + E_mgiAtk) / E_num * layer * 8
 		attInfo.atk = (E_def + E_maxHp / 8) / E_num + layer * 3
 		attInfo.mgiAtk = (E_mgiDef + E_maxHp / 8) / E_num + layer * 3
 		attInfo.def = (E_atk + layer * 2) / E_num
@@ -131,7 +136,7 @@ func normalAtkChara(cha):
 
 
 # 创建时间轴
-func setTimeAxis(skillAxis):
+func set_time_axis(skillAxis):
 	TimeAxis = Utils.create_timeAxis(skillAxis)
 
 func _upS():
@@ -140,4 +145,6 @@ func _upS():
 	if TimeAxis.has(battleDuration):
 		call_deferred(TimeAxis[battleDuration])
 
-	
+# 拼接当前文件的路径
+func set_path(id: String):
+	Path = chaData.infoDs[id].dir + "/%s/files" % [id]

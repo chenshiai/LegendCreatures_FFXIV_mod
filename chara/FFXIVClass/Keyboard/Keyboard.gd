@@ -1,4 +1,4 @@
-extends Node
+extends "../BaseClass.gd"
 
 func _init():
 	print("最终幻想14：—————— 键盘监听开启 ——————")

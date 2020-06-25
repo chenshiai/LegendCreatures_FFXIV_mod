@@ -11,7 +11,7 @@ var layer = 0 # 当前关卡数
 var lastLayer = 0 # 上一次出现boss的层数
 
 const PROBABILITY = 100 # Boss出现的基本概率
-const BOSS_LAYER = 2 # 在多少关之后概率动态调整
+const BOSS_LAYER = 1 # 在多少关之后概率动态调整
 var probability = PROBABILITY # Boss出现的动态概率
 
 func init():
@@ -22,6 +22,7 @@ func get_info():
 
 func _connect():
 	FFControl = Utils.initFFControl()
+	originBackground = sys.main.get_node("scene/bg/bg").get_texture()
 
 	sys.main.player.maxHp += lv * 4 + 20
 	sys.main.player.plusHp(lv * 4 + 20)
@@ -30,8 +31,6 @@ func _connect():
 	sys.main.connect("onBattleEnd", self, "reward")
 	Retreat.initRetreat()
 	FFChara.openDeathList()
-
-
 
 class Raid:
 	extends Buff
@@ -57,7 +56,6 @@ func reward():
 	FFControl.Limit.reset_limitBreak()
 
 func come():
-	originBackground = sys.main.get_node("scene/bg/bg").get_texture()
 	layer = sys.main.guankaMsg.lvStep - 2
 	if layer > BOSS_LAYER and layer != lastLayer:
 		if sys.rndPer(probability):

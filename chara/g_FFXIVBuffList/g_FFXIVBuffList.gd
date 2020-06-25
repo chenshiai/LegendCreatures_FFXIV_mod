@@ -667,28 +667,62 @@ class b_StaticTime:
 		masCha.isMoveIng = true
 		life = clamp(life, 0, 2)
 
-class b_Test:
-	extends Buff
-	func _init(lv):
+# cd技能停止
+class b_FrozenCdSkill:
+	extends BaseBuff
+	func _init(dur = 1, cha = null):
 		attInit()
-		id = "test"
-		life = lv
-		att.atk = 100
-		
+		id = "b_FrozenCdSkill"
+		life = dur
+		att.cd = -100
+		isNegetive = false
+		addBuff(cha)
+
+
+# 易伤
+class b_VulnerableSmall:
+	extends Buff
+	func _init(dur = 1):
+		attInit()
+		life = dur
+		isNegetive = false
+		id = "b_VulnerableSmall"
+	
 	func _connect():
-		var direc = masCha.direc
-		eff = sys.newEff("animEff", masCha.position)
-		eff.setImgs(direc + '你图片的文件地址', 15, false)
-		# eff.normalSpr.position = Vector2(0, 0)
-		# eff.rotation = deg2rad(0)
-		# eff.scale *= 1
+		masCha.connect("onHurt", self, "run")
+
+	func run(atkInfo):
+		atkInfo.hurtVal *= 1.3
+		
+# 物理耐性下降·大
+class b_VulnerableLarge:
+	extends Buff
+	func _init(dur = 1):
+		attInit()
+		life = dur
+		isNegetive = false
+		id = "b_VulnerableLarge"
+	
+	func _connect():
+		masCha.connect("onHurt", self, "run")
+
+	func run(atkInfo):
+		if atkInfo.atkType == Chara.AtkType.NORMAL:
+			atkInfo.hurtVal *= 99
+
+
+class b_Share:
+	extends BaseBuff
+	func _init(lv = 1, cha = null):
+		attInit()
+		id = "b_Share"
+		isNegetive = false
+		life = lv
+		addBuff(cha)
+		eff = Utils.draw_effect("share", masCha.position, Vector2(0, -20), 8, 3, true)
+
+	func _del():
+		eff.queue_free()
 
 	func _process(a):
 		eff.position = masCha.position
-
-
-# 添加A_buff，判断目标是否持有【护盾基类buff】，没有则创建一个护盾槽，挂在角色节点上
-# 添加B_buff，判断目标是有持有【护盾基类buff】，有，则将护盾值累加在护盾槽
-# 当B_buff消失，目标护盾槽减少b_buff的剩余护盾值
-
-# 当任意护盾buff的护盾值更新，都要触发目标护盾槽值的变化
