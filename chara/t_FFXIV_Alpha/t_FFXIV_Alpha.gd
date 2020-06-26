@@ -11,7 +11,7 @@ var layer = 0 # 当前关卡数
 var lastLayer = 0 # 上一次出现boss的层数
 
 const PROBABILITY = 100 # Boss出现的基本概率
-const BOSS_LAYER = 1 # 在多少关之后概率动态调整
+const BOSS_LAYER = 80 # 在多少关之后概率动态调整
 var probability = PROBABILITY # Boss出现的动态概率
 
 func init():
@@ -58,6 +58,7 @@ func reward():
 
 func come():
 	layer = sys.main.guankaMsg.lvStep - 2
+	print(layer)
 	if layer > BOSS_LAYER and layer != lastLayer:
 		if sys.rndPer(probability):
 			lastLayer = layer

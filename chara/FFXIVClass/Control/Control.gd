@@ -81,7 +81,7 @@ func controlFree():
 # 节流冷却
 func order_throttle():
 	throttle = true
-	yield(sys.get_tree().create_timer(1), "timeout")
+	yield(sys.get_tree().create_timer(0.6), "timeout")
 	throttle = false
 
 

@@ -39,7 +39,7 @@ class BassShield extends BaseBuff:
 			self.isDel = true
 
 
-class ReduceDemage extends BaseBuff:
+class ReduceDamage extends BaseBuff:
 	var reduce_type = null
 	var reduce_pw = 0
 
@@ -64,7 +64,7 @@ class b_Abhor:
 
 # 暗黑布道，减少魔法伤害
 class b_DarkMissionary:
-	extends ReduceDemage
+	extends ReduceDamage
 	func _init(dur = 1, cha = null):
 		attInit()
 		id = "b_DarkMissionary"
@@ -174,7 +174,7 @@ class b_Superbolide:
 
 # 光之心，减少{TMgiHurt}
 class b_HeartOfLight:
-	extends ReduceDemage
+	extends ReduceDamage
 	func _init(dur = 1, cha = null):
 		attInit()
 		id = "b_HeartOfLight"
@@ -304,7 +304,7 @@ class b_Adloquium:
 
 # 野战治疗阵，减伤，持续恢复
 class b_SacredSoil:
-	extends ReduceDemage
+	extends ReduceDamage
 	var hot = 0
 	func _init(dur = 1, val = 0, cha = null):
 		attInit()
@@ -393,14 +393,13 @@ class b_Paean:
 
 # 行吟，减伤			
 class b_Troubadour:
-	extends ReduceDemage
+	extends ReduceDamage
 	func _init(dur = 1, cha = null):
 		attInit()
 		id = "b_Troubadour"
 		isNegetive = false
 		life = dur
 		reduce_pw = 0.10
-		conflict(cha, "b_Troubadour")
 		addBuff(cha)
 
 # 魔人曲。魔法易伤
@@ -617,7 +616,7 @@ class b_Night:
 
 # 命运之轮，减少伤害
 class b_Collective:
-	extends ReduceDemage
+	extends ReduceDamage
 	func _init(dur = 1, cha = null):
 		attInit()
 		id = "b_Collective"
@@ -708,6 +707,7 @@ class RotateCha:
 		life = dur
 		n = dur * 10
 		tarCha = cha
+		addBuff(cha)
 		rotateCha()
 
 	func _connect():
@@ -718,6 +718,7 @@ class RotateCha:
 
 	func rotateCha():
 		# 比较蠢的旋转动画
+		tarCha.get_node("ui").visible = false
 		tarCha.img.set_pivot_offset(tarCha.img.rect_size / 2)
 		for i in range(n):
 			yield(sys.get_tree().create_timer(0.1), "timeout")
@@ -731,10 +732,13 @@ class RotateCha:
 				return
 
 	func _del():
-		tarCha.normalSpr.position = Vector2(0, 0)
-		tarCha.img.set_rotation_degrees(0)
+		tarCha.get_node("ui").visible = true
 
-# 关闭自动攻击
+	func _upS():
+		if life < 1:
+			tarCha.get_node("ui").visible = true
+
+# 关闭自动攻击 有上限
 class b_StaticTime:
 	extends BaseBuff
 	func _init(dur = 1, cha = null):
@@ -752,7 +756,7 @@ class b_StaticTime:
 	func _upS():
 		life = clamp(life, 0, 2)
 
-# 关闭自动攻击
+# 关闭自动攻击 无上限
 class b_StaticTimeUnlock:
 	extends BaseBuff
 	func _init(dur = 1, cha = null):

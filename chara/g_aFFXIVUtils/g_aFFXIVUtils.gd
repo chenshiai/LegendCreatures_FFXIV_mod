@@ -178,6 +178,12 @@ func lineChas(aCell, bCell, num):
 				chas.append(toolman.matCha(ac))
 	return chas
 
+# 距离衰减aoe计算
+func attenuationDamage(startCell, targetCell, damage):
+	var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
+	var length = toolman.cellRan(startCell, targetCell)
+	return damage / (1 + length)
+
 # 数据处理类
 class Calculation:
 	static func sort_MaxMgiAtk(a, b):
