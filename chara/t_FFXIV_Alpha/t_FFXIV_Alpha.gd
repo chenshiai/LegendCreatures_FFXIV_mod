@@ -54,6 +54,7 @@ func reward():
 	sys.main.get_node("scene/bg/bg").set_texture(originBackground)
 	FFControl.HpBar.hidden()
 	FFControl.Limit.reset_limitBreak()
+	FFControl.FFMusic.reset()
 
 func come():
 	layer = sys.main.guankaMsg.lvStep - 2

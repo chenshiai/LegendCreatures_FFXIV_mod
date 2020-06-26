@@ -169,5 +169,5 @@
   res://ui/zhiZuoMsg/zhiZuoMsg.gd.remap,
   res://ui/zhiZuoMsg/zhiZuoMsg.gdc,
   res://ui/zhiZuoMsg/zhiZuoMsg.tscn,
-  res://ui/theme.tres
+  res://ui/theme.tres... # 居然太多了打印不完全
 ]

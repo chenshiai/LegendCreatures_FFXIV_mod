@@ -22,6 +22,18 @@ func _init():
 	pass
 
 
+# 隐藏控制面板，并关闭键盘监听
+func hiddenControl():
+	SwitchButton.visible = false
+	ControlPanel.visible = false
+	Keyboard.close()
+
+# 显示控制面板，并开启键盘监听
+func showControl():
+	SwitchButton.visible = true
+	SwitchButton.text = "展开"
+	Keyboard.open()
+
 func createControl():
 	Limit = Utils.FFXIVClass.LimitBreak.new() # 创建极限技实例
 	HpBar = Utils.FFXIVClass.BossHpBar.new() # 创建血条实例

@@ -643,50 +643,15 @@ class b_LifeOfTheDragon:
 	func _upS():
 		life = clamp(life, 0, 15)
 
-# 静止不动
-class b_StaticTime:
-	extends BaseBuff
-	var oriAi
-	func _init(lv = 1, cha = null):
-		attInit()
-		id = "b_StaticTime"
-		life = lv
-		isNegetive = false
-		addBuff(cha)
-
-	func _connect():
-		oriAi = masCha.aiOn
-		masCha.aiOn = false
-
-	func _del():
-		._del()
-		masCha.aiOn = oriAi
-		masCha.isMoveIng = false
-
-	func _upS():
-		masCha.isMoveIng = true
-		life = clamp(life, 0, 2)
-
-# cd技能停止
-class b_FrozenCdSkill:
-	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
-		id = "b_FrozenCdSkill"
-		life = dur
-		att.cd = -100
-		isNegetive = false
-		addBuff(cha)
-
-
 # 易伤
 class b_VulnerableSmall:
-	extends Buff
-	func _init(dur = 1):
+	extends BaseBuff
+	func _init(dur = 1, cha = null):
 		attInit()
 		life = dur
 		isNegetive = false
 		id = "b_VulnerableSmall"
+		addBuff(cha)
 	
 	func _connect():
 		masCha.connect("onHurt", self, "run")
@@ -696,12 +661,13 @@ class b_VulnerableSmall:
 		
 # 物理耐性下降·大
 class b_VulnerableLarge:
-	extends Buff
-	func _init(dur = 1):
+	extends BaseBuff
+	func _init(dur = 1, cha = null):
 		attInit()
 		life = dur
 		isNegetive = false
 		id = "b_VulnerableLarge"
+		addBuff(cha)
 	
 	func _connect():
 		masCha.connect("onHurt", self, "run")
@@ -711,13 +677,14 @@ class b_VulnerableLarge:
 			atkInfo.hurtVal *= 99
 
 
+# 分摊特效
 class b_Share:
 	extends BaseBuff
-	func _init(lv = 1, cha = null):
+	func _init(dur = 1, cha = null):
 		attInit()
 		id = "b_Share"
 		isNegetive = false
-		life = lv
+		life = dur
 		addBuff(cha)
 		eff = Utils.draw_effect("share", masCha.position, Vector2(0, -20), 8, 3, true)
 
@@ -726,3 +693,89 @@ class b_Share:
 
 	func _process(a):
 		eff.position = masCha.position
+
+
+# 击飞旋转角色，至少2秒，且为0.8的整数倍
+class RotateCha:
+	extends BaseBuff
+	var n = 0
+	var exit = false
+	var tarCha = null
+	func _init(dur = 1, cha = null):
+		attInit()
+		id = "b_RotateCha"
+		isNegetive = false
+		life = dur
+		n = dur * 10
+		tarCha = cha
+		rotateCha()
+
+	func _connect():
+		sys.main.connect("tree_exited", self, "gameExit")
+
+	func gameExit():
+		exit = true
+
+	func rotateCha():
+		# 比较蠢的旋转动画
+		tarCha.img.set_pivot_offset(tarCha.img.rect_size / 2)
+		for i in range(n):
+			yield(sys.get_tree().create_timer(0.1), "timeout")
+			if tarCha and !exit:
+				if i < 10:
+					tarCha.normalSpr.position += Vector2(0, -15)
+				elif i > n - 10:
+					tarCha.normalSpr.position += Vector2(0, 15)
+				tarCha.img.set_rotation_degrees(45 * i)
+			else:
+				return
+
+	func _del():
+		tarCha.normalSpr.position = Vector2(0, 0)
+		tarCha.img.set_rotation_degrees(0)
+
+# 关闭自动攻击
+class b_StaticTime:
+	extends BaseBuff
+	func _init(dur = 1, cha = null):
+		attInit()
+		id = "b_StaticTime"
+		life = dur
+		isNegetive = false
+		cha.aiOn = false
+		addBuff(cha)
+
+	func _del():
+		if !masCha.hasBuff("b_StaticTimeUnlock"):
+			masCha.aiOn = true
+
+	func _upS():
+		life = clamp(life, 0, 2)
+
+# 关闭自动攻击
+class b_StaticTimeUnlock:
+	extends BaseBuff
+	func _init(dur = 1, cha = null):
+		attInit()
+		id = "b_StaticTimeUnlock"
+		life = dur
+		isNegetive = false
+		cha.aiOn = false
+		addBuff(cha)
+
+	func _del():
+		masCha.aiOn = true
+
+	func _upS():
+		masCha.aiOn = false
+
+# 冻结CD
+class b_FrozenCdSkill:
+	extends BaseBuff
+	func _init(dur = 1, cha = null):
+		attInit()
+		id = "b_FrozenCdSkill"
+		life = dur
+		isNegetive = false
+		att.cd = -cha.att.cd - 1
+		addBuff(cha)

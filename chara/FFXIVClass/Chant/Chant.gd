@@ -10,6 +10,8 @@ var allTime = 0
 var nowTime = 0
 var skillName = "测试文案"
 
+var pending = true # 读条进行中
+
 func _init(position = null):
 	createChantBar(position)
 	pass
@@ -21,10 +23,10 @@ func createChantBar(position):
 	chantBar = TextureProgress.new()
 	laber = Label.new()
 
-	chantBarUnder = Utils.load_texture("/img/chantBar_under.png")
+	chantBarUnder = Utils.load_texture(Utils.Path, "/img/chantBar_under.png")
 	chantBar.set_under_texture(chantBarUnder)
 
-	chantBarProgress = Utils.load_texture("/img/chantBar_progress.png")
+	chantBarProgress = Utils.load_texture(Utils.Path, "/img/chantBar_progress.png")
 	chantBar.set_progress_texture(chantBarProgress)
 	chantBar.set_step(0.1)
 	chantBar.set_value(0)
@@ -39,12 +41,15 @@ func createChantBar(position):
 
 func chantStart(text, duration):
 	var n = duration
+	pending = true
 	chantBar.set_max(n)
 	chantBar.set_visible(true)
 	laber.set_visible(true) 
 	laber.text = "%s %.1f" % [text, duration]
 
 	for i in range(n * 10):
+		if !pending:
+			return
 		duration -= 0.1
 		chantBar.set_value(n - duration)
 		laber.text = "%s %.1f" % [text, duration]
@@ -53,3 +58,20 @@ func chantStart(text, duration):
 	chantBar.set_visible(false)
 	laber.set_visible(false) 
 	chantBar.set_value(0)
+	pending = false
+	
+func get_status():
+	return pending
+
+func interrupt():
+	if !pending:
+		return
+	pending = false
+	yield(sys.get_tree().create_timer(0.1), "timeout")
+	laber.text = "已打断！"
+
+	yield(sys.get_tree().create_timer(2), "timeout")
+	chantBar.set_visible(false)
+	laber.set_visible(false) 
+	chantBar.set_value(0)
+	pending = false

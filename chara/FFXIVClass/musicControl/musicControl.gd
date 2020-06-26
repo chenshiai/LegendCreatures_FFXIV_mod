@@ -1,18 +1,45 @@
 extends Control
 var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
 var originMusic
+var TheAudio
 
 func _init():
-	originMusic = sys.get_node("/root/audio/AudioStreamPlayer").stream
+	TheAudio = sys.get_node("/root/audio/AudioStreamPlayer")
+	originMusic = TheAudio.stream
 
-func play(path):
-	var track = load(path)
-	sys.get_node("/root/audio/AudioStreamPlayer").stop()
-	sys.get_node("/root/audio/AudioStreamPlayer").stream = track
-	sys.get_node("/root/audio/AudioStreamPlayer").play()
+func play(path, musicPath):
+	var track = load("%s/%s" % [path, musicPath])
+	TheAudio.stop()
+	TheAudio.stream = track
+	TheAudio.play()
 
+func dbDown(n):
+	var db = TheAudio.get_volume_db()
+	for i in range(n):
+		db -= 1
+		TheAudio.set_volume_db(db)
+		yield(sys.get_tree().create_timer(0.1), "timeout")
+
+func dbUp(n):
+	var db = TheAudio.get_volume_db()
+	for i in range(n):
+		db += 1
+		TheAudio.set_volume_db(db)
+		yield(sys.get_tree().create_timer(0.1), "timeout")
 
 func reset():
-	sys.get_node("/root/audio/AudioStreamPlayer").stop()
-	sys.get_node("/root/audio/AudioStreamPlayer").stream = originMusic
-	sys.get_node("/root/audio/AudioStreamPlayer").play()
+	TheAudio.stop()
+	TheAudio.stream = originMusic
+	TheAudio.play()
+
+func get_playback_position():
+	return TheAudio.get_playback_position()
+
+func set_volume_db(val):
+	TheAudio.set_volume_db(val)
+
+func get_volume_db():
+	return TheAudio.get_volume_db()
+
+func seek(time):
+	TheAudio.seek(time)

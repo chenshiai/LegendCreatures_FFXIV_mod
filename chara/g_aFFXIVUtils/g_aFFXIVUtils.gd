@@ -3,6 +3,8 @@ var Path = null
 var FFXIVClass = null
 var FFControl = null
 
+
+
 func _init():
 	print("最终幻想14：—————— 完整性检测中 ——————")
 	call_deferred("dataInit")
@@ -17,38 +19,43 @@ func dataInit():
 		label.text = "最终幻想14：MOD文件路径读取失败，请在创意工坊内重新订阅。"
 		handle.add_child(label)
 
+
+# 返回控制器实例，没有则新建一个
 func initFFControl():
 	if FFControl == null:
 		FFControl = FFXIVClass.FFControl.new()
 		sys.main.connect("tree_exited", self, "gameExit")
 	return FFControl
 
+
 # 返回标题释放控制器实例
 func gameExit():
 	FFControl = null
 
-
-# 如果是mod本体图片加载，则自动拼接Path
-# 如果不是mod本体图片加载，则imgPath应当为完整的绝对路径
-func load_texture(imgPath, local = true):
+# 加载图片纹理
+func load_texture(path, imgPath) -> ImageTexture:
 	var im = Image.new()
 	var imt = ImageTexture.new()
-
-	if local:
-		im.load(Path + imgPath)
-	else:
-		im.load(imgPath)
+	im.load("%s/%s" % [path, imgPath])
 	imt.create_from_image(im)
 	return imt
 
 
 # 更换背景
-func background_change(imgPath, local = true):
-	sys.main.get_node("scene/bg/bg").set_texture(load_texture(imgPath, local))
+func background_change(path, imgPath):
+	sys.main.get_node("scene/bg/bg").set_texture(load_texture(path, imgPath))
 
 
 # 创建本体的自定义特效
-func draw_effect(effectName, position, deviation, frame = 15, scale = 1, repeat = false, rotation = deg2rad(0)): 
+func draw_effect(
+		effectName,
+		position,
+		deviation,
+		frame = 15,
+		scale = 1,
+		repeat = false,
+		rotation = deg2rad(0)
+	):
 	var eff = sys.newEff("animEff", position)
 	var direc = Path + "/effects/" + effectName
 	eff.setImgs(direc, frame, repeat)
@@ -59,7 +66,15 @@ func draw_effect(effectName, position, deviation, frame = 15, scale = 1, repeat 
 
 
 # 创建非本体的自定义特效
-func draw_effect_out(effdirec, position, deviation, frame = 15, scale = 1, repeat = false, rotation = deg2rad(0)): 
+func draw_effect_out(
+		effdirec,
+		position,
+		deviation,
+		frame = 15,
+		scale = 1,
+		repeat = false,
+		rotation = deg2rad(0)
+	):
 	var eff = sys.newEff("animEff", position)
 	eff.setImgs(effdirec, frame, repeat)
 	eff.normalSpr.position = deviation
@@ -81,15 +96,6 @@ func draw_efftext(text, position, deviation, color = "#ffffff", speed = 0):
 		eff.normalSpr.position = deviation + Vector2(0, -3) * dev
 		yield(sys.get_tree().create_timer(0.1), "timeout")
 	eff.queue_free()
-
-
-# 创建Boss时间轴
-func create_timeAxis(skillAxis):
-	var timeAxis = {}
-	for skillName in skillAxis:
-		for timePoint in skillAxis[skillName]:
-			timeAxis[timePoint] = skillName
-	return timeAxis
 
 
 # 绘制按钮UI
@@ -144,6 +150,15 @@ func draw_shadow(img, startPositon:Vector2, endPositon:Vector2, speed = 25):
 		spr.texture = img.texture_normal
 		spr.position = startPositon + speed * (i + 1) * distance.normalized() - Vector2(img.texture_normal.get_width() / 2, img.texture_normal.get_height())
 		spr.init(255 / n * i + 100)
+
+
+# 创建Boss时间轴
+func create_timeAxis(skillAxis):
+	var timeAxis = {}
+	for skillName in skillAxis:
+		for timePoint in skillAxis[skillName]:
+			timeAxis[timePoint] = skillName
+	return timeAxis
 
 
 # 获取直线范围的角色
@@ -217,7 +232,7 @@ class Calculation:
 
 # 文件路径遍历
 class FileHelper:
-	static func scan(path:String) -> Array:
+	static func scan(path:String):
 		var file_name := ""
 		var files := []
 		var dir := Directory.new()

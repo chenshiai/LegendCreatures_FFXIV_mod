@@ -22,13 +22,13 @@ func draw_limitBreak():
 	Chant = Utils.FFXIVClass.Chant.new(Vector2(400, 400))
 	limitBreak = TextureProgress.new() # 极限技UI节点
 
-	limitUnder = Utils.load_texture("/img/limitBreak_under.png")
+	limitUnder = Utils.load_texture(Utils.Path, "/img/limitBreak_under.png")
 
-	limitProgress0 = Utils.load_texture("/img/limitBreak_progress0.png")
+	limitProgress0 = Utils.load_texture(Utils.Path, "/img/limitBreak_progress0.png")
 
-	limitProgress1 = Utils.load_texture("/img/limitBreak_progress1.png")
-	limitProgress2 = Utils.load_texture("/img/limitBreak_progress2.png")
-	limitProgress = Utils.load_texture("/img/limitBreak_progress.png")
+	limitProgress1 = Utils.load_texture(Utils.Path, "/img/limitBreak_progress1.png")
+	limitProgress2 = Utils.load_texture(Utils.Path, "/img/limitBreak_progress2.png")
+	limitProgress = Utils.load_texture(Utils.Path, "/img/limitBreak_progress.png")
 
 	limitBreak.set_under_texture(limitUnder)
 	limitBreak.set_progress_texture(limitProgress0)

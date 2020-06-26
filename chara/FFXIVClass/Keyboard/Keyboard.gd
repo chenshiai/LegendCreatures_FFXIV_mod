@@ -1,9 +1,5 @@
 extends "../BaseClass.gd"
 
-func _init():
-	print("最终幻想14：—————— 键盘监听开启 ——————")
-	pass
-
 signal key_w
 signal key_a
 signal key_s
@@ -17,8 +13,15 @@ signal key_x
 signal key_c
 signal key_v
 
+var switch = true
+
+func _init():
+	print("最终幻想14：—————— 键盘监听开启 ——————")
+	pass
+
+
 func _input(event):
-	if event is InputEventKey and event.pressed:
+	if event is InputEventKey and event.pressed and switch:
 		match event.scancode:
 			KEY_W: emit_signal("key_w")
 			KEY_A: emit_signal("key_a")
@@ -32,3 +35,10 @@ func _input(event):
 			KEY_X: emit_signal("key_x")
 			KEY_C: emit_signal("key_c")
 			KEY_V: emit_signal("key_v")
+
+func open():
+	switch = true
+
+func close():
+	switch = false
+

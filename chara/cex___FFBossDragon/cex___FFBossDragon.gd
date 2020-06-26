@@ -1,40 +1,42 @@
 extends "./BossChara.gd"
 const BERSERKERTIME_P1 = 180 # P1狂暴时间
+const BERSERKERTIME_P3 = 400 # P3狂暴时间
 
 var stage = "p1" # p1 p2 p3阶段
-
+var P2summonCount = 0 # p2的小龙召唤次数
+var P2summonLive = 0 # p2小龙存活数
 var reincarnation_pw = 4 # 死亡轮回威力
 var blowingSnow_pw = 0.75 # 吹雪威力
 var lightning_pw = 1 # 闪电威力
 var supernova_pw = 1 # 超新星威力
 var icicles_pw = 1 # 冰柱威力
+var protostar_pw = 0 # 原恒星威力
+var trillionChop_pw = 3 # 万亿斩击威力
 
 var SKILL_TXT = """{c_base}
 第一阶段：
-[大地之怒]：开战时使用且只使用一次。神龙的威严不可触犯，对所有敌人造成最大生命值[150%]的魔法伤害。
-[死亡轮回]：{TDeath}对当前仇恨目标连续造成四次[{1}]的范围魔法伤害，可多人分摊伤害。
-[吹雪]：对所有敌人造成[{2}]的魔法伤害，会在场地上留下水坑，水坑中的角色会获得[雷耐性下降·大][火耐性上升·大]。
-[闪电]：对所有敌人释放闪电，造成[{3}]的小范围雷属性魔法伤害。
-[超新星]：对所有敌人释放火炎攻击，造成[{4}]的火属性魔法伤害。
-[召唤冰柱]：场地随机一边出现两根冰柱，对直线上的敌人造成[{5}]的魔法伤害，并附加[易伤]。
+[大地之怒]：开战时使用且只使用一次。神龙的威严不可触犯，对所有敌人造成{c_mgi}最大生命值[150%]{/c}的魔法伤害。
+[死亡轮回]：{TDeath}对当前仇恨目标连续造成四次{c_mgi}[{1}]{/c}的范围魔法伤害，可多人分摊伤害。
+[吹雪]：对所有敌人造成{c_mgi}[{2}]{/c}的魔法伤害，会在场地上留下水坑，水坑中的角色会获得[雷耐性下降·大][火耐性上升·大]。
+[闪电]：对所有敌人释放闪电，造成{c_mgi}[{3}]{/c}的小范围雷属性魔法伤害。
+[超新星]：对所有敌人释放火炎攻击，造成{c_mgi}[{4}]{/c}的火属性魔法伤害。
+[召唤冰柱]：场地随机一边出现两根冰柱，对直线上的敌人造成{c_mgi}[{5}]{/c}的魔法伤害，并附加[易伤]。
 
 第二阶段：
 [召唤小龙]：在场地上召唤4只小龙，1只大龙。
-[原恒星]：对所有敌人造成[{6}]的魔法伤害，场上每有一只小龙存活，该技能伤害提升20%。
+[原恒星]：对所有敌人造成魔法伤害，该技能伤害根据读条进度正比提升。
 
 第三阶段：
-[万亿斩击]：{TDeath}对当前仇恨目标造成[{7}]的物理伤害，并附加[物理耐性下降·大]
+[万亿斩击]：{TDeath}对当前仇恨目标造成{c_phy}[{6}]{/c}的物理伤害，并附加[物理耐性下降·大]
 {/c}"""
 
 var pwConfig = {
-	"0": "未知",
 	"1": "未知",
 	"2": "未知",
 	"3": "未知",
 	"4": "未知",
 	"5": "未知",
 	"6": "未知",
-	"7": "未知",
 }
 
 # 场地水坑区域以及特效
@@ -66,10 +68,16 @@ func _init():
 		"icicles": [26, 66, 106, 146],
 		"leftOrRigth": [33, 73, 113, 153],
 		"reincarnation": [45, 85, 125, 165],
+		"P2summon": [206],
+		"protostar": [280],
+		"P3Start": [322],
+		"uptial": [306, 308, 310, 312, 314, 316, 318],
+		"trillionChop": [330, 350],
+		"tsunami": [370]
 	})
 	FFControl = Utils.initFFControl()
-	Utils.background_change(Path + "/background/CrystallizationSpace.png", false)
-	FFControl.FFMusic.play(Path + "/music/DragonFantasy1.ogg.oggstr")
+	Utils.background_change(Path, "/background/CrystallizationSpace.png")
+	FFControl.FFMusic.play(Path, "/music/DragonFantasy1.ogg.oggstr")
 
 
 func _connect():
@@ -78,7 +86,7 @@ func _connect():
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-	if id == "skill_attack" and stage == "p1":
+	if id == "skill_attack" and stage != "p2":
 		var count = 0
 		for cha in Retreat.PlayerChas:
 			if !cha.isDeath:
@@ -90,17 +98,34 @@ func _castCdSkill(id):
 
 func _onBattleStart():
 	._onBattleStart()
+	aiOn = false
 	stage = "p1"
-	sprcPos = Vector2(-50, -40)
+	sprcPos = Vector2(-50, -30)
 	for cha in sys.main.btChas:
 		if cha.team == 1:
 			cha.addBuff(b_longAtk.new())
-	wrathOfTheEarth()
+
 	reincarnation_pw *= (E_lv / E_num) # 死亡轮回威力
 	blowingSnow_pw *= (E_lv / E_num) # 吹雪威力
 	lightning_pw *= (E_lv / E_num) # 闪电威力
 	supernova_pw *= (E_lv / E_num) # 超新星威力
 	icicles_pw *= (E_lv / E_num) # 冰柱威力
+	trillionChop_pw *= (E_lv / E_num) # 万亿斩击
+
+	pwConfig = {
+		"1": "%d" % [reincarnation_pw * 100],
+		"2": "%d" % [blowingSnow_pw * 100],
+		"3": "%d" % [lightning_pw * 100],
+		"4": "%d" % [supernova_pw * 100],
+		"5": "%d" % [icicles_pw * 100],
+		"6": "%d" % [trillionChop_pw * 100],
+	}
+
+	skillStrs[0] = (TEXT.format(SKILL_TXT, pwConfig))
+
+	if stage == "p1":		
+		wrathOfTheEarth()
+
 
 func _onBattleEnd():
 	._onBattleEnd()
@@ -117,39 +142,128 @@ func _onAddBuff(buff:Buff):
 
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)
-	if att.hp <= att.maxHp * 0.44 and stage == "p1":
+	# P1时当生命值低于44%时转P2
+	if stage == "p1" and att.hp <= att.maxHp * 0.44:
 		changeStage("p2")
 
+	# P2阶段，不会受伤
+	if stage == "p2":
+		atkInfo.hurtVal = 0
+
+func _onCharaDel(cha):
+	._onCharaDel(cha)
+	# 当白金龙死亡时，再次召唤一波小怪，三波小怪全死后打断原恒星读条
+	if cha.id == "cFFXIV_Dragon_entourage_large":
+		P2summonLive -= 1
+		if P2summonCount < 3:
+			P2summon()
+
+	if cha.id == "cFFXIV_Dragon_entourage_small":
+		P2summonLive -= 1
+
+	if cha.team != 1 and P2summonCount == 3 and P2summonLive == 0:
+		P2summonCount = 0
+		P2SummonEnd()
+
+# 死亡时，如果有水坑特效就释放
 func _onDeath(atkInfo):
 	._onDeath(atkInfo)
-	queue_eff()
+	queue_free_eff()
 
+
+# 转阶段控制
 func changeStage(p):
-	self.isDeath = true
 	stage = p
+	queue_free_eff()
 
-	for cha in sys.main.btChas:
-		if cha.team == 1:
-			BUFF_LIST.b_FrozenCdSkill.new(20, cha)
-
-	yield(reTimer(2), "timeout")
-	normalSpr.position = Vector2(0, -300)
-	Utils.draw_shadow(img,  position, position + Vector2(0, -300), 25)
-
+	# p2转场
 	if stage == "p2":
-		activeTimeManeuver()
-		Utils.draw_shadow(img,  position + Vector2(0, 600), position, 25)
-		FFControl.FFMusic.play(Path + "/music/DragonFantasy2.ogg.oggstr")
+		normalSpr.position = Vector2(0, -400)
+		Utils.draw_shadow(img,  position, position + Vector2(0, -300), 25)
+		battleDuration = 180
+		FFControl.hiddenControl()
+		for cha in sys.main.btChas:
+			if cha.team == 1:
+				BUFF_LIST.b_FrozenCdSkill.new(26, cha)
+				BUFF_LIST.b_StaticTimeUnlock.new(26, cha)
 
-func activeTimeManeuver():
+		FFControl.FFMusic.dbDown(20)
+
+		yield(reTimer(2), "timeout")
+		FFControl.FFMusic.play(Path, "/music/DragonFantasy2.ogg.oggstr")
+		FFControl.FFMusic.dbUp(20)
+
+		yield(reTimer(3), "timeout")
+		Utils.background_change(Path, "/background/CrystallizationSpace2.png")
+		Utils.draw_shadow(img, Vector2(400, 600), Vector2(400, 0), 25)
+		
+		for cha in sys.main.btChas:
+			if cha != null and !cha.isDeath and cha != self:
+				BUFF_LIST.RotateCha.new(19.3, cha)
+				
+		yield(reTimer(18), "timeout")
+		Utils.draw_shadow(img, Vector2(400, 600), Vector2(400, 0), 25)
+		Utils.background_change(Path, "/background/CrystallizationSpace3.png")
+		FFControl.showControl()
+		Chant.chantStart("原恒星", 75)
+
+	if stage == "p3":
+		setCell(Vector2(4, 1))
+		position = sys.main.map.map_to_world(Vector2(4, 1))
+		normalSpr.position = Vector2(0, 0)
+
+
+# 召唤小龙
+func P2summon():
+	summonDragon(Vector2(0, 0), 5)
+	summonDragon(Vector2(7, 0), 5)
+	summonDragon(Vector2(0, 4), 5)
+	summonDragon(Vector2(5, 2), 5, true)
+	summonDragon(Vector2(7, 4), 5)
+	P2summonCount += 1
+	P2summonLive += 5
+
+# 距离衰减AOE以及召唤的实现
+func summonDragon(cell, time, large = false):
+	var position = cell * 100
+	var eff = Utils.draw_effect("attenuation", position, Vector2(0, -12), 7, 4, true)
+	yield(reTimer(time), "timeout")
+	var eff2:Eff = newEff("sk_yunShi")
+	eff2.position = position
+	eff2.scale *= 4
+	eff.queue_free()
+	yield(reTimer(0.5), "timeout")
+	if large:
+		newChara("cFFXIV_Dragon_entourage_large", cell)
+	else:
+		newChara("cFFXIV_Dragon_entourage_small", cell)
+	
+# 小龙击杀完毕，P2召唤结束
+func P2SummonEnd():
+	Chant.interrupt()
+	var chas = getAllChas(1)
+	for i in chas:
+		BUFF_LIST.b_StaticTimeUnlock.new(20, i)
+	battleDuration = 292
+	yield(reTimer(2), "timeout")
+	protostar(false)
+	yield(reTimer(4), "timeout")
+	FFControl.FFMusic.dbDown(20)	
+	yield(reTimer(2), "timeout")
+	FFControl.FFMusic.seek(104)
+	FFControl.FFMusic.dbUp(20)
+
+# P3开始！
+func P3Start():
+	changeStage("p3")
 	pass
 
-func queue_eff():
+func queue_free_eff():
 	if mapEffect.puddle != null:
 		mapEffect.puddle.queue_free()
 		mapEffect.puddle = null
 
-
+# 神龙的普攻
 func attack(cha, count):
 	var StartPoint = self.sprcPos
 	if count == 1:
@@ -177,9 +291,11 @@ func wrathOfTheEarth():
 
 # 死亡轮回
 func reincarnation():
+	self.aiOn = true
 	Chant.chantStart("死亡轮回", 5)
-	BUFF_LIST.b_Share.new(5, aiCha)
-	yield(reTimer(5), "timeout")
+	yield(reTimer(1), "timeout")
+	BUFF_LIST.b_Share.new(4, aiCha)
+	yield(reTimer(4), "timeout")
 	shareDemage()
 	yield(reTimer(1), "timeout")
 	shareDemage()
@@ -187,9 +303,10 @@ func reincarnation():
 	shareDemage()
 	yield(reTimer(1), "timeout")
 	shareDemage()
+	aiOn = false
 
 func shareDemage():
-	if att.hp <= 0:
+	if att.hp <= 0 and stage != "p1":
 		return
 	Utils.draw_effect("death", aiCha.position, Vector2(0, -130), 10, 2)
 	var chas = getCellChas(aiCha.cell, 2, 1)
@@ -231,7 +348,7 @@ func leftOrRigth():
 	Chant.chantStart(name[type], 4)
 	yield(reTimer(4), "timeout")
 
-	queue_eff()
+	queue_free_eff()
 
 	if att.hp <=0:
 		return
@@ -302,13 +419,89 @@ func icicles():
 			FFHurtChara(cha, att.mgiAtk * icicles_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 			cha.addBuff(BUFF_LIST.b_VulnerableSmall.new(20))
 
+# 原恒星
+func protostar(overtime = true):
+	Utils.draw_effect("energyStorage", position, Vector2(0, 0), 15, 6)
+	Utils.draw_effect("beatficVision", Vector2(350, 200), Vector2(0, -30), 10, 4)
+	var chas = getAllChas(1)
+	for i in chas:
+		if overtime:
+			i.att.hp = -1
+			FFHurtChara(i, i.att.maxHp, Chara.HurtType.REAL, Chara.AtkType.SKILL)
+		else:
+			FFHurtChara(i, att.mgiAtk * supernova_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+
+
+func uptial():
+	var cha = sys.rndListItem(getAllChas(1))
+	addBuff(laser.new(cha.cell.x, self, 5))
+
+
+# 用buff做临时对象，内部延时不受外部影响，且时间结束自动释放，完美
+class laser:
+	extends Buff
+	var chas
+	var Utils = globalData.infoDs["g_aFFXIVUtils"]
+	func _init(x, Dragon = null, dur = 1):
+		life = dur
+		Utils.draw_effect("danger", Vector2(x * 100, -1), Vector2(-300, 0), 2, 1, false, deg2rad(90))
+		yield(sys.get_tree().create_timer(3), "timeout")
+		var effect = Utils.draw_effect("icicles", Vector2(x * 100, 400), Vector2(0, -50), 4)
+		effect._initFlyPos(Vector2(x * 100, 0), 1600)
+
+		chas = Utils.lineChas(Vector2(x, 0), Vector2(x, 5), 5)
+		for cha in chas:
+			Dragon.FFHurtChara(cha, Dragon.att.mgiAtk * Dragon.icicles_pw * 0.5, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+		
+
+# 万亿斩击
+func trillionChop():
+	self.aiOn = true
+	Chant.chantStart("万亿斩击", 5)
+	yield(reTimer(1), "timeout")
+	self.HateTarget = aiCha
+	print(self.HateTarget)
+	yield(reTimer(4), "timeout")
+	if att.hp <=0:
+		return
+	if self.HateTarget != null:
+		Utils.draw_effect("zhua", self.HateTarget.position, Vector2(0, -30), 15, 3)
+		hurtChara(self.HateTarget, att.mgiAtk * trillionChop_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+		BUFF_LIST.b_VulnerableLarge.new(15, self.HateTarget)
+	self.aiOn = false
+
+func tsunami():
+	Chant.chantStart("大海啸", 30)
+	yield(reTimer(30), "timeout")
+	if att.hp <=0:
+		return
+	var chas = getAllChas(1)
+	for i in chas:
+		i.att.hp = -1
+		FFHurtChara(i, i.att.maxHp, Chara.HurtType.REAL, Chara.AtkType.SKILL)
+
 
 func _upS():
 	._upS()
+	if stage == "p1":
+		setCell(Vector2(4, 0))
+		position = sys.main.map.map_to_world(Vector2(4, 0))
+
+	if stage == "p2":
+		setCell(Vector2(7, 2))
+		position = sys.main.map.map_to_world(Vector2(7, 2))
+		# 从p2开始，每秒累计原恒星的威力
+		protostar_pw += 0.02
+
+	if stage == "p3":
+		setCell(Vector2(4, 1))
+		position = sys.main.map.map_to_world(Vector2(4, 1))
+
 	if stage == "p1" and battleDuration > BERSERKERTIME_P1 and (battleDuration % 5 == 0):
 		# p1阶段超过180s，狂暴
 		blowingSnow()
 		blowingSnow_pw += 1
+		battleDuration = BERSERKERTIME_P1
 
 
 class b_longAtk:
