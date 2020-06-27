@@ -24,7 +24,7 @@ func _onBattleStart():
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)
 	if atkInfo.atkType == AtkType.NORMAL and sys.rndPer(20):
-		Utils.draw_efftext("辉煌箭！", position, Vector2(30, -30), "#fff000", 0.5)
+		Utils.draw_efftext("辉煌箭！", position, Vector2(30, -30), "#fff000")
 		atkInfo.hurtVal *= REFULGENT_PW
 
 func _castCdSkill(id):

@@ -22,7 +22,7 @@ func _onBattleStart():
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Horoscope":
-		Utils.draw_efftext("袖内抽卡！", position, Vector2(0, -30), "#ffffff", 0.5)
+		Utils.draw_efftext("袖内抽卡！", position, Vector2(0, -30), "#ffffff")
 		for i in range(3):
 			drawCard()
 			yield(reTimer(0.5), "timeout")

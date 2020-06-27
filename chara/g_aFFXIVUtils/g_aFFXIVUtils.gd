@@ -32,6 +32,8 @@ func getFFControl():
 # 返回标题释放控制器实例
 func gameExit():
 	FFControl = null
+	infomation = null
+	textGrid = null
 
 # 加载图片纹理
 func load_texture(path, imgPath) -> ImageTexture:
@@ -85,15 +87,20 @@ func draw_effect_out(
 
 
 # 浮动文字特效
-func draw_efftext(text, position, deviation, color = "#ffffff", speed = 0):
+func draw_efftext(text, position, deviation, color = "#ffffff", up = true):
 	var eff = sys.newEff("numHit", position)
 	var dev = 0
 	eff.normalSpr.position = deviation
 	eff.scale.x *= -1
 	eff.setText(text, color)
 	eff.anim.set_speed_scale(0)
-	while dev < 10:
-		dev += 1
+	while dev < 10 and dev > -10:
+		if !eff:
+			return
+		if up:
+			dev += 1
+		else:
+			dev -= 1
 		eff.normalSpr.position = deviation + Vector2(0, -3) * dev
 		yield(sys.get_tree().create_timer(0.1), "timeout")
 	eff.queue_free()

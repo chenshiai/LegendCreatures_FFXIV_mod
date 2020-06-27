@@ -20,6 +20,6 @@ func _onBattleStart():
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Tsubame":
-		Utils.draw_efftext("燕回返！", position, Vector2(30, -30), "#ffffff", 1)
+		Utils.draw_efftext("燕回返！", position, Vector2(30, -30), "#ffffff")
 		setsugekka(beforIaijutsu)
 

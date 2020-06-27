@@ -412,7 +412,7 @@ class Summoner:
 		name = "[color=#4b8e13]召唤师之证"
 		info = "灵魂的水晶，刻有历代召唤师的记忆和真理。\n"\
 			+ "[三重灾祸]\n"\
-			+ "对目标施加[中毒][流血]。\n"\
+			+ "对目标及周围一格的敌人施加[剧毒菌][瘴暍]。\n"\
 			+ "冷却15s，持续10s"
 		att.maxHp = 100
 		att.mgiAtk = 30
@@ -424,8 +424,11 @@ class Summoner:
 
 	func triDisaster(id):
 		if id == "skill__TriDisaster" and masCha.aiCha != null:
-			masCha.aiCha.addBuff(b_liuXue.new(10))
-			masCha.aiCha.addBuff(b_zhonDu.new(10))
+			var chas = masCha.getCellChas(masCha.aiCha.cell, 1, 1)
+			for i in chas:
+				BUFF_LIST.b_Bio.new(10, i, masCha)
+				BUFF_LIST.b_Miasma.new(10, i, masCha)
+				yield(sys.get_tree().create_timer(0.1), "timeout")
 
 class Machinist:
 	extends BaseSoul

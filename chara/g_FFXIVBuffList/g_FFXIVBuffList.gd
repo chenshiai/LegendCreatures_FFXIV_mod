@@ -351,6 +351,40 @@ class b_Dreadwyrm:
 	func _upS():
 		life = clamp(life, 0, 8)
 
+# 剧毒菌，持续伤害
+class b_Bio:
+	extends BaseBuff
+	var app = null
+	func _init(dur = 1, cha = null, Applicator = null):
+		attInit()
+		id = "b_Bio"
+		life = dur
+		isNegetive = true
+		app = Applicator
+		addBuff(cha)
+		Utils.draw_efftext("剧毒菌", cha.position, Vector2(30, -30), "#DEE254", false)
+
+	func _upS():
+		app.hurtChara(masCha, app.att.mgiAtk * 0.05, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+		life = clamp(life, 0, 10)
+
+# 瘴暍，持续伤害
+class b_Miasma:
+	extends BaseBuff
+	var app = null
+	func _init(dur = 1, cha = null, Applicator = null):
+		attInit()
+		id = "b_Miasma"
+		life = dur
+		isNegetive = true
+		app = Applicator
+		addBuff(cha)
+		Utils.draw_efftext("瘴暍", cha.position, Vector2(-30, -30), "#59DFD7", false)
+
+	func _upS():
+		app.hurtChara(masCha, app.att.mgiAtk * 0.05, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+		life = clamp(life, 0, 10)
+
 # 贤者的叙事谣，提高非特效伤害
 class b_Ballad:
 	extends BaseBuff
