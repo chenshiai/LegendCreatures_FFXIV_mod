@@ -134,10 +134,12 @@ func complex_move(mapArea):
 
 
 # 选择当前区域内最近地点移动
-func select_area(cha, mapArea, area):
+func select_area(cha, mapArea, area, count = 1):
 	var minDistance = 20
 	var targetCell = Vector2(0, 0)
 
+	if count >= 4:
+		return
 	for cell in MapArea[mapArea][area]:
 		if cha.matCha(cell) == null:
 			var distance = cha.cellRan(cell)
@@ -150,11 +152,12 @@ func select_area(cha, mapArea, area):
 	if targetCell != Vector2(0, 0):
 		movement(cha, targetCell)
 	else:
+		count += 1
 		match area:
-			"left_bottom": select_area(cha, mapArea, "right_bottom")
-			"left_top": select_area(cha, mapArea, "left_bottom")
-			"right_bottom": select_area(cha, mapArea, "right_top")
-			"right_top": select_area(cha, mapArea, "left_top")
+			"left_bottom": select_area(cha, mapArea, "right_bottom", count)
+			"left_top": select_area(cha, mapArea, "left_bottom", count)
+			"right_bottom": select_area(cha, mapArea, "right_top", count)
+			"right_top": select_area(cha, mapArea, "left_top", count)
 
 func showCrusade():
 	Crusade.CrusadeMsg.popup_centered()
