@@ -1,11 +1,22 @@
 extends "../BaseClass.gd"
 var CrusadeMsg
 var CrusadeCheck = {}
+var AllCheck = null
 var infoBtn
 func _init():
 	initCrusade()
 
 
+func allCheck():
+	if AllCheck.pressed:
+		for id in FFChara.CrusadeConfig.keys():
+			FFChara.CrusadeConfig[id].checked = true
+			CrusadeCheck[id].pressed = true
+	else:
+		for id in FFChara.CrusadeConfig.keys():
+			FFChara.CrusadeConfig[id].checked = false
+			CrusadeCheck[id].pressed = false
+	
 func checkChange(id):
 	var checkStr = ""
 	if CrusadeCheck[id].pressed:
@@ -13,6 +24,7 @@ func checkChange(id):
 		checkStr = "已开启"
 	else:
 		FFChara.CrusadeConfig[id].checked = false
+		AllCheck.pressed = false
 		checkStr = "已关闭"
 
 	print("最终幻想14：%s %s" % [CrusadeCheck[id].text, checkStr])
@@ -41,6 +53,10 @@ func initCrusade():
 	infoBtn.connect("pressed", Utils, "showInfomation", [TEXT.UpdateInfo])	
 	infoBtn.set_h_size_flags(3)
 	CrusadeBox.add_child(infoBtn)
+
+	AllCheck = Utils.draw_check("全选", "allCheck")
+	AllCheck.connect("pressed", self, "allCheck")
+	CrusadeBox.add_child(AllCheck)
 
 	for config in FFChara.CrusadeConfig.keys():
 		var item = FFChara.CrusadeConfig[config]

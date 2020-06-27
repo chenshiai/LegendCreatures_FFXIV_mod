@@ -1,5 +1,5 @@
 # 最终幻想14 Boss模板文件
-# 版本号 2020/06/25 0.0.2
+# 版本号 2020/06/25 0.0.3
 extends Chara
 const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
 const Utils = globalData.infoDs["g_aFFXIVUtils"]
@@ -68,6 +68,13 @@ func _onKillChara(atkInfo):
 			if !cha.isDeath:
 				count += 1
 
+		if !tarCha.isSumm:
+			match tarCha.lv:
+				1: sys.main.player.hp += 2
+				2: sys.main.player.hp += 5
+				3: sys.main.player.hp += 10
+				4: sys.main.player.hp += 15
+
 		if count == 0:
 			reward = false
 			tarCha.newChara("cex___FFXIVSummon", tarCha.cell)
@@ -80,6 +87,7 @@ func _onDeath(atkInfo):
 	if reward:
 		var item = sys.newItem("i_FFXIVSoulCrystal")
 		sys.main.player.addItem(item)
+		sys.newBaseMsg(TEXT.Reward.title, TEXT.Reward.content)
 
 func FFHurtChara(target, atkVal, hurtType, atkType):
 	if target != null and !target.isDeath:
