@@ -1,5 +1,5 @@
 var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
-var BossList = []
+var CrusadeConfig = {} # 讨伐战配置
 var DeathList = []
 var FFControl
 
@@ -9,11 +9,13 @@ func _init():
 
 func dataInit():
 	for id in chaData.infoDs.keys():
-		if id.begins_with("cex___FFBoss"):
+		if id.begins_with("cFFXIVBoss"):
 			var BossPath = chaData.infoDs[id].dir
 			var FFConfig = load("%s/%s/FFConfig.gd" % [BossPath, id])
-			BossList.append(FFConfig.BossInfo)
-			print("最终幻想14：《%s》√ " % [FFConfig.BossInfo.crusade])
+			var CrusadeId = FFConfig.CrusadeInfo.id
+			CrusadeConfig[CrusadeId] = FFConfig.CrusadeInfo
+			CrusadeConfig[CrusadeId].checked = false
+			print("最终幻想14：《%s》√ " % [FFConfig.CrusadeInfo.text])
 
 
 func openDeathList():
@@ -31,10 +33,19 @@ func initDeathCha():
 	DeathList = []
 
 func rndRanBoss():
-	var n = sys.rndRan(0, BossList.size() - 1)
-	clear(null)
-	var cha = add_unit(BossList[n].id, BossList[n].position, 2)
-	return cha
+	var CrusadeCheckList = []
+	var BossChara = null
+
+	for key in CrusadeConfig.keys():
+		var item = CrusadeConfig[key]
+		if item.checked:
+			CrusadeCheckList.append(item)
+
+	if CrusadeCheckList.size() > 0:
+		var n = sys.rndRan(0, CrusadeCheckList.size() - 1)
+		clear(null)
+		BossChara = add_unit(CrusadeCheckList[n].id, CrusadeCheckList[n].position, 2)
+	return BossChara
 
 
 func clear(bosscha):

@@ -11,7 +11,7 @@ var layer = 0 # 当前关卡数
 var lastLayer = 0 # 上一次出现boss的层数
 
 const PROBABILITY = 100 # Boss出现的基本概率
-const BOSS_LAYER = 80 # 在多少关之后概率动态调整
+const BOSS_LAYER = 27 # 在多少关之后概率动态调整
 var probability = PROBABILITY # Boss出现的动态概率
 
 func init():
@@ -21,7 +21,7 @@ func get_info():
 	return TEXT.T_RAID % [lv * 4 + 20, (0.05 + lv * 0.01) * 100, lv, 5 + lv * 5]
 
 func _connect():
-	FFControl = Utils.initFFControl()
+	FFControl = Utils.getFFControl()
 	originBackground = sys.main.get_node("scene/bg/bg").get_texture()
 
 	sys.main.player.maxHp += lv * 4 + 20
@@ -58,16 +58,16 @@ func reward():
 
 func come():
 	layer = sys.main.guankaMsg.lvStep - 2
-	print(layer)
 	if layer > BOSS_LAYER and layer != lastLayer:
 		if sys.rndPer(probability):
 			lastLayer = layer
 			probability = PROBABILITY
-			FFControl.HpBar.show()
 
 			var cha = FFChara.rndRanBoss()
-			cha.connect("onHurtEnd", FFControl.HpBar, "hpDown")
-			cha.connect("onAtkChara", FFControl.Limit, "limitBreak_up")
+			if cha != null:
+				FFControl.HpBar.show()
+				cha.connect("onHurtEnd", FFControl.HpBar, "hpDown")
+				cha.connect("onAtkChara", FFControl.Limit, "limitBreak_up")
 
 		else:
 			probability += 1

@@ -3,7 +3,8 @@ var Path = null
 var FFXIVClass = null
 var FFControl = null
 
-
+var infomation = null
+var textGrid = null
 
 func _init():
 	print("最终幻想14：—————— 完整性检测中 ——————")
@@ -21,7 +22,7 @@ func dataInit():
 
 
 # 返回控制器实例，没有则新建一个
-func initFFControl():
+func getFFControl():
 	if FFControl == null:
 		FFControl = FFXIVClass.FFControl.new()
 		sys.main.connect("tree_exited", self, "gameExit")
@@ -151,7 +152,43 @@ func draw_shadow(img, startPositon:Vector2, endPositon:Vector2, speed = 25):
 		spr.position = startPositon + speed * (i + 1) * distance.normalized() - Vector2(img.texture_normal.get_width() / 2, img.texture_normal.get_height())
 		spr.init(255 / n * i + 100)
 
+# 绘制选项
+func draw_check(
+		text,
+		id = "",
+		pressed = false,
+		disabled = false
+	):
+	var c = CheckBox.new()
+	c.text = text
+	c.disabled = disabled
+	c.pressed = pressed
+	if id != "":
+		c.name = id
+	return c
 
+func initInfomation():
+	textGrid = RichTextLabel.new()
+	textGrid.rect_min_size = Vector2(1000, 400)
+	textGrid.margin_left = 50
+	textGrid.margin_top = 80
+	textGrid.bbcode_enabled = true
+	
+	infomation = sys.newMsg("jiangLiMsg")
+	infomation.get_node("Panel").add_child(textGrid)
+	infomation.get_node("Panel/Button").connect("pressed", self, "MsgOk")
+
+func showInfomation(config):
+	if !infomation:
+		initInfomation()
+	infomation.get_node("Panel/Label").text = config.title
+	textGrid.bbcode_text = config.content
+	infomation.show()
+
+
+func MsgOk():
+	pass
+	
 # 创建Boss时间轴
 func create_timeAxis(skillAxis):
 	var timeAxis = {}

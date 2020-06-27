@@ -1,0 +1,54 @@
+extends "../BaseClass.gd"
+var CrusadeMsg
+var CrusadeCheck = {}
+var infoBtn
+func _init():
+	initCrusade()
+
+
+func checkChange(id):
+	var checkStr = ""
+	if CrusadeCheck[id].pressed:
+		FFChara.CrusadeConfig[id].checked = true
+		checkStr = "已开启"
+	else:
+		FFChara.CrusadeConfig[id].checked = false
+		checkStr = "已关闭"
+
+	print("最终幻想14：%s %s" % [CrusadeCheck[id].text, checkStr])
+
+
+func initCrusade():
+	var MsgScroll = ScrollContainer.new()
+	var CrusadeBox = VBoxContainer.new()
+	CrusadeMsg = WindowDialog.new()
+	# CrusadeMsg.title = "选择出"
+	infoBtn = Button.new()
+
+	CrusadeBox.name = "CrusadeBox"
+	CrusadeBox.set_alignment(1)
+	CrusadeBox.rect_position = Vector2(50,20)
+	CrusadeMsg.set_size(Vector2(400,500))
+
+	MsgScroll.name = "Scroll"
+	MsgScroll.set_anchors_preset(15)
+	MsgScroll.anchor_bottom -= 0.2
+	MsgScroll.anchor_right -= 0.1
+	MsgScroll.set_margin(0,30)
+	MsgScroll.set_margin(1,20)
+
+	infoBtn.text = "最终幻想14更新记录"
+	infoBtn.connect("pressed", Utils, "showInfomation", [TEXT.UpdateInfo])	
+	infoBtn.set_h_size_flags(3)
+	CrusadeBox.add_child(infoBtn)
+
+	for config in FFChara.CrusadeConfig.keys():
+		var item = FFChara.CrusadeConfig[config]
+		var c = Utils.draw_check(item.text, item.id, item.checked)
+		c.connect("pressed", self, "checkChange", [item.id])
+	
+		CrusadeCheck[item.id] = c
+		CrusadeBox.add_child(c)
+
+	MsgScroll.add_child(CrusadeBox)
+	CrusadeMsg.add_child(MsgScroll)

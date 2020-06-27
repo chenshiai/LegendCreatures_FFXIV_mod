@@ -4,17 +4,18 @@ var Keyboard # 键盘监听实例
 var ControlPanel # 控制面板节点
 var SwitchButton # 开关节点
 var PlayerChas = [] # 被控制的角色列表
+
 var Limit
 var HpBar # boss血条类
 var FFMusic
+var Crusade
 
 var ButtonConfig
 var MapArea
+var CheckBoxConfig
 
 var AreaQueue = []
 var throttle = false # 命令节流 防止重复命令导致程序崩溃
-var infomation
-var textGrid
 
 func _init():
 	print("最终幻想14：—————— 控制面板加载 ——————")
@@ -51,7 +52,10 @@ func createControl():
 
 func render_panel():
 	ControlPanel = NinePatchRect.new()
-	ControlPanel.rect_position = Vector2(400, 430)
+	ControlPanel.rect_position = Vector2(350, 430)
+
+	Crusade = Utils.FFXIVClass.Crusade.new() # 创建讨伐管理面板实例
+	ControlPanel.add_child(Crusade.CrusadeMsg)
 
 	for button in ButtonConfig:
 		var bt = Utils.draw_ui_button(button.text, button.position, button.target, button.callback, button.config)
@@ -146,29 +150,14 @@ func select_area(cha, mapArea, area):
 	if targetCell != Vector2(0, 0):
 		movement(cha, targetCell)
 	else:
-		# 此处不留爷，自有留爷处。当前区域没有位置了，前往下一个区域
 		match area:
 			"left_bottom": select_area(cha, mapArea, "right_bottom")
 			"left_top": select_area(cha, mapArea, "left_bottom")
 			"right_bottom": select_area(cha, mapArea, "right_top")
 			"right_top": select_area(cha, mapArea, "left_top")
 
-
-func showLimitInfo():
-	textGrid = RichTextLabel.new()
-	textGrid.rect_min_size = Vector2(1000, 400)
-	textGrid.margin_left = 50
-	textGrid.margin_top = 80
-	textGrid.bbcode_enabled = true
-	textGrid.bbcode_text = TEXT.Instructions.content
-	infomation = sys.newMsg("jiangLiMsg")
-	infomation.get_node("Panel/Label").text = TEXT.Instructions.title
-	infomation.get_node("Panel").add_child(textGrid)
-	infomation.get_node("Panel/Button").connect("pressed", self, "MsgOk")
-	infomation.show()
-
-func MsgOk():
-	pass
+func showCrusade():
+	Crusade.CrusadeMsg.popup_centered()
 
 
 func keyboard_connect():
@@ -196,12 +185,22 @@ func set_config():
 		{
 			"text": "说明书",
 			"position": Vector2(610, 0),
+			"target": Utils,
+			"callback": "showInfomation",
+			"config": {
+				"args": [TEXT.Instructions],
+				"return": true
+			},
+		},
+		{
+			"text": "讨伐设置",
+			"position": Vector2(610, 50),
 			"target": self,
-			"callback": "showLimitInfo",
+			"callback": "showCrusade",
 			"config": {
 				"args": [],
 				"return": true
-			},
+			}
 		},
 		{
 			"text": "退避",

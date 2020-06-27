@@ -35,7 +35,7 @@ func init():
 	id = "i_FFXIVSoulCrystal"
 	name = "灵魂水晶"
 	type = config.EQUITYPE_EQUI
-	price = 500
+	price = 100
 	info = Epilogue
 
 func _connect():

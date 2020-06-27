@@ -6,6 +6,7 @@ var FFControl
 var FFMusic
 var BossHpBar
 var LimitBreak
+var Crusade
 
 func Classload(gdname):
   return load("%s/FFXIVClass/%s/%s.gd" % [Utils.Path, gdname, gdname])
@@ -18,3 +19,4 @@ func _init():
   FFMusic = Classload("musicControl")
   BossHpBar = Classload("BossHpBar")
   LimitBreak = Classload("LimitBreak")
+  Crusade = Classload("Crusade")
