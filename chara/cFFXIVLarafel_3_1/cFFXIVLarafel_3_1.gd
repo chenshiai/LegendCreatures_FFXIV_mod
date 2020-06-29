@@ -24,7 +24,7 @@ func _castCdSkill(id):
 		manafication()
 
 func manafication():
-	Utils.draw_efftext("倍增！", position, Vector2(0, -30))
+	Utils.draw_efftext("倍增！", position)
 	blackMorgen *= 2
 	whiteMorgan *= 2
 	if blackMorgen > MORGEN_MAX:

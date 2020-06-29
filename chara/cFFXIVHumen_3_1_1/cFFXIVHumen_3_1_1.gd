@@ -33,4 +33,4 @@ func devilment():
 	BUFF_LIST.b_Devilment.new(8)
 	BUFF_LIST.b_Devilment.new(8, atkMaxAlly)
 	BUFF_LIST.b_Devilment.new(8, mgiAtkMaxAlly)
-	Utils.draw_efftext("进攻之探戈！", position, Vector2(-40, -30), "#ff008a")
+	Utils.draw_efftext("进攻之探戈！", position, "#ff008a")

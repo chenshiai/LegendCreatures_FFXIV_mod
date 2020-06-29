@@ -65,4 +65,4 @@ func danceStep():
 	BUFF_LIST.b_DanceStep.new(10, self)
 	BUFF_LIST.b_DanceStep.new(10, atkMaxAlly)
 	BUFF_LIST.b_DanceStep.new(10, mgiAtkMaxAlly)
-	Utils.draw_efftext("标准舞步！", position, Vector2(-10, -30), "#ff008a")
+	Utils.draw_efftext("标准舞步！", position, "#ff008a")

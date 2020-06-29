@@ -40,7 +40,7 @@ func succor():
 			yield(reTimer(0.1), "timeout")
 
 func sacredSoil():
-	Utils.draw_efftext("野战治疗阵！", position, Vector2(0, -30), "#1a8a00")
+	Utils.draw_efftext("野战治疗阵！", position, "#1a8a00")
 	var allys = getCellChas(cell, 3, 2)
 	for cha in allys:
 		if cha != null:

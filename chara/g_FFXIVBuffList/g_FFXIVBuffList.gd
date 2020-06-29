@@ -298,6 +298,7 @@ class b_Adloquium:
 		conflict(cha, "b_Night")
 		addBuff(cha)
 		updateShield(cha)
+		Utils.draw_efftext("鼓舞", cha.position, "#1a8a00")
 
 	func _upS():
 		life = clamp(life, 0, 10)
@@ -362,7 +363,7 @@ class b_Bio:
 		isNegetive = true
 		app = Applicator
 		addBuff(cha)
-		Utils.draw_efftext("剧毒菌", cha.position, Vector2(30, -30), "#DEE254", false)
+		Utils.draw_efftext("剧毒菌", cha.position, "#DEE254", false)
 
 	func _upS():
 		app.hurtChara(masCha, app.att.mgiAtk * 0.05, Chara.HurtType.MGI, Chara.AtkType.SKILL)
@@ -379,7 +380,7 @@ class b_Miasma:
 		isNegetive = true
 		app = Applicator
 		addBuff(cha)
-		Utils.draw_efftext("瘴暍", cha.position, Vector2(-30, -30), "#59DFD7", false)
+		Utils.draw_efftext("瘴暍", cha.position, "#59DFD7", false)
 
 	func _upS():
 		app.hurtChara(masCha, app.att.mgiAtk * 0.05, Chara.HurtType.MGI, Chara.AtkType.SKILL)

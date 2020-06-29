@@ -87,24 +87,22 @@ func draw_effect_out(
 
 
 # 浮动文字特效
-func draw_efftext(text, position, deviation, color = "#ffffff", up = true):
+func draw_efftext(text, position, color = "#ffffff", up = true):
 	var eff = sys.newEff("numHit", position)
 	var dev = 0
-	eff.normalSpr.position = deviation
-	eff.scale.x *= -1
-	eff.setText(text, color)
-	eff.anim.set_speed_scale(0)
-	while dev < 10 and dev > -10:
-		if !eff:
-			return
-		if up:
-			dev += 1
-		else:
-			dev -= 1
-		eff.normalSpr.position = deviation + Vector2(0, -3) * dev
-		yield(sys.get_tree().create_timer(0.1), "timeout")
-	eff.queue_free()
+	if up:
+		text = "▲%s▲" % [text]
+	else:
+		text = "▼%s▼" % [text]
 
+	eff.setText(text, color)
+
+	var y = sys.rndListItem([-80, -70, -60, -50, -40, -30, -20, -10, 0, 10, 20])
+	eff.normalSpr.position = Vector2(0, y)
+	eff.scale.x *= -1
+	eff.anim.set_speed_scale(0)
+
+	eff._initFlyPos(position + Vector2(1, 0) * 20, 20)
 
 # 绘制按钮UI
 func draw_ui_button(

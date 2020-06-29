@@ -33,7 +33,7 @@ func _onBattleStart():
 func shiver():
 	plusHp(att.maxHp * 0.20)
 	BUFF_LIST.b_Shiver.new(20, self)
-	Utils.draw_efftext("战栗", position, Vector2(30, -30), "#3cff00")
+	Utils.draw_efftext("战栗", position, "#3cff00")
 
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)
