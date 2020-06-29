@@ -3,8 +3,8 @@ const BERSERKERTIME_P1 = 180 # P1狂暴时间
 const BERSERKERTIME_P3 = 400 # P3狂暴时间
 
 var stage = "p1" # p1 p2 p3阶段
-var P2summonCount = 0 # p2的小龙召唤次数
-var P2summonLive = 0 # p2小龙存活数
+var P2summonCount = 3 # p2的小龙召唤次数
+var P2summonLive = 15 # p2小龙存活数
 var reincarnation_pw = 4 # 死亡轮回威力
 var blowingSnow_pw = 0.75 # 吹雪威力
 var lightning_pw = 1 # 闪电威力
@@ -66,16 +66,16 @@ func _extInit():
 func _init():
 	set_path("cFFXIVBossDragon_Hide")
 	set_time_axis({
-		"blowingSnow": [20, 60, 100, 140],
+		"blowingSnow": [20, 60, 100, 140, 340],
 		"icicles": [26, 66, 106, 146],
-		"leftOrRigth": [33, 73, 113, 153],
+		"leftOrRigth": [33, 73, 113, 153, 360],
 		"reincarnation": [45, 85, 125, 165],
 		"P2summon": [206],
 		"protostar": [280],
 		"uptial": [306, 308, 310, 312, 314, 316, 318],
 		"P3Start": [322],
-		"trillionChop": [330, 350],
-		"tsunami": [370]
+		"trillionChop": [330, 350, 370],
+		"tsunami": [400]
 	})
 	FFControl = Utils.getFFControl()
 	Utils.background_change(Path, "/background/CrystallizationSpace.png")
@@ -131,7 +131,7 @@ func _onBattleStart():
 	skillStrs[0] = (TEXT.format(SKILL_TXT, pwConfig))
 
 	# 开场直接转p2 测试用
-	# changeStage("p2") 
+	# changeStage("p2")
 	if stage == "p1":		
 		wrathOfTheEarth()
 
@@ -164,13 +164,15 @@ func _onCharaDel(cha):
 	# 当白金龙死亡时，再次召唤一波小怪，三波小怪全死后打断原恒星读条
 	if cha.id == "cFFXIV_Dragon_entourage_large":
 		P2summonLive -= 1
-		if P2summonCount < 3:
+		print("神龙眷属剩余：%d" % [P2summonLive])
+		if P2summonCount > 0:
 			P2summon()
 
 	if cha.id == "cFFXIV_Dragon_entourage_small":
 		P2summonLive -= 1
+		print("神龙眷属剩余：%d" % [P2summonLive])
 
-	if cha.team != 1 and P2summonCount == 3 and P2summonLive <= 0:
+	if cha.team != 1 and P2summonCount == 0 and P2summonLive <= 0:
 		P2summonCount = 0
 		P2SummonEnd()
 
@@ -220,9 +222,9 @@ func changeStage(p):
 		Chant.chantStart("原恒星", 75)
 
 	if stage == "p3":
-		setCell(Vector2(4, 1))
-		position = sys.main.map.map_to_world(Vector2(4, 1))
-		normalSpr.position = Vector2(0, -100)
+		setCell(Vector2(4, 0))
+		position = sys.main.map.map_to_world(Vector2(4, 0))
+		normalSpr.position = Vector2(0, 0)
 
 
 # 召唤小龙
@@ -232,7 +234,7 @@ func P2summon():
 	summonDragon(Vector2(0, 4), 5)
 	summonDragon(Vector2(3, 2), 5, true)
 	summonDragon(Vector2(7, 4), 5)
-	P2summonCount += 1
+	P2summonCount -= 1
 
 # 距离衰减AOE以及召唤的实现
 func summonDragon(cell, time, large = false):
@@ -252,11 +254,11 @@ func summonDragon(cell, time, large = false):
 
 	yield(reTimer(0.5), "timeout")
 	if large:
-		if newChara("cFFXIV_Dragon_entourage_large", cell):
-			P2summonLive += 1
+		if !newChara("cFFXIV_Dragon_entourage_large", cell):
+			P2summonLive -= 1
 	else:
-		if newChara("cFFXIV_Dragon_entourage_small", cell):
-			P2summonLive += 1
+		if !newChara("cFFXIV_Dragon_entourage_small", cell):
+			P2summonLive -= 1
 	
 # 小龙击杀完毕，P2召唤结束
 func P2SummonEnd():
@@ -481,7 +483,6 @@ class laser:
 func trillionChop():
 	Chant.chantStart("万亿斩击", 5)
 	self.HateTarget = aiCha
-	print(self.HateTarget)
 	yield(reTimer(5), "timeout")
 	if att.hp <=0:
 		return
@@ -493,7 +494,7 @@ func trillionChop():
 
 func tsunami():
 	Chant.chantStart("大海啸-团灭", 30)
-	yield(reTimer(30), "timeout")
+	yield(reTimer(31), "timeout")
 	if att.hp <=0:
 		return
 	var chas = getAllChas(1)
@@ -506,6 +507,7 @@ func _upS():
 	._upS()
 	if aiCha.isDeath or aiCha == null:
 		aiCha = sys.rndListItem(getAllChas(1))
+
 	if stage == "p1":
 		setCell(Vector2(4, 0))
 		position = sys.main.map.map_to_world(Vector2(4, 0))
@@ -517,8 +519,8 @@ func _upS():
 		protostar_pw += 0.02
 
 	if stage == "p3":
-		setCell(Vector2(4, 1))
-		position = sys.main.map.map_to_world(Vector2(4, 1))
+		setCell(Vector2(4, 0))
+		position = sys.main.map.map_to_world(Vector2(4, 0))
 
 	if stage == "p1" and battleDuration > BERSERKERTIME_P1 and (battleDuration % 5 == 0):
 		# p1阶段超过180s，狂暴
