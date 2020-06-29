@@ -233,7 +233,6 @@ func P2summon():
 	summonDragon(Vector2(3, 2), 5, true)
 	summonDragon(Vector2(7, 4), 5)
 	P2summonCount += 1
-	P2summonLive += 5
 
 # 距离衰减AOE以及召唤的实现
 func summonDragon(cell, time, large = false):
@@ -253,9 +252,11 @@ func summonDragon(cell, time, large = false):
 
 	yield(reTimer(0.5), "timeout")
 	if large:
-		newChara("cFFXIV_Dragon_entourage_large", cell)
+		if newChara("cFFXIV_Dragon_entourage_large", cell):
+			P2summonLive += 1
 	else:
-		newChara("cFFXIV_Dragon_entourage_small", cell)
+		if newChara("cFFXIV_Dragon_entourage_small", cell):
+			P2summonLive += 1
 	
 # 小龙击杀完毕，P2召唤结束
 func P2SummonEnd():
