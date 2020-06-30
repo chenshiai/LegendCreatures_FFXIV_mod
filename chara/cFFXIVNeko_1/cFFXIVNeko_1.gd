@@ -47,5 +47,5 @@ func adloquium(pw, hudun = false):
 	if chas[0] != null:
 		chas[0].plusHp(att.mgiAtk * pw)
 		if hudun:
-			BUFF_LIST.b_Adloquium.new(10, att.mgiAtk * pw * shield_pw, chas[0])
+			BUFF_LIST.b_Adloquium.new({"cha": chas[0], "dur": 10, "HD": att.mgiAtk * pw * shield_pw})
 			Utils.draw_effect("shield", chas[0].position, Vector2(0,-30), 7)

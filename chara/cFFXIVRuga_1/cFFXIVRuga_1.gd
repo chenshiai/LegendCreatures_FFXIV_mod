@@ -30,7 +30,7 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
-	BUFF_LIST.b_SteelBelief.new(self)
+	BUFF_LIST.b_SteelBelief.new({"cha": self})
 	Utils.draw_effect("defense", position, Vector2(0,-60), 14)
 
 

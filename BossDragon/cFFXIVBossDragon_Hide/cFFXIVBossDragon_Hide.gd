@@ -194,12 +194,12 @@ func changeStage(p):
 		Utils.draw_shadow(img,  position, position + Vector2(0, -300), 25)
 		battleDuration = 180
 		FFControl.hiddenControl()
-		BUFF_LIST.b_FrozenCdSkill.new(26, self)
+		BUFF_LIST.b_FrozenCdSkill.new({"cha": self, "dur": 26})
 
 		for cha in sys.main.btChas:
 			if cha.team == 1:
-				BUFF_LIST.b_FrozenCdSkill.new(26, cha)
-				BUFF_LIST.b_StaticTimeUnlock.new(26, cha)
+				BUFF_LIST.b_FrozenCdSkill.new({"cha": cha, "dur": 12})
+				BUFF_LIST.b_StaticTimeUnlock.new({"cha": cha, "dur": 12})
 
 		FFControl.FFMusic.dbDown(20)
 
@@ -213,7 +213,7 @@ func changeStage(p):
 		
 		for cha in sys.main.btChas:
 			if cha != null and !cha.isDeath and cha != self:
-				BUFF_LIST.RotateCha.new(19.3, cha)
+				BUFF_LIST.RotateCha.new({"cha": cha, "dur": 19.3})
 				
 		yield(reTimer(18), "timeout")
 		Utils.draw_shadow(img, Vector2(400, 600), Vector2(400, 0), 25)
@@ -267,7 +267,7 @@ func P2SummonEnd():
 
 	var chas = getAllChas(1)
 	for i in chas:
-		BUFF_LIST.b_StaticTimeUnlock.new(30, i)
+		BUFF_LIST.b_StaticTimeUnlock.new({"cha": i, "dur": 30})
 
 	yield(reTimer(2), "timeout")
 	protostar(false)
@@ -277,7 +277,7 @@ func P2SummonEnd():
 	FFControl.FFMusic.seek(104)
 	FFControl.FFMusic.dbUp(20)
 	for i in chas:
-		BUFF_LIST.b_FrozenCdSkill.new(12, i)
+		BUFF_LIST.b_FrozenCdSkill.new({"cha": i, "dur": 12})
 
 
 # P3开始！
@@ -320,7 +320,7 @@ func wrathOfTheEarth():
 # 死亡轮回
 func reincarnation():
 	Chant.chantStart("死亡轮回", 5)
-	BUFF_LIST.b_Share.new(4, aiCha)
+	BUFF_LIST.b_Share.new({"cha": aiCha, "dur": 5})
 	yield(reTimer(5), "timeout")
 	sharedamage()
 	yield(reTimer(1), "timeout")
@@ -436,13 +436,13 @@ func icicles():
 	for cha in chas1:
 		if cha.team != team :
 			FFHurtChara(cha, att.mgiAtk * icicles_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
-			cha.addBuff(BUFF_LIST.b_VulnerableSmall.new(20))
+			BUFF_LIST.b_VulnerableSmall.new({"cha": cha, "dur": 20})
 
 	chas2 = Utils.lineChas(Vector2(x2, 0), Vector2(x2, 5), 5)
 	for cha in chas2:
 		if cha.team != team :
 			FFHurtChara(cha, att.mgiAtk * icicles_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
-			cha.addBuff(BUFF_LIST.b_VulnerableSmall.new(20))
+			BUFF_LIST.b_VulnerableSmall.new({"cha": cha, "dur": 20})
 
 # 原恒星
 func protostar(overtime = true):
@@ -489,7 +489,7 @@ func trillionChop():
 	if self.HateTarget != null:
 		Utils.draw_effect("zhua", self.HateTarget.position, Vector2(0, -30), 15, 3)
 		hurtChara(self.HateTarget, att.mgiAtk * trillionChop_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
-		BUFF_LIST.b_VulnerableLarge.new(15, self.HateTarget)
+		BUFF_LIST.b_VulnerableLarge.new({"cha": self.HateTarget, "dur": 15})
 	self.aiOn = false
 
 func tsunami():

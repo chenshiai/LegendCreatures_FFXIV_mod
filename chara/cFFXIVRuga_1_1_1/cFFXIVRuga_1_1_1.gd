@@ -23,9 +23,9 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
-	BUFF_LIST.b_Superbolide.new(10, self)
+	BUFF_LIST.b_Superbolide.new({"cha": self, "dur": 10})
 
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Superbolide":
-		BUFF_LIST.b_Superbolide.new(10, self)
+		BUFF_LIST.b_Superbolide.new({"cha": self, "dur": 10})

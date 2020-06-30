@@ -95,7 +95,7 @@ func righteousBolt():
 	if self.HateTarget != null:
 		Utils.draw_effect("thunder", self.HateTarget.position, Vector2(0, -140), 15, 1)
 		hurtChara(self.HateTarget, att.mgiAtk * righteousBolt_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
-		BUFF_LIST.b_VulnerableLarge.new(15, self.HateTarget)  
+		BUFF_LIST.b_VulnerableLarge.new({"cha": self.HateTarget, "dur": 15})  
 	self.aiOn = true
 
 # 断罪飞翔
@@ -146,12 +146,12 @@ func wingedReprobation():
 	for cha in chas1:
 		if cha.team != team :
 			hurtChara(cha, att.mgiAtk * wingedReprobation_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
-			BUFF_LIST.b_VulnerableSmall.new(15, cha)
+			BUFF_LIST.b_VulnerableSmall.new({"cha": cha, "dur": 15})
 
 	for cha in chas2:
 		if cha.team != team :
 			hurtChara(cha, att.mgiAtk * wingedReprobation_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
-			BUFF_LIST.b_VulnerableSmall.new(15, cha)
+			BUFF_LIST.b_VulnerableSmall.new({"cha": cha, "dur": 15})
 
 # 夺影
 func shadowReaver():

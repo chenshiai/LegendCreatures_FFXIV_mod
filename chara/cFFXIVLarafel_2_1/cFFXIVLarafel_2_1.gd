@@ -30,7 +30,7 @@ func _castCdSkill(id):
 		xenoglossy()
 
 func leyLines():
-	addBuff(BUFF_LIST.b_LeyLines.new(30))
+	BUFF_LIST.b_LeyLines.new({"cha": self, "dur": 30})
 
 func xenoglossy():
 	Utils.draw_effect("melanositis", aiCha.position, Vector2(0, -50), 7, 2)

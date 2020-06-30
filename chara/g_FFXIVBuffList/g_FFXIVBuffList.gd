@@ -1,9 +1,24 @@
 class BaseBuff extends Buff:
 	var Utils = globalData.infoDs["g_aFFXIVUtils"]
-
-	func _init(config):
+	var lifeMax
+	func _init(config = {
+			"cha": null
+		}):
 		attInit()
 		addBuff(config.cha)
+		life = _get(config, "dur", null)
+		casCha = _get(config, "cas", null)
+		lifeMax = _get(config, "limit", 0)
+
+	func _upS():
+		if lifeMax > 0:
+			life = clamp(life, 0, lifeMax)
+	
+	func _get(config, name, default):
+		if config.has(name):
+			return config[name]
+		else:
+			return default
 
 	func addBuff(cha):
 		if cha != null:
@@ -17,6 +32,10 @@ class BaseBuff extends Buff:
 
 class BassShield extends BaseBuff:
 	var shieldValue = 0
+	func _init(config = {
+			"cha": null
+		}):
+		._init(config)
 
 	func updateShield(cha):
 		if cha == null:
@@ -42,6 +61,14 @@ class BassShield extends BaseBuff:
 class ReduceDamage extends BaseBuff:
 	var reduce_type = null
 	var reduce_pw = 0
+	var MGI = Chara.HurtType.MGI
+	var PHY = Chara.HurtType.PHY
+	var REAL = Chara.HurtType.REAL
+
+	func _init(config = {
+			"cha": null
+		}):
+		._init(config)
 
 	func _connect():
 		masCha.connect("onHurt", self, "run")
@@ -56,25 +83,22 @@ class ReduceDamage extends BaseBuff:
 # 深恶痛绝
 class b_Abhor:
 	extends BaseBuff
-	id = "b_Abhor"
-	isNegetive = false
-
-	func _init(config = {"cha": null, "dur": 0}):
+	func _init(config):
 		._init(config)
+		id = "b_Abhor"
+		isNegetive = false
 		att.mgiDefL = 0.10
 
 
 # 暗黑布道
 class b_DarkMissionary:
 	extends ReduceDamage
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_DarkMissionary"
-		life = dur
 		isNegetive = false
-		reduce_type = Chara.HurtType.MGI
+		reduce_type = MGI
 		reduce_pw = 0.10
-		addBuff(cha)
 
 	func _upS():
 		life = clamp(life, 0, 6)
@@ -82,32 +106,27 @@ class b_DarkMissionary:
 # 至黑之夜
 class b_TheBlackestNight:
 	extends BassShield
-	func _init(val = 0, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_TheBlackestNight"
-		self.shieldValue = val
 		isNegetive = false
-		addBuff(cha)
-		Utils.draw_efftext("至黑之夜", cha.position, "#59DFD7")
+		self.shieldValue = _get(config, "HD", 0)
+		Utils.draw_efftext("至黑之夜", config.cha.position, "#872a8b")
 
 # 活死人，无敌，但是还是会死
 class b_LivingDeath:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_LivingDeath"
 		isNegetive = false
-		life = dur
-		addBuff(cha)
+		Utils.draw_efftext("活死人", config.cha.position, "#d0d0d0")
 
 	func _connect():
 		masCha.connect("onHurt", self, "run")
 
 	func run(atkInfo:AtkInfo):
 		atkInfo.hurtVal = 0
-
-	func _upS():
-		life = clamp(life, 0, 10)
 
 	func _del():
 		if life < 0:
@@ -116,14 +135,13 @@ class b_LivingDeath:
 # 强甲破点突，削弱双抗
 class b_ArmorCrush:
 	extends BaseBuff
-	func _init(dur = 1, pw = 0.15, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_ArmorCrush"
-		life = dur
-		att.defL -= pw
-		att.mgiDefL -= pw
-		addBuff(cha)
-		Utils.draw_efftext("强甲破点突", cha.position, "#59DFD7", false)
+		isNegetive = false
+		att.defL -= _get(config, "PW", 0)
+		att.mgiDefL -= _get(config, "PW", 0)
+		Utils.draw_efftext("强甲破点突", config.cha.position, "#59DFD7", false)
 
 	func _upS():
 		life = clamp(life, 0, 7)
@@ -131,41 +149,32 @@ class b_ArmorCrush:
 # 战栗，提高最大生命值和治疗量
 class b_Shiver:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Shiver"
 		isNegetive = false
-		life = dur
 		att.maxHpL = 0.20
 		att.reHp = 0.20
-		addBuff(cha)
-
-	func _upS():
-		life = clamp(life, 0, 20)
+		Utils.draw_efftext("战栗", config.cha.position, "#3cff00")
 
 # 原初的解放，提高暴击率
 class b_InnerRelease:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_InnerRelease"
 		isNegetive = false
 		att.cri = 1
-		life = dur
-		addBuff(cha)
+		Utils.draw_efftext("原初的解放", config.cha.position, "#ff0000")
 
-	func _upS():
-		life = clamp(life, 0, 8)
 
 # 超火流星，无敌
 class b_Superbolide:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Superbolide"
 		isNegetive = false
-		life = dur
-		addBuff(cha)
 
 	func _connect():
 		masCha.connect("onHurt", self, "run")
@@ -179,15 +188,13 @@ class b_Superbolide:
 # 光之心，减少魔法伤害
 class b_HeartOfLight:
 	extends ReduceDamage
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_HeartOfLight"
-		life = dur
 		isNegetive = false
-		reduce_type = Chara.HurtType.MGI
+		reduce_type = MGI
 		reduce_pw = 0.10
-		addBuff(cha)
-		Utils.draw_efftext("光之心", cha.position, "#59DFD7")
+		Utils.draw_efftext("光之心", config.cha.position, "#59DFD7")
 
 	func _upS():
 		life = clamp(life, 0, 10)
@@ -195,40 +202,35 @@ class b_HeartOfLight:
 # 舞伴，攻击力提高
 class b_DancingPartner:
 	extends BaseBuff
-	func _init(cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_DancingPartner"
 		isNegetive = false
 		att.atkL = 0.10
 		att.mgiAtkL = 0.10
-		addBuff(cha)
-		Utils.draw_efftext("舞伴", cha.position, "#59DFD7")
+		Utils.draw_efftext("舞伴", config.cha.position, "#F7BC79")
 
 # 伶俐，攻击力提高
 class b_DanceStep:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_DanceStep"
 		isNegetive = false
-		life = dur
 		att.atkL = 0.10
 		att.mgiAtkL = 0.10
-		addBuff(cha)
 
 	func _upS():
 		life = clamp(life, 0, 10)
 
 class b_Devilment:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Devilment"
 		isNegetive = false
-		life = dur
 		att.atkL = 0.20
 		att.mgiAtkL = 0.20
-		addBuff(cha)
 
 	func _upS():
 		life = clamp(life, 0, 8)
@@ -237,12 +239,10 @@ class b_Devilment:
 class b_Regen:
 	extends BaseBuff
 	var hot = 0
-	func _init(dur = 1, val = 0, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Regen"
-		hot = val
-		life = dur
-		addBuff(cha)
+		hot = _get(config, "hot", 0)
 
 	func _upS():
 		masCha.plusHp(hot)
@@ -251,14 +251,12 @@ class b_Regen:
 # 黑魔纹，冷却缩减
 class b_LeyLines:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_LeyLines"
 		isNegetive = false
 		att.cd = 0.15
-		life = dur
-		addBuff(cha)
-		Utils.draw_efftext("黑魔纹", cha.position, "#59DFD7")
+		Utils.draw_efftext("黑魔纹", config.cha.position, "#cb2dff")
 
 	func _upS():
 		life = clamp(life, 0, 30)
@@ -266,29 +264,28 @@ class b_LeyLines:
 # 天语
 class b_Enochian:
 	extends BaseBuff
-	func _init(lv = 1, cha = null):
-		attInit()
+	var step
+	func _init(config):
+		._init(config)
 		id = "b_Enochian"
 		isNegetive = false
-		addBuff(cha)
+		step = _get(config, "lv", 1)
 
 	func _connect():
 		masCha.connect("onAtkChara", self, "run")
 	
 	func run(atkInfo):
 		if atkInfo.atkType != Chara.AtkType.EFF:
-			atkInfo.hurtVal *= 1 + (0.05 * (lv - 1))
+			atkInfo.hurtVal *= 1 + (0.05 * (step - 1))
 
 # 倍增,提高法强
 class b_Manafication:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Manafication"
 		isNegetive = false
-		life = dur
 		att.mgiAtkL = 0.10
-		addBuff(cha)
 
 	func _upS():
 		life = clamp(life, 0, 10)
@@ -296,16 +293,16 @@ class b_Manafication:
 # 鼓舞，护盾。可以吸收一定数值的伤害
 class b_Adloquium:
 	extends BassShield
-	func _init(dur = 1, val = 0, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Adloquium"
-		self.shieldValue = val
-		life = dur
 		isNegetive = false
-		conflict(cha, "b_Night")
-		addBuff(cha)
-		updateShield(cha)
-		Utils.draw_efftext("鼓舞", cha.position, "#1a8a00")
+		self.shieldValue = _get(config, "HD", 0)
+
+		conflict(config.cha, "b_Night")
+		updateShield(config.cha)
+
+		Utils.draw_efftext("鼓舞", config.cha.position, "#1a8a00")
 
 	func _upS():
 		life = clamp(life, 0, 10)
@@ -314,14 +311,12 @@ class b_Adloquium:
 class b_SacredSoil:
 	extends ReduceDamage
 	var hot = 0
-	func _init(dur = 1, val = 0, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_SacredSoil"
-		hot = val
-		life = dur
 		isNegetive = false
 		reduce_pw = 0.10
-		addBuff(cha)
+		hot = _get(config, "hot", 0)
 
 	func _upS():
 		masCha.plusHp(hot)
@@ -330,13 +325,11 @@ class b_SacredSoil:
 # 连环计
 class b_ChainStratagem:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_ChainStratagem"
-		life = dur
 		isNegetive = false
-		addBuff(cha)
-		Utils.draw_efftext("连环计", cha.position, "#59DFD7")
+		Utils.draw_efftext("连环计", config.cha.position, "#3aa1e9", false)
 	
 	func _connect():
 		masCha.connect("onHurt", self, "run")
@@ -349,14 +342,12 @@ class b_ChainStratagem:
 # 龙神迸发，提高法强
 class b_Dreadwyrm:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Dreadwyrm"
-		life = dur
 		isNegetive = false
 		att.mgiAtkL = 0.20
-		addBuff(cha)
-		Utils.draw_efftext("附体", cha.position, "#59DFD7")
+		Utils.draw_efftext("附体", config.cha.position, "#21f2ff")
 
 	func _upS():
 		life = clamp(life, 0, 8)
@@ -364,46 +355,36 @@ class b_Dreadwyrm:
 # 剧毒菌，持续伤害
 class b_Bio:
 	extends BaseBuff
-	var app = null
-	func _init(dur = 1, cha = null, Applicator = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Bio"
-		life = dur
 		isNegetive = true
-		app = Applicator
-		addBuff(cha)
-		Utils.draw_efftext("剧毒菌", cha.position, "#DEE254", false)
+		Utils.draw_efftext("剧毒菌", config.cha.position, "#DEE254", false)
 
 	func _upS():
-		app.hurtChara(masCha, app.att.mgiAtk * 0.05, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+		casCha.hurtChara(masCha, app.att.mgiAtk * 0.05, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 		life = clamp(life, 0, 10)
 
 # 瘴暍，持续伤害
 class b_Miasma:
 	extends BaseBuff
-	var app = null
-	func _init(dur = 1, cha = null, Applicator = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Miasma"
-		life = dur
 		isNegetive = true
-		app = Applicator
-		addBuff(cha)
-		Utils.draw_efftext("瘴暍", cha.position, "#59DFD7", false)
+		Utils.draw_efftext("瘴暍", config.cha.position, "#59DFD7", false)
 
 	func _upS():
-		app.hurtChara(masCha, app.att.mgiAtk * 0.05, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+		casCha.hurtChara(masCha, app.att.mgiAtk * 0.05, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 		life = clamp(life, 0, 10)
 
 # 贤者的叙事谣，提高非特效伤害
 class b_Ballad:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Ballad"
 		isNegetive = false
-		life = dur
-		addBuff(cha)
 	
 	func _connect():
 		masCha.connect("onAtkChara", self, "onAtkChara")
@@ -418,12 +399,10 @@ class b_Ballad:
 # 光阴神的礼赞凯歌，debuff免疫
 class b_Paean:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Paean"
 		isNegetive = false
-		life = dur
-		addBuff(cha)
 	
 	func _connect():
 		masCha.connect("onAddBuff", self, "onAddBuff")
@@ -438,23 +417,21 @@ class b_Paean:
 # 行吟，减伤			
 class b_Troubadour:
 	extends ReduceDamage
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Troubadour"
 		isNegetive = false
-		life = dur
 		reduce_pw = 0.10
-		addBuff(cha)
+		conflict(config.cha, "b_Troubadour")
 
 # 魔人曲。魔法易伤
 class b_RequiemOfTheDevil:
 	extends BaseBuff
-	func _init(cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_RequiemOfTheDevil"
 		isNegetive = false
-		conflict(cha, "b_RequiemOfTheDevil")
-		addBuff(cha)
+		conflict(config.cha, "b_RequiemOfTheDevil")
 	
 	func _connect():
 		masCha.connect("onHurt", self, "run")
@@ -466,23 +443,21 @@ class b_RequiemOfTheDevil:
 # 钢铁意志，提高防御
 class b_SteelBelief:
 	extends BaseBuff
-	func _init(cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_SteelBelief"
 		isNegetive = false
 		att.defL = 0.10
-		addBuff(cha)
 
 # 安魂祈祷
 class b_Requiescat:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Requiescat"
-		life = dur
 		isNegetive = false
 		att.mgiAtk = 50
-		addBuff(cha)
+		Utils.draw_efftext("安魂祈祷", config.cha.position, "#0090ff")
 
 	func _upS():
 		life = clamp(life, 0, 15)
@@ -490,28 +465,24 @@ class b_Requiescat:
 # 圣光幕帘，护盾。可以吸收一定数值的伤害
 class b_DivineVeil:
 	extends BassShield
-	func _init(dur = 1, val = 0, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_DivineVeil"
-		self.shieldValue = val
 		isNegetive = false
-		life = dur
-		addBuff(cha)
-		Utils.draw_efftext("圣光幕帘", cha.position, "#59DFD7")
+		self.shieldValue = _get(config, "HD", 0)
+		Utils.draw_efftext("圣光幕帘", config.cha.position, "#a6d8ff")
 
 	func _upS():
 		life = clamp(life, 0, 10)
 
 class b_Mantra:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Mantra"
 		isNegetive = false
-		life = dur
 		att.reHp = 0.10
-		addBuff(cha)
-		Utils.draw_efftext("真言", cha.position, "#59DFD7")
+		Utils.draw_efftext("真言", config.cha.position, "#ffd0a6")
 
 	func _upS():
 		life = clamp(life, 0, 10)
@@ -519,13 +490,11 @@ class b_Mantra:
 # 野火Buff
 class b_Wildfire:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Wildfire"
 		isNegetive = false
-		life = dur
-		addBuff(cha)
-		Utils.draw_efftext("野火", cha.position, "#59DFD7")
+		Utils.draw_efftext("野火", config.cha.position, "#ff5f5f")
 
 	func _upS():
 		life = clamp(life, 0, 7)
@@ -533,14 +502,12 @@ class b_Wildfire:
 # 过载			
 class b_Overload:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Overload"
 		isNegetive = false
 		att.atkL = 0.20
-		life = dur
-		addBuff(cha)
-		Utils.draw_efftext("过载", cha.position, "#59DFD7")
+		Utils.draw_efftext("过载", config.cha.position, "#ff5f5f")
 
 	func _upS():
 		life = clamp(life, 0, 8)
@@ -548,14 +515,12 @@ class b_Overload:
 # 太阳神之衡  
 class b_Balance:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Balance"
 		isNegetive = false
 		att.atkL = 0.20
 		att.mgiAtkL = 0.20
-		life = dur
-		addBuff(cha)
 
 	func _upS():
 		life = clamp(life, 0, 20)
@@ -563,13 +528,11 @@ class b_Balance:
 # 放浪神之箭  
 class b_Arrow:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Arrow"
 		isNegetive = false
 		att.spd = 0.20
-		life = dur
-		addBuff(cha)
 
 	func _upS():
 		life = clamp(life, 0, 20)
@@ -577,13 +540,11 @@ class b_Arrow:
 # 战争神之枪     
 class b_Spear:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Spear"
 		isNegetive = false
 		att.cri = 0.20
-		life = dur
-		addBuff(cha)
 
 	func _upS():
 		life = clamp(life, 0, 20)
@@ -591,13 +552,11 @@ class b_Spear:
 # 世界树之干
 class b_Bole:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Bole"
 		isNegetive = false
 		att.defL = 0.20
-		life = dur
-		addBuff(cha)
 
 	func _upS():
 		life = clamp(life, 0, 20)
@@ -605,13 +564,11 @@ class b_Bole:
 # 河流神之瓶
 class b_Ewer:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Ewer"
 		isNegetive = false
 		att.cd = 0.20
-		life = dur
-		addBuff(cha)
 
 	func _upS():
 		life = clamp(life, 0, 20)
@@ -619,13 +576,11 @@ class b_Ewer:
 # 建筑神之塔
 class b_Spire:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Spire"
 		isNegetive = false
 		att.mgiDefL = 0.20
-		life = dur
-		addBuff(cha)
 
 	func _upS():
 		life = clamp(life, 0, 20)
@@ -634,13 +589,11 @@ class b_Spire:
 class b_LuckyStar:
 	extends BaseBuff
 	var hot = 0
-	func _init(dur = 1, val = 0, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_LuckyStar"
 		isNegetive = false
-		hot = val
-		life = dur
-		addBuff(cha)
+		hot = _get(config, "hot", 0)
 
 	func _upS():
 		masCha.plusHp(hot)
@@ -649,16 +602,14 @@ class b_LuckyStar:
 # 黑夜领域，护盾。可以吸收一定数值的伤害
 class b_Night:
 	extends BassShield
-	func _init(dur = 1, val = 0, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Night"
-		self.shieldValue = val
 		isNegetive = false
-		life = dur
-		conflict(cha, "b_Adloquium")
-		addBuff(cha)
-		updateShield(cha)
-		Utils.draw_efftext("黑夜领域", cha.position, "#59DFD7")
+		self.shieldValue = _get(config, "HD", 0)
+		conflict(config.cha, "b_Adloquium")
+		updateShield(config.cha)
+		Utils.draw_efftext("黑夜领域", config.cha.position, "#d05fff")
 
 	func _upS():
 		life = clamp(life, 0, 10)
@@ -666,14 +617,12 @@ class b_Night:
 # 命运之轮，减少伤害
 class b_Collective:
 	extends ReduceDamage
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Collective"
-		life = dur
 		isNegetive = false
 		reduce_pw = 0.10
-		addBuff(cha)
-		Utils.draw_efftext("命运之轮", cha.position, "#59DFD7")
+		Utils.draw_efftext("命运之轮", config.cha.position, "#00fcff")
 
 	func _upS():
 		life = clamp(life, 0, 18)
@@ -681,14 +630,12 @@ class b_Collective:
 # 红莲龙血
 class b_LifeOfTheDragon:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_LifeOfTheDragon"
 		isNegetive = false
 		att.atkL = 0.15
-		life = dur
-		addBuff(cha)
-		Utils.draw_efftext("红莲龙血", cha.position, "#59DFD7")
+		Utils.draw_efftext("红莲龙血", config.cha.position, "#ff0000")
 
 	func _upS():
 		life = clamp(life, 0, 15)
@@ -696,13 +643,11 @@ class b_LifeOfTheDragon:
 # 易伤
 class b_VulnerableSmall:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
-		life = dur
+	func _init(config):
+		._init(config)
 		isNegetive = false
 		id = "b_VulnerableSmall"
-		addBuff(cha)
-		Utils.draw_efftext("易伤", cha.position, "#59DFD7", false)
+		Utils.draw_efftext("易伤", config.cha.position, "#59DFD7", false)
 
 	func _connect():
 		masCha.connect("onHurt", self, "run")
@@ -713,13 +658,11 @@ class b_VulnerableSmall:
 # 物理耐性下降·大
 class b_VulnerableLarge:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
-		life = dur
+	func _init(config):
+		._init(config)
 		isNegetive = false
 		id = "b_VulnerableLarge"
-		addBuff(cha)
-		Utils.draw_efftext("物理耐性下降·大", cha.position, "#59DFD7", false)
+		Utils.draw_efftext("物理耐性下降·大", config.cha.position, "#59DFD7", false)
 	
 	func _connect():
 		masCha.connect("onHurt", self, "run")
@@ -732,12 +675,10 @@ class b_VulnerableLarge:
 # 分摊特效
 class b_Share:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_Share"
 		isNegetive = false
-		life = dur
-		addBuff(cha)
 		eff = Utils.draw_effect("share", masCha.position, Vector2(0, -20), 8, 3, true)
 
 	func _del():
@@ -753,14 +694,12 @@ class RotateCha:
 	var n = 0
 	var exit = false
 	var tarCha = null
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_RotateCha"
 		isNegetive = false
-		life = dur
 		n = dur * 10
-		tarCha = cha
-		addBuff(cha)
+		tarCha = config.cha
 		rotateCha()
 
 	func _connect():
@@ -794,13 +733,11 @@ class RotateCha:
 # 关闭自动攻击 有上限
 class b_StaticTime:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_StaticTime"
-		life = dur
 		isNegetive = false
-		cha.aiOn = false
-		addBuff(cha)
+		config.cha.aiOn = false
 
 	func _del():
 		if !masCha.hasBuff("b_StaticTimeUnlock"):
@@ -812,13 +749,11 @@ class b_StaticTime:
 # 关闭自动攻击 无上限
 class b_StaticTimeUnlock:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_StaticTimeUnlock"
-		life = dur
 		isNegetive = false
-		cha.aiOn = false
-		addBuff(cha)
+		config.cha.aiOn = false
 
 	func _del():
 		masCha.aiOn = true
@@ -829,10 +764,8 @@ class b_StaticTimeUnlock:
 # 冻结CD
 class b_FrozenCdSkill:
 	extends BaseBuff
-	func _init(dur = 1, cha = null):
-		attInit()
+	func _init(config):
+		._init(config)
 		id = "b_FrozenCdSkill"
-		life = dur
 		isNegetive = false
 		att.cd = -cha.att.cd - 1
-		addBuff(cha)

@@ -61,7 +61,7 @@ func autoturret(addCount):
 
 	if autoCount > 4:
 		autoCount = 0
-		addBuff(BUFF_LIST.b_Overload.new(13))
+		BUFF_LIST.b_Overload.new({"cha": self, "dur": 13})
 		
 	FFHurtChara(aiCha, att.atk * AUTOTURRET_PW, Chara.HurtType.PHY, Chara.AtkType.EFF)
 
@@ -69,4 +69,4 @@ func autoturret(addCount):
 func wildfire():
 	if aiCha != null:
 		fireChara = aiCha
-		aiCha.addBuff(BUFF_LIST.b_Wildfire.new(7))
+		BUFF_LIST.b_Wildfire.new({"cha": aiCha, "dur": 7})

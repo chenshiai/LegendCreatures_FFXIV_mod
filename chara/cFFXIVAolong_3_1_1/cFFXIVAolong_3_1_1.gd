@@ -28,6 +28,6 @@ func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_ArmorCrush":
 		if aiCha.aiCha != self:
-			aiCha.addBuff(BUFF_LIST.b_ArmorCrush.new(7, 0.3))
+			BUFF_LIST.b_ArmorCrush.new({"cha": aiCha, "PW": 0.3})
 		else:
-			aiCha.addBuff(BUFF_LIST.b_ArmorCrush.new(7, 0.15))
+			BUFF_LIST.b_ArmorCrush.new({"cha": aiCha, "PW": 0.15})

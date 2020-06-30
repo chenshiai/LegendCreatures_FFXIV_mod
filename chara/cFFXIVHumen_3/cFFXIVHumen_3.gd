@@ -49,12 +49,12 @@ func setDancePartner():
 	atkMaxAlly = chas[0]
 
 	if mgiAtkMaxAlly != self:
-		BUFF_LIST.b_DancingPartner.new(mgiAtkMaxAlly)
+		BUFF_LIST.b_DancingPartner.new({"cha": mgiAtkMaxAlly})
 
 	if atkMaxAlly != self and atkMaxAlly != mgiAtkMaxAlly:
-		BUFF_LIST.b_DancingPartner.new(atkMaxAlly)
+		BUFF_LIST.b_DancingPartner.new({"cha": atkMaxAlly})
 
-	BUFF_LIST.b_DancingPartner.new(self)
+	BUFF_LIST.b_DancingPartner.new({"cha": self})
 
 # 标准舞步
 func danceStep():
@@ -62,7 +62,7 @@ func danceStep():
 	for i in chas:
 		FFHurtChara(i, att.atk * DANCESTEP_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
-	BUFF_LIST.b_DanceStep.new(10, self)
-	BUFF_LIST.b_DanceStep.new(10, atkMaxAlly)
-	BUFF_LIST.b_DanceStep.new(10, mgiAtkMaxAlly)
+	BUFF_LIST.b_DanceStep.new({"cha": self, "dur": 10})
+	BUFF_LIST.b_DanceStep.new({"cha": mgiAtkMaxAlly, "dur": 10})
+	BUFF_LIST.b_DanceStep.new({"cha": atkMaxAlly, "dur": 10})
 	Utils.draw_efftext("标准舞步！", position, "#ff008a")

@@ -81,7 +81,7 @@ class DarkKnight:
 			masCha = atkInfo.hitCha
 			maxTreatmentVolume = masCha.att.maxHp * 0.50
 			atkInfo.hurtVal = 0
-			masCha.addBuff(BUFF_LIST.b_LivingDeath.new(10))
+			BUFF_LIST.b_LivingDeath.new({"cha": masCha, "dur": 10})
 			switch = false
 
 	func relieve(val):
@@ -117,7 +117,7 @@ class Gunbreaker:
 			var allys = masCha.getAllChas(2)
 			for cha in allys:
 				if cha != null:
-					cha.addBuff(BUFF_LIST.b_HeartOfLight.new(10))
+					BUFF_LIST.b_HeartOfLight.new({"cha": cha, "dur": 10})
 			allys = null
 
 class Bard:
@@ -142,7 +142,7 @@ class Bard:
 		if sys.main.btChas.has(masCha):
 			for cha in masCha.getAllChas(1):
 				if cha.team != masTeam:
-					BUFF_LIST.b_RequiemOfTheDevil.new(cha)
+					BUFF_LIST.b_RequiemOfTheDevil.new({"cha": cha})
 
 
 class Dragoon:
@@ -177,7 +177,7 @@ class Dragoon:
 		if id == "skill_DragonBlood" and Dragon:
 			Dragon = false
 			count = 0
-			masCha.addBuff(BUFF_LIST.b_LifeOfTheDragon.new(15))
+			BUFF_LIST.b_LifeOfTheDragon.new({"cha": masCha, "dur": 15})
 
 class BlackMage:
 	extends BaseSoul
@@ -197,7 +197,7 @@ class BlackMage:
 		sys.main.connect("onBattleStart", self, "enochian")
 
 	func enochian():
-		BUFF_LIST.b_Enochian.new(masCha.lv, masCha)
+		BUFF_LIST.b_Enochian.new({"cha": masCha, "step": masCha.lv})
 
 class Astrologian:
 	extends BaseSoul
@@ -223,7 +223,7 @@ class Astrologian:
 			var allys = masCha.getCellChas(masCha.cell, 2, 2)
 			for cha in allys:
 				if cha != null:
-					cha.addBuff(BUFF_LIST.b_Collective.new(18))
+					BUFF_LIST.b_Collective.new({"cha": cha, "dur": 18})
 			allys = null
 
 class Samurai:
@@ -320,7 +320,7 @@ class Monk:
 			var allys = masCha.getAllChas(2)
 			for cha in allys:
 				if cha != null:
-					cha.addBuff(BUFF_LIST.b_Mantra.new(10))
+					BUFF_LIST.b_Mantra.new({"cha": cha, "dur": 10})
 			allys = null
 
 class Paladin:
@@ -343,7 +343,7 @@ class Paladin:
 
 	func requiescat(id):
 		if id == "skill_Requiescat":
-			masCha.addBuff(BUFF_LIST.b_Requiescat.new(15))
+			BUFF_LIST.b_Requiescat.new({"cha": masCha, "dur": 15})
 
 class Ninja:
 	extends BaseSoul
@@ -403,7 +403,7 @@ class Scholar:
 
 	func chainStratagem(id):
 		if id == "skill_ChainStratagem" and masCha.aiCha != null:
-			masCha.aiCha.addBuff(BUFF_LIST.b_ChainStratagem.new(8))
+			masCha.aiCha.addBuff(BUFF_LIST.b_ChainStratagem.new({"dur": 8}))
 
 class Summoner:
 	extends BaseSoul
@@ -426,8 +426,8 @@ class Summoner:
 		if id == "skill__TriDisaster" and masCha.aiCha != null:
 			var chas = masCha.getCellChas(masCha.aiCha.cell, 1, 1)
 			for i in chas:
-				BUFF_LIST.b_Bio.new(10, i, masCha)
-				BUFF_LIST.b_Miasma.new(10, i, masCha)
+				BUFF_LIST.b_Bio.new({"cha": i, "cas": masCha, "dur": 10})
+				BUFF_LIST.b_Miasma.new({"cha": i, "cas": masCha, "dur": 10})
 				yield(sys.get_tree().create_timer(0.1), "timeout")
 
 class Machinist:

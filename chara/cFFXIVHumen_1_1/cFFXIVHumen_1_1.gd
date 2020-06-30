@@ -27,8 +27,7 @@ func _castCdSkill(id):
 		fc = true
 
 	if id == "skill_InnerRelease":
-		BUFF_LIST.b_InnerRelease.new(8, self)
-		Utils.draw_efftext("原初的解放", position, "#ff0000")
+		BUFF_LIST.b_InnerRelease.new({"cha": self, "dur": 8})
 
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)

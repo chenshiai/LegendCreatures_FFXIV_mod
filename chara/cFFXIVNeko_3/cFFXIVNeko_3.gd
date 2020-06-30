@@ -48,7 +48,7 @@ func ballad():
 	normalAtkChara(aiCha)
 	var chas = getAllChas(2)
 	for cha in chas :
-		cha.addBuff(BUFF_LIST.b_Ballad.new(8))
+		BUFF_LIST.b_Ballad.new({"cha": cha, "dur": 8})
 
 # 光阴神的礼赞凯歌
 func paean():
@@ -56,7 +56,7 @@ func paean():
 	chas.sort_custom(Utils.Calculation, "sort_MinHpP")
 	var cha = chas[0]
 	if cha != null:
-		cha.addBuff(BUFF_LIST.b_Paean.new(3))
+		BUFF_LIST.b_Paean.new({"cha": cha, "dur": 3})
 
 	var lx = cha.hasBuff("b_liuXue")
 	var zd = cha.hasBuff("b_zhonDu")

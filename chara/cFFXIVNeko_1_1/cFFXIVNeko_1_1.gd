@@ -35,7 +35,7 @@ func succor():
 	for cha in allys:
 		if cha != null:
 			cha.plusHp(att.mgiAtk * SUCCOR_PW, false)
-			BUFF_LIST.b_Adloquium.new(10, att.mgiAtk * SUCCOR_PW * shield_pw, cha)
+			BUFF_LIST.b_Adloquium.new({"cha": chas, "dur": 10, "HD": att.mgiAtk * SUCCOR_PW * pw})
 			Utils.draw_effect("shield", cha.position, Vector2(0,-30), 14)
 			yield(reTimer(0.1), "timeout")
 
@@ -44,4 +44,4 @@ func sacredSoil():
 	var allys = getCellChas(cell, 3, 2)
 	for cha in allys:
 		if cha != null:
-			cha.addBuff(BUFF_LIST.b_SacredSoil.new(10, att.mgiAtk * SACREDSOIL_PW))
+			BUFF_LIST.b_SacredSoil.new({"cha": cha, "dur": 10, "hot": att.mgiAtk * SACREDSOIL_PW})

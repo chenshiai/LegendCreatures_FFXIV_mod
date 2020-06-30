@@ -31,4 +31,4 @@ func manafication():
 		blackMorgen = MORGEN_MAX
 	if whiteMorgan > MORGEN_MAX:
 		whiteMorgan = MORGEN_MAX
-	BUFF_LIST.b_Manafication.new(10, self)
+	BUFF_LIST.b_Manafication.new({"cha": self, "dur": 10})

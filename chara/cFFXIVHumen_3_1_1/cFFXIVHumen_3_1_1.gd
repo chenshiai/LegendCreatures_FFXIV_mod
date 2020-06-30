@@ -30,7 +30,7 @@ func _castCdSkill(id):
 
 # 进攻探戈
 func devilment():
-	BUFF_LIST.b_Devilment.new(8)
-	BUFF_LIST.b_Devilment.new(8, atkMaxAlly)
-	BUFF_LIST.b_Devilment.new(8, mgiAtkMaxAlly)
+	BUFF_LIST.b_Devilment.new({"cha": self, "dur": 8})
+	BUFF_LIST.b_Devilment.new({"cha": atkMaxAlly, "dur": 8})
+	BUFF_LIST.b_Devilment.new({"cha": mgiAtkMaxAlly, "dur": 8})
 	Utils.draw_efftext("进攻之探戈！", position, "#ff008a")

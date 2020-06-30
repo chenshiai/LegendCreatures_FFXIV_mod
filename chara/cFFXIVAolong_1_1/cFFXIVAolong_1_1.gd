@@ -31,7 +31,7 @@ func _onAtkChara(atkInfo:AtkInfo):
 		skillStrs[0] = "当前暗黑值：%d / 1000" % [darkCount]
 		if darkCount >= 1000:
 			darkCount = 0
-			BUFF_LIST.b_TheBlackestNight.new(att.maxHp * 0.20, self)
+			BUFF_LIST.b_TheBlackestNight.new({"cha": self, "HD": att.maxHp * 0.20})
 			Utils.draw_effect("ePcr_phyPZ", position, Vector2(0,-30), 15)
 
 # 暗黑布道			
@@ -39,4 +39,4 @@ func darkMissionary():
 	var allys = getAllChas(2)
 	for cha in allys:
 		if cha != null:
-			cha.addBuff(BUFF_LIST.b_DarkMissionary.new(6))
+			BUFF_LIST.b_DarkMissionary.new({"cha": cha, "dur": 6})

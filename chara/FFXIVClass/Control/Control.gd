@@ -93,14 +93,14 @@ func order_throttle():
 func delay():
 	for cha in PlayerChas:
 		if cha.hasBuff("b_StaticTime"):
-			BUFF_LIST.b_StaticTime.new(1, cha)
+			BUFF_LIST.b_StaticTime.new({"cha": cha, "dur": 1})
 
 
 # 定点移动，让角色向目标点移动，true表示移动成功，false表示移动失败
 func movement(cha, cell) -> bool:
 	if !cha.isDeath:
 		if cha.setCell(cell):
-			BUFF_LIST.b_StaticTime.new(2, cha) # 移动成功时关闭ai，防止反复横跳
+			BUFF_LIST.b_StaticTime.new({"cha": cha, "dur": 2}) # 移动成功时关闭ai，防止反复横跳
 			return true
 		else:
 			return false
