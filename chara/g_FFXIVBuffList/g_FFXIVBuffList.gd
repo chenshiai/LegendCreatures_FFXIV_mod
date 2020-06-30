@@ -1,22 +1,23 @@
 class BaseBuff extends Buff:
-	var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
-	var shieldBar:TextureProgress = null
-	var shieldBarValue = 0
-	# 当我不想对在角色文件中使用addBuff的时候，我会把角色传到buff里面使用addBuff()
+	var Utils = globalData.infoDs["g_aFFXIVUtils"]
+
+	func _init(config):
+		attInit()
+		addBuff(config.cha)
+
 	func addBuff(cha):
 		if cha != null:
 			cha.addBuff(self)
 
-	# 我不想让两个不同的buff同时生效，我就要删除它
 	func conflict(cha, buffId):
 		var bf = cha.hasBuff(buffId)
 		if bf != null and bf != self:
 			bf.isDel = true
 
+
 class BassShield extends BaseBuff:
 	var shieldValue = 0
 
-	# 给目标套上一个同种护盾，需要更新目标身上的护盾值
 	func updateShield(cha):
 		if cha == null:
 			return
@@ -29,12 +30,11 @@ class BassShield extends BaseBuff:
 
 	func run(atkInfo:AtkInfo):
 		if shieldValue > atkInfo.hurtVal:
-			shieldValue -= atkInfo.hurtVal
 			atkInfo.hurtVal = 0
 		else:
 			atkInfo.hurtVal -= shieldValue
-			shieldValue = 0
 
+		shieldValue -= atkInfo.hurtVal
 		if shieldValue <= 0:
 			self.isDel = true
 
@@ -52,17 +52,19 @@ class ReduceDamage extends BaseBuff:
 		elif reduce_type == atkInfo.hurtType:
 			atkInfo.hurtVal *= 1 - reduce_pw
 
-# 深恶痛绝，提高魔防
+
+# 深恶痛绝
 class b_Abhor:
 	extends BaseBuff
-	func _init(cha = null):
-		attInit()
-		id = "b_Abhor"
-		isNegetive = false
-		att.mgiDefL = 0.10
-		addBuff(cha)
+	id = "b_Abhor"
+	isNegetive = false
 
-# 暗黑布道，减少魔法伤害
+	func _init(config = {"cha": null, "dur": 0}):
+		._init(config)
+		att.mgiDefL = 0.10
+
+
+# 暗黑布道
 class b_DarkMissionary:
 	extends ReduceDamage
 	func _init(dur = 1, cha = null):
@@ -77,7 +79,7 @@ class b_DarkMissionary:
 	func _upS():
 		life = clamp(life, 0, 6)
 
-# 至黑之夜，护盾。可以吸收一定数值的伤害
+# 至黑之夜
 class b_TheBlackestNight:
 	extends BassShield
 	func _init(val = 0, cha = null):
@@ -86,6 +88,7 @@ class b_TheBlackestNight:
 		self.shieldValue = val
 		isNegetive = false
 		addBuff(cha)
+		Utils.draw_efftext("至黑之夜", cha.position, "#59DFD7")
 
 # 活死人，无敌，但是还是会死
 class b_LivingDeath:
@@ -120,6 +123,7 @@ class b_ArmorCrush:
 		att.defL -= pw
 		att.mgiDefL -= pw
 		addBuff(cha)
+		Utils.draw_efftext("强甲破点突", cha.position, "#59DFD7", false)
 
 	func _upS():
 		life = clamp(life, 0, 7)
@@ -172,7 +176,7 @@ class b_Superbolide:
 	func _upS():
 		life = clamp(life, 0, 10)
 
-# 光之心，减少{TMgiHurt}
+# 光之心，减少魔法伤害
 class b_HeartOfLight:
 	extends ReduceDamage
 	func _init(dur = 1, cha = null):
@@ -183,6 +187,7 @@ class b_HeartOfLight:
 		reduce_type = Chara.HurtType.MGI
 		reduce_pw = 0.10
 		addBuff(cha)
+		Utils.draw_efftext("光之心", cha.position, "#59DFD7")
 
 	func _upS():
 		life = clamp(life, 0, 10)
@@ -197,6 +202,7 @@ class b_DancingPartner:
 		att.atkL = 0.10
 		att.mgiAtkL = 0.10
 		addBuff(cha)
+		Utils.draw_efftext("舞伴", cha.position, "#59DFD7")
 
 # 伶俐，攻击力提高
 class b_DanceStep:
@@ -217,7 +223,7 @@ class b_Devilment:
 	extends BaseBuff
 	func _init(dur = 1, cha = null):
 		attInit()
-		id = "b_DanceStep"
+		id = "b_Devilment"
 		isNegetive = false
 		life = dur
 		att.atkL = 0.20
@@ -252,6 +258,7 @@ class b_LeyLines:
 		att.cd = 0.15
 		life = dur
 		addBuff(cha)
+		Utils.draw_efftext("黑魔纹", cha.position, "#59DFD7")
 
 	func _upS():
 		life = clamp(life, 0, 30)
@@ -329,6 +336,7 @@ class b_ChainStratagem:
 		life = dur
 		isNegetive = false
 		addBuff(cha)
+		Utils.draw_efftext("连环计", cha.position, "#59DFD7")
 	
 	func _connect():
 		masCha.connect("onHurt", self, "run")
@@ -348,6 +356,7 @@ class b_Dreadwyrm:
 		isNegetive = false
 		att.mgiAtkL = 0.20
 		addBuff(cha)
+		Utils.draw_efftext("附体", cha.position, "#59DFD7")
 
 	func _upS():
 		life = clamp(life, 0, 8)
@@ -488,6 +497,7 @@ class b_DivineVeil:
 		isNegetive = false
 		life = dur
 		addBuff(cha)
+		Utils.draw_efftext("圣光幕帘", cha.position, "#59DFD7")
 
 	func _upS():
 		life = clamp(life, 0, 10)
@@ -501,6 +511,7 @@ class b_Mantra:
 		life = dur
 		att.reHp = 0.10
 		addBuff(cha)
+		Utils.draw_efftext("真言", cha.position, "#59DFD7")
 
 	func _upS():
 		life = clamp(life, 0, 10)
@@ -514,6 +525,7 @@ class b_Wildfire:
 		isNegetive = false
 		life = dur
 		addBuff(cha)
+		Utils.draw_efftext("野火", cha.position, "#59DFD7")
 
 	func _upS():
 		life = clamp(life, 0, 7)
@@ -528,6 +540,7 @@ class b_Overload:
 		att.atkL = 0.20
 		life = dur
 		addBuff(cha)
+		Utils.draw_efftext("过载", cha.position, "#59DFD7")
 
 	func _upS():
 		life = clamp(life, 0, 8)
@@ -645,6 +658,7 @@ class b_Night:
 		conflict(cha, "b_Adloquium")
 		addBuff(cha)
 		updateShield(cha)
+		Utils.draw_efftext("黑夜领域", cha.position, "#59DFD7")
 
 	func _upS():
 		life = clamp(life, 0, 10)
@@ -659,7 +673,8 @@ class b_Collective:
 		isNegetive = false
 		reduce_pw = 0.10
 		addBuff(cha)
-			
+		Utils.draw_efftext("命运之轮", cha.position, "#59DFD7")
+
 	func _upS():
 		life = clamp(life, 0, 18)
 
@@ -673,6 +688,7 @@ class b_LifeOfTheDragon:
 		att.atkL = 0.15
 		life = dur
 		addBuff(cha)
+		Utils.draw_efftext("红莲龙血", cha.position, "#59DFD7")
 
 	func _upS():
 		life = clamp(life, 0, 15)
@@ -686,7 +702,8 @@ class b_VulnerableSmall:
 		isNegetive = false
 		id = "b_VulnerableSmall"
 		addBuff(cha)
-	
+		Utils.draw_efftext("易伤", cha.position, "#59DFD7", false)
+
 	func _connect():
 		masCha.connect("onHurt", self, "run")
 
@@ -702,6 +719,7 @@ class b_VulnerableLarge:
 		isNegetive = false
 		id = "b_VulnerableLarge"
 		addBuff(cha)
+		Utils.draw_efftext("物理耐性下降·大", cha.position, "#59DFD7", false)
 	
 	func _connect():
 		masCha.connect("onHurt", self, "run")
@@ -757,7 +775,7 @@ class RotateCha:
 		tarCha.img.set_pivot_offset(tarCha.img.rect_size / 2)
 		for i in range(n):
 			yield(sys.get_tree().create_timer(0.1), "timeout")
-			if tarCha and !exit:
+			if tarCha and !exit and !isDel:
 				if i < 10:
 					tarCha.normalSpr.position += Vector2(0, -15)
 				elif i > n - 10:

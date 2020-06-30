@@ -32,7 +32,7 @@ func _connect():
 func _onBattleStart():
 	._onBattleStart()
 	atkCount = 0
-	BUFF_LIST.b_Abhor.new(self)
+	BUFF_LIST.b_Abhor.new({"cha": self})
 
 func _castCdSkill(id):
 	._castCdSkill(id)
