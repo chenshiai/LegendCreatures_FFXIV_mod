@@ -58,7 +58,7 @@ func _onAtkChara(atkInfo):
 		atkInfo.isCri = true
 		blackMorgen -= REDOUBLEMENT_CAST
 		whiteMorgan -= REDOUBLEMENT_CAST
-		if lv == 3:
+		if self.lv >= 3:
 			verthunder(false, VERFLARE_PW)
 
 # 赤闪雷/赤疾风

@@ -197,7 +197,7 @@ class BlackMage:
 		sys.main.connect("onBattleStart", self, "enochian")
 
 	func enochian():
-		BUFF_LIST.b_Enochian.new({"cha": masCha, "step": masCha.lv})
+		BUFF_LIST.b_Enochian.new({"cha": masCha, "lv": masCha.lv})
 
 class Astrologian:
 	extends BaseSoul
@@ -403,7 +403,7 @@ class Scholar:
 
 	func chainStratagem(id):
 		if id == "skill_ChainStratagem" and masCha.aiCha != null:
-			masCha.aiCha.addBuff(BUFF_LIST.b_ChainStratagem.new({"dur": 8}))
+			BUFF_LIST.b_ChainStratagem.new({"cha": masCha.aiCha, "dur": 8})
 
 class Summoner:
 	extends BaseSoul

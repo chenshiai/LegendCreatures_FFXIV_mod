@@ -35,7 +35,7 @@ func succor():
 	for cha in allys:
 		if cha != null:
 			cha.plusHp(att.mgiAtk * SUCCOR_PW, false)
-			BUFF_LIST.b_Adloquium.new({"cha": chas, "dur": 10, "HD": att.mgiAtk * SUCCOR_PW * pw})
+			BUFF_LIST.b_Adloquium.new({"cha": cha, "dur": 10, "HD": att.mgiAtk * SUCCOR_PW * shield_pw})
 			Utils.draw_effect("shield", cha.position, Vector2(0,-30), 14)
 			yield(reTimer(0.1), "timeout")
 

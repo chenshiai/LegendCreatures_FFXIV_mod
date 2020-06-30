@@ -45,27 +45,27 @@ func drawCard():
 	var bf = null
 	if n == 0:
 		Utils.draw_effect("Arcana_01", position, Vector2(0, -240), 14, 0.5)
-		bf = BUFF_LIST.b_Balance.new({"dur": 20})
+		bf = "b_Balance"
 	elif n == 1:
 		Utils.draw_effect("Arcana_02", position, Vector2(0, -240), 14, 0.5)
-		bf = BUFF_LIST.b_Arrow.new({"dur": 20})
+		bf = "b_Arrow"
 	elif n == 2:
 		Utils.draw_effect("Arcana_03", position, Vector2(0, -240), 14, 0.5)
-		bf = BUFF_LIST.b_Spear.new({"dur": 20})
+		bf = "b_Spear"
 	elif n == 3:
 		Utils.draw_effect("Arcana_04", position, Vector2(0, -240), 14, 0.5)
-		bf = BUFF_LIST.b_Bole.new({"dur": 20})
+		bf = "b_Bole"
 	elif n == 4:
 		Utils.draw_effect("Arcana_05", position, Vector2(0, -240), 14, 0.5)
-		bf = BUFF_LIST.b_Ewer.new({"dur": 20})
+		bf = "b_Ewer"
 	elif n == 5:
 		Utils.draw_effect("Arcana_06", position, Vector2(0, -240), 14, 0.5)
-		bf = BUFF_LIST.b_Spire.new({"dur": 20})
+		bf = "b_Spire"
 
 	var chas = getAllChas(2)
 	for cha in chas:
 		if cha != null and bf != null:
-			cha.addBuff(bf)
+			BUFF_LIST[bf].new({"cha": cha, "dur": 20})
 
 # 阳星相位		
 func starPhase(lv):

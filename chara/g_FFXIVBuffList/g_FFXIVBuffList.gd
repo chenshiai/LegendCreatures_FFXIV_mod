@@ -5,7 +5,8 @@ class BaseBuff extends Buff:
 			"cha": null
 		}):
 		attInit()
-		addBuff(config.cha)
+		var cha = _get(config, "cha", null)
+		addBuff(cha)
 		life = _get(config, "dur", null)
 		casCha = _get(config, "cas", null)
 		lifeMax = _get(config, "limit", 0)
@@ -362,7 +363,7 @@ class b_Bio:
 		Utils.draw_efftext("剧毒菌", config.cha.position, "#DEE254", false)
 
 	func _upS():
-		casCha.hurtChara(masCha, app.att.mgiAtk * 0.05, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+		casCha.hurtChara(masCha, casCha.att.mgiAtk * 0.05, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 		life = clamp(life, 0, 10)
 
 # 瘴暍，持续伤害
@@ -375,7 +376,7 @@ class b_Miasma:
 		Utils.draw_efftext("瘴暍", config.cha.position, "#59DFD7", false)
 
 	func _upS():
-		casCha.hurtChara(masCha, app.att.mgiAtk * 0.05, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+		casCha.hurtChara(masCha, casCha.att.mgiAtk * 0.05, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 		life = clamp(life, 0, 10)
 
 # 贤者的叙事谣，提高非特效伤害
@@ -521,6 +522,7 @@ class b_Balance:
 		isNegetive = false
 		att.atkL = 0.20
 		att.mgiAtkL = 0.20
+		print(config)
 
 	func _upS():
 		life = clamp(life, 0, 20)
@@ -533,6 +535,7 @@ class b_Arrow:
 		id = "b_Arrow"
 		isNegetive = false
 		att.spd = 0.20
+		print(config)
 
 	func _upS():
 		life = clamp(life, 0, 20)
@@ -545,6 +548,7 @@ class b_Spear:
 		id = "b_Spear"
 		isNegetive = false
 		att.cri = 0.20
+		print(config)
 
 	func _upS():
 		life = clamp(life, 0, 20)
@@ -557,6 +561,7 @@ class b_Bole:
 		id = "b_Bole"
 		isNegetive = false
 		att.defL = 0.20
+		print(config)
 
 	func _upS():
 		life = clamp(life, 0, 20)
@@ -569,6 +574,7 @@ class b_Ewer:
 		id = "b_Ewer"
 		isNegetive = false
 		att.cd = 0.20
+		print(config)
 
 	func _upS():
 		life = clamp(life, 0, 20)
@@ -581,6 +587,7 @@ class b_Spire:
 		id = "b_Spire"
 		isNegetive = false
 		att.mgiDefL = 0.20
+		print(config)
 
 	func _upS():
 		life = clamp(life, 0, 20)
@@ -698,7 +705,7 @@ class RotateCha:
 		._init(config)
 		id = "b_RotateCha"
 		isNegetive = false
-		n = dur * 10
+		n = config.dur * 10
 		tarCha = config.cha
 		rotateCha()
 
@@ -768,4 +775,4 @@ class b_FrozenCdSkill:
 		._init(config)
 		id = "b_FrozenCdSkill"
 		isNegetive = false
-		att.cd = -cha.att.cd - 1
+		att.cd = -config.cha.att.cd - 1
