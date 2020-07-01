@@ -9,11 +9,11 @@ func _extInit():
 	lv = 3
 	evos = []
 	addCdSkill("skill_Succor", 17)
-	addSkillTxt("[士高气昂之策]：冷却17s，恢复自身和周围4格内队员[100%]法强的HP，并附加[鼓舞]效果")
+	addSkillTxt("[士高气昂之策]：冷却17s，恢复自身和周围4格内队员[70%]法强的HP，并附加[鼓舞]效果")
 	addCdSkill("skill_SacredSoil", 20)
 	addSkillTxt("[野战治疗阵]：冷却20s，使自身和周围3格内队员受到的伤害减少10%，并附加持续恢复效果，持续10s")
 
-const SUCCOR_PW = 1.00 # 士高气昂之策威力
+const SUCCOR_PW = 0.70 # 士高气昂之策威力
 const SACREDSOIL_PW = 0.05 # 野战治疗阵恢复力
 
 func _connect():
@@ -35,7 +35,11 @@ func succor():
 	for cha in allys:
 		if cha != null:
 			cha.plusHp(att.mgiAtk * SUCCOR_PW, false)
-			BUFF_LIST.b_Adloquium.new({"cha": cha, "dur": 10, "HD": att.mgiAtk * SUCCOR_PW * shield_pw})
+			BUFF_LIST.b_Adloquium.new({
+				"cha": cha,
+				"dur": 10,
+				"HD": att.mgiAtk * SUCCOR_PW * shield_pw
+			})
 			Utils.draw_effect("shield", cha.position, Vector2(0,-30), 14)
 			yield(reTimer(0.1), "timeout")
 
@@ -44,4 +48,8 @@ func sacredSoil():
 	var allys = getCellChas(cell, 3, 2)
 	for cha in allys:
 		if cha != null:
-			BUFF_LIST.b_SacredSoil.new({"cha": cha, "dur": 10, "hot": att.mgiAtk * SACREDSOIL_PW})
+			BUFF_LIST.b_SacredSoil.new({
+				"cha": cha,
+				"dur": 10,
+				"hot": att.mgiAtk * SACREDSOIL_PW
+			})

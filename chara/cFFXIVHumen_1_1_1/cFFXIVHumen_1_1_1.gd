@@ -31,7 +31,7 @@ func _castCdSkill(id):
 	if id == "skill_Decimate":
 		var chas = getCellChas(cell, 2)
 		for i in chas:
-			FFHurtChara(i, att.atk * DECIMATE_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+			FFHurtChara(i, att.atk * DECIMATE_PW, PHY, SKILL)
 
 func _onHurt(atkInfo:AtkInfo):
 	._onHurt(atkInfo)

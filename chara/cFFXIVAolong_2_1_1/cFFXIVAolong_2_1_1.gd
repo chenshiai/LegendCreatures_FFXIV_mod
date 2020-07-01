@@ -31,6 +31,6 @@ func _onBattleStart():
 func Shoha():
 	ShohaCount += 1
 	if ShohaCount >= 3:
-		FFHurtChara(aiCha, att.atk * SHOHA_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+		FFHurtChara(aiCha, att.atk * SHOHA_PW, PHY, SKILL)
 		ShohaCount = 0
 

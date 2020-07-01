@@ -27,8 +27,5 @@ func manafication():
 	Utils.draw_efftext("倍增！", position)
 	blackMorgen *= 2
 	whiteMorgan *= 2
-	if blackMorgen > MORGEN_MAX:
-		blackMorgen = MORGEN_MAX
-	if whiteMorgan > MORGEN_MAX:
-		whiteMorgan = MORGEN_MAX
+	morgenLimit()
 	BUFF_LIST.b_Manafication.new({"cha": self, "dur": 10})

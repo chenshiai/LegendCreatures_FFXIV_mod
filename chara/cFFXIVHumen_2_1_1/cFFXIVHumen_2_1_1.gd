@@ -9,8 +9,8 @@ func _extInit():
 	attCoe.mgiDef = 5.8
 	lv = 4
 	evos = []
-	addCdSkill("skill_BlastingZone", 15)
-	addSkillTxt(TEXT.format("[爆破领域]：冷却15s，对目标造成[380%]的{TPhyHurt}"))
+	addCdSkill("skill_BlastingZone", 10)
+	addSkillTxt(TEXT.format("[爆破领域]：冷却10s，对目标造成[380%]的{TPhyHurt}"))
 
 
 const BLASTINGZONE_PW = 3.80 # 爆破领域威力
@@ -24,4 +24,4 @@ func _onBattleStart():
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_BlastingZone":
-		FFHurtChara(aiCha, att.atk * BLASTINGZONE_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+		FFHurtChara(aiCha, att.atk * BLASTINGZONE_PW, PHY, SKILL)

@@ -32,7 +32,7 @@ func stornIII():
 	var d:Eff = newEff("sk_feiDang",sprcPos)
 	d._initFlyCha(aiCha)
 	yield(d, "onReach")
-	FFHurtChara(aiCha, att.mgiAtk * STORNIII_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+	FFHurtChara(aiCha, att.mgiAtk * STORNIII_PW, MGI, SKILL)
 
 func benediction():
 	var chas = getAllChas(2)

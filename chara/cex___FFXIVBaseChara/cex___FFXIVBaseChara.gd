@@ -2,6 +2,12 @@ extends Chara
 const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
 const Utils = globalData.infoDs["g_aFFXIVUtils"]
 const TEXT = globalData.infoDs["g_bFFXIVText"]
+const MGI = Chara.HurtType.MGI
+const PHY = Chara.HurtType.PHY
+const REAL = Chara.HurtType.REAL
+const NORMAL = Chara.AtkType.NORMAL
+const SKILL = Chara.AtkType.SKILL
+const EFF = Chara.AtkType.EFF
 var baseId = ""
 var OCCUPATION = "Default"
 
@@ -13,10 +19,10 @@ var BallisticSpeed = {
 }
 
 var FFHurtType = {
-	"MeleeDPS": HurtType.PHY,
-	"MagicDPS": HurtType.MGI,
-	"DistanceDPS": HurtType.PHY,
-	"Default": HurtType.PHY
+	"MeleeDPS": PHY,
+	"MagicDPS": MGI,
+	"DistanceDPS": PHY,
+	"Default": PHY
 }
 
 
@@ -67,7 +73,7 @@ func normalAtkChara(cha):
 		atkInfo.canCri = canCri()
 		atkInfo.atkVal = getAtkVal()
 		atkInfo.hurtType = FFHurtType[OCCUPATION]
-		atkInfo.atkType = AtkType.NORMAL
+		atkInfo.atkType = NORMAL
 		atkRun(cha)
 
 func FFHurtChara(target, atkVal, hurtType, atkType):

@@ -9,8 +9,8 @@ var SKILL_TXT_1 = TEXT.format("""[攻其不备]：{TPassive}普通攻击会给�
 
 var SKILL_TXT_2 = TEXT.format("""[忍术]：冷却11s，随机释放以下忍术
 [风魔手里剑]：对魔法攻击力最高的一名敌人造成[480%]的{TPhyHurt}
-[冰遁之术]：对周围2格的敌人造成[70%]的{TPhyHurt}，并附加5层[结霜]
-[火遁之术]：对周围2格的敌人造成[50%]的{TPhyHurt}，并附加5层[烧灼]""")
+[冰遁之术]：对目标及周围2格的敌人造成[70%]的{TPhyHurt}，并附加5层[结霜]
+[火遁之术]：对目标及周围2格的敌人造成[50%]的{TPhyHurt}，并附加5层[烧灼]""")
 
 func _extInit():
 	._extInit()
@@ -62,18 +62,18 @@ func fuma():
 	var d:Eff = newEff("sk_4_1_2", sprcPos)
 	d._initFlyCha(chas[0])
 	yield(d, "onReach")
-	FFHurtChara(chas[0], att.atk * FUMA_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+	FFHurtChara(chas[0], att.atk * FUMA_PW, PHY, SKILL)
 
 # 冰遁之术
 func hyoton():
-	var chas = getCellChas(cell, 2, 1)
+	var chas = getCellChas(aiCha.cell, 2, 1)
 	for i in chas:
-		FFHurtChara(i, att.atk * HYOTON_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+		FFHurtChara(i, att.atk * HYOTON_PW, PHY, SKILL)
 		i.addBuff(b_jieShuang.new(5))
 
 # 火遁之术			
 func katon():
-	var chas = getCellChas(cell, 2, 1)
+	var chas = getCellChas(aiCha.cell, 2, 1)
 	for i in chas:
 		FFHurtChara(i, att.atk * KATON_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 		i.addBuff(b_shaoZhuo.new(5))

@@ -99,7 +99,7 @@ func setsugekka(skill_pw):
 	normalSpr.position = (aiCha.position - position).normalized() * 70
 	yield(reTimer(0.3), "timeout")
 	Utils.draw_effect("slash2", aiCha.position, Vector2(0,-30), 10, 1.3)
-	FFHurtChara(aiCha, att.atk * skill_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+	FFHurtChara(aiCha, att.atk * skill_pw, PHY, SKILL)
 	normalSpr.position = Vector2(0, 0)
 
 # 重置所有状态

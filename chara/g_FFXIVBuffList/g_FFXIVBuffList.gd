@@ -5,11 +5,11 @@ class BaseBuff extends Buff:
 			"cha": null
 		}):
 		attInit()
-		var cha = _get(config, "cha", null)
-		addBuff(cha)
 		life = _get(config, "dur", null)
 		casCha = _get(config, "cas", null)
 		lifeMax = _get(config, "limit", 0)
+		var cha = _get(config, "cha", null)
+		addBuff(cha)
 
 	func _upS():
 		if lifeMax > 0:
@@ -686,7 +686,7 @@ class b_Share:
 		._init(config)
 		id = "b_Share"
 		isNegetive = false
-		eff = Utils.draw_effect("share", masCha.position, Vector2(0, -20), 8, 3, true)
+		eff = Utils.draw_effect("share", config.cha.position, Vector2(0, -20), 8, 3, true)
 
 	func _del():
 		eff.queue_free()

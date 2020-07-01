@@ -61,6 +61,12 @@ func _onAtkChara(atkInfo):
 		if self.lv >= 3:
 			verthunder(false, VERFLARE_PW)
 
+func morgenLimit():
+	if whiteMorgan > MORGEN_MAX:
+		whiteMorgan = MORGEN_MAX
+	if blackMorgen > MORGEN_MAX:
+		blackMorgen = MORGEN_MAX
+
 # 赤闪雷/赤疾风
 func verthunder(first, pw):
 	var d:Eff = newEff("sk_feiDang", sprcPos)
@@ -71,13 +77,10 @@ func verthunder(first, pw):
 	var n = sys.rndRan(0, 1)
 	if n == 0 and blackMorgen < (MORGEN + MORGEN_MAX):
 		blackMorgen += MORGEN
-		if blackMorgen > MORGEN_MAX:
-			blackMorgen = MORGEN_MAX
 	elif n == 1 and whiteMorgan < (MORGEN + MORGEN_MAX):
 		whiteMorgan += MORGEN
-		if whiteMorgan > MORGEN_MAX:
-			whiteMorgan = MORGEN_MAX
 
+	morgenLimit()
 	skillStrs[0] = "白魔元：%d / 100	黑魔元：%d / 100" % [whiteMorgan, blackMorgen]
 	if first:
 		verthunder(false, VERTHUNDER_PW)

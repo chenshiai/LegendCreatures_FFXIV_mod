@@ -16,7 +16,7 @@ func _extInit():
 	addCdSkill("skill_DanceStep", 23)
 	addSkillTxt(TEXT.format("[伶俐]：{TPassive}技能可以产生暴击"))
 	addSkillTxt(TEXT.format("[闭式舞姿]：{TPassive}战斗开始时，选择物攻最高与魔攻最高的队友作为舞伴，提高他们与自己的攻击力10%"))
-	addSkillTxt(TEXT.format("[标准舞步]：冷却23s，对三格内的敌人造成[600%]的{TPhyHurt}，同时舞伴与自己的攻击力再提升10%，持续10s"))
+	addSkillTxt(TEXT.format("[标准舞步]：冷却23s，对四格内的敌人造成[600%]的{TPhyHurt}，同时舞伴与自己的攻击力再提升10%，持续10s"))
 
 const DANCESTEP_PW = 6 # 标准舞步威力
 var atkMaxAlly = null # 攻击力最高的队友
@@ -58,7 +58,7 @@ func setDancePartner():
 
 # 标准舞步
 func danceStep():
-	var chas = getCellChas(cell, 3)
+	var chas = getCellChas(cell, 4, 1)
 	for i in chas:
 		FFHurtChara(i, att.atk * DANCESTEP_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 

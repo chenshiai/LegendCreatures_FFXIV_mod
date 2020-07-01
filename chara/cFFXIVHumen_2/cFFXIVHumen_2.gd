@@ -33,7 +33,7 @@ func _castCdSkill(id):
 func bowShock():
 	var chas = getCellChas(cell, 2, 1)
 	for i in chas:
-		FFHurtChara(i, att.atk * BOWSHOCK_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+		FFHurtChara(i, att.atk * BOWSHOCK_PW, PHY, SKILL)
 		i.addBuff(b_shaoZhuo.new(4))
 
 func _onHurt(atkInfo:AtkInfo):

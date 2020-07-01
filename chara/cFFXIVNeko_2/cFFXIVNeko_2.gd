@@ -46,7 +46,7 @@ func ruinIII():
 	var d:Eff = newEff("sk_feiDang", sprcPos)
 	d._initFlyCha(aiCha)
 	yield(d, "onReach")
-	FFHurtChara(aiCha, att.mgiAtk * RUINIII_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+	FFHurtChara(aiCha, att.mgiAtk * RUINIII_PW, MGI, SKILL)
 
 # 溃烂爆发	
 func fester():
@@ -57,7 +57,7 @@ func fester():
 	for bf in aiCha.buffs:
 		if bf.isNegetive:
 			sf += 1
-	FFHurtChara(aiCha, att.mgiAtk * (FESTER_PW + FESTER_N_PW * sf), Chara.HurtType.MGI, Chara.AtkType.SKILL)
+	FFHurtChara(aiCha, att.mgiAtk * (FESTER_PW + FESTER_N_PW * sf), MGI, SKILL)
 
 func summon(lv):
 	var n = sys.rndRan(0, 2)

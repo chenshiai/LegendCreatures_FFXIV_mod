@@ -31,7 +31,7 @@ func _castCdSkill(id):
 
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)
-	if atkInfo.atkType == Chara.AtkType.NORMAL and fc:
+	if atkInfo.atkType == NORMAL and fc:
 		var sk = getSkill("skill_FellCleave")
 		if sk != null: sk.nowTime = 0
 		fc = false
