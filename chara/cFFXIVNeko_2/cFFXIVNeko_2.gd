@@ -1,4 +1,5 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
+var SummonChara = null
 
 func _info():
 	pass
@@ -74,4 +75,6 @@ func summon(lv):
 	elif lv == 4:
 		summonCha += "_1_1"
 
-	newChara(summonCha, self.cell)
+	SummonChara = newChara(summonCha, self.cell)
+	if SummonChara:
+		SummonChara.Summoner = self

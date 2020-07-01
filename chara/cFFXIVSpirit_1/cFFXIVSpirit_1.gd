@@ -22,7 +22,7 @@ func _extInit():
 {c_bole}世界树之干{/c}[物防提升20%]；{c_ewer}河流神之瓶{/c}[冷却缩减20%]；{c_spire}建筑神之塔{/c}[魔防提升20%]。"""))
 	addCdSkill("skill_StarPhase", 18)
 	addSkillTxt(TEXT.format("""[阳星相位]：冷却18s，恢复全场友军[60%]法强的HP
-[白昼学派]：{TPassive}阳星相位会给目标施加持续恢复效果，每秒恢复[15%]法强的HP，持续8秒"""))
+[白昼学派]：{TPassive}阳星相位会给目标施加持续恢复效果，每秒恢复[10%]法强的HP，持续5秒"""))
 
 const STARPHASE_PW = 0.60 # 阳星威力
 
@@ -74,7 +74,7 @@ func starPhase(lv):
 	for cha in allys:
 		if cha != null:
 			cha.plusHp(att.mgiAtk * STARPHASE_PW)
-			BUFF_LIST.b_LuckyStar.new({"cha": cha, "dur": 8, "hot": att.mgiAtk * 0.15})
+			BUFF_LIST.b_LuckyStar.new({"cha": cha, "dur": 5, "hot": att.mgiAtk * 0.10})
 			if lv == 4:
 				BUFF_LIST.b_Night.new({"cha": cha, "dur": 10, "HD": att.mgiAtk * STARPHASE_PW * 1.25})
 				Utils.draw_effect("ePcr_mgiPZ", cha.position, Vector2(0,-30), 14)

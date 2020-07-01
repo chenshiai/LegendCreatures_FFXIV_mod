@@ -522,7 +522,6 @@ class b_Balance:
 		isNegetive = false
 		att.atkL = 0.20
 		att.mgiAtkL = 0.20
-		print(config)
 
 	func _upS():
 		life = clamp(life, 0, 20)
@@ -535,7 +534,6 @@ class b_Arrow:
 		id = "b_Arrow"
 		isNegetive = false
 		att.spd = 0.20
-		print(config)
 
 	func _upS():
 		life = clamp(life, 0, 20)
@@ -548,7 +546,6 @@ class b_Spear:
 		id = "b_Spear"
 		isNegetive = false
 		att.cri = 0.20
-		print(config)
 
 	func _upS():
 		life = clamp(life, 0, 20)
@@ -561,7 +558,6 @@ class b_Bole:
 		id = "b_Bole"
 		isNegetive = false
 		att.defL = 0.20
-		print(config)
 
 	func _upS():
 		life = clamp(life, 0, 20)
@@ -574,7 +570,6 @@ class b_Ewer:
 		id = "b_Ewer"
 		isNegetive = false
 		att.cd = 0.20
-		print(config)
 
 	func _upS():
 		life = clamp(life, 0, 20)
@@ -587,7 +582,6 @@ class b_Spire:
 		id = "b_Spire"
 		isNegetive = false
 		att.mgiDefL = 0.20
-		print(config)
 
 	func _upS():
 		life = clamp(life, 0, 20)

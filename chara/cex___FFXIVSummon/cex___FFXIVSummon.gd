@@ -12,5 +12,8 @@ func _extInit():
 	attCoe.def = 1
 	attCoe.mgiDef = 1
 	isSumm = true
+	isDeath = true
+	self.get_node("ui/hpBar").visible = false
+
 
 		

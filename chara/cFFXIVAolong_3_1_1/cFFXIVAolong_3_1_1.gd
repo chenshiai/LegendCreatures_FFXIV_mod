@@ -23,7 +23,8 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
-	armorCrush()
+	yield(reTimer(1), "timeout")
+	call_deferred("armorCrush")
 
 func _castCdSkill(id):
 	._castCdSkill(id)

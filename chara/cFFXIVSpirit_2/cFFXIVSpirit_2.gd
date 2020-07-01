@@ -77,6 +77,6 @@ func starPhase(lv):
 			Utils.draw_effect("ePcr_mgiPZ", cha.position, Vector2(0,-30), 14)
 			BUFF_LIST.b_Night.new({"cha": cha, "dur": 10, "HD": att.mgiAtk * STARPHASE_PW * 1.25})
 			if lv == 4:
-				BUFF_LIST.b_LuckyStar.new({"cha": cha, "dur": 8, "hot": att.mgiAtk * 0.15})
+				BUFF_LIST.b_LuckyStar.new({"cha": cha, "dur": 5, "hot": att.mgiAtk * 0.10})
 			yield(reTimer(0.1), "timeout")
 			

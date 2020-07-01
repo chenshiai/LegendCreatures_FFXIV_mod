@@ -1,5 +1,4 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
-
 func _info():
 	pass
 
@@ -38,6 +37,7 @@ func _castCdSkill(id):
 		adloquium()
 	if id == "skill_DeathMgi":
 		deathMgi()
+		embrace()
 
 func deathMgi():
 	var d:Eff = newEff("sk_feiDang",sprcPos)
@@ -46,7 +46,7 @@ func deathMgi():
 	FFHurtChara(aiCha, att.mgiAtk * DEATHMGI_PW, MGI, SKILL)
 		
 
-# 鼓舞激励之策/仙光的拥抱
+# 鼓舞激励之策
 func adloquium():
 	var chas = getAllChas(2)
 	chas.sort_custom(Utils.Calculation, "sort_MinHpP")
@@ -59,3 +59,12 @@ func adloquium():
 			"HD": att.mgiAtk * ADLOQUIUM_PW * shield_pw
 		})
 		Utils.draw_effect("shield", chas[0].position, Vector2(0,-30), 7)
+
+# 仙光的拥抱
+func embrace():
+	var chas = getAllChas(2)
+	chas.sort_custom(Utils.Calculation, "sort_MinHpP")
+
+	if chas[0] != null:
+		chas[0].plusHp(att.mgiAtk * 0.15, true)
+		Utils.draw_effect("recovery1", chas[0].position, Vector2(0, -30), 15)

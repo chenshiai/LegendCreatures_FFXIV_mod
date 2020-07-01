@@ -77,7 +77,7 @@ func _onKillChara(atkInfo):
 
 		if count == 0:
 			reward = false
-			tarCha.newChara("cex___FFXIVSummon", tarCha.cell)
+			tarCha.newChara("cFFXIV___Muren", tarCha.cell)
 			sys.newBaseMsg(TEXT.Insurance.title, TEXT.Insurance.content)
 			FFHurtChara(self, att.maxHp * 2, Chara.HurtType.REAL, Chara.AtkType.SKILL)
 
