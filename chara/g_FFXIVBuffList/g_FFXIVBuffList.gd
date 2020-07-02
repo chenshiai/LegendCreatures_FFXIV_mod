@@ -1,10 +1,13 @@
 class BaseBuff extends Buff:
 	var Utils = globalData.infoDs["g_aFFXIVUtils"]
 	var lifeMax
-	func _init(config = {
+
+	func _init():
+		attInit()
+
+	func set_config(config = {
 			"cha": null
 		}):
-		attInit()
 		life = _get(config, "dur", null)
 		casCha = _get(config, "cas", null)
 		lifeMax = _get(config, "limit", 0)
@@ -14,8 +17,8 @@ class BaseBuff extends Buff:
 	func _upS():
 		if lifeMax > 0:
 			life = clamp(life, 0, lifeMax)
-	
-	func _get(config, name, default):
+
+	func _get(config, name, default = null):
 		if config.has(name):
 			return config[name]
 		else:
@@ -33,10 +36,8 @@ class BaseBuff extends Buff:
 
 class BassShield extends BaseBuff:
 	var shieldValue = 0
-	func _init(config = {
-			"cha": null
-		}):
-		._init(config)
+	func set_config(config):
+		.set_config(config)
 
 	func updateShield(cha):
 		if cha == null:
@@ -66,10 +67,8 @@ class ReduceDamage extends BaseBuff:
 	var PHY = Chara.HurtType.PHY
 	var REAL = Chara.HurtType.REAL
 
-	func _init(config = {
-			"cha": null
-		}):
-		._init(config)
+	func set_config(config):
+		.set_config(config)
 
 	func _connect():
 		masCha.connect("onHurt", self, "run")
@@ -85,7 +84,7 @@ class ReduceDamage extends BaseBuff:
 class b_Abhor:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Abhor"
 		isNegetive = false
 		att.mgiDefL = 0.10
@@ -95,7 +94,7 @@ class b_Abhor:
 class b_DarkMissionary:
 	extends ReduceDamage
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_DarkMissionary"
 		isNegetive = false
 		reduce_type = MGI
@@ -108,7 +107,7 @@ class b_DarkMissionary:
 class b_TheBlackestNight:
 	extends BassShield
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_TheBlackestNight"
 		isNegetive = false
 		self.shieldValue = _get(config, "HD", 0)
@@ -118,7 +117,7 @@ class b_TheBlackestNight:
 class b_LivingDeath:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_LivingDeath"
 		isNegetive = false
 		Utils.draw_efftext("活死人", config.cha.position, "#d0d0d0")
@@ -137,7 +136,7 @@ class b_LivingDeath:
 class b_ArmorCrush:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_ArmorCrush"
 		isNegetive = false
 		att.defL -= _get(config, "PW", 0)
@@ -151,7 +150,7 @@ class b_ArmorCrush:
 class b_Shiver:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Shiver"
 		isNegetive = false
 		att.maxHpL = 0.20
@@ -162,7 +161,7 @@ class b_Shiver:
 class b_InnerRelease:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_InnerRelease"
 		isNegetive = false
 		att.cri = 1
@@ -173,7 +172,7 @@ class b_InnerRelease:
 class b_Superbolide:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Superbolide"
 		isNegetive = false
 
@@ -190,7 +189,7 @@ class b_Superbolide:
 class b_HeartOfLight:
 	extends ReduceDamage
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_HeartOfLight"
 		isNegetive = false
 		reduce_type = MGI
@@ -204,7 +203,7 @@ class b_HeartOfLight:
 class b_DancingPartner:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_DancingPartner"
 		isNegetive = false
 		att.atkL = 0.10
@@ -215,7 +214,7 @@ class b_DancingPartner:
 class b_DanceStep:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_DanceStep"
 		isNegetive = false
 		att.atkL = 0.10
@@ -227,7 +226,7 @@ class b_DanceStep:
 class b_Devilment:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Devilment"
 		isNegetive = false
 		att.atkL = 0.20
@@ -241,7 +240,7 @@ class b_Regen:
 	extends BaseBuff
 	var hot = 0
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Regen"
 		hot = _get(config, "hot", 0)
 
@@ -253,7 +252,7 @@ class b_Regen:
 class b_LeyLines:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_LeyLines"
 		isNegetive = false
 		att.cd = 0.15
@@ -267,14 +266,14 @@ class b_Enochian:
 	extends BaseBuff
 	var step
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Enochian"
 		isNegetive = false
 		step = _get(config, "lv", 1)
 
 	func _connect():
 		masCha.connect("onAtkChara", self, "run")
-	
+
 	func run(atkInfo):
 		if atkInfo.atkType != Chara.AtkType.EFF:
 			atkInfo.hurtVal *= 1 + (0.05 * (step - 1))
@@ -283,7 +282,7 @@ class b_Enochian:
 class b_Manafication:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Manafication"
 		isNegetive = false
 		att.mgiAtkL = 0.10
@@ -295,7 +294,7 @@ class b_Manafication:
 class b_Adloquium:
 	extends BassShield
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Adloquium"
 		isNegetive = false
 		self.shieldValue = _get(config, "HD", 0)
@@ -313,7 +312,7 @@ class b_SacredSoil:
 	extends ReduceDamage
 	var hot = 0
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_SacredSoil"
 		isNegetive = false
 		reduce_pw = 0.10
@@ -327,11 +326,11 @@ class b_SacredSoil:
 class b_ChainStratagem:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_ChainStratagem"
 		isNegetive = false
 		Utils.draw_efftext("连环计", config.cha.position, "#3aa1e9", false)
-	
+
 	func _connect():
 		masCha.connect("onHurt", self, "run")
 
@@ -344,7 +343,7 @@ class b_ChainStratagem:
 class b_Dreadwyrm:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Dreadwyrm"
 		isNegetive = false
 		att.mgiAtkL = 0.20
@@ -357,7 +356,7 @@ class b_Dreadwyrm:
 class b_Bio:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Bio"
 		isNegetive = true
 		Utils.draw_efftext("剧毒菌", config.cha.position, "#DEE254", false)
@@ -370,7 +369,7 @@ class b_Bio:
 class b_Miasma:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Miasma"
 		isNegetive = true
 		Utils.draw_efftext("瘴暍", config.cha.position, "#59DFD7", false)
@@ -383,10 +382,10 @@ class b_Miasma:
 class b_Ballad:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Ballad"
 		isNegetive = false
-	
+
 	func _connect():
 		masCha.connect("onAtkChara", self, "onAtkChara")
 
@@ -394,17 +393,17 @@ class b_Ballad:
 		life = clamp(life, 0, 8)
 
 	func onAtkChara(atkInfo:AtkInfo):
-		if atkInfo.atkType != Chara.AtkType.EFF: 
+		if atkInfo.atkType != Chara.AtkType.EFF:
 			atkInfo.hurtVal *= 1.08
 
 # 光阴神的礼赞凯歌，debuff免疫
 class b_Paean:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Paean"
 		isNegetive = false
-	
+
 	func _connect():
 		masCha.connect("onAddBuff", self, "onAddBuff")
 
@@ -415,11 +414,11 @@ class b_Paean:
 	func _upS():
 		life = clamp(life, 0, 3)
 
-# 行吟，减伤			
+# 行吟，减伤
 class b_Troubadour:
 	extends ReduceDamage
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Troubadour"
 		isNegetive = false
 		reduce_pw = 0.10
@@ -429,23 +428,23 @@ class b_Troubadour:
 class b_RequiemOfTheDevil:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_RequiemOfTheDevil"
 		isNegetive = false
 		conflict(config.cha, "b_RequiemOfTheDevil")
-	
+
 	func _connect():
 		masCha.connect("onHurt", self, "run")
 
 	func run(atkInfo:AtkInfo):
-		if atkInfo.hurtType == Chara.HurtType.MGI: 
+		if atkInfo.hurtType == Chara.HurtType.MGI:
 			atkInfo.hurtVal *= 1.1
-		
+
 # 钢铁意志，提高防御
 class b_SteelBelief:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_SteelBelief"
 		isNegetive = false
 		att.defL = 0.10
@@ -454,7 +453,7 @@ class b_SteelBelief:
 class b_Requiescat:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Requiescat"
 		isNegetive = false
 		att.mgiAtk = 50
@@ -467,7 +466,7 @@ class b_Requiescat:
 class b_DivineVeil:
 	extends BassShield
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_DivineVeil"
 		isNegetive = false
 		self.shieldValue = _get(config, "HD", 0)
@@ -479,7 +478,7 @@ class b_DivineVeil:
 class b_Mantra:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Mantra"
 		isNegetive = false
 		att.reHp = 0.10
@@ -492,7 +491,7 @@ class b_Mantra:
 class b_Wildfire:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Wildfire"
 		isNegetive = false
 		Utils.draw_efftext("野火", config.cha.position, "#ff5f5f")
@@ -500,11 +499,11 @@ class b_Wildfire:
 	func _upS():
 		life = clamp(life, 0, 7)
 
-# 过载			
+# 过载
 class b_Overload:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Overload"
 		isNegetive = false
 		att.atkL = 0.20
@@ -513,11 +512,11 @@ class b_Overload:
 	func _upS():
 		life = clamp(life, 0, 8)
 
-# 太阳神之衡  
+# 太阳神之衡
 class b_Balance:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Balance"
 		isNegetive = false
 		att.atkL = 0.20
@@ -526,11 +525,11 @@ class b_Balance:
 	func _upS():
 		life = clamp(life, 0, 20)
 
-# 放浪神之箭  
+# 放浪神之箭
 class b_Arrow:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Arrow"
 		isNegetive = false
 		att.spd = 0.20
@@ -538,11 +537,11 @@ class b_Arrow:
 	func _upS():
 		life = clamp(life, 0, 20)
 
-# 战争神之枪     
+# 战争神之枪
 class b_Spear:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Spear"
 		isNegetive = false
 		att.cri = 0.20
@@ -554,7 +553,7 @@ class b_Spear:
 class b_Bole:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Bole"
 		isNegetive = false
 		att.defL = 0.20
@@ -566,7 +565,7 @@ class b_Bole:
 class b_Ewer:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Ewer"
 		isNegetive = false
 		att.cd = 0.20
@@ -578,7 +577,7 @@ class b_Ewer:
 class b_Spire:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Spire"
 		isNegetive = false
 		att.mgiDefL = 0.20
@@ -591,7 +590,7 @@ class b_LuckyStar:
 	extends BaseBuff
 	var hot = 0
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_LuckyStar"
 		isNegetive = false
 		hot = _get(config, "hot", 0)
@@ -604,7 +603,7 @@ class b_LuckyStar:
 class b_Night:
 	extends BassShield
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Night"
 		isNegetive = false
 		self.shieldValue = _get(config, "HD", 0)
@@ -619,7 +618,7 @@ class b_Night:
 class b_Collective:
 	extends ReduceDamage
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Collective"
 		isNegetive = false
 		reduce_pw = 0.10
@@ -632,7 +631,7 @@ class b_Collective:
 class b_LifeOfTheDragon:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_LifeOfTheDragon"
 		isNegetive = false
 		att.atkL = 0.15
@@ -645,7 +644,7 @@ class b_LifeOfTheDragon:
 class b_VulnerableSmall:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		isNegetive = false
 		id = "b_VulnerableSmall"
 		Utils.draw_efftext("易伤", config.cha.position, "#59DFD7", false)
@@ -655,16 +654,16 @@ class b_VulnerableSmall:
 
 	func run(atkInfo):
 		atkInfo.hurtVal *= 1.3
-		
+
 # 物理耐性下降·大
 class b_VulnerableLarge:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		isNegetive = false
 		id = "b_VulnerableLarge"
 		Utils.draw_efftext("物理耐性下降·大", config.cha.position, "#59DFD7", false)
-	
+
 	func _connect():
 		masCha.connect("onHurt", self, "run")
 
@@ -677,7 +676,7 @@ class b_VulnerableLarge:
 class b_Share:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_Share"
 		isNegetive = false
 		eff = Utils.draw_effect("share", config.cha.position, Vector2(0, -20), 8, 3, true)
@@ -696,7 +695,7 @@ class RotateCha:
 	var exit = false
 	var tarCha = null
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_RotateCha"
 		isNegetive = false
 		n = config.dur * 10
@@ -735,7 +734,7 @@ class RotateCha:
 class b_StaticTime:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_StaticTime"
 		isNegetive = false
 		config.cha.aiOn = false
@@ -751,7 +750,7 @@ class b_StaticTime:
 class b_StaticTimeUnlock:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_StaticTimeUnlock"
 		isNegetive = false
 		config.cha.aiOn = false
@@ -766,7 +765,7 @@ class b_StaticTimeUnlock:
 class b_FrozenCdSkill:
 	extends BaseBuff
 	func _init(config):
-		._init(config)
+		.set_config(config)
 		id = "b_FrozenCdSkill"
 		isNegetive = false
 		att.cd = -config.cha.att.cd - 1

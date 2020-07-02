@@ -90,18 +90,17 @@ func draw_effect_out(
 func draw_efftext(text, position, color = "#ffffff", up = true):
 	var eff = sys.newEff("numHit", position)
 	var dev = 0
+	var y = sys.rndListItem([-80, -70, -60, -50, -40, -30, -20, -10, 0, 10, 20])
+	eff.normalSpr.position = Vector2(0, y)
+	eff.scale.x *= -1
+	eff.anim.set_speed_scale(0)
+
 	if up:
 		text = "▲%s▲" % [text]
 	else:
 		text = "▼%s▼" % [text]
 
 	eff.setText(text, color)
-
-	var y = sys.rndListItem([-80, -70, -60, -50, -40, -30, -20, -10, 0, 10, 20])
-	eff.normalSpr.position = Vector2(0, y)
-	eff.scale.x *= -1
-	eff.anim.set_speed_scale(0)
-
 	eff._initFlyPos(position + Vector2(1, 0) * 20, 20)
 
 # 绘制按钮UI
@@ -115,27 +114,18 @@ func draw_ui_button(
 			"return": false
 		}
 	):
-	# 这个默认值过于愚蠢
-	var args = []
-	if config.has("args"):
-		args = config.args
-	
+	var args = _get(config, "args", [])
 	var button = Button.new()
 	button.text = text
 	button.rect_position = position
 	button.connect("pressed", target, callback, args)
 
-	if config.has("set_size"):
-		button.set_size = config["set_size"]
-	if config.has("margin_left"):
-		button.margin_left = config["margin_left"]
-	if config.has("margin_right"):
-		button.margin_right = config["margin_right"]
-	if config.has("margin_top"):
-		button.margin_top = config["margin_top"]
-	if config.has("margin_bottom"):
-		button.margin_bottom = config["margin_bottom"]
-	if config.has("return") and config["return"]:
+	button.margin_left = _get(config, "margin_left", 0)
+	button.margin_right = _get(config, "margin_right", 0)
+	button.margin_top = _get(config, "margin_top", 0)
+	button.margin_bottom = _get(config, "margin_bottom", 0)
+
+	if _get(config, "return", false):
 		return button
 	else:
 		sys.main.get_node("ui").add_child(button)
@@ -178,7 +168,7 @@ func initInfomation():
 	textGrid.margin_left = 50
 	textGrid.margin_top = 80
 	textGrid.bbcode_enabled = true
-	
+
 	infomation = sys.newMsg("jiangLiMsg")
 	infomation.get_node("Panel").add_child(textGrid)
 	infomation.get_node("Panel/Button").connect("pressed", self, "MsgOk")
@@ -193,7 +183,7 @@ func showInfomation(config):
 
 func MsgOk():
 	pass
-	
+
 # 创建Boss时间轴
 func create_timeAxis(skillAxis):
 	var timeAxis = {}
@@ -225,6 +215,12 @@ func attenuationDamage(startCell, targetCell, damage):
 	var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
 	var length = toolman.cellRan(startCell, targetCell)
 	return damage / (1 + length)
+
+func _get(object, name, default = null):
+	if object.has(name):
+		return object[name]
+	else:
+		return default
 
 # 数据处理类
 class Calculation:

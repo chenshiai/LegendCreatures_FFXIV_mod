@@ -59,7 +59,7 @@ func chantStart(text, duration):
 	laber.set_visible(false) 
 	chantBar.set_value(0)
 	pending = false
-	
+
 func get_status():
 	return pending
 
@@ -72,6 +72,6 @@ func interrupt():
 
 	yield(sys.get_tree().create_timer(2), "timeout")
 	chantBar.set_visible(false)
-	laber.set_visible(false) 
+	laber.set_visible(false)
 	chantBar.set_value(0)
 	pending = false
