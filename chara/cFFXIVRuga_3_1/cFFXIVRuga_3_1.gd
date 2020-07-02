@@ -27,4 +27,4 @@ func _castCdSkill(id):
 		drill()
 
 func drill():
-	FFHurtChara(aiCha, att.atk * DRILL_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+	FFHurtChara(aiCha, att.atk * DRILL_PW, PHY, SKILL)

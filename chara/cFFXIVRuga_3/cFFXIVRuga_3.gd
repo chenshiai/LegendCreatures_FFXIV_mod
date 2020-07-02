@@ -45,11 +45,11 @@ func _castCdSkill(id):
 
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)
-	if atkInfo.hitCha == fireChara and atkInfo.atkType == AtkType.NORMAL:
+	if atkInfo.hitCha == fireChara and atkInfo.atkType == NORMAL:
 		if atkInfo.hitCha.hasBuff("b_Wildfire") != null:
 			fireCount += 1
 		elif atkInfo.hitCha.hasBuff("b_Wildfire") == null:
-			FFHurtChara(aiCha, att.atk * WILDFIRE_PW * fireCount, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+			FFHurtChara(aiCha, att.atk * WILDFIRE_PW * fireCount, PHY, SKILL)
 			Utils.draw_effect("blast", aiCha.position, Vector2(0,-40), 15, 1)
 			fireCount = 0
 			fireChara = null
@@ -63,7 +63,7 @@ func autoturret(addCount):
 		autoCount = 0
 		BUFF_LIST.b_Overload.new({"cha": self, "dur": 13})
 		
-	FFHurtChara(aiCha, att.atk * AUTOTURRET_PW, Chara.HurtType.PHY, Chara.AtkType.EFF)
+	FFHurtChara(aiCha, att.atk * AUTOTURRET_PW, PHY, EFF)
 
 # 野火		
 func wildfire():

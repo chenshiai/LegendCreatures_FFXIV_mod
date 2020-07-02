@@ -51,7 +51,7 @@ func _castCdSkill(id):
 
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)
-	if (atkInfo.atkType == AtkType.NORMAL
+	if (atkInfo.atkType == NORMAL
 			and blackMorgen >= REDOUBLEMENT_CAST
 			and whiteMorgan >= REDOUBLEMENT_CAST):
 		atkInfo.hurtVal *= REDOUBLEMENT_PW
@@ -72,7 +72,7 @@ func verthunder(first, pw):
 	var d:Eff = newEff("sk_feiDang", sprcPos)
 	d._initFlyCha(aiCha, 1000)
 	yield(d, "onReach")
-	FFHurtChara(aiCha, att.mgiAtk * pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+	FFHurtChara(aiCha, att.mgiAtk * pw, MGI, SKILL)
 
 	var n = sys.rndRan(0, 1)
 	if n == 0 and blackMorgen < (MORGEN + MORGEN_MAX):

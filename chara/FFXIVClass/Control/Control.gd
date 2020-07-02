@@ -186,7 +186,7 @@ func keyboard_connect():
 func set_config():
 	ButtonConfig = [
 		{
-			"text": "说明书",
+			"text": "控制说明",
 			"position": Vector2(610, 0),
 			"target": Utils,
 			"callback": "showInfomation",

@@ -29,12 +29,8 @@ func _onBattleStart():
 	# imt.create_from_image(im)
 	# img.texture_normal = imt
 	BUFF_LIST.b_Adloquium.new({"cha": self, "HD": 800, "dur": 10})
-	yield(reTimer(5), "timeout")
-
 	BUFF_LIST.b_Adloquium.new({"cha": self, "HD": 800, "dur": 10})
-
-	yield(reTimer(12), "timeout")
-	BUFF_LIST.b_Adloquium.new({"cha": self, "HD": 800, "dur": 10})
+	# BUFF_LIST.b_Adloquium.new({"cha": self, "HD": 800, "dur": 10})
 
 
 

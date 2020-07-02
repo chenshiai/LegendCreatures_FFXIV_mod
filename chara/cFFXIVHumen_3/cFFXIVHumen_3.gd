@@ -36,7 +36,7 @@ func _castCdSkill(id):
 
 func _onAtkInfo(atkInfo: AtkInfo):
 	._onAtkInfo(atkInfo)
-	if atkInfo.atkCha == self and atkInfo.atkType == Chara.AtkType.SKILL:
+	if atkInfo.atkCha == self and atkInfo.atkType == SKILL:
 		atkInfo.canCri = true
 
 # 寻找舞伴		
@@ -60,7 +60,7 @@ func setDancePartner():
 func danceStep():
 	var chas = getCellChas(cell, 4, 1)
 	for i in chas:
-		FFHurtChara(i, att.atk * DANCESTEP_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+		FFHurtChara(i, att.atk * DANCESTEP_PW, PHY, SKILL)
 
 	BUFF_LIST.b_DanceStep.new({"cha": self, "dur": 10})
 	BUFF_LIST.b_DanceStep.new({"cha": mgiAtkMaxAlly, "dur": 10})

@@ -31,31 +31,31 @@ func checkChange(id):
 
 
 func initCrusade():
-	var MsgScroll = ScrollContainer.new()
-	var CrusadeBox = VBoxContainer.new()
 	CrusadeMsg = WindowDialog.new()
-	# CrusadeMsg.title = "选择出"
-	infoBtn = Button.new()
-
-	CrusadeBox.name = "CrusadeBox"
-	CrusadeBox.set_alignment(1)
-	CrusadeBox.rect_position = Vector2(50,20)
 	CrusadeMsg.set_size(Vector2(400,500))
 
+	var CrusadeBox = VBoxContainer.new()
+	CrusadeBox.name = "CrusadeBox"
+	CrusadeBox.set_alignment(1)
+
+	var MsgScroll = ScrollContainer.new()
 	MsgScroll.name = "Scroll"
 	MsgScroll.set_anchors_preset(15)
 	MsgScroll.anchor_bottom -= 0.2
 	MsgScroll.anchor_right -= 0.1
-	MsgScroll.set_margin(0,30)
-	MsgScroll.set_margin(1,20)
+	MsgScroll.set_margin(0, 30)
+	MsgScroll.set_margin(1, 25)
 
+	infoBtn = Button.new()
 	infoBtn.text = "最终幻想14更新记录"
+	infoBtn.set_size(Vector2(360,50))
 	infoBtn.connect("pressed", Utils, "showInfomation", [TEXT.UpdateInfo])	
-	infoBtn.set_h_size_flags(3)
+	infoBtn.set_h_size_flags(4)
 	CrusadeBox.add_child(infoBtn)
 
 	AllCheck = Utils.draw_check("全选", "allCheck")
 	AllCheck.connect("pressed", self, "allCheck")
+	AllCheck.set_size(Vector2(380,30))
 	CrusadeBox.add_child(AllCheck)
 
 	for config in FFChara.CrusadeConfig.keys():

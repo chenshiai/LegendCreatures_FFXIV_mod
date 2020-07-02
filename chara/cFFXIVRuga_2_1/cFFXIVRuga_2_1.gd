@@ -35,4 +35,4 @@ func sixSidedStar():
 	if js != null:
 		count = js.life
 
-	FFHurtChara(aiCha, att.atk * (FIGHTGAS_PW + (SIXSIDEDSTAR_PW + count * 0.05)), Chara.HurtType.PHY, Chara.AtkType.SKILL)
+	FFHurtChara(aiCha, att.atk * (FIGHTGAS_PW + (SIXSIDEDSTAR_PW + count * 0.05)), PHY, SKILL)

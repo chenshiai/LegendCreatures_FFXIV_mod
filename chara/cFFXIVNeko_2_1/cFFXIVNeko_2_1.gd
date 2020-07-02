@@ -40,8 +40,8 @@ func enkindleBahamut(lv):
 	for i in chas:
 		if i != null:
 			if lv == 4:
-				FFHurtChara(i, att.mgiAtk * (ENKINDLEBAHAMUT_PW + 0.60), Chara.HurtType.MGI, Chara.AtkType.SKILL)
+				FFHurtChara(i, att.mgiAtk * (ENKINDLEBAHAMUT_PW + 0.60), MGI, SKILL)
 				i.addBuff(b_shaoZhuo.new(20))
 			else:
-				FFHurtChara(i, att.mgiAtk * ENKINDLEBAHAMUT_PW, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+				FFHurtChara(i, att.mgiAtk * ENKINDLEBAHAMUT_PW, MGI, SKILL)
 

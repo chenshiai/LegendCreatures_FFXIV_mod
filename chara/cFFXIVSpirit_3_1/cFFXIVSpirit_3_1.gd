@@ -36,6 +36,10 @@ func stardiver():
 
 	var cha = rndChas(getAllChas(1), 1)
 	var mv = Vector2(cell.x, cell.y)
+	if cha.isDeath:
+		normalSpr.position = Vector2(0, 0)
+		return
+	aiCha = cha
 	mv.x = cha.cell.x
 	mv.y = cha.cell.y
 	var vs = [Vector2(0, 0), Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, -1), Vector2(1, 1), Vector2(-1, 1), Vector2(-1, -1), Vector2(1, -1)]
@@ -53,8 +57,7 @@ func stardiver():
 	yield(reTimer(0.3), "timeout")
 
 	aiOn = true
-	aiCha = cha
 	normalSpr.position = Vector2(0, 0)
 	var chas = getCellChas(cell, 2)
 	for i in chas:
-		FFHurtChara(i, att.atk * STARDIVER_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+		FFHurtChara(i, att.atk * STARDIVER_PW, PHY, SKILL)

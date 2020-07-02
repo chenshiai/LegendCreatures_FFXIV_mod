@@ -107,12 +107,9 @@ func draw_efftext(text, position, color = "#ffffff", up = true):
 func draw_ui_button(
 		text,
 		position,
-		target = self,
-		callback = "defaultCallback",
-		config = {
-			"args": [],
-			"return": false
-		}
+		target,
+		callback,
+		config
 	):
 	var args = _get(config, "args", [])
 	var button = Button.new()
@@ -120,19 +117,10 @@ func draw_ui_button(
 	button.rect_position = position
 	button.connect("pressed", target, callback, args)
 
-	button.margin_left = _get(config, "margin_left", 0)
-	button.margin_right = _get(config, "margin_right", 0)
-	button.margin_top = _get(config, "margin_top", 0)
-	button.margin_bottom = _get(config, "margin_bottom", 0)
-
 	if _get(config, "return", false):
 		return button
 	else:
 		sys.main.get_node("ui").add_child(button)
-
-
-func defaultCallback():
-	sys.newBaseMsg("测试", "并未连接到任何函数")
 
 
 # 绘制残影

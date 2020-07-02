@@ -75,5 +75,5 @@ func hyoton():
 func katon():
 	var chas = getCellChas(aiCha.cell, 2, 1)
 	for i in chas:
-		FFHurtChara(i, att.atk * KATON_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+		FFHurtChara(i, att.atk * KATON_PW, PHY, SKILL)
 		i.addBuff(b_shaoZhuo.new(5))

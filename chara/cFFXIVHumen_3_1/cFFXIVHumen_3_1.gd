@@ -24,4 +24,4 @@ func _castCdSkill(id):
 func saberDance():
 	var chas = getCellChas(aiCha.cell, 2, 1)
 	for i in chas:
-		FFHurtChara(i, att.atk * SABERDANCE_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+		FFHurtChara(i, att.atk * SABERDANCE_PW, PHY, SKILL)

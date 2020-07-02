@@ -59,7 +59,7 @@ func highJump():
 
 		Utils.draw_shadow(img, Vector2(x, y - 400), Vector2(x, y), 40)
 		Utils.draw_effect("slashBlue", cha.position, Vector2(0, -30), 14, 2)
-		FFHurtChara(cha, att.atk * HIGHJUMP_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+		FFHurtChara(cha, att.atk * HIGHJUMP_PW, PHY, SKILL)
 
 		Utils.draw_shadow(img, Vector2(x, y), Vector2(x, y) + Vector2(0, -150) - (75 * deviation.normalized()), 40)
 		yield(reTimer(0.3), "timeout")
@@ -74,4 +74,4 @@ func geirskogul():
 		var chas = Utils.lineChas(cell, aiCha.cell, 4)
 		for cha in chas:
 			if cha.team != team :
-				FFHurtChara(cha, att.atk * GEIRSKOGUL_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+				FFHurtChara(cha, att.atk * GEIRSKOGUL_PW, PHY, SKILL)

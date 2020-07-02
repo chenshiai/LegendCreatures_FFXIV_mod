@@ -56,4 +56,4 @@ func grace():
 
 # 王权剑		
 func authority():
-	FFHurtChara(aiCha, att.atk * AUTHORITY_PW, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+	FFHurtChara(aiCha, att.atk * AUTHORITY_PW, PHY, SKILL)

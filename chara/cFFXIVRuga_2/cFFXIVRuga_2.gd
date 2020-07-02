@@ -50,5 +50,5 @@ func _castCdSkill(id):
 		fightGasAtk()
 
 func fightGasAtk():
-	FFHurtChara(aiCha, att.atk * (FIGHTGAS_PW + FIGHTGAS_N_PW * fightGas), Chara.HurtType.PHY, Chara.AtkType.SKILL)
+	FFHurtChara(aiCha, att.atk * (FIGHTGAS_PW + FIGHTGAS_N_PW * fightGas), PHY, SKILL)
 	fightGas = 0
