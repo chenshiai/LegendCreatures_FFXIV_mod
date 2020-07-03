@@ -34,7 +34,7 @@ func succor():
 	var allys = getCellChas(cell, 4, 2)
 	allys.shuffle()
 	for cha in allys:
-		if cha != null:
+		if cha != null and !cha.isDeath:
 			cha.plusHp(att.mgiAtk * SUCCOR_PW, false)
 			BUFF_LIST.b_Adloquium.new({
 				"cha": cha,

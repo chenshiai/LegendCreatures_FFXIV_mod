@@ -67,16 +67,15 @@ func drawCard():
 		if cha != null and bf != null:
 			BUFF_LIST[bf].new({"cha": cha, "dur": 20})
 
-# 阳星相位		
+# 阳星相位
 func starPhase(lv):
 	var allys = getAllChas(2)
 	allys.shuffle()
 	for cha in allys:
-		if cha != null:
+		if cha != null and !cha.isDeath:
 			cha.plusHp(att.mgiAtk * STARPHASE_PW)
 			Utils.draw_effect("ePcr_mgiPZ", cha.position, Vector2(0,-30), 14)
 			BUFF_LIST.b_Night.new({"cha": cha, "dur": 10, "HD": att.mgiAtk * STARPHASE_PW * 1.25})
 			if lv == 4:
 				BUFF_LIST.b_LuckyStar.new({"cha": cha, "dur": 5, "hot": att.mgiAtk * 0.10})
 			yield(reTimer(0.1), "timeout")
-			

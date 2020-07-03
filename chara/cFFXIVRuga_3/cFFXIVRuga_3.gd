@@ -18,13 +18,13 @@ func _extInit():
 	addCdSkill("skill_Autoturret", 3)
 	addCdSkill("skill_Wildfire", 17)
 	addSkillTxt(TEXT.format("""[车式浮空炮塔]：冷却3s，机工士自带的浮空炮塔进行援护射击造成[50%]的{TPhyHurt}
-[超载]：{TPassive}浮空炮攻击5次后进入超载，机工士攻击力提升20%，持续8s。"""))
-	addSkillTxt(TEXT.format("[野火]：冷却17s，对目标附加野火状态，持续7s，结束后爆炸造成[技能期间的攻击次数 x 200%]的{TPhyHurt}"))
+[超载]：{TPassive}浮空炮攻击5次后进入超载，机工士攻击力提升20%，持续8s。
+[野火]：冷却17s，对目标附加野火状态，持续7s，结束后爆炸造成[野火期间的攻击次数 x 200%]的{TPhyHurt}"""))
 
 const AUTOTURRET_PW = 0.50 # 车式浮空炮威力
 const WILDFIRE_PW = 2.00 # 野火提升威力
 var autoCount = 0 # 浮空炮攻击次数
-var fireCount = 0 # 野火提升阶段
+var fireCount = 1 # 野火提升阶段
 var fireChara = null # 被施加了野火的目标
 
 func _connect():
@@ -33,7 +33,7 @@ func _connect():
 func _onBattleStart():
 	._onBattleStart()
 	autoCount = 0
-	fireCount = 0
+	fireCount = 1
 	fireChara = null
 
 func _castCdSkill(id):
@@ -62,10 +62,10 @@ func autoturret(addCount):
 	if autoCount > 4:
 		autoCount = 0
 		BUFF_LIST.b_Overload.new({"cha": self, "dur": 13})
-		
-	FFHurtChara(aiCha, att.atk * AUTOTURRET_PW, PHY, EFF)
 
-# 野火		
+	FFHurtChara(aiCha, att.atk * AUTOTURRET_PW, PHY, SKILL)
+
+# 野火
 func wildfire():
 	if aiCha != null:
 		fireChara = aiCha

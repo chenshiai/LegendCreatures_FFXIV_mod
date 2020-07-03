@@ -48,7 +48,7 @@ func divineVeilTodo(val):
 		var allys = getAllChas(2)
 		allys.shuffle()
 		for cha in allys:
-			if cha != null and cha != self:
+			if cha != null and !cha.isDeath and cha != self:
 				Utils.draw_effect("ePcr_pingZhang", cha.position, Vector2(0, -30), 7, 1)
 				BUFF_LIST.b_DivineVeil.new({
 					"cha": cha,

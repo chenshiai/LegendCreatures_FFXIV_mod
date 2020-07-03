@@ -8,38 +8,30 @@ func _extInit():
 	chaName = "红叶之诗"
 	lv = 3
 	evos = []
-	addCdSkill("skill_ApexArrow", 12)
-	addSkillTxt(TEXT.format("""[辉煌箭]：{TPassive}普通攻击有20%的概率触发，造成[330%]的{TPhyHurt}
-[绝峰箭]：冷却12s，射出穿透箭对直线上单位造成[200%]的{TPhyHurt}，并赋予5层[流血]"""))
+	addSkillTxt(TEXT.format("[辉煌箭]：{TPassive}普通攻击有20%的概率触发，造成[330%]的{TPhyHurt}"))
+	addSkillTxt(TEXT.format("""[行吟]：{TPassive}战斗开始时，为自身和所有队友附加[行吟]，受到的伤害减少10%
+不可与舞者的[防守之桑巴]、机工士的[策动]效果叠加"""))
 
 const REFULGENT_PW = 3.30 # 辉煌箭威力
-const APEXARROW_PW = 2 # 绝峰箭威力
 
 func _connect():
 	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
+	troubadour()
+
+func troubadour():
+	var ailys = getAllChas(2)
+	for cha in ailys:
+		if cha != null:
+			BUFF_LIST.b_Troubadour.new({"cha": cha})
 
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)
 	if atkInfo.atkType == AtkType.NORMAL and sys.rndPer(20):
-		Utils.draw_efftext("辉煌箭！", position, "#fff000")
-		atkInfo.hurtVal *= REFULGENT_PW
+		refulgent()
 
-func _castCdSkill(id):
-	._castCdSkill(id)
-	if id == "skill_ApexArrow":
-		apexArrow()
-
-func apexArrow():
-	if aiCha != null:
-		var eff:Eff = newEff("sk_chuanTouJian", sprcPos)
-		eff._initFlyPos(position + (aiCha.position - position).normalized() * 1000, 800)
-		eff.connect("onInCell", self, "effInCell")
-
-func effInCell(cell):
-	var cha = matCha(cell)
-	if cha != null and cha.team != team:
-		FFHurtChara(cha, att.atk * APEXARROW_PW, PHY, SKILL)
-		cha.addBuff(b_liuXue.new(5))
+func refulgent():
+	Utils.draw_efftext("辉煌箭！", position, "#fff000")
+	FFHurtChara(aiCha, att.atk * REFULGENT_PW, PHY, SKILL)

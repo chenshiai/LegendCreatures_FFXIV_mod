@@ -111,7 +111,7 @@ func limit_treatment():
 
 		if healStep == 3:
 			canRevive = true
-		
+
 		healStep = (healStep * healStep * 0.5 + 1.5 * healStep + 1) / 10
 		Chant.chantStart("极限技-治疗", 1)
 		yield(sys.get_tree().create_timer(1), "timeout")

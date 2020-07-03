@@ -55,8 +55,12 @@ func cureIII():
 	var allys = getAllChas(2)
 	allys.shuffle()
 	for cha in allys:
-		if cha != null:
-			BUFF_LIST.b_Regen.new({"cha": cha, "dur": 5, "hot": att.mgiAtk * REGEN_PW})
+		if cha != null and !cha.isDeath:
+			BUFF_LIST.b_Regen.new({
+				"cha": cha,
+				"dur": 5,
+				"hot": att.mgiAtk * REGEN_PW
+			})
 			cha.plusHp(att.mgiAtk * CUREIII_PW)
 			yield(reTimer(0.1), "timeout")
 
@@ -66,4 +70,8 @@ func regen():
 	chas.sort_custom(Utils.Calculation, "sort_MinHpP")
 
 	if chas[0] != null:
-		BUFF_LIST.b_Regen.new({"cha": chas[0], "dur": 10, "hot": att.mgiAtk * REGEN_PW})
+		BUFF_LIST.b_Regen.new({
+			"cha": chas[0],
+			"dur": 10,
+			"hot": att.mgiAtk * REGEN_PW
+		})

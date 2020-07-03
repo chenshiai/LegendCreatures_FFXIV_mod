@@ -21,19 +21,19 @@ func _onBattleStart():
 
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)
-	if (att.hp - atkInfo.hurtVal) <= att.maxHp * 0.10:
+	if (att.hp - atkInfo.hurtVal) <= att.maxHp * 0.10 and superbolide:
 		if self.team == 2 and sys.rndPer(60):
 			superbolide = false
 
 		if superbolide:
 			atkInfo.hurtVal = 0
-			yield(reTimer(0.1), "timeout")
 			BUFF_LIST.b_Superbolide.new({"cha": self, "dur": 8})
+			yield(reTimer(0.1), "timeout")
 			Utils.draw_effect("shieldBlue", position, Vector2(0, -20), 14, 2)
 			att.hp = 1
 			superbolide = false
 
 func _onAtkChara(atkInfo:AtkInfo):
 	._onAtkChara(atkInfo)
-	if atkInfo.atkType == AtkType.NORMAL:
+	if atkInfo.atkType == NORMAL:
 		FFHurtChara(atkInfo.hitCha, att.atk * 0.35, MGI, EFF)

@@ -4,6 +4,9 @@ var TEXT = globalData.infoDs["g_bFFXIVText"]
 func init():
 	name = "队伍编制"
 
+func get_info():
+	return TEXT.T_TEAM
+
 func _connect():
 	sys.main.connect("onBattleStart", self, "run")
 	player.connect("onAddTalent", self, "population")
@@ -25,8 +28,6 @@ func run():
 			elif count >= 4:
 				cha.addBuff(LightTeam.new(lv))
 
-func get_info():
-	return TEXT.T_TEAM
 
 class LightTeam:
 	extends Buff

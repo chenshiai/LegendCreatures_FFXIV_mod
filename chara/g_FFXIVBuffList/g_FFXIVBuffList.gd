@@ -13,10 +13,10 @@ class BaseBuff extends Buff:
 		id = buffId
 		isNegetive = negetive
 		life = _get(config, "dur", null)
-		casCha = _get(config, "cas", null)
 		target = _get(config, "cha", null)
 		if target != null:
 			target.addBuff(self)
+		casCha = _get(config, "cas", null)
 	func _get(config, name, default = null):
 		if config.has(name):
 			return config[name]
@@ -99,7 +99,7 @@ class b_LivingDeath extends BaseBuff:
 
 	func _del():
 		if life < 0:
-			masCha.att.hp = 1
+			masCha.att.hp = -1
 
 # 强甲破点突，削弱双抗
 class b_ArmorCrush extends BaseBuff:
@@ -329,22 +329,16 @@ class b_Ballad extends BaseBuff:
 		if atkInfo.atkType != Chara.AtkType.EFF:
 			atkInfo.hurtVal *= 1.08
 
-# 光阴神的礼赞凯歌，debuff免疫
+# 大地神的抒情恋歌
 class b_Paean	extends BaseBuff:
 	func _init(config):
 		_set_config("b_Paean", config)
-
-	func _connect():
-		masCha.connect("onAddBuff", self, "run")
-
-	func run(buff:Buff):
-		if buff.isNegetive:
-			buff.isDel = true
+		att.reHp = 0.20
 
 	func _upS():
-		life = clamp(life, 0, 3)
+		life = clamp(life, 0, 10)
 
-# 行吟，减伤
+# 行吟，策动，桑巴，减伤
 class b_Troubadour extends ReduceDamage:
 	func _init(config):
 		_set_config("b_Troubadour", config)

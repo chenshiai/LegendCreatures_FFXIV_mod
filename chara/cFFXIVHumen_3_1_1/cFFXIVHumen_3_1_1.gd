@@ -16,7 +16,6 @@ func _extInit():
 	addSkillTxt("[进攻之探戈]：冷却18s，自身与舞伴的攻击力提高20%，持续8s")
 
 
-
 func _connect():
 	._connect()
 
