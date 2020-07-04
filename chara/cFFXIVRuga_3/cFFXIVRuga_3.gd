@@ -19,7 +19,7 @@ func _extInit():
 	addCdSkill("skill_Wildfire", 17)
 	addSkillTxt(TEXT.format("""[车式浮空炮塔]：冷却3s，机工士自带的浮空炮塔进行援护射击造成[50%]的{TPhyHurt}
 [超载]：{TPassive}浮空炮攻击5次后进入超载，机工士攻击力提升20%，持续8s。
-[野火]：冷却17s，对目标附加野火状态，持续7s，结束后爆炸造成[野火期间的攻击次数 x 200%]的{TPhyHurt}"""))
+[野火]：冷却17s，开局释放一次。对目标附加野火状态，持续7s，结束后爆炸造成[野火期间的攻击次数 x 200%]的{TPhyHurt}"""))
 
 const AUTOTURRET_PW = 0.50 # 车式浮空炮威力
 const WILDFIRE_PW = 2.00 # 野火提升威力
@@ -35,6 +35,8 @@ func _onBattleStart():
 	autoCount = 0
 	fireCount = 1
 	fireChara = null
+	yield(reTimer(1), "timeout")
+	call_deferred("wildfire")
 
 func _castCdSkill(id):
 	._castCdSkill(id)

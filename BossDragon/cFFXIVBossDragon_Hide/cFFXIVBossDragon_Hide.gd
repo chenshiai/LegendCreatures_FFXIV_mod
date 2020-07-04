@@ -2,7 +2,6 @@ extends "./BossChara.gd"
 const BERSERKERTIME_P1 = 180 # P1狂暴时间
 const BERSERKERTIME_P3 = 400 # P3狂暴时间
 
-var stage = "p1" # p1 p2 p3阶段
 var P2summonCount = 3 # p2的小龙召唤次数
 var P2summonLive = 15 # p2小龙存活数
 var reincarnation_pw = 4 # 死亡轮回威力
@@ -89,7 +88,7 @@ func _connect():
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_attack":
-		if stage == "p1":
+		if STAGE == "p1":
 			var count = 0
 			for cha in Retreat.PlayerChas:
 				if !cha.isDeath:
@@ -97,7 +96,7 @@ func _castCdSkill(id):
 					attack(cha, count)
 				if count == 2:
 					return
-		if stage == "p3":
+		if STAGE == "p3":
 			attack(aiCha, 1)
 			attack(aiCha, 2)
 
@@ -105,7 +104,7 @@ func _castCdSkill(id):
 func _onBattleStart():
 	._onBattleStart()
 	aiOn = false
-	stage = "p1"
+	STAGE = "p1"
 	aiCha = Retreat.PlayerChas[0]
 	sprcPos = Vector2(-50, -30)
 	for cha in sys.main.btChas:
@@ -132,7 +131,7 @@ func _onBattleStart():
 
 	# 开场直接转p2 测试用
 	# changeStage("p2")
-	if stage == "p1":		
+	if STAGE == "p1":		
 		wrathOfTheEarth()
 
 
@@ -152,11 +151,11 @@ func _onAddBuff(buff:Buff):
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)
 	# P1时当生命值低于44%时转P2
-	if stage == "p1" and att.hp <= att.maxHp * 0.44:
+	if STAGE == "p1" and att.hp <= att.maxHp * 0.44:
 		changeStage("p2")
 
 	# P2阶段，不会受伤
-	if stage == "p2":
+	if STAGE == "p2":
 		atkInfo.hurtVal = 0
 
 func _onCharaDel(cha):
@@ -172,7 +171,7 @@ func _onCharaDel(cha):
 		P2summonLive -= 1
 		print("神龙眷属剩余：%d" % [P2summonLive])
 
-	if cha.team != 1 and P2summonCount == 0 and P2summonLive <= 0:
+	if cha.team != 1 and cha != self and P2summonCount == 0 and P2summonLive <= 0:
 		P2summonCount = 0
 		P2SummonEnd()
 
@@ -181,14 +180,13 @@ func _onDeath(atkInfo):
 	._onDeath(atkInfo)
 	queue_free_eff()
 
-
 # 转阶段控制
 func changeStage(p):
-	stage = p
+	STAGE = p
 	queue_free_eff()
 
 	# p2转场
-	if stage == "p2":
+	if STAGE == "p2":
 		normalSpr.position = Vector2(0, -400)
 		self.visible = false
 		Utils.draw_shadow(img,  position, position + Vector2(0, -300), 25)
@@ -198,8 +196,8 @@ func changeStage(p):
 
 		for cha in sys.main.btChas:
 			if cha.team == 1:
-				BUFF_LIST.b_FrozenCdSkill.new({"cha": cha, "dur": 12})
-				BUFF_LIST.b_StaticTimeUnlock.new({"cha": cha, "dur": 12})
+				BUFF_LIST.b_FrozenCdSkill.new({"cha": cha, "dur": 26})
+				BUFF_LIST.b_StaticTimeUnlock.new({"cha": cha, "dur": 26})
 
 		FFControl.FFMusic.dbDown(20)
 
@@ -213,7 +211,7 @@ func changeStage(p):
 		
 		for cha in sys.main.btChas:
 			if cha != null and !cha.isDeath and cha != self:
-				BUFF_LIST.RotateCha.new({"cha": cha, "dur": 19.3})
+				BUFF_LIST.RotateCha.new({"cha": cha, "dur": 19.2})
 				
 		yield(reTimer(18), "timeout")
 		Utils.draw_shadow(img, Vector2(400, 600), Vector2(400, 0), 25)
@@ -221,7 +219,7 @@ func changeStage(p):
 		FFControl.showControl()
 		Chant.chantStart("原恒星", 75)
 
-	if stage == "p3":
+	if STAGE == "p3":
 		setCell(Vector2(4, 0))
 		position = sys.main.map.map_to_world(Vector2(4, 0))
 		normalSpr.position = Vector2(0, 0)
@@ -239,13 +237,14 @@ func P2summon():
 # 距离衰减AOE以及召唤的实现
 func summonDragon(cell, time, large = false):
 	var position = cell * 100
-	var eff = Utils.draw_effect("attenuation", position, Vector2(0, -12), 7, 4, true)
+	self.addBuff(attenuation.new(position, time))
 	yield(reTimer(time), "timeout")
+	if att.hp <= 0:
+		return
 
 	var eff2:Eff = newEff("sk_yunShi")
 	eff2.position = position
 	eff2.scale *= 4
-	eff.queue_free()
 
 	for cha in getAllChas(1):
 		if cellRan(cell, cha.cell) < 4:
@@ -260,6 +259,14 @@ func summonDragon(cell, time, large = false):
 		if !newChara("cFFXIV_Dragon_entourage_small", cell):
 			P2summonLive -= 1
 	
+class attenuation extends Buff:
+	var Utils = globalData.infoDs["g_aFFXIVUtils"]
+	func _init(position, dur):
+		life = dur
+		eff = Utils.draw_effect("attenuation", position, Vector2(0, -12), 7, 4, true)
+	func _del():
+		eff.queue_free()
+
 # 小龙击杀完毕，P2召唤结束
 func P2SummonEnd():
 	Chant.interrupt()
@@ -331,7 +338,7 @@ func reincarnation():
 	sharedamage()
 
 func sharedamage():
-	if att.hp <= 0 and stage != "p1":
+	if att.hp <= 0 and STAGE != "p1":
 		return
 	Utils.draw_effect("death", aiCha.position, Vector2(0, -130), 10, 2)
 	var chas = getCellChas(aiCha.cell, 2, 1)
@@ -350,7 +357,7 @@ func blowingSnow():
 		eff.position = pos
 		yield(reTimer(0.1), "timeout")
 
-	if att.hp <= 0 or stage == "p2":
+	if att.hp <= 0 or STAGE == "p2":
 		return
 
 	var chas = getAllChas(1)
@@ -375,7 +382,7 @@ func leftOrRigth():
 
 	queue_free_eff()
 
-	if att.hp <= 0 or stage == "p2":
+	if att.hp <= 0 or STAGE == "p2":
 		return
 
 	if type == 0:
@@ -424,7 +431,7 @@ func icicles():
 	Utils.draw_effect("danger", Vector2(x1 * 100, -1), Vector2(-300, 0), 2, 1, false, deg2rad(90))
 	Utils.draw_effect("danger", Vector2(x2 * 100, -1), Vector2(-300, 0), 2, 1, false, deg2rad(90))
 	yield(reTimer(4), "timeout")
-	if att.hp <= 0 or stage == "p2":
+	if att.hp <= 0 or STAGE == "p2":
 		return
 
 	var eff1 = Utils.draw_effect("icicles", Vector2(x1 * 100, 400), Vector2(0, -50), 4)
@@ -463,8 +470,7 @@ func uptial():
 
 
 # 用buff做临时对象，内部延时不受外部影响，且时间结束自动释放，完美
-class laser:
-	extends Buff
+class laser extends Buff:
 	var chas
 	var Utils = globalData.infoDs["g_aFFXIVUtils"]
 	func _init(x, Dragon = null, dur = 1):
@@ -508,21 +514,21 @@ func _upS():
 	if aiCha.isDeath or aiCha == null:
 		aiCha = sys.rndListItem(getAllChas(1))
 
-	if stage == "p1":
+	if STAGE == "p1":
 		setCell(Vector2(4, 0))
 		position = sys.main.map.map_to_world(Vector2(4, 0))
 
-	if stage == "p2":
+	if STAGE == "p2":
 		setCell(Vector2(7, 2))
 		position = sys.main.map.map_to_world(Vector2(7, 2))
 		# 从p2开始，每秒累计原恒星的威力
 		protostar_pw += 0.02
 
-	if stage == "p3":
+	if STAGE == "p3":
 		setCell(Vector2(4, 0))
 		position = sys.main.map.map_to_world(Vector2(4, 0))
 
-	if stage == "p1" and battleDuration > BERSERKERTIME_P1 and (battleDuration % 5 == 0):
+	if STAGE == "p1" and battleDuration > BERSERKERTIME_P1 and (battleDuration % 5 == 0):
 		# p1阶段超过180s，狂暴
 		blowingSnow()
 		blowingSnow_pw += 1

@@ -33,6 +33,7 @@ func reset():
 		TheAudio.stop()
 		TheAudio.stream = originMusic
 		TheAudio.play()
+		hasChanged = false
 
 func get_playback_position():
 	return TheAudio.get_playback_position()

@@ -1,5 +1,5 @@
 # 最终幻想14 Boss模板文件
-# 版本号 2020/06/25 0.0.3
+# 版本号 2020/07/03 0.0.4
 extends Chara
 const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
 const Utils = globalData.infoDs["g_aFFXIVUtils"]
@@ -27,6 +27,7 @@ var E_mgiDef = 1
 var E_num = 1
 var E_lv = 1
 var E_spd = 1
+var STAGE = "p1" # p1 p2 p3阶段
 
 func _extInit():
 	._extInit()
@@ -59,27 +60,29 @@ func _onHurt(atkInfo:AtkInfo):
 		atkInfo.hurtVal = att.maxHp * 0.005 * (1 - (att.def + att.mgiDef) / (att.def + att.mgiDef + 200))
 
 # 团灭玩家，boss自杀
-func _onKillChara(atkInfo):
-	._onKillChara(atkInfo)
-	var tarCha = atkInfo.hitCha
-	if tarCha.team == 1:
+func _onCharaDel(cha):
+	._onCharaDel(cha)
+	if cha.team == 1:
 		var count = 0
 		for cha in getAllChas(1):
 			if !cha.isDeath:
 				count += 1
 
-		if !tarCha.isSumm:
-			match tarCha.lv:
+		if !cha.isSumm:
+			match cha.lv:
 				1: sys.main.player.hp += 2
 				2: sys.main.player.hp += 5
 				3: sys.main.player.hp += 10
 				4: sys.main.player.hp += 15
 
 		if count == 0:
+			STAGE = "p0"
 			reward = false
-			tarCha.newChara("cFFXIV___Muren", tarCha.cell)
+			cha.newChara("cFFXIV___Muren", cha.cell)
 			sys.newBaseMsg(TEXT.Insurance.title, TEXT.Insurance.content)
-			FFHurtChara(self, att.maxHp * 2, Chara.HurtType.REAL, Chara.AtkType.SKILL)
+			for i in getAllChas(2):
+				FFHurtChara(i, att.maxHp * 2, Chara.HurtType.REAL, Chara.AtkType.SKILL)
+			Chant.interrupt()
 
 # 死亡奖励
 func _onDeath(atkInfo):

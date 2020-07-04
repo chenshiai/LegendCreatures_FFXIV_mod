@@ -10,7 +10,8 @@ func _extInit():
 	evos = []
 	attAdd.atkL += 0.15
 	addCdSkill("skill_Stardiver", 27)
-	addSkillTxt(TEXT.format("[坠星冲]：冷却27s，高高跃起，向随机一名敌人猛冲，对落点周围2格的敌人造成[700%]的{TPhyHurt}"))
+	addSkillTxt(TEXT.format("""[坠星冲]：冷却27s，高高跃起，向随机一名敌人猛冲，对落点周围2格的敌人造成[700%]的{TPhyHurt}
+[战斗连祷]：战斗开始后，使所有队友暴击率提高10%"""))
 
 const STARDIVER_PW = 7.3 # 坠星冲倍率
 
@@ -19,6 +20,7 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
+	battleLitany()
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -27,12 +29,9 @@ func _castCdSkill(id):
 
 func stardiver():
 	aiOn = false
-	normalSpr.position = Vector2(0, -10)
-	yield(reTimer(0.2), "timeout")
-
 	normalSpr.position = Vector2(0, -450)
 	Utils.draw_shadow(img, position, position + Vector2(0, -450), 40)
-	yield(reTimer(0.4), "timeout")
+	yield(reTimer(0.2), "timeout")
 
 	var cha = rndChas(getAllChas(1), 1)
 	if cha == null or cha.isDeath:
@@ -61,3 +60,9 @@ func stardiver():
 	var chas = getCellChas(cell, 2)
 	for i in chas:
 		FFHurtChara(i, att.atk * STARDIVER_PW, PHY, SKILL)
+
+func battleLitany():
+	var ailys = getAllChas(2)
+	for cha in ailys:
+		if cha != null:
+			BUFF_LIST.b_Litany.new({"cha": cha})

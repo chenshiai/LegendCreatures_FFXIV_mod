@@ -35,6 +35,7 @@ func _extInit():
 # 	toAtk(cha)
 	
 
+
 # func toAtk(cha):
 # 	var eff = newEff(atkEff, sprcPos)
 # 	eff._initFlyCha(cha, 500)
@@ -52,14 +53,22 @@ func _extInit():
 func _connect():
 	._connect()
 
+var SummonChara = null
 func _onBattleStart():
 	._onBattleStart()
+	SummonChara = sys.main.newChara("cFFXIV_Summon4", self.team)
+	add_child(SummonChara)
 	# print(self.atkInfo.rate)
 	# print(self.atkInfo.isCri)
 	# print(self.atkInfo.canCri)
 	# print(self.atkInfo.atkVal)
 	# print(self.atkInfo.hurtType)
 	# print(self.atkInfo.atkType)
+
+func _onBattleEnd():
+	remove_child(SummonChara)
+	SummonChara = null
+
 
 func _onDeath(atkInfo):
 	._onDeath(atkInfo)

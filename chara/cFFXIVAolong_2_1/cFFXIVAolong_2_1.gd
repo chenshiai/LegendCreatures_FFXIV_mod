@@ -9,7 +9,7 @@ func _extInit():
 	lv = 3
 	evos = []
 	addCdSkill("skill_Tsubame", 14)
-	addSkillTxt("[燕回返]：冷却14s，发动上一次使用的居合术")
+	addSkillTxt("[燕回返]：冷却14s，发动上一次使用的居合术，并且使伤害提高50%")
 
 func _connect():
 	._connect()
@@ -21,5 +21,5 @@ func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Tsubame":
 		Utils.draw_efftext("燕回返！", position, "#ffffff")
-		setsugekka(beforIaijutsu)
+		setsugekka(beforIaijutsu * 1.5)
 

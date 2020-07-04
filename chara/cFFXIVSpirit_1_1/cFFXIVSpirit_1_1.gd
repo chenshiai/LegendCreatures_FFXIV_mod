@@ -7,11 +7,11 @@ func _extInit():
 	._extInit()
 	chaName = "东天之星-昼"
 	lv = 3
-	attAdd.mgiAtkL += 0.20
+	attAdd.mgiAtkL += 0.10
 	evos = []
 	addCdSkill("skill_Horoscope", 25)
 	addSkillTxt("[袖内抽卡]：冷却25s，连续使用三次[抽卡]")
-	addSkillTxt(TEXT.format("[星位合图]：{TPassive}提高20%的法强"))
+	addSkillTxt(TEXT.format("[星位合图]：{TPassive}提高10%的法强"))
 
 func _connect():
 	._connect()

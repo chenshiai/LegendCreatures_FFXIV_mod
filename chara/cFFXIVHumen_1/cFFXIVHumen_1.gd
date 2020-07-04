@@ -17,7 +17,7 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_Shiver", 20)
 	addSkillTxt("[守护]：受到的伤害减少20%")
-	addSkillTxt("[战栗]：冷却20s，立即治疗20%的最大生命值。然后最大生命值提高20%，受到的治疗量提高20%，持续20s")
+	addSkillTxt("[战栗]：冷却10s，立即治疗10%的最大生命值。然后最大生命值提高20%，受到的治疗量提高20%，持续10s")
 
 func _connect():
 	._connect()
@@ -32,7 +32,7 @@ func _onBattleStart():
 
 func shiver():
 	plusHp(att.maxHp * 0.20)
-	BUFF_LIST.b_Shiver.new({"cha": self, "dur": 20})
+	BUFF_LIST.b_Shiver.new({"cha": self, "dur": 10})
 
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)

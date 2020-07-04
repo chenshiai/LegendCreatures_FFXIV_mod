@@ -12,7 +12,7 @@ func _extInit():
 	attCoe.def = 1
 	attCoe.mgiDef = 1
 	isSumm = true
-	isDeath = true
+	normalSpr.position = Vector2(-40, 0)
 	self.get_node("ui/hpBar").visible = false
 
 

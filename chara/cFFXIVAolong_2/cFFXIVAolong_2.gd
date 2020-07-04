@@ -1,8 +1,8 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 
-const HIGANBANE_PW = 1.50 # 一个印记威力
-const FIVESWORD_PW = 3.50 # 两个印记威力
-const SETSUGEKKA_PW = 7.20 # 三个印记纷乱雪月花威力
+const HIGANBANE_PW = 2.50 # 一个印记威力
+const FIVESWORD_PW = 3.60 # 两个印记威力
+const SETSUGEKKA_PW = 8.00 # 三个印记纷乱雪月花威力
 
 var snow = false # 雪
 var moon = false # 月
@@ -13,8 +13,8 @@ var beforIaijutsu = 0 # 上一次雪月花的威力
 
 signal swordPpressure
 
-var SKILL_TXT_1 = TEXT.format("""[居合术]：每第6次攻击，发动一次[纷乱雪月花]
-[纷乱雪月花]：对目标造成[150%][350%][720%]的{TPhyHurt}，印记种类越多伤害越高，可暴击！""")
+var SKILL_TXT_1 = TEXT.format("""[居合术]：每第6次攻击后，下一次攻击将发动[纷乱雪月花]
+[纷乱雪月花]：对目标造成[250%][360%][800%]的{TPhyHurt}，印记种类越多伤害越高""")
 
 func _extInit():
 	._extInit()
@@ -30,7 +30,7 @@ func _extInit():
 	lv = 2
 	evos = ["cFFXIVAolong_2_1"]
 	atkEff = "atk_dao"
-	addSkillTxt(TEXT.format("[雪/月/花]：{TPassive}每2次攻击随机获得[雪][月][花]印记，攻击力提升10%，攻速提升10%"))
+	addSkillTxt(TEXT.format("[雪/月/花]：{TPassive}每2次攻击随机获得[雪][月][花]印记，攻击力提升10%，攻速提升10%，技能可以产生暴击"))
 	addSkillTxt(SKILL_TXT_1)
 
 func _connect():
@@ -43,7 +43,7 @@ func _onBattleEnd():
 func normalAtkChara(cha):
 	.normalAtkChara(cha)
 	atkCount += 1
-	if atkCount == 6:
+	if atkCount == 7:
 		atkCount = 0
 		iaijutsu()
 	elif atkCount % 2 == 0:
@@ -83,14 +83,17 @@ func getFlash(name):
 			if !snow :
 				snow = true
 				flash += 1
+				Utils.draw_efftext("雪", position, "#55ffc1")
 		"moon":
 			if !moon :
 				moon = true
 				flash += 1
+				Utils.draw_efftext("月", position, "#5599ff")
 		"flower":
 			if !flower :
 				flower = true
 				flash += 1
+				Utils.draw_efftext("花", position, "#ff558d")
 
 # 纷乱雪月花
 func setsugekka(skill_pw):

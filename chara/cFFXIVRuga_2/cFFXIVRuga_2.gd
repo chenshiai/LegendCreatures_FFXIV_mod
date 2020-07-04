@@ -41,6 +41,7 @@ func _onAtkChara(atkInfo:AtkInfo):
 
 func fightGasUp():
 	fightGas += 1
+	Utils.draw_efftext("斗气", position, "#ff6631")
 	if fightGas >= 5:
 		fightGasAtk()
 

@@ -17,14 +17,17 @@ func _extInit():
 	evos = ["cFFXIVSpirit_2_1"]
 	atkEff = "atk_dang"
 	addCdSkill("skill_DrawCard", 20)
-	addSkillTxt(TEXT.format("""[抽卡]：冷却20s，随机抽取一张卡施加效果给全部队友，持续20s。此技能开局释放一次，不记入CD
+	addCdSkill("skill_Malefic", 4)
+	addCdSkill("skill_StarPhase", 16)
+	addSkillTxt(TEXT.format("""[煞星]：冷却4s，对目标造成[70%]的{TMgiHurt}
+[抽卡]：冷却20s，随机抽取一张卡施加效果给全部队友，持续20s。此技能开局释放一次，不记入CD
 {c_balance}太阳神之衡{/c}[双攻提升20%]；{c_arrow}放浪神之箭{/c}[攻击速度20%]；{c_spear}战争神之枪{/c}[暴击增加20%]；
 {c_bole}世界树之干{/c}[物防提升20%]；{c_ewer}河流神之瓶{/c}[冷却缩减20%]；{c_spire}建筑神之塔{/c}[魔防提升20%]。"""))
-	addCdSkill("skill_StarPhase", 15)
 	addSkillTxt(TEXT.format("""[阳星相位]：冷却15s，恢复全场友军[60%]法强的HP，并附加[黑夜领域]效果
 [黑夜学派]：{TPassive}[黑夜领域]可以抵消[治疗量125%]的伤害，持续10秒，无法与学者的[鼓舞]叠加"""))
 
 const STARPHASE_PW = 0.60 # 阳星威力
+const MALEFIC_PW = 0.7 # 煞星威力
 
 func _connect():
 	._connect()
@@ -39,6 +42,14 @@ func _castCdSkill(id):
 		drawCard()
 	if id == "skill_StarPhase":
 		starPhase(self.lv)
+	if id == "skill_Malefic":
+		malefic()
+
+func malefic():
+	var d:Eff = newEff("sk_feiDang",sprcPos)
+	d._initFlyCha(aiCha)
+	yield(d, "onReach")
+	FFHurtChara(aiCha, att.mgiAtk * MALEFIC_PW, MGI, SKILL)
 
 func drawCard():
 	var n = sys.rndRan(0, 5)

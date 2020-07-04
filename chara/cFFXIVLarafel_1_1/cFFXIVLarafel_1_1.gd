@@ -8,9 +8,9 @@ func _extInit():
 	addCdSkill("skill_Benediction", 20)
 	addSkillTxt("[天赐祝福]：冷却20s，为生命最低的友方单位恢复至满血，第一次使用后，此技能冷却延长至60s")
 	addCdSkill("skill_StornIII", 4)
-	addSkillTxt(TEXT.format("[崩石]：冷却4s，对目标造成[90%]的{TMgiHurt}"))
+	addSkillTxt(TEXT.format("[闪耀]：冷却4s，对目标造成[100%]的{TMgiHurt}"))
 
-const STORNIII_PW = 0.90 # 崩石威力
+const STORNIII_PW = 1.0 # 崩石威力
 
 func _connect():
 	._connect()

@@ -101,6 +101,21 @@ class b_LivingDeath extends BaseBuff:
 		if life < 0:
 			masCha.att.hp = -1
 
+# 攻其不备
+class b_TrickAttack extends BaseBuff:
+	func _init(config):
+		_set_config("b_TrickAttack", config)
+
+	func _connect():
+		masCha.connect("onHurt", self, "run")
+		Utils.draw_efftext("受伤加重", masCha.position, "#59DFD7", false)
+
+	func run(atkInfo:AtkInfo):
+		atkInfo.hurtVal *= 1.20
+	
+	func _upS():
+		life = clamp(life, 0, 10)
+
 # 强甲破点突，削弱双抗
 class b_ArmorCrush extends BaseBuff:
 	func _init(config):
@@ -226,7 +241,7 @@ class b_Enochian extends BaseBuff:
 
 	func run(atkInfo):
 		if atkInfo.atkType != EFF:
-			atkInfo.hurtVal *= 1 + (0.05 * (step - 1))
+			atkInfo.hurtVal *= 1.1 + (0.05 * (step - 1))
 
 # 倍增,提高法强
 class b_Manafication extends BaseBuff:
@@ -335,6 +350,9 @@ class b_Paean	extends BaseBuff:
 		_set_config("b_Paean", config)
 		att.reHp = 0.20
 
+	func _connect():
+		Utils.draw_effect("ePcrD_1_1_10", masCha.position, Vector2(0, -30), 15, 0.5)
+
 	func _upS():
 		life = clamp(life, 0, 10)
 
@@ -406,7 +424,7 @@ class b_Wildfire extends BaseBuff:
 		_set_config("b_Wildfire", config)
 
 	func _connect():
-		Utils.draw_efftext("野火", config.cha.position, "#ff5f5f", false)
+		Utils.draw_efftext("野火", masCha.position, "#ff5f5f", false)
 
 	func _upS():
 		life = clamp(life, 0, 7)
@@ -418,7 +436,7 @@ class b_Overload extends BaseBuff:
 		att.atkL = 0.20
 
 	func _connect():
-		Utils.draw_efftext("过载", config.cha.position, "#ff5f5f")
+		Utils.draw_efftext("过载", masCha.position, "#ff5f5f")
 
 	func _upS():
 		life = clamp(life, 0, 8)
@@ -517,6 +535,16 @@ class b_Collective extends ReduceDamage:
 	func _upS():
 		life = clamp(life, 0, 18)
 
+class b_Litany extends BaseBuff:
+	func _init(config):
+		_set_config("b_Litany", config)
+		_conflict("b_Litany")
+		att.cri += 0.10
+	
+	func _connect():
+		Utils.draw_efftext("战斗连祷", masCha.position, "#99bfff")
+
+
 # 红莲龙血
 class b_LifeOfTheDragon	extends BaseBuff:
 	func _init(config):
@@ -573,8 +601,10 @@ class b_Share	extends BaseBuff:
 # 击飞旋转角色，至少2秒，且为0.8的整数倍
 class RotateCha	extends BaseBuff:
 	var exit = false
+	var n = 0
 	func _init(config):
 		_set_config("b_RotateCha", config)
+		n = config.dur * 10
 		rotateCha()
 	func _connect():
 		sys.main.connect("tree_exited", self, "gameExit")
@@ -582,7 +612,6 @@ class RotateCha	extends BaseBuff:
 		exit = true
 	func rotateCha():
 		# 比较蠢的旋转动画
-		var n = life * 10
 		target.get_node("ui").visible = false
 		target.img.set_pivot_offset(target.img.rect_size / 2)
 		for i in range(n):
@@ -590,13 +619,15 @@ class RotateCha	extends BaseBuff:
 			if target and !exit and !isDel:
 				if i < 10:
 					target.normalSpr.position += Vector2(0, -15)
-				elif i > n - 10:
+				elif i > n - 13:
 					target.normalSpr.position += Vector2(0, 15)
 				target.img.set_rotation_degrees(45 * i)
 			else:
 				return
 	func _del():
 		target.get_node("ui").visible = true
+		target.normalSpr.position = Vector2(0, 0)
+		target.img.set_rotation_degrees(0)
 	func _upS():
 		if life < 1:
 			target.get_node("ui").visible = true

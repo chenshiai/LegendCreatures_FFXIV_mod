@@ -12,7 +12,6 @@ func _extInit():
 	attCoe.atk = 4
 	attCoe.def = 3
 	attCoe.mgiDef = 3
-	attAdd.cri += 0.3
 	lv = 2
 	evos = ["cFFXIVNeko_3_1"]
 	addCdSkill("skill_LronJaws", 10)

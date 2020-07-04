@@ -186,7 +186,7 @@ class BlackMage:
 		name = "[color=#312d3a]黑魔法师之证"
 		info = "灵魂的水晶，刻有历代黑魔法师的记忆和魔力。\n"\
 			+ "[天语]\n"\
-			+ "战斗开始时，为自身附加[天语]效果，提升自身[5%][10%][15%]的伤害。\n"\
+			+ "战斗开始时，为自身附加[天语]效果，提升自身[15%][20%][25%]的伤害。\n"\
 			+ "根据黑魔法师的等级来调整。"
 		att.maxHp = 100
 		att.mgiAtk = 30
@@ -208,11 +208,11 @@ class Astrologian:
 			+ "[命运之轮]\n"\
 			+ "使自身及周围2格范围内的队友所受到的伤害减轻10%。\n"\
 			+ "此效果不可叠加。\n"\
-			+ "冷却36s，持续18s"
+			+ "冷却24s，持续10s"
 		att.maxHp = 100
 		att.def = 20
 		att.mgiAtk = 15
-		setCdSkill("skill_Collective", 36)
+		setCdSkill("skill_Collective", 24)
 		_connect()
 
 	func _connect():
@@ -223,7 +223,7 @@ class Astrologian:
 			var allys = masCha.getCellChas(masCha.cell, 2, 2)
 			for cha in allys:
 				if cha != null:
-					BUFF_LIST.b_Collective.new({"cha": cha, "dur": 18})
+					BUFF_LIST.b_Collective.new({"cha": cha, "dur": 10})
 			allys = null
 
 class Samurai:
@@ -351,24 +351,24 @@ class Ninja:
 		._init(cha)
 		name = "[color=#6f5e5d]忍者之证"
 		info = "灵魂的水晶，刻有历代忍者的记忆和精神。\n"\
-			+ "[梦幻三段]\n"\
-			+ "对目标连续发动三次普通攻击。\n"\
-			+ "冷却19s"
+			+ "[风遁之术]\n"\
+			+ "获得15%的冷却缩减。"
 		att.maxHp = 150
 		att.atk = 20
 		att.def = 10
 		att.mgiDef = 10
-		setCdSkill("skill_Dream", 19)
-		_connect()
+		att.cd = 0.15
+		# setCdSkill("skill_Dream", 14)
+	# 	_connect()
 	
-	func _connect():
-		masCha.connect("onCastCdSkill", self, "dream")
+	# func _connect():
+	# 	masCha.connect("onCastCdSkill", self, "dream")
 
-	func dream(id):
-		if id == "skill_Dream" and masCha.aiCha != null:
-			masCha.normalAtkChara(masCha.aiCha)
-			masCha.normalAtkChara(masCha.aiCha)
-			masCha.normalAtkChara(masCha.aiCha)
+	# func dream(id):
+	# 	if id == "skill_Dream" and masCha.aiCha != null:
+	# 		masCha.normalAtkChara(masCha.aiCha)
+	# 		masCha.normalAtkChara(masCha.aiCha)
+	# 		masCha.normalAtkChara(masCha.aiCha)
 
 class WhiteMage:
 	extends BaseSoul
@@ -377,7 +377,7 @@ class WhiteMage:
 		name = "[color=#c5bc94]白魔法师之证"
 		info = "灵魂的水晶，刻有历代白魔法师的记忆和圣迹。\n"\
 			+ "[神速咏唱]\n"\
-			+ "[color=#e5e5e5]被动[/color]，技能冷却速度加快15%。"
+			+ "获得15%的冷却缩减。"
 		att.maxHp = 100
 		att.mgiAtk = 20
 		att.cd = 0.15

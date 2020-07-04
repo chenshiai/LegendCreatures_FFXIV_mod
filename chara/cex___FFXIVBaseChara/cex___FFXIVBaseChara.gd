@@ -10,7 +10,6 @@ const SKILL = Chara.AtkType.SKILL
 const EFF = Chara.AtkType.EFF
 var baseId = ""
 var OCCUPATION = "Default"
-
 var BallisticSpeed = {
 	"MeleeDPS": 500,
 	"MagicDPS": 300,
@@ -50,16 +49,16 @@ func getAtkVal():
 		"Default":
 			return att.atk
 
-func canCri():
-	match OCCUPATION:
-		"MeleeDPS": 
-			return true
-		"MagicDPS":
-			return false
-		"DistanceDPS":
-			return true
-		"Default":
-			return true
+# func canCri():
+# 	match OCCUPATION:
+# 		"MeleeDPS": 
+# 			return true
+# 		"MagicDPS":
+# 			return true
+# 		"DistanceDPS":
+# 			return true
+# 		"Default":
+# 			return true
 
 
 func normalAtkChara(cha):
@@ -70,7 +69,7 @@ func normalAtkChara(cha):
 	if sys.isClass(cha, "Chara"):
 		atkInfo.rate = 1
 		atkInfo.isCri = false
-		atkInfo.canCri = canCri()
+		atkInfo.canCri = true
 		atkInfo.atkVal = getAtkVal()
 		atkInfo.hurtType = FFHurtType[OCCUPATION]
 		atkInfo.atkType = NORMAL
