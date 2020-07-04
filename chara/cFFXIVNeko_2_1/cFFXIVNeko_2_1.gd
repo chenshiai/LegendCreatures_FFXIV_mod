@@ -25,6 +25,7 @@ func _castCdSkill(id):
 	if id == "skill_Dreadwyrm":
 		dreadwyrm()
 		enkindleBahamut(self.lv)
+		SummonChara.skill_lv3()
 
 func dreadwyrm():
 	BUFF_LIST.b_Dreadwyrm.new({"cha": self, "dur": 8})

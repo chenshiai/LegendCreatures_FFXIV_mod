@@ -6,25 +6,36 @@ func _info():
 func _extInit():
 	._extInit()
 	chaName = "泰坦之灵"
-	attCoe.atkRan = 1
-	attCoe.maxHp = 3.5
-	attCoe.atk = 2
-	attCoe.mgiAtk = 1
-	attCoe.def = 2.5
-	attCoe.mgiDef = 2.5
-	lv = 2
-	evos = ["cFFXIV_Summon3_1"]
-	atkEff = "atk_dao"
-	addCdSkill("skill_RockBuster", 5)#添加cd技能
-	addSkillTxt("[碎岩]：冷却5s，为周围2格的友军附加3层[抵御]")
+	isDeath = true
+	addSkillTxt("土神之灵，与召唤师攻击同一目标，根据召唤师等级解锁技能")
+	addSkillTxt(TEXT.format("""lv2·[碎岩]：冷却4s，对目标造成召唤师[40%]法强的魔法伤害
+lv3·[山崩]：冷却10s，对目标周围一格的敌人造成召唤师[40%]法强的物理伤害
+lv4·[大地之怒]：冷却24s，对目标周围一格的敌人造成召唤师[130%]法强的物理伤害"""))
 
-#进入战斗初始化，事件连接在这里初始化
+const Crimson_pw = 0.40
+const Flaming_pw = 0.40
+const Inferno_pw = 1.30
+
 func _connect():
-	._connect() #保留继承的处理
+	._connect() 
 
-func _castCdSkill(id):
-	._castCdSkill(id)
-	if id == "skill_RockBuster":
-		var chas = getCellChas(cell, 2, 2)
-		for i in chas:
-				i.addBuff(b_diYu.new(3))
+func skill_lv1():
+	normalSpr.position += Vector2(10, -10)
+	Summoner.FFHurtChara(Summoner.aiCha, Summoner.att.mgiAtk * Crimson_pw, MGI, SKILL)
+	yield(reTimer(0.1), "timeout")
+	normalSpr.position -= Vector2(10, -10)
+
+func skill_lv2():
+	var cell = Summoner.aiCha.cell
+	var chas = getCellChas(cell, 1)
+	for i in chas:
+		if i != null:
+			Summoner.FFHurtChara(i, Summoner.att.mgiAtk * Flaming_pw, PHY, SKILL)
+
+func skill_lv3():
+	var cell = Summoner.aiCha.cell
+	var chas = getCellChas(cell, 1)
+	Utils.draw_efftext("大地之怒", Summoner.position, "#f1b500")
+	for i in chas:
+		if i != null:
+			Summoner.FFHurtChara(i, Summoner.att.mgiAtk * Inferno_pw, PHY, SKILL)

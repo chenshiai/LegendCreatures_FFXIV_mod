@@ -279,6 +279,17 @@ class b_SacredSoil extends ReduceDamage:
 		masCha.plusHp(hot)
 		life = clamp(life, 0, 10)
 
+# 仙光的低语
+class b_Whispering extends BaseBuff:
+	var hot = 0
+	func _init(config):
+		_set_config("b_Whispering", config)
+		hot = _get(config, "hot", 0)
+
+	func _upS():
+		masCha.plusHp(hot)
+		life = clamp(life, 0, 10)
+
 # 连环计
 class b_ChainStratagem extends BaseBuff:
 	func _init(config):
@@ -324,6 +335,18 @@ class b_Miasma extends BaseBuff:
 
 	func _connect():
 		Utils.draw_efftext("瘴暍", masCha.position, "#59DFD7", false)
+
+	func _upS():
+		casCha.hurtChara(masCha, casCha.att.mgiAtk * 0.05, MGI, SKILL)
+		life = clamp(life, 0, 10)
+
+# 螺旋气流，持续伤害
+class b_Slipstream extends BaseBuff:
+	func _init(config):
+		_set_config("b_Slipstream", config, true)
+
+	func _connect():
+		Utils.draw_efftext("螺旋气流", masCha.position, "#58ff83", false)
 
 	func _upS():
 		casCha.hurtChara(masCha, casCha.att.mgiAtk * 0.05, MGI, SKILL)

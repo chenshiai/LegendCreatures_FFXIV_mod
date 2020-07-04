@@ -5,23 +5,38 @@ func _info():
 func _extInit():
 	._extInit()#保留继承的处理
 	chaName = "伊弗利特之灵"
-	attCoe.atkRan = 1
-	attCoe.maxHp = 3
-	attCoe.atk = 2
-	attCoe.mgiAtk = 1
-	attCoe.def = 2.5
-	attCoe.mgiDef = 2.5
-	lv = 2
-	evos = ["cFFXIV_Summon1_1"]
-	atkEff = "atk_dao"
-	addCdSkill("skill_BurningStrike", 5)
-	addSkillTxt("[燃火强袭]：冷却5s，对目标附加3层[烧灼]")
+	isDeath = true
+	addSkillTxt("火神之灵，与召唤师攻击同一目标，根据召唤师等级解锁技能")
+	addSkillTxt(TEXT.format("""lv2·[燃火强袭]：冷却4s，对目标造成召唤师[30%]法强的物理伤害
+lv3·[烈焰碎击]：冷却10s，对目标周围一格的敌人造成召唤师[50%]法强的魔法伤害
+lv4·[地狱之火炎]：冷却24s，对目标周围一格的敌人造成召唤师[150%]法强的魔法伤害，并附加10层[烧灼]"""))
 
-#进入战斗初始化，事件连接在这里初始化
+const Crimson_pw = 0.30
+const Flaming_pw = 0.50
+const Inferno_pw = 1.50
+
 func _connect():
-	._connect() #保留继承的处理
+	._connect() 
 
-func _castCdSkill(id):
-	._castCdSkill(id)
-	if id == "skill_BurningStrike" and aiCha != null:
-		aiCha.addBuff(b_shaoZhuo.new(3))
+func skill_lv1():
+	normalSpr.position += Vector2(10, -10)
+	Summoner.FFHurtChara(Summoner.aiCha, Summoner.att.mgiAtk * Crimson_pw, PHY, SKILL)
+	yield(reTimer(0.1), "timeout")
+	normalSpr.position -= Vector2(10, -10)
+
+func skill_lv2():
+	var cell = Summoner.aiCha.cell
+	var chas = getCellChas(cell, 1)
+	Utils.draw_efftext("烈焰碎击", Summoner.position, "#ff5858")
+	for i in chas:
+		if i != null:
+			Summoner.FFHurtChara(i, Summoner.att.mgiAtk * Flaming_pw, MGI, SKILL)
+
+func skill_lv3():
+	var cell = Summoner.aiCha.cell
+	var chas = getCellChas(cell, 1)
+	Utils.draw_efftext("地狱之火炎", Summoner.position, "#ff5858")
+	for i in chas:
+		if i != null:
+			Summoner.FFHurtChara(i, Summoner.att.mgiAtk * Inferno_pw, MGI, SKILL)
+			i.addBuff(b_shaoZhuo.new(10))
