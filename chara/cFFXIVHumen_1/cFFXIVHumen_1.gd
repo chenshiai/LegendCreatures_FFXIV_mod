@@ -15,7 +15,7 @@ func _extInit():
 	lv = 2
 	evos = ["cFFXIVHumen_1_1"]
 	atkEff = "atk_dao"
-	addCdSkill("skill_Shiver", 20)
+	addCdSkill("skill_Shiver", 10)
 	addSkillTxt("[守护]：受到的伤害减少20%")
 	addSkillTxt("[战栗]：冷却10s，立即治疗10%的最大生命值。然后最大生命值提高20%，受到的治疗量提高20%，持续10s")
 

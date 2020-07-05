@@ -3,7 +3,7 @@ var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
 var TEXT = globalData.infoDs["g_bFFXIVText"]
 var FFChara = globalData.infoDs["g_FFXIVChara"] # 角色相关类
 var Retreat = globalData.infoDs["g_FFXIVRetreat"] # 退避机制
-
+var RandomItem = load("%s%s" % [Utils.Path, "/FFXIVItem/randomItem.gd"])
 var FFControl # 控制面板
 
 var originBackground # 原版背景
@@ -52,6 +52,12 @@ func reward():
 		sys.main.player.plusHp(lv)
 	sys.main.player.plusGold(5 + lv * 5)
 	sys.main.get_node("scene/bg/bg").set_texture(originBackground)
+	
+	if sys.rndPer(20):
+		var item = RandomItem.getItem()
+		sys.main.player.addItem(item)
+		sys.newBaseMsg("获得了上古武器！", "获得了装备%s" % [item.name])
+
 	FFControl.HpBar.hidden()
 	FFControl.Limit.reset_limitBreak()
 	FFControl.FFMusic.reset()

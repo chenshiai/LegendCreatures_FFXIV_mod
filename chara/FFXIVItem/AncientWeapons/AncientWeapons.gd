@@ -2,7 +2,7 @@ extends Item
 const Utils = globalData.infoDs["g_aFFXIVUtils"]
 const TEXT = globalData.infoDs["g_bFFXIVText"]
 
-const STEP = ["", "·天极", "·魂晶", "·魂灵", "·新星", "·镇魂(终)"]
+const STEP = ["", "·天极", "·魂晶", "·魂灵", "·新星", "·镇魂"]
 const EXP_MAX = 20 # 每升一级需要的经验值
 const EXP_BAR = "■■■■■■■■■■■■■■■■■■■■□□□□□□□□□□□□□□□□□□□□"
 
@@ -16,22 +16,28 @@ var randAtt = [] # 随机词条数组
 var Skill_info = ""
 var Infomation = TEXT.format("""说明：
 传说中的上古武器之一，携带此装备战斗可以使武器属性成长
-上古武器拥有两条{c_base}固定词条{/c}，和两条{c_base}随机词条{/c}
+上古武器拥有两条{c_base}固定词条{/c}和两条{c_base}随机词条{/c}
+{c_base}随机词条{/c}需要装备在角色身上才会显示
 有技能的武器固定词条的数值会降低，但随机词条不受影响
-携带者{c_base}连续完成两次战斗{/c}既可锁定随机词条
 携带者不战斗，则战斗结束会刷新随机词条
+携带者{c_base}连续完成两次战斗{/c}既可锁定随机词条
 来自《最终幻想14》""")
 
 signal randomAtt
 signal updateAtt
 
-func _getEpilogue():
+func _getEpilogue(over = false):
 	var Exp_progress = EXP_BAR.substr(20 - exp_now, 20) # 当前进度显示
+	if over:
+		Exp_progress = "该装备的成长已到达最后阶段"
+	else:
+		Exp_progress = "当前进度\n%s" % Exp_progress
+
 	var Epilogue = """{skill_info}
 {progress}
 {infomation}""".format({
 		"skill_info": Skill_info,
-		"progress": "当前进度\n%s" % [Exp_progress],
+		"progress": "%s" % [Exp_progress],
 		"infomation": Infomation
 	})
 	return Epilogue
@@ -77,7 +83,11 @@ func expUp(cha):
 			exp_now -= EXP_MAX
 			name = ItemName % [STEP[Level]]
 			emit_signal("updateAtt")
-		info = _getEpilogue()
+
+		if Level == 5:
+			info = _getEpilogue(true)
+		else:
+			info = _getEpilogue()
 
 func _randomAtt(ban1, ban2):
 	var AllAtt = [
