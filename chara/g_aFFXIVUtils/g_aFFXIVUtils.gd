@@ -111,13 +111,13 @@ func draw_ui_button(
 		callback,
 		config
 	):
-	var args = _get(config, "args", [])
+	var args = getVal(config, "args", [])
 	var button = Button.new()
 	button.text = text
 	button.rect_position = position
 	button.connect("pressed", target, callback, args)
 
-	if _get(config, "return", false):
+	if getVal(config, "return", false):
 		return button
 	else:
 		sys.main.get_node("ui").add_child(button)
@@ -185,8 +185,8 @@ func create_timeAxis(skillAxis):
 func lineChas(aCell, bCell, num):
 	var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
 	var chas = []
-	var aPos = sys.main.map.map_to_world(aCell)
-	var bPos = sys.main.map.map_to_world(bCell)
+	var aPos = sys.main.map.map_to_world(aCell) + Vector2(50, 50)
+	var bPos = sys.main.map.map_to_world(bCell) + Vector2(50, 50)
 	var n = (bPos - aPos).normalized()
 	var oldCell = null
 	for i in range(num):
@@ -204,7 +204,7 @@ func attenuationDamage(startCell, targetCell, damage):
 	var length = toolman.cellRan(startCell, targetCell)
 	return damage / (1 + length)
 
-func _get(object, name, default = null):
+func getVal(object, name, default = null):
 	if object.has(name):
 		return object[name]
 	else:

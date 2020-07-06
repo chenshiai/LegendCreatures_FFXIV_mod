@@ -25,6 +25,7 @@ var beatficVision_pw = 2 # 荣福直观
 var deviation = Vector2(0, 0)
 
 func _init():
+	._init()
 	var SkillAxis = {
 		"righteousBolt": [20, 60, 120, 160],
 		"wingedReprobation": [10, 30, 50, 70, 90, 130, 170],
@@ -34,7 +35,6 @@ func _init():
 	}
 	set_time_axis(SkillAxis)
 	set_path("cFFXIVBossInnocence_Hide")
-	FFControl = Utils.getFFControl()
 	Utils.background_change(Path, "/background/PerfectThrone.png")
 	FFControl.FFMusic.play(Path, "/music/Innocence.oggstr")
 
@@ -157,8 +157,6 @@ func wingedReprobation():
 func shadowReaver():
 	Chant.chantStart("夺影", 3)
 	yield(reTimer(3), "timeout")
-	if att.hp <= 0:
-		return
 	var chas = getAllChas(1)
 	Utils.draw_effect("energyStorage", Vector2(350, 0), Vector2(0, 0), 13, 6)
 	yield(reTimer(0.2), "timeout")

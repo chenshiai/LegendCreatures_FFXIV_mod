@@ -138,11 +138,16 @@ const BOSS_DRAGON = """[color=#ffffff]
 边聆听异国的诗人演奏的庄严旋律，光之战士开始了神龙之战的追忆。[/color]
 """
 
+const BOSS_LIVING_LIQUID = """[color=#ffffff]
+Our world's is a fantasy， no more than a test.
+——我们的世界是一个空想，不只是测试的产物。[/color]
+"""
+
 var UpdateInfo = {
 	"title": "最终幻想14-更新记录",
 	"content": format("""[color=#64a6b7]【Ver 2.8.1】2020-07-05[/color]
 实装上古武器
-【无锋剑柯塔纳】【神圣盾】【释法来】【勇悍斧】【穿心强盖博尔格】
+【无锋剑柯塔纳】【神圣盾】【释法来】【勇悍斧】【穿心枪盖博尔格】
 【月神之弓】【酒神杖】【星辰杖】【绿瞳列传】【万辞全书】【吉光】
 获取方式：
 学习天赋 Rain作战记录 后，战斗结束有概率获得随机一件上古武器

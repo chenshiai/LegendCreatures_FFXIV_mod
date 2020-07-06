@@ -1,10 +1,12 @@
 # 最终幻想14 Boss模板文件
-# 版本号 2020/07/03 0.0.4
+# 版本号 2020/07/06 0.0.6
 extends Chara
 const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
 const Utils = globalData.infoDs["g_aFFXIVUtils"]
 const TEXT = globalData.infoDs["g_bFFXIVText"]
-var Retreat = globalData.infoDs["g_FFXIVRetreat"] # 退避机制
+const Retreat = globalData.infoDs["g_FFXIVRetreat"] # 退避机制
+const FFChara = globalData.infoDs["g_FFXIVChara"] # 角色相关类
+
 var FFControl = null
 var Path = ""
 
@@ -12,6 +14,7 @@ var baseId = ""
 var reward = true # 是否开启死亡奖励
 var layer # 当前关卡数
 var battleDuration = 0 # 战斗时间
+var STAGE = "p1" # p1 p2 p3 ...阶段
 
 var TimeAxis = {} # 时间轴
 var HateTarget # 暂存boss当前仇恨目标
@@ -27,7 +30,6 @@ var E_mgiDef = 1
 var E_num = 1
 var E_lv = 1
 var E_spd = 1
-var STAGE = "p1" # p1 p2 p3阶段
 
 func _extInit():
 	._extInit()
@@ -44,6 +46,9 @@ func _extInit():
 	HateTarget = null
 	addSkillTxt(TEXT.format(TEXT.BOSS_DEFAULT))
 
+func _init():
+	FFControl = Utils.getFFControl()
+
 func _onBattleStart():
 	._onBattleStart()
 	selfAdaption()
@@ -53,7 +58,7 @@ func _onBattleEnd():
 	._onBattleEnd()
 	reset()
 
-# 克制细剑 烧灼的百分比伤害
+# 克制细剑,流血,烧灼伤害
 func _onHurt(atkInfo:AtkInfo):
 	._onHurt(atkInfo)
 	if atkInfo.atkType == Chara.AtkType.EFF and atkInfo.hurtVal > att.maxHp * 0.005:
@@ -71,9 +76,9 @@ func _onCharaDel(cha):
 		if !cha.isSumm:
 			match cha.lv:
 				1: sys.main.player.hp += 2
-				2: sys.main.player.hp += 5
-				3: sys.main.player.hp += 10
-				4: sys.main.player.hp += 15
+				2: sys.main.player.hp += 4
+				3: sys.main.player.hp += 7
+				4: sys.main.player.hp += 10
 
 		if count == 0:
 			STAGE = "p0"

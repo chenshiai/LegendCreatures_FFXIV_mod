@@ -1,10 +1,12 @@
 # 最终幻想14 Boss模板文件
-# 版本号 2020/06/25 0.0.3
+# 版本号 2020/07/06 0.0.6
 extends Chara
 const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
 const Utils = globalData.infoDs["g_aFFXIVUtils"]
 const TEXT = globalData.infoDs["g_bFFXIVText"]
-var Retreat = globalData.infoDs["g_FFXIVRetreat"] # 退避机制
+const Retreat = globalData.infoDs["g_FFXIVRetreat"] # 退避机制
+const FFChara = globalData.infoDs["g_FFXIVChara"] # 角色相关类
+
 var FFControl = null
 var Path = ""
 
@@ -12,6 +14,7 @@ var baseId = ""
 var reward = true # 是否开启死亡奖励
 var layer # 当前关卡数
 var battleDuration = 0 # 战斗时间
+var STAGE = "p1" # p1 p2 p3 ...阶段
 
 var TimeAxis = {} # 时间轴
 var HateTarget # 暂存boss当前仇恨目标
@@ -43,6 +46,9 @@ func _extInit():
 	HateTarget = null
 	addSkillTxt(TEXT.format(TEXT.BOSS_DEFAULT))
 
+func _init():
+	FFControl = Utils.getFFControl()
+
 func _onBattleStart():
 	._onBattleStart()
 	selfAdaption()
@@ -52,34 +58,36 @@ func _onBattleEnd():
 	._onBattleEnd()
 	reset()
 
-# 克制细剑 烧灼的百分比伤害
+# 克制细剑,流血,烧灼伤害
 func _onHurt(atkInfo:AtkInfo):
 	._onHurt(atkInfo)
 	if atkInfo.atkType == Chara.AtkType.EFF and atkInfo.hurtVal > att.maxHp * 0.005:
 		atkInfo.hurtVal = att.maxHp * 0.005 * (1 - (att.def + att.mgiDef) / (att.def + att.mgiDef + 200))
 
 # 团灭玩家，boss自杀
-func _onKillChara(atkInfo):
-	._onKillChara(atkInfo)
-	var tarCha = atkInfo.hitCha
-	if tarCha.team == 1:
+func _onCharaDel(cha):
+	._onCharaDel(cha)
+	if cha.team == 1:
 		var count = 0
 		for cha in getAllChas(1):
 			if !cha.isDeath:
 				count += 1
 
-		if !tarCha.isSumm:
-			match tarCha.lv:
+		if !cha.isSumm:
+			match cha.lv:
 				1: sys.main.player.hp += 2
-				2: sys.main.player.hp += 5
-				3: sys.main.player.hp += 10
-				4: sys.main.player.hp += 15
+				2: sys.main.player.hp += 4
+				3: sys.main.player.hp += 7
+				4: sys.main.player.hp += 10
 
 		if count == 0:
+			STAGE = "p0"
 			reward = false
-			tarCha.newChara("cFFXIV___Muren", tarCha.cell)
+			cha.newChara("cFFXIV___Muren", cha.cell)
 			sys.newBaseMsg(TEXT.Insurance.title, TEXT.Insurance.content)
-			FFHurtChara(self, att.maxHp * 2, Chara.HurtType.REAL, Chara.AtkType.SKILL)
+			for i in getAllChas(2):
+				FFHurtChara(i, att.maxHp * 2, Chara.HurtType.REAL, Chara.AtkType.SKILL)
+			Chant.interrupt()
 
 # 死亡奖励
 func _onDeath(atkInfo):
@@ -88,7 +96,6 @@ func _onDeath(atkInfo):
 		var item = sys.newItem("i_FFXIVSoulCrystal")
 		sys.main.player.addItem(item)
 		sys.newBaseMsg(TEXT.Reward.title, TEXT.Reward.content)
-
 
 func FFHurtChara(target, atkVal, hurtType, atkType):
 	if target != null and !target.isDeath:

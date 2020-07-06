@@ -63,6 +63,7 @@ func _extInit():
 
 # 必要的初始化
 func _init():
+	._init()
 	set_path("cFFXIVBossDragon_Hide")
 	set_time_axis({
 		"blowingSnow": [20, 60, 100, 140, 340],
@@ -76,7 +77,6 @@ func _init():
 		"trillionChop": [330, 350, 370],
 		"tsunami": [400]
 	})
-	FFControl = Utils.getFFControl()
 	Utils.background_change(Path, "/background/CrystallizationSpace.png")
 	FFControl.FFMusic.play(Path, "/music/DragonFantasy1.ogg.oggstr")
 

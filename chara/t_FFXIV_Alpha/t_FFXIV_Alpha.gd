@@ -11,7 +11,7 @@ var layer = 0 # 当前关卡数
 var lastLayer = 0 # 上一次出现boss的层数
 
 const PROBABILITY = 100 # Boss出现的基本概率
-const BOSS_LAYER = 27 # 在多少关之后概率动态调整
+const BOSS_LAYER = 1 # 在多少关之后概率动态调整
 var probability = PROBABILITY # Boss出现的动态概率
 
 func init():
@@ -31,6 +31,14 @@ func _connect():
 	sys.main.connect("onBattleEnd", self, "reward")
 	Retreat.initRetreat()
 	FFChara.openDeathList()
+	# sys.main.mat.append([null, null, null, null, null])
+	# sys.main.matW = 9
+	# print(sys.main.map)
+	# print(sys.main.cam)
+	# print(sys.main.mat)
+	# print(sys.main.nowCell)
+	# print(sys.main.matH)
+	# print(sys.main.matW)
 
 class Raid:
 	extends Buff
