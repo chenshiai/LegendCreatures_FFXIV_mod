@@ -39,7 +39,7 @@ func gameExit():
 func load_texture(path, imgPath) -> ImageTexture:
 	var im = Image.new()
 	var imt = ImageTexture.new()
-	im.load("%s/%s" % [path, imgPath])
+	im.load("%s%s" % [path, imgPath])
 	imt.create_from_image(im)
 	return imt
 
@@ -203,6 +203,19 @@ func attenuationDamage(startCell, targetCell, damage):
 	var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
 	var length = toolman.cellRan(startCell, targetCell)
 	return damage / (1 + length)
+
+# 距离目标格子的最近的单位计算
+func distanceMinCha(startCell, chas):
+	var minDistance = 20
+	var target = null
+	for cha in chas:
+		var distance = cha.cellRan(startCell)
+		if distance < minDistance:
+			minDistance = distance
+			target = cha
+	return target
+
+
 
 func getVal(object, name, default = null):
 	if object.has(name):

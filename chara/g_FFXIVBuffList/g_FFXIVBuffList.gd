@@ -605,6 +605,19 @@ class b_VulnerableLarge	extends BaseBuff:
 		if atkInfo.atkType == NORMAL:
 			atkInfo.hurtVal *= 99
 
+# 水耐性下降·大
+class b_waterDown	extends BaseBuff:
+	func _init(config):
+		_set_config("b_waterDown", config)
+
+	func _connect():
+		masCha.connect("onHurt", self, "run")
+		Utils.draw_efftext("水耐性下降·大", masCha.position, "#00a8ff", false)
+
+	func run(atkInfo):
+		if atkInfo.hurtType == Chara.HurtType.MGI and atkInfo.atkType == Chara.AtkType.SKILL:
+			atkInfo.hurtVal *= 99
+
 
 # 分摊特效
 class b_Share	extends BaseBuff:

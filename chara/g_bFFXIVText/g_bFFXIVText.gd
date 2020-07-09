@@ -4,6 +4,7 @@ func _init():
 	config.bfDir["瘴暍"] = "debuff，可驱散，携带者每秒受到释放者法强5%的魔法伤害。"
 	config.bfDir["剧毒菌"] = "debuff，可驱散，携带者每秒受到释放者法强5%的魔法伤害。"
 	config.bfDir["螺旋气流"] = "debuff，可驱散，携带者每秒受到释放者法强5%的魔法伤害。"
+	config.bfDir["水耐性下降·大"] = "debuff，不可驱散，携带者受到的水属性伤害提高99倍。"
 
 func format(text, config = {}):
 	var Text = text.format(self.Config)

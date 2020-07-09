@@ -31,14 +31,6 @@ func _connect():
 	sys.main.connect("onBattleEnd", self, "reward")
 	Retreat.initRetreat()
 	FFChara.openDeathList()
-	# sys.main.mat.append([null, null, null, null, null])
-	# sys.main.matW = 9
-	# print(sys.main.map)
-	# print(sys.main.cam)
-	# print(sys.main.mat)
-	# print(sys.main.nowCell)
-	# print(sys.main.matH)
-	# print(sys.main.matW)
 
 class Raid:
 	extends Buff
@@ -61,7 +53,7 @@ func reward():
 	sys.main.player.plusGold(5 + lv * 5)
 	sys.main.get_node("scene/bg/bg").set_texture(originBackground)
 	
-	if sys.rndPer(20):
+	if sys.rndPer(13):
 		var item = RandomItem.getItem()
 		sys.main.player.addItem(item)
 		sys.newBaseMsg("获得了上古武器！", "获得了装备%s" % [item.name])

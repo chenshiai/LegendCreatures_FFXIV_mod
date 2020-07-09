@@ -370,8 +370,8 @@ func blowingSnow():
 		return
 
 	if mapEffect.puddle == null:
-		mapEffect.puddle = Utils.draw_effect_out(Path + "/effects/puddle", Vector2(position.x, position.y - 1), Vector2(25, 75), 13, 2, true)
-		
+		mapEffect.puddle = Utils.draw_effect_out(Path + "/effects/puddle", Vector2(position.x, position.y), Vector2(25, 75), 13, 2, true)
+		mapEffect.puddle.show_on_top = false
 # 闪电/超新星
 func leftOrRigth():
 	var type = sys.rndRan(0, 1)

@@ -1,5 +1,5 @@
 # 最终幻想14 Boss模板文件
-# 版本号 2020/07/06 0.0.6
+# 版本号 2020/07/09 0.0.8
 extends Chara
 const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
 const Utils = globalData.infoDs["g_aFFXIVUtils"]
@@ -114,7 +114,7 @@ func selfAdaption():
 		E_spd = allAtt.spd
 		E_num = allAtt.num
 		E_lv = allAtt.lv
-		attInfo.maxHp = (E_atk + E_mgiAtk) / E_num * layer * 10
+		attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 800
 		attInfo.atk = (E_def + E_maxHp / 8) / E_num + layer * 3
 		attInfo.mgiAtk = (E_mgiDef + E_maxHp / 8) / E_num + layer * 3
 		attInfo.def = (E_atk + layer * 2) / E_num
@@ -150,6 +150,9 @@ func normalAtkChara(cha):
 		atkInfo.atkType = AtkType.NORMAL
 		atkRun(cha)
 
+# 关闭奖励
+func closeReward():
+	self.reward = false
 
 # 创建时间轴
 func set_time_axis(skillAxis):
