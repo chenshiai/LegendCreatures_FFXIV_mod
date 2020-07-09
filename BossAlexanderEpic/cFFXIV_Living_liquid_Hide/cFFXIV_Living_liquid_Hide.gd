@@ -11,7 +11,7 @@ var SKILL_TXT = """
 [水波]：射出水波，造成{c_mgi}[{3}]{/c}的水属性魔法伤害，并附加[水耐性下降·大]，持续5s。
 [倾泻]：对全屏的敌人造成{c_mgi}[{2}]{/c}的水属性魔法伤害，并在场上留下两个[水圈]，然后召唤[活水之手]。
 说明：水圈将朝敌人所在方向射出一道水波，然后再朝距离最近敌人方向射出一道必中的水波。
-[万变水波]：[有生命活水]与[水圈]将连续发动[水波]组合技能，结束后[水圈]会产生一个缓慢移动的水球。
+[万变水波]：[有生命活水]与[水圈]将连续发动[水波]组合技能，之后[水圈]会产生一个缓慢移动的水球。
 说明：任何单位在碰到水球后会引发全屏爆炸。{/c}"""
 
 var pwConfig = {
@@ -55,7 +55,8 @@ func _init():
 		"fluidOscillation": [10, 36, 54, 124],
 		"waves": [95],
 		"parting": [104],
-		"waves2": [107]
+		"waves2": [107],
+		"waterPolo": [118]
 	})
 	Utils.background_change(Path, "/background/TheEpicOfAlexander.png")
 	FFControl.FFMusic.play(Path, "/music/dregs.oggstr")
@@ -63,7 +64,7 @@ func _init():
 func _onBattleStart():
 	._onBattleStart()
 	closeReward()
-	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 400
+	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 380
 	fluidOscillation_pw *= (E_lv / E_num) # 流体震荡威力
 	pourOut_pw *= (E_lv / E_num) # 倾泻威力
 	waves_pw *= (E_lv / E_num) # 水波威力
@@ -73,6 +74,11 @@ func _onBattleStart():
 		"3": "%d%%" % [waves_pw * 100],
 	}
 	skillStrs[1] = (TEXT.format(SKILL_TXT, pwConfig))
+
+func _onHurt(atkInfo):
+	._onHurt(atkInfo)
+	if atkInfo.atkCha != self and HandoWater != null:
+		HandoWater.hurtself(atkInfo.hurtVal)
 
 func _onDeath(atkInfo):
 	._onDeath(atkInfo)
@@ -109,10 +115,11 @@ func pourOut():
 	for item in mapEffect:
 		if item.effect == null:
 			item.effect = Utils.draw_effect("puddle", item.cell * 100, Vector2(0, 0), 13, 1, true)
+			item.effect.show_on_top = false
 
 	if HandoWater == null:
 		HandoWater = newChara("cFFXIV_HandofivingWater_Hide", self.cell)
-		HandoWater.attInfo.maxHp = att.hp / 2
+		HandoWater.attInfo.maxHp = att.hp
 		HandoWater.attInfo.atk = att.atk
 		HandoWater.attInfo.mgiAtk = att.mgiAtk
 		HandoWater.attInfo.def = att.def
@@ -154,7 +161,7 @@ func wave(cell, chaCell, show = false):
 			FFHurtChara(cha, att.atk * waves_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 			BUFF_LIST.b_waterDown.new({
 				"cha": cha,
-				"dur": 5
+				"dur": 15
 			})
 
 
@@ -177,3 +184,24 @@ func waves2():
 	
 func parting():
 	HandoWater.parting()
+
+func waterPolo():
+	for item in mapEffect:
+		if item.effect != null:
+			var startPos = item.cell * 100
+			# var eff:Eff = newEff("sk_chuanTouJian", startPos)
+			# eff._initFlyPos(startPos + (self.position - startPos).normalized() * 1000, 80)
+			# eff.show_on_top = false
+
+			var eff1 = Utils.draw_effect("waterBall", startPos, Vector2(0,-30), 0)
+			eff1._initFlyPos(startPos + (self.position - startPos).normalized() * 1000, 80)
+			eff1.show_on_top = true
+			eff1.connect("onInCell", self, "effInCell")
+
+func effInCell(cell):
+	var cha = matCha(cell)
+	if cha != null:
+		Utils.draw_effect("waterBoom", Vector2(350, 150), Vector2(0, 0), 15, 2)
+		for cha in getAllChas(1):
+			FFHurtChara(cha, att.maxHp, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+			yield(reTimer(0.1), "timeout")

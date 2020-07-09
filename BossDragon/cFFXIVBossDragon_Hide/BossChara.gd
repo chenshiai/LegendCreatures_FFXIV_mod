@@ -1,5 +1,5 @@
 # 最终幻想14 Boss模板文件
-# 版本号 2020/07/09 0.0.8
+# 版本号 2020/07/10 0.0.9
 extends Chara
 const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
 const Utils = globalData.infoDs["g_aFFXIVUtils"]
@@ -92,6 +92,7 @@ func _onCharaDel(cha):
 # 死亡奖励
 func _onDeath(atkInfo):
 	._onDeath(atkInfo)
+	Chant.interrupt()
 	if reward:
 		var item = sys.newItem("i_FFXIVSoulCrystal")
 		sys.main.player.addItem(item)

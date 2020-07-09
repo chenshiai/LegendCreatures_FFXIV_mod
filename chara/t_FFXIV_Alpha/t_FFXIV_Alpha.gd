@@ -14,6 +14,14 @@ const PROBABILITY = 100 # Boss出现的基本概率
 const BOSS_LAYER = 27 # 在多少关之后概率动态调整
 var probability = PROBABILITY # Boss出现的动态概率
 
+const CharaList = ["cFFXIVAolong_1_1", "cFFXIVAolong_2_1", "cFFXIVAolong_3_1",
+	"cFFXIVHumen_1_1", "cFFXIVHumen_2_1", "cFFXIVHumen_3_1",
+	"cFFXIVLarafel_1_1", "cFFXIVLarafel_2_1", "cFFXIVLarafel_3_1",
+	"cFFXIVNeko_1_1", "cFFXIVNeko_2_1", "cFFXIVNeko_3_1",
+	"cFFXIVRuga_1_1", "cFFXIVRuga_2_1", "cFFXIVRuga_3_1",
+	"cFFXIVSpirit_1_1", "cFFXIVSpirit_2_1", "cFFXIVSpirit_3_1"]
+
+
 func init():
 	name = "Raid战斗记录"
 
@@ -31,6 +39,9 @@ func _connect():
 	sys.main.connect("onBattleEnd", self, "reward")
 	Retreat.initRetreat()
 	FFChara.openDeathList()
+	# for id in CharaList:
+	# 	var cha = sys.main.newChara(id, 1)
+	# 	sys.main.player.addCha(cha)
 
 class Raid:
 	extends Buff

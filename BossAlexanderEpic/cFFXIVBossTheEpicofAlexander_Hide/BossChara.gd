@@ -1,5 +1,5 @@
 # 最终幻想14 Boss模板文件
-# 版本号 2020/07/09 0.0.8
+# 版本号 2020/07/10 0.1.0
 extends Chara
 const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
 const Utils = globalData.infoDs["g_aFFXIVUtils"]
@@ -83,11 +83,12 @@ func _onCharaDel(cha):
 		if count == 0:
 			STAGE = "p0"
 			reward = false
-			cha.newChara("cFFXIV___Muren", cha.cell)
+			cha.newChara("cFFXIV_zTatalu", cha.cell)
 			sys.newBaseMsg(TEXT.Insurance.title, TEXT.Insurance.content)
+			Chant.interrupt()
+			yield(reTimer(0.1), "timeout")
 			for i in getAllChas(2):
 				FFHurtChara(i, att.maxHp * 2, Chara.HurtType.REAL, Chara.AtkType.SKILL)
-			Chant.interrupt()
 
 # 死亡奖励
 func _onDeath(atkInfo):

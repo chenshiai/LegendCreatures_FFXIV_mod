@@ -37,7 +37,7 @@ func parting():
 
 	Chant.chantStart("离别之手", 10)
 	yield(reTimer(10), "timeout")
-	if att.hp <= 0:
+	if att.hp <= 0 and !Summoner.isDeath:
 		return
 	self.img.set_pivot_offset(self.img.rect_size / 2)
 	self.img.set_rotation_degrees(120 * self.dire * -1)
@@ -52,7 +52,7 @@ func parting():
 	elif cellRan(Summoner.cell) >2 and status == "far":
 		for cha in getAllChas(1):
 			cha.att.hp = -1
-			FFHurtChara(cha, 1, Chara.HurtType.REAL, Chara.AtkType.EFF)
+			FFHurtChara(cha, 100, Chara.HurtType.REAL, Chara.AtkType.EFF)
 
 	yield(reTimer(1), "timeout")
 	if att.hp <= 0:
@@ -62,7 +62,14 @@ func parting():
 	self.img.texture_normal = originImg
 	yield(reTimer(1), "timeout")
 	self.att.hp = -1
-	hurtChara(self, 0)
+	hurtChara(self, 100)
+
+func hurtself(val):
+	FFHurtChara(self, val, Chara.HurtType.REAL, Chara.AtkType.EFF)
+	
+func _onHurt(atkInfo):
+	._onHurt(atkInfo)
+	atkInfo.atkCha.aiCha = Summoner
 
 func _upS():
 	aiOn = false
