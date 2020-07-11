@@ -1,4 +1,3 @@
-var handle = sys.get_node("../Control")
 var Path = null
 var FFXIVClass = null
 var FFControl = null
@@ -6,10 +5,11 @@ var FFControl = null
 var infomation = null
 var textGrid = null
 
+
 func _init():
 	print("最终幻想14：—————— 完整性检测中 ——————")
 	call_deferred("dataInit")
-	pass
+
 
 func dataInit():
 	Path = chaData.infoDs["cFFXIV_zTatalu"].dir
@@ -18,7 +18,7 @@ func dataInit():
 	else:
 		var label = Label.new()
 		label.text = "最终幻想14：MOD文件路径读取失败，请在创意工坊内重新订阅。"
-		handle.add_child(label)
+		sys.get_node("../Control").add_child(label)
 
 
 # 返回控制器实例，没有则新建一个
@@ -34,6 +34,7 @@ func gameExit():
 	FFControl = null
 	infomation = null
 	textGrid = null
+
 
 # 加载图片纹理
 func load_texture(path, imgPath) -> ImageTexture:
@@ -101,7 +102,8 @@ func draw_efftext(text, position, color = "#ffffff", up = true):
 		text = "▼%s▼" % [text]
 
 	eff.setText(text, color)
-	eff._initFlyPos(position + Vector2(1, 0) * 20, 20)
+	eff._initFlyPos(position + Vector2(20, 0), 20)
+
 
 # 绘制按钮UI
 func draw_ui_button(
@@ -128,12 +130,14 @@ func draw_shadow(img, startPositon:Vector2, endPositon:Vector2, speed = 25):
 	var distance = endPositon - startPositon
 	var rs = preload("res://core/ying.tscn")
 	var n = distance.length() / speed
+	var texture = img.texture_normal
 	for i in range(n):
 		var spr = rs.instance()
 		sys.main.map.add_child(spr)
-		spr.texture = img.texture_normal
-		spr.position = startPositon + speed * (i + 1) * distance.normalized() - Vector2(img.texture_normal.get_width() / 2, img.texture_normal.get_height())
+		spr.texture = texture
+		spr.position = startPositon + speed * (i + 1) * distance.normalized() - Vector2(texture.get_width() / 2, texture.get_height())
 		spr.init(255 / n * i + 100)
+
 
 # 绘制选项
 func draw_check(
@@ -150,6 +154,7 @@ func draw_check(
 		c.name = id
 	return c
 
+
 func initInfomation():
 	textGrid = RichTextLabel.new()
 	textGrid.rect_min_size = Vector2(1000, 400)
@@ -160,6 +165,7 @@ func initInfomation():
 	infomation = sys.newMsg("jiangLiMsg")
 	infomation.get_node("Panel").add_child(textGrid)
 	infomation.get_node("Panel/Button").connect("pressed", self, "MsgOk")
+
 
 func showInfomation(config):
 	if !infomation:
@@ -172,7 +178,8 @@ func showInfomation(config):
 func MsgOk():
 	pass
 
-# 创建Boss时间轴
+
+# 创建时间轴
 func create_timeAxis(skillAxis):
 	var timeAxis = {}
 	for skillName in skillAxis:
@@ -198,13 +205,15 @@ func lineChas(aCell, bCell, num):
 				chas.append(toolman.matCha(ac))
 	return chas
 
+
 # 距离衰减aoe计算
 func attenuationDamage(startCell, targetCell, damage):
 	var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
 	var length = toolman.cellRan(startCell, targetCell)
 	return damage / (1 + length)
 
-# 距离目标格子的最近的单位计算
+
+# 寻找距离最近的单位计算
 func distanceMinCha(startCell, chas):
 	var minDistance = 20
 	var target = null
@@ -216,12 +225,12 @@ func distanceMinCha(startCell, chas):
 	return target
 
 
-
 func getVal(object, name, default = null):
 	if object.has(name):
 		return object[name]
 	else:
 		return default
+
 
 # 数据处理类
 class Calculation:

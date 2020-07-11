@@ -1,4 +1,5 @@
-extends "./BossChara.gd"
+extends "../../2098858773/BossChara.gd"
+
 const BERSERKERTIME_P1 = 180 # P1狂暴时间
 const BERSERKERTIME_P3 = 400 # P3狂暴时间
 

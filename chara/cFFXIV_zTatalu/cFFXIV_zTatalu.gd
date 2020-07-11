@@ -62,6 +62,9 @@ func _onBattleStart():
 	# print(self.atkInfo.hurtType)
 	# print(self.atkInfo.atkType)
 
+func _onHurt(atkInfo):
+	._onHurt(atkInfo)
+	atkInfo.hurtVal = 0
 
 func _onDeath(atkInfo):
 	._onDeath(atkInfo)

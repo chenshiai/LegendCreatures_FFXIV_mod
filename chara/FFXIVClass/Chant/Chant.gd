@@ -75,3 +75,6 @@ func interrupt():
 	laber.set_visible(false)
 	chantBar.set_value(0)
 	pending = false
+
+func set_chant_position(position):
+	chantBar.rect_position += position

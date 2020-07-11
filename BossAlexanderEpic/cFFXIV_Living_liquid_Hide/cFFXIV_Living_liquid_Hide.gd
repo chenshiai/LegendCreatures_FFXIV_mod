@@ -1,14 +1,14 @@
-extends "../cFFXIVBossTheEpicofAlexander_Hide/BossChara.gd"
-const BERSERKERTIME_P1 = 120 # P1狂暴时间
+extends "../../2098858773/BossChara.gd"
+const BERSERKERTIME_P1 = 140 # P1狂暴时间
 var HandoWater = null
 var fluidOscillation_pw = 2.5 # 流体震荡威力
 var pourOut_pw = 1.2 # 倾泻威力
 var waves_pw = 1.6 # 水波威力
-
+var tarchwater = false # 是否碰到了水球
 var SKILL_TXT = """
 {c_base}亚历山大绝境战 第一阶段
 [流体震荡]：{TDeath}对当前目标造成{c_phy}[{1}]{/c}的小范围物理伤害。
-[水波]：射出水波，造成{c_mgi}[{3}]{/c}的水属性魔法伤害，并附加[水耐性下降·大]，持续5s。
+[水波]：射出水波，造成{c_mgi}[{3}]{/c}的水属性魔法伤害，并附加[水耐性下降·大]，持续15s。
 [倾泻]：对全屏的敌人造成{c_mgi}[{2}]{/c}的水属性魔法伤害，并在场上留下两个[水圈]，然后召唤[活水之手]。
 说明：水圈将朝敌人所在方向射出一道水波，然后再朝距离最近敌人方向射出一道必中的水波。
 [万变水波]：[有生命活水]与[水圈]将连续发动[水波]组合技能，之后[水圈]会产生一个缓慢移动的水球。
@@ -47,7 +47,6 @@ func _extInit():
 	
 func _init():
 	._init()
-	closeReward()
 	set_path("cFFXIVBossTheEpicofAlexander_Hide")
 	set_time_axis({
 		"pourOut": [18, 87, 133],
@@ -56,15 +55,19 @@ func _init():
 		"waves": [95],
 		"parting": [104],
 		"waves2": [107],
-		"waterPolo": [118]
+		"waterPolo": [118],
+		"over": [140]
 	})
 	Utils.background_change(Path, "/background/TheEpicOfAlexander.png")
 	FFControl.FFMusic.play(Path, "/music/dregs.oggstr")
+	closeReward()
 	
+
 func _onBattleStart():
 	._onBattleStart()
+	STAGE = "p1"
 	closeReward()
-	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 380
+	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 360
 	fluidOscillation_pw *= (E_lv / E_num) # 流体震荡威力
 	pourOut_pw *= (E_lv / E_num) # 倾泻威力
 	waves_pw *= (E_lv / E_num) # 水波威力
@@ -82,55 +85,78 @@ func _onHurt(atkInfo):
 
 func _onDeath(atkInfo):
 	._onDeath(atkInfo)
+	StageToP2()
 	queue_free_eff()
+	if HandoWater != null:
+		HandoWater.att.hp = -1
+		HandoWater.hurtself(atkInfo.hurtVal)
+
+func StageToP2():
+	print("进入p2")
+	if STAGE == "p1":
+		print("开始召唤")
+		var CruiseChaser = sys.main.newChara("cFFXIV_CruiseChaser_Hide", 2)
+		sys.main.map.add_child(CruiseChaser)
+		if CruiseChaser:
+			CruiseChaser.attInfo.maxHp = att.maxHp * 0.7
+			CruiseChaser.attInfo.atk = att.atk
+			CruiseChaser.attInfo.mgiAtk = att.mgiAtk
+			CruiseChaser.attInfo.def = att.def
+			CruiseChaser.attInfo.mgiDef = att.mgiDef
+			CruiseChaser.STAGE = "p2"
+			CruiseChaser.upAtt()
 
 # 流体震荡
 func fluidOscillation():
 	self.HateTarget = aiCha
 	Chant.chantStart("流体震荡", 3)
 	yield(reTimer(3), "timeout")
-	var chas = getCellChas(self.HateTarget.cell, 1)
 	Utils.draw_effect("blastYellow", self.HateTarget.position, Vector2(0, -50), 15)
 	if att.hp <= 0:
 		return
-	for i in chas:
-		if i != self:
-			FFHurtChara(i, att.mgiAtk * fluidOscillation_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+	var chas = getCellChas(self.HateTarget.cell, 1)
+	complexHurt(chas, att.mgiAtk * fluidOscillation_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
 # 倾泻
 func pourOut():
 	aiOn = false
 	Chant.chantStart("倾泻", 4)
 	yield(reTimer(4), "timeout")
-	var chas = getAllChas(1)
 	Utils.draw_effect("waterBoom", Vector2(350, 150), Vector2(0, 0), 15, 2)
 	yield(reTimer(0.2), "timeout")
 
 	if att.hp <= 0:
 		return
-	for i in chas:
-		if i != null:
-			FFHurtChara(i, att.mgiAtk * pourOut_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+
+	complexHurt(getAllChas(1), att.mgiAtk * pourOut_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
 	for item in mapEffect:
 		if item.effect == null:
 			item.effect = Utils.draw_effect("puddle", item.cell * 100, Vector2(0, 0), 13, 1, true)
 			item.effect.show_on_top = false
 
+	summonHandoWater()
+	yield(reTimer(2), "timeout")
+	aiOn = true
+
+
+func summonHandoWater():
 	if HandoWater == null:
-		HandoWater = newChara("cFFXIV_HandofivingWater_Hide", self.cell)
+		HandoWater = sys.main.newChara("cFFXIV_HandofivingWater_Hide", 2)
+		sys.main.map.add_child(HandoWater)
+		sys.main.setMatCha(position, HandoWater)
 		HandoWater.attInfo.maxHp = att.hp
 		HandoWater.attInfo.atk = att.atk
 		HandoWater.attInfo.mgiAtk = att.mgiAtk
 		HandoWater.attInfo.def = att.def
 		HandoWater.attInfo.mgiDef = att.mgiDef
+		HandoWater.attCoe.atkRan = 0
+		HandoWater.moveSpeed = 100
 		HandoWater.upAtt()
-	yield(reTimer(2), "timeout")
-	HandoWater.Summoner = self
-	aiOn = true
+		HandoWater.Summoner = self
 
 
-# 水圈
+# 水圈喷水
 func hydrosphere(show = true):
 	var chas = getAllChas(1)
 	for item in mapEffect:
@@ -156,6 +182,7 @@ func wave(cell, chaCell, show = false):
 	eff2.show_on_top = false
 	
 	var chas = Utils.lineChas(cell, chaCell, 15)
+
 	for cha in chas:
 		if cha.team != team :
 			FFHurtChara(cha, att.atk * waves_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
@@ -165,7 +192,7 @@ func wave(cell, chaCell, show = false):
 			})
 
 
-# 万变水波
+# 万变水波1
 func waves():
 	aiOn = false
 	Chant.chantStart("万变水波", 5)
@@ -175,6 +202,7 @@ func waves():
 	for cha in getAllChas(1):
 		wave(self.cell, cha.cell, true)
 
+# 万变水波2
 func waves2():
 	if att.hp <= 0:
 		return
@@ -182,26 +210,38 @@ func waves2():
 		wave(self.cell, cha.cell, false)
 	aiOn = true
 	
+# 离别之手
 func parting():
 	HandoWater.parting()
 
 func waterPolo():
+	queue_free_eff()
+	yield(reTimer(0.2), "timeout")
 	for item in mapEffect:
-		if item.effect != null:
-			var startPos = item.cell * 100
-			# var eff:Eff = newEff("sk_chuanTouJian", startPos)
-			# eff._initFlyPos(startPos + (self.position - startPos).normalized() * 1000, 80)
-			# eff.show_on_top = false
-
-			var eff1 = Utils.draw_effect("waterBall", startPos, Vector2(0,-30), 0)
-			eff1._initFlyPos(startPos + (self.position - startPos).normalized() * 1000, 80)
-			eff1.show_on_top = true
-			eff1.connect("onInCell", self, "effInCell")
+		var startPos = item.cell * 100
+		item.effect = Utils.draw_effect("waterBall", startPos, Vector2(0,-30), 0)
+		item.effect._initFlyPos(startPos + (self.position - startPos).normalized() * 1000, 50)
+		item.effect.show_on_top = true
+		item.effect.connect("onInCell", self, "effInCell")
 
 func effInCell(cell):
+	queue_free_eff()
+	if att.hp <= 0 and !tarchwater:
+		return
+	tarchwater = true
 	var cha = matCha(cell)
 	if cha != null:
+		Ace()
 		Utils.draw_effect("waterBoom", Vector2(350, 150), Vector2(0, 0), 15, 2)
-		for cha in getAllChas(1):
-			FFHurtChara(cha, att.maxHp, Chara.HurtType.MGI, Chara.AtkType.SKILL)
-			yield(reTimer(0.1), "timeout")
+
+func over():
+	aiOn = false
+	Chant.chantStart("倾泻-团灭", 10)
+	yield(reTimer(10), "timeout")
+	var chas = getAllChas(1)
+	Utils.draw_effect("waterBoom", Vector2(350, 150), Vector2(0, 0), 15, 2)
+	yield(reTimer(0.2), "timeout")
+
+	if att.hp <= 0:
+		return
+	Ace()

@@ -9,7 +9,7 @@ func _init():
 	att.mgiPen = 10
 
 func updateAtt():
-	att.def += 6
+	att.mgiAtk += 6
 	att.mgiPen += 3
 	for item in randAtt:
 		att[item.attr] += rand_range(item.up[0], item.up[1])

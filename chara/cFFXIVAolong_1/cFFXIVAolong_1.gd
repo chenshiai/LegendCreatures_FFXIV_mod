@@ -1,13 +1,13 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 
-const PLUSHP = 0.01 # 恢复量
-const BLOODSPILLER_PW = 2.50 # 血溅倍率
+const PLUSHP = 0.05 # 恢复量
+const BLOODSPILLER_PW = 2.90 # 血溅倍率
 var atkCount = 0 # 攻击次数
 var darkCount = 0 # 暗黑值
 
 var SKILL_TXT_1 = """[深恶痛绝]：{TPassive}战斗开始时，魔法防御提高10%
-[噬魂斩]：{TPassive}第三次普通攻击造成[110%]的伤害，并恢复自身1%的HP
-[血溅]：冷却10s，对目标造成[250%]的{TPhyHurt}"""
+[噬魂斩]：{TPassive}第三次普通攻击造成[110%]的伤害，并恢复自身5%的HP
+[血溅]：冷却10s，对目标造成[290%]的{TPhyHurt}"""
 
 func _extInit():
 	._extInit()

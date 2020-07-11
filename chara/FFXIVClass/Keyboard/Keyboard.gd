@@ -1,4 +1,4 @@
-extends "../BaseClass.gd"
+extends Node
 
 signal key_w
 signal key_a

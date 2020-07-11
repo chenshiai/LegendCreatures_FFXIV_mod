@@ -1,4 +1,5 @@
-extends "./BossChara.gd"
+extends "../../2098858773/BossChara.gd"
+
 const BERSERKERTIME_P1 = 120 # P1狂暴时间
 
 func _extInit():

@@ -91,10 +91,9 @@ func fuma():
 	var chas = getAllChas(1)
 	chas.sort_custom(Utils.Calculation, "sort_MaxMgiAtk")
 
-	var d:Eff = newEff("sk_4_1_2", sprcPos)
-	d._initFlyCha(chas[0])
+	var eff = newEff("sk_4_1_2", sprcPos)
+	eff._initFlyPos(chas[0].position, 1200)
 	Utils.draw_efftext("风魔", position)
-	yield(d, "onReach")
 	FFHurtChara(chas[0], att.atk * FUMA_PW, PHY, SKILL)
 
 # 雷遁之术

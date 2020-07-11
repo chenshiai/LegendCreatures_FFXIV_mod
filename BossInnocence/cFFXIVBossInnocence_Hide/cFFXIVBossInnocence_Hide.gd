@@ -1,4 +1,5 @@
-extends "./BossChara.gd"
+extends "../../2098858773/BossChara.gd"
+
 const BERSERKERTIME = 190 # 狂暴时间
 var SKILL_TXT = TEXT.format("""{c_base}
 [夺影]：对全屏的敌人造成[未知]的{TMgiHurt}。

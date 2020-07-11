@@ -9,9 +9,10 @@ func _extInit():
 	chaName = "吟游诗人"
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
-	attCoe.atk = 4
+	attCoe.atk = 4.1
 	attCoe.def = 3
 	attCoe.mgiDef = 3
+	attAdd.cri += 0.2
 	lv = 2
 	evos = ["cFFXIVNeko_3_1"]
 	addCdSkill("skill_LronJaws", 10)
