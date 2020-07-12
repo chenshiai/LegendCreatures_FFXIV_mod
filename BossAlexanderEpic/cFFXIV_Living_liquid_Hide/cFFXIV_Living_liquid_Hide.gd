@@ -7,11 +7,11 @@ var waves_pw = 1.6 # 水波威力
 var tarchwater = false # 是否碰到了水球
 var SKILL_TXT = """
 {c_base}亚历山大绝境战 第一阶段
-[流体震荡]：{TDeath}对当前目标造成{c_phy}[{1}]{/c}的小范围物理伤害。
-[水波]：射出水波，造成{c_mgi}[{3}]{/c}的水属性魔法伤害，并附加[水耐性下降·大]，持续15s。
-[倾泻]：对全屏的敌人造成{c_mgi}[{2}]{/c}的水属性魔法伤害，并在场上留下两个[水圈]，然后召唤[活水之手]。
-说明：水圈将朝敌人所在方向射出一道水波，然后再朝距离最近敌人方向射出一道必中的水波。
-[万变水波]：[有生命活水]与[水圈]将连续发动[水波]组合技能，之后[水圈]会产生一个缓慢移动的水球。
+{c_skill}[流体震荡]{/c}：{TDeath}对当前目标造成{c_phy}[{1}]{/c}的小范围物理伤害。
+{c_skill}[水波]{/c}：射出水波，对命中的敌人造成{c_mgi}[{3}]{/c}的水属性魔法伤害，并附加[水耐性下降·大]，持续15s。
+{c_skill}[倾泻]{/c}：对全屏的敌人造成{c_mgi}[{2}]{/c}的水属性魔法伤害，并在场上留下两个[水圈]，然后召唤[活水之手]。
+说明：水圈将周期性地朝距离最近敌人的方向射出一道水波。
+{c_skill}[万变水波]{/c}：[有生命活水]与[水圈]将连续发动[水波]组合技能，之后[水圈]会产生一个缓慢移动的水球。
 说明：任何单位在碰到水球后会引发全屏爆炸。{/c}"""
 
 var pwConfig = {
@@ -67,7 +67,7 @@ func _onBattleStart():
 	._onBattleStart()
 	STAGE = "p1"
 	closeReward()
-	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 360
+	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 380
 	fluidOscillation_pw *= (E_lv / E_num) # 流体震荡威力
 	pourOut_pw *= (E_lv / E_num) # 倾泻威力
 	waves_pw *= (E_lv / E_num) # 水波威力
@@ -77,6 +77,7 @@ func _onBattleStart():
 		"3": "%d%%" % [waves_pw * 100],
 	}
 	skillStrs[1] = (TEXT.format(SKILL_TXT, pwConfig))
+	att.hp = 1000
 
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)
@@ -92,19 +93,11 @@ func _onDeath(atkInfo):
 		HandoWater.hurtself(atkInfo.hurtVal)
 
 func StageToP2():
-	print("进入p2")
 	if STAGE == "p1":
-		print("开始召唤")
 		var CruiseChaser = sys.main.newChara("cFFXIV_CruiseChaser_Hide", 2)
 		sys.main.map.add_child(CruiseChaser)
 		if CruiseChaser:
-			CruiseChaser.attInfo.maxHp = att.maxHp * 0.7
-			CruiseChaser.attInfo.atk = att.atk
-			CruiseChaser.attInfo.mgiAtk = att.mgiAtk
-			CruiseChaser.attInfo.def = att.def
-			CruiseChaser.attInfo.mgiDef = att.mgiDef
-			CruiseChaser.STAGE = "p2"
-			CruiseChaser.upAtt()
+			CruiseChaser._onBattleStart()
 
 # 流体震荡
 func fluidOscillation():
@@ -144,7 +137,6 @@ func summonHandoWater():
 	if HandoWater == null:
 		HandoWater = sys.main.newChara("cFFXIV_HandofivingWater_Hide", 2)
 		sys.main.map.add_child(HandoWater)
-		sys.main.setMatCha(position, HandoWater)
 		HandoWater.attInfo.maxHp = att.hp
 		HandoWater.attInfo.atk = att.atk
 		HandoWater.attInfo.mgiAtk = att.mgiAtk
@@ -216,16 +208,14 @@ func parting():
 
 func waterPolo():
 	queue_free_eff()
-	yield(reTimer(0.2), "timeout")
 	for item in mapEffect:
 		var startPos = item.cell * 100
-		item.effect = Utils.draw_effect("waterBall", startPos, Vector2(0,-30), 0)
-		item.effect._initFlyPos(startPos + (self.position - startPos).normalized() * 1000, 50)
-		item.effect.show_on_top = true
-		item.effect.connect("onInCell", self, "effInCell")
+		var eff = Utils.draw_effect("waterBall", startPos, Vector2(0,-30), 0)
+		eff._initFlyPos(startPos + (self.position - startPos).normalized() * 800, 50)
+		eff.show_on_top = true
+		eff.connect("onInCell", self, "effInCell")
 
 func effInCell(cell):
-	queue_free_eff()
 	if att.hp <= 0 and !tarchwater:
 		return
 	tarchwater = true
@@ -236,8 +226,8 @@ func effInCell(cell):
 
 func over():
 	aiOn = false
-	Chant.chantStart("倾泻-团灭", 10)
-	yield(reTimer(10), "timeout")
+	Chant.chantStart("倾泻-团灭", 15)
+	yield(reTimer(15), "timeout")
 	var chas = getAllChas(1)
 	Utils.draw_effect("waterBoom", Vector2(350, 150), Vector2(0, 0), 15, 2)
 	yield(reTimer(0.2), "timeout")

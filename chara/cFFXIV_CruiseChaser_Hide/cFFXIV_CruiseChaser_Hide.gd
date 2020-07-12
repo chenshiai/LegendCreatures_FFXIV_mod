@@ -45,9 +45,8 @@ func _init():
 	set_time_axis({
 		"limitCutting": [2, 6, 10, 14, 18, 22, 26, 30],
 		"justiceKicks": [34],
-		"tornado": [44, 75, 105],
-		"collimation": [50, 95, 125],
-		"photonGun": [60]
+		"tornado": [44],
+		"collimation": [50]
 	})
 	closeReward()
 	FFControl.HpBar.show()
@@ -126,12 +125,11 @@ func limitCutting():
 			target = newTarget
 			break
 	normalSpr.position = Vector2(0, -800)
-	if target != null:
-		Utils.draw_shadow(img, position, position + (target.position - position).normalized() * 1000, 25)
-		chas = Utils.lineChas(cell, target.cell, 15)
-		for cha in chas:
-			if cha.team != team :
-				FFHurtChara(cha, att.atk * limitCutting_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+	Utils.draw_shadow(img, position, position + (target.position - position).normalized() * 1000, 25)
+	chas = Utils.lineChas(cell, target.cell, 15)
+	for cha in chas:
+		if cha.team != team :
+			FFHurtChara(cha, att.atk * limitCutting_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
 func startP2():
 	STAGE = "p2"
@@ -149,7 +147,6 @@ func justiceKicks():
 	startP2()
 
 func photonGun():
-	aiOn = false
 	Chant.chantStart("光子炮", 3)
 	yield(reTimer(3), "timeout")
 	Utils.draw_effect("energyStorage", Vector2(350, 0), Vector2(0, 0), 13, 6)
@@ -163,8 +160,6 @@ func photonGun():
 	for cha in getAllChas(1):
 		cha.att.hp = 1
 		cha.plusHp(0, false)
-	yield(reTimer(1), "timeout")
-	aiOn = true
 
 func tornado():
 	aiOn = false
@@ -188,9 +183,9 @@ func collimation():
 	var cellList = []
 	for cha in getAllChas(1):
 		cellList.append(cha.cell)
-		var eff = Utils.draw_effect("dangerS", cha.position, Vector2(0, 0), 2, 2.5)
+		var eff = Utils.draw_effect("dangerS", cha.position, Vector2(0, 0), 2, 2)
 		eff.show_on_top = false
-	yield(reTimer(1.8), "timeout")
+	yield(reTimer(2), "timeout")
 
 	for cell in cellList:
 		var pos = sys.main.map.map_to_world(cell)

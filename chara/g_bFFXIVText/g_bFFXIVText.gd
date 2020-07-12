@@ -11,22 +11,23 @@ func format(text, config = {}):
 	return Text.format(config)
 
 var Config = {
-	"c_base": "[color=%s]" % [COLOR.BASE],
-	"c_buff": "[color=%s]" % [COLOR.BUFF],
-	"c_mgi": "[color=%s]" % [COLOR.C_MGI],
-	"c_phy": "[color=%s]" % [COLOR.C_PHY],
-	"c_pas": "[color=%s]" % [COLOR.PASSIVE],
-	"c_Tmgi": "[color=%s]" % [COLOR.MGI],
-	"c_Tphy": "[color=%s]" % [COLOR.PHY],
-	"c_balance": "[color=%s]" % [COLOR.BALANCE],
-	"c_arrow": "[color=%s]" % [COLOR.ARROW],
-	"c_spear": "[color=%s]" % [COLOR.SPEAR],
-	"c_bole": "[color=%s]" % [COLOR.BOLE],
-	"c_ewer": "[color=%s]" % [COLOR.EWER],
-	"c_spire": "[color=%s]" % [COLOR.SPIRE],
-	"c_pro": "[color=%s]" % [COLOR.PROTECT],
-	"c_atk": "[color=%s]" % [COLOR.ATTACK],
-	"c_tre": "[color=%s]" % [COLOR.TREATMENT],
+	"c_base": "[color=%s]" % [COLOR.BASE], # 基础色
+	"c_buff": "[color=%s]" % [COLOR.BUFF], # buff色
+	"c_mgi": "[color=%s]" % [COLOR.C_MGI], # 魔法伤害数字色
+	"c_phy": "[color=%s]" % [COLOR.C_PHY], # 物理伤害数字色
+	"c_pas": "[color=%s]" % [COLOR.PASSIVE], # 被动技能字色
+	"c_Tmgi": "[color=%s]" % [COLOR.MGI], # 魔法伤害文本色
+	"c_Tphy": "[color=%s]" % [COLOR.PHY], # 物理伤害文本色
+	"c_balance": "[color=%s]" % [COLOR.BALANCE], # 太阳神之衡
+	"c_arrow": "[color=%s]" % [COLOR.ARROW], # 放浪神之箭
+	"c_spear": "[color=%s]" % [COLOR.SPEAR], # 战争神之枪
+	"c_bole": "[color=%s]" % [COLOR.BOLE], # 世界树之干
+	"c_ewer": "[color=%s]" % [COLOR.EWER], # 河流神之瓶
+	"c_spire": "[color=%s]" % [COLOR.SPIRE], # 建筑神之塔
+	"c_pro": "[color=%s]" % [COLOR.PROTECT], # 防护职业
+	"c_atk": "[color=%s]" % [COLOR.ATTACK], # 进攻职业
+	"c_tre": "[color=%s]" % [COLOR.TREATMENT], # 治疗职业
+	"c_skill": "[color=%s]" % [COLOR.SKILL], # 技能文本色
 	"/c": "[/color]",
 	"TItemSoul": "[color=#f6ff00][灵魂水晶][/color]",
 	"TDeath": "[color=%s]死刑！！[/color]" % [COLOR.DEATH],
@@ -57,7 +58,8 @@ const COLOR = {
 	"SPEAR": "#8693f4",
 	"BOLE": "#80f87d",
 	"EWER": "#229fff",
-	"SPIRE": "#fcda72"
+	"SPIRE": "#fcda72",
+	"SKILL": "#48daff"
 }
 
 const Instructions = {
@@ -162,7 +164,7 @@ var UpdateInfo = {
 基础暴击率 20% -> 40%
 
 {c_atk}【机工士】{/c}
-基础暴击率 20% -> 0%
+基础暴击率 20% -> 10%
 
 [color=#64a6b7]【Ver 2.8.1】2020-07-05[/color]
 实装上古武器

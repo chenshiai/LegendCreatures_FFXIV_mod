@@ -1,5 +1,5 @@
 # 最终幻想14 Boss模板文件
-# 版本号 2020/07/11 0.1.3
+# 版本号 2020/07/13 0.1.4
 extends Chara
 const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"] # Buff列表
 const Utils = globalData.infoDs["g_aFFXIVUtils"] # FFXIV全局工具
@@ -69,6 +69,8 @@ func _onHurt(atkInfo):
 
 
 func _onCharaDel(cha):
+	if isDeath:
+		return
 	# 玩家角色，给玩家回复一定的血量
 	healPlayer(cha)
 
@@ -80,7 +82,9 @@ func _onCharaDel(cha):
 				count += 1
 
 		if count == 0:
-			cha.newChara("cFFXIV_zTatalu", cha.cell)
+			var tata = sys.main.newChara("cFFXIV_zTatalu", 1)
+			sys.main.map.add_child(tata)
+			tata.isSumm = true
 			killSelf()
 
 
@@ -193,10 +197,10 @@ func healPlayer(cha):
 	# 回复玩家生命
 	if !cha.isSumm and cha.team == 1:
 		match cha.lv:
-			1: sys.main.player.hp += 1
-			2: sys.main.player.hp += 2
-			3: sys.main.player.hp += 3
-			4: sys.main.player.hp += 5
+			1: sys.main.player.hp += 2
+			2: sys.main.player.hp += 4
+			3: sys.main.player.hp += 7
+			4: sys.main.player.hp += 10
 
 
 func killSelf():

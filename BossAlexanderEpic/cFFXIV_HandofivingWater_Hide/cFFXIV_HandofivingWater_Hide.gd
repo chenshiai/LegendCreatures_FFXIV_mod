@@ -3,7 +3,7 @@ extends "../../2098858773/BossChara.gd"
 var Summoner = null
 
 var SKILL_TXT = """{c_base}亚历山大绝境战 第一阶段
-[离别之手]：
+{c_skill}[离别之手]{/c}：
 	当与[有生命活水]距离较近（小于等于2）时，变为拳头，10s后造成全屏[极大]伤害；
 	当与[有生命活水]距离较远（大于2）时，变为布，10s后造成全屏[极大]伤害；{/c}"""
 
@@ -40,6 +40,7 @@ func parting():
 
 	Chant.chantStart("离别之手", 10)
 	yield(reTimer(10), "timeout")
+	print(isDeath, Summoner.isDeath)
 	if att.hp <= 0 and !self.isDeath and !Summoner.isDeath:
 		return
 	self.img.set_pivot_offset(self.img.rect_size / 2)
@@ -48,11 +49,11 @@ func parting():
 	var eff = Utils.draw_effect("lightBlue", position, Vector2(0, -10), 15, 10)
 	eff.show_on_top = false
 
-	if cellRan(Summoner.cell) <= 2 and status == "near":
-		Ace()
-	elif cellRan(Summoner.cell) >2 and status == "far":
-		Ace()
-	yield(reTimer(1), "timeout")
+	if cellRan(Summoner.cell) <= 2 and status == "near" and STAGE == "p1":
+		Summoner.Ace()
+	elif cellRan(Summoner.cell) >2 and status == "far" and STAGE == "p1":
+		Summoner.Ace()
+
 	if att.hp <= 0:
 		return
 	self.img.set_rotation_degrees(0)
