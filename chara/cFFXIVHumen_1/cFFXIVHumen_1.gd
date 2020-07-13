@@ -1,12 +1,10 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
-
-func _info():
-	pass
+const FFData = preload("./charaData.gd")
 
 func _extInit():
 	._extInit()
 	OCCUPATION = "MeleeDPS"
-	chaName = "战士"
+	chaName = FFData.name_1
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4.7
 	attCoe.atk = 4
@@ -16,8 +14,7 @@ func _extInit():
 	evos = ["cFFXIVHumen_1_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_Shiver", 10)
-	addSkillTxt("[守护]：受到的伤害减少20%")
-	addSkillTxt("[战栗]：冷却10s，立即治疗10%的最大生命值。然后最大生命值提高20%，受到的治疗量提高20%，持续10s")
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
 func _connect():
 	._connect()

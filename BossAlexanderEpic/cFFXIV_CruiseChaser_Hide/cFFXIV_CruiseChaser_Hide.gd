@@ -37,7 +37,7 @@ func _extInit():
 	lv = 4
 	attCoe.atkRan = 2
 	addSkillTxt(TEXT.format(SKILL_TXT, pwConfig))
-	
+
 func _init():
 	._init()
 	STAGE = "p1"
@@ -71,7 +71,7 @@ func _onBattleStart():
 	}
 	skillStrs[1] = (TEXT.format(SKILL_TXT, pwConfig))
 	self.visible = false
-	
+
 	for cha in sys.main.btChas:
 		if cha.team == 1:
 			BUFF_LIST.b_StaticTimeUnlock.new({"cha": cha, "dur": 34})
@@ -106,7 +106,8 @@ func limitCutting():
 	Utils.draw_shadow(img, position + Vector2(0, -250), position, 60)
 	var rotation = atan2(target.position.y - position.y, target.position.x - position.x)
 	yield(reTimer(1), "timeout")
-	Utils.draw_effect_out(Path + "/effects/limitCutting", position, Vector2(-95, 0), 15, 1, false, rotation)
+	var effLimit = Utils.draw_effect_out(Path + "/effects/limitCutting", position, Vector2(-95, 0), 15, 1, false, rotation)
+	effLimit.show_on_top = false
 	var chas = []
 	for area in limitCuttingArea:
 		var v = mv + area
@@ -146,6 +147,8 @@ func justiceKicks():
 		sys.main.map.add_child(CruiseChaser)
 		if CruiseChaser:
 			CruiseChaser._onBattleStart()
+		else:
+			killSelf()
 	startP2()
 
 func photonGun():
@@ -157,7 +160,7 @@ func photonGun():
 	Utils.draw_effect("energyStorage", Vector2(150, 150), Vector2(0, 0), 13, 6)
 	yield(reTimer(0.2), "timeout")
 	Utils.draw_effect("energyStorage", Vector2(500, 200), Vector2(0, 0), 13, 6)
-	
+
 	if att.hp <= 0:
 		return
 	for cha in getAllChas(1):
@@ -184,7 +187,7 @@ func collimation():
 	yield(reTimer(4), "timeout")
 	if att.hp <= 0:
 		return
-	
+
 	var cellList = []
 	for cha in getAllChas(1):
 		cellList.append(cha.cell)

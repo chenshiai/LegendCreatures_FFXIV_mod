@@ -5,11 +5,11 @@ func _info():
 
 func _extInit():
 	._extInit()
-	chaName = "无双之士"
+	chaName = FFData.name_2
 	lv = 3
 	evos = []
 	addCdSkill("skill_Tsubame", 14)
-	addSkillTxt("[燕回返]：冷却14s，发动上一次使用的居合术，并且使伤害提高50%")
+	addSkillTxt(FFData.SKILL_TEXT_1)
 
 func _connect():
 	._connect()

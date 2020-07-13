@@ -1,18 +1,15 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
+const FFData = preload("./charaData.gd")
 
 const PLUSHP = 0.05 # 恢复量
 const BLOODSPILLER_PW = 2.90 # 血溅倍率
 var atkCount = 0 # 攻击次数
 var darkCount = 0 # 暗黑值
 
-var SKILL_TXT_1 = """[深恶痛绝]：{TPassive}战斗开始时，魔法防御提高10%
-[噬魂斩]：{TPassive}第三次普通攻击造成[110%]的伤害，并恢复自身5%的HP
-[血溅]：冷却10s，对目标造成[290%]的{TPhyHurt}"""
-
 func _extInit():
 	._extInit()
 	OCCUPATION = "MeleeDPS"
-	chaName = "暗黑骑士"
+	chaName = FFData.name_1
 	attCoe.atkRan = 1
 	attCoe.maxHp = 5
 	attCoe.atk = 3.6
@@ -22,8 +19,8 @@ func _extInit():
 	evos = ["cFFXIVAolong_1_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_Bloodspiller", 10)
-	addSkillTxt("暗黑值：0 / 700")
-	addSkillTxt(TEXT.format(SKILL_TXT_1))
+	addSkillTxt(FFData.meterage % [0])
+	addSkillTxt(TEXT.format(FFData.SKILL_TXT))
 
 func _connect():
 	._connect()

@@ -172,7 +172,7 @@ func wave(cell, chaCell, show = false):
 
 	var eff2 = Utils.draw_effect("wave", start, Vector2(-125, 0), 8, 3, false, rotation)
 	eff2.show_on_top = false
-	
+
 	var chas = Utils.lineChas(cell, chaCell, 15)
 
 	for cha in chas:
@@ -201,21 +201,23 @@ func waves2():
 	for cha in getAllChas(1):
 		wave(self.cell, cha.cell, false)
 	aiOn = true
-	
+
 # 离别之手
 func parting():
 	HandoWater.parting()
 
 func waterPolo():
 	queue_free_eff()
+	yield(reTimer(1), "timeout")
 	for item in mapEffect:
 		var startPos = item.cell * 100
-		var eff = Utils.draw_effect("waterBall", startPos, Vector2(0,-30), 0)
-		eff._initFlyPos(startPos + (self.position - startPos).normalized() * 800, 50)
-		eff.show_on_top = true
-		eff.connect("onInCell", self, "effInCell")
+		item.effect = Utils.draw_effect("waterBall", startPos, Vector2(0,-30), 0)
+		item.effect._initFlyPos(startPos + (self.position - startPos).normalized() * 800, 50)
+		item.effect.show_on_top = true
+		item.effect.connect("onInCell", self, "effInCell")
 
 func effInCell(cell):
+	queue_free_eff()
 	if att.hp <= 0 and !tarchwater:
 		return
 	tarchwater = true

@@ -1,11 +1,8 @@
 extends "../cFFXIVAolong_3_1/cFFXIVAolong_3_1.gd"
 
-func _info():
-	pass
-
 func _extInit():
 	._extInit()
-	chaName = "夕雾-传奇"
+	chaName = FFData.name_3
 	attCoe.atkRan = 2
 	attCoe.maxHp = 4.1
 	attCoe.atk = 5.2
@@ -14,9 +11,7 @@ func _extInit():
 	lv = 4
 	evos = []
 	addCdSkill("skill_ArmorCrush", 16)
-	addSkillTxt("[强甲破点突]：冷却16s，开局释放一次，削弱目标的15%的双抗，若目标的仇恨不是自己，则数值提高为30%。持续7s")
-
-
+	addSkillTxt(FFData.SKILL_TEXT_2)
 
 func _connect():
 	._connect()

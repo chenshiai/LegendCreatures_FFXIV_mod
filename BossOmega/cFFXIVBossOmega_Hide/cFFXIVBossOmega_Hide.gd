@@ -1,4 +1,4 @@
-extends "./BossChara.gd"
+extends "../../2098858773/BossChara.gd"
 
 const BERSERKERTIME = 190 # 狂暴时间
 

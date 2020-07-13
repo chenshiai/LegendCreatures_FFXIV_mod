@@ -1,4 +1,5 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
+const FFData = preload("./charaData.gd")
 
 const TRICKATTACK_PW = 3.0 # 攻其不备威力
 const FUMA_PW = 5.0 # 风魔手里剑威力
@@ -11,18 +12,11 @@ var colorConfig = {
 	"chi": "[color=#ffae57]『地』[/color]", # 1
 	"jin": "[color=#fdff57]『人』[/color]" # 2
 }
-var SKILL_TXT_1 = TEXT.format("""[隐遁]：{TPassive}获得30%的闪避，移动速度提高50
-[攻其不备]：冷却15s，对目标造成[300%]的{TPhyHurt}，并目标受到的任何伤害增加20%，持续10s{c_base}
-[忍术]：冷却11s，从{ten}/{chi}/{jin}中连续结出两个手印，并根据结印顺序释放以下忍术
-[风魔手里剑]：两个相同手印，对魔法强度最高的一名敌人造成{c_phy}[500%]{/c}的{TPhyHurt}
-[火遁之术]：{chi}{ten}/{jin}{ten}对目标及周围2格的敌人造成{c_phy}[150%]{/c}的{TMgiHurt}，并附加5层[烧灼]
-[雷遁之术]：{ten}{chi}/{jin}{chi}对目标造成{c_phy}[480%]{/c}的{TMgiHurt}
-[冰遁之术]：{ten}{jin}/{chi}{jin}对目标及周围2格的敌人造成{c_phy}[150%]{/c}的{TMgiHurt}，并附加5层[结霜]{/c}""", colorConfig)
 
 func _extInit():
 	._extInit()
 	OCCUPATION = "MeleeDPS"
-	chaName = "忍者"
+	chaName = FFData.name_1
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4
 	attCoe.atk = 4.1
@@ -35,7 +29,7 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_TrickAttack", 15)
 	addCdSkill("skill_Ninjutsu", 11)
-	addSkillTxt(SKILL_TXT_1)
+	addSkillTxt(TEXT.format(FFData.SKILL_TXT, colorConfig))
 
 
 func _connect():
@@ -65,7 +59,7 @@ func ninjutsu():
 	for i in range(2):
 		var n = sys.rndRan(0, 2)
 		match n:
-			0: 
+			0:
 				Utils.draw_efftext("天", position, "#7ed9ff")
 			1:
 				Utils.draw_efftext("地", position, "#ffae57")
@@ -80,7 +74,7 @@ func ninjutsu():
 	if Mudra[0] == Mudra[1]:
 		fuma()
 		return
-	
+
 	match Mudra[1]:
 		0: katon()
 		1: raiton()
@@ -114,7 +108,7 @@ func hyoton():
 			FFHurtChara(i, att.atk * HYOTON_PW, MGI, SKILL)
 			i.addBuff(b_jieShuang.new(5))
 
-# 火遁之术			
+# 火遁之术
 func katon():
 	if Assassinate:
 		Assassinate = false

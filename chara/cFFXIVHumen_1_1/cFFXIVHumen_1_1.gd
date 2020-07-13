@@ -1,17 +1,16 @@
 extends "../cFFXIVHumen_1/cFFXIVHumen_1.gd"
 
 const FELLCLEAVE_PW = 3.50 # 裂石飞环威力
-var fc = false # 是否准备就绪	
+var fc = false # 是否准备就绪
 
 func _extInit():
 	._extInit()
-	chaName = "纯爱之斧"
+	chaName = FFData.name_2
 	lv = 3
 	evos = []
 	addCdSkill("skill_FellCleave", 4)
 	addCdSkill("skill_InnerRelease", 16)
-	addSkillTxt(TEXT.format("[裂石飞环]：冷却4s，下一次普通攻击对目标造成[350%]的{TPhyHurt}"))
-	addSkillTxt("[原初的解放]：冷却16s，获得100%的暴击率提升，持续8s")
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
 
 
 func _connect():

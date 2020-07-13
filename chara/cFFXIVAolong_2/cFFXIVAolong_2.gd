@@ -1,4 +1,5 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
+const FFData = preload("./charaData.gd")
 
 const HIGANBANE_PW = 2.50 # 一个印记威力
 const FIVESWORD_PW = 3.60 # 两个印记威力
@@ -13,13 +14,10 @@ var beforIaijutsu = 0 # 上一次雪月花的威力
 
 signal swordPpressure
 
-var SKILL_TXT_1 = TEXT.format("""[居合术]：每第6次攻击后，下一次攻击将发动[纷乱雪月花]
-[纷乱雪月花]：对目标造成[250%][360%][800%]的{TPhyHurt}，印记种类越多伤害越高""")
-
 func _extInit():
 	._extInit()
 	OCCUPATION = "MeleeDPS"
-	chaName = "武士"
+	chaName = FFData.name_1
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4
 	attCoe.atk = 4.2
@@ -30,8 +28,7 @@ func _extInit():
 	lv = 2
 	evos = ["cFFXIVAolong_2_1"]
 	atkEff = "atk_dao"
-	addSkillTxt(TEXT.format("[雪/月/花]：{TPassive}每2次攻击随机获得[雪][月][花]印记，攻击力提升10%，攻速提升10%，技能可以产生暴击"))
-	addSkillTxt(SKILL_TXT_1)
+	addSkillTxt(TEXT.format(FFData.SKILL_TXT))
 
 func _connect():
 	._connect()
@@ -57,7 +54,7 @@ func normalAtkChara(cha):
 
 func _castCdSkill(id):
 	._castCdSkill(id)
-		
+
 func _onAtkInfo(atkInfo: AtkInfo):
 	._onAtkInfo(atkInfo)
 	if atkInfo.atkCha == self and atkInfo.atkType == Chara.AtkType.SKILL:
