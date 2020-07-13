@@ -1,11 +1,8 @@
 extends "../cFFXIVLarafel_2_1/cFFXIVLarafel_2_1.gd"
 
-func _info():
-	pass
-
 func _extInit():
 	._extInit()
-	chaName = "帕帕力莫-传奇"
+	chaName = FFData.name_3
 	attCoe.maxHp = 4
 	attCoe.atk = 3
 	attCoe.mgiAtk = 6
@@ -14,8 +11,7 @@ func _extInit():
 	attAdd.mgiAtkL += 0.3
 	lv = 4
 	evos = []
-	addSkillTxt(TEXT.format("[最好的学生]：{TPassive}提高30%的法强"))
-
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))
 
 
 func _connect():

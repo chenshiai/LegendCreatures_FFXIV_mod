@@ -188,7 +188,7 @@ func draw_ui_button(text, position, target, callback, config):
 # @param {Vector2} startPositon - 起点
 # @param {Vector2} endPositon - 终点
 # @param {number} speed - 消逝速度
-func draw_shadow(img, startPositon:, endPositon, speed = 25):
+func draw_shadow(img, startPositon, endPositon, speed = 25):
 	var distance = endPositon - startPositon
 	var rs = preload("res://core/ying.tscn")
 	var n = distance.length() / speed

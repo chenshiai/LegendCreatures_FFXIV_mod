@@ -1,16 +1,12 @@
 extends "../cFFXIVRuga_1/cFFXIVRuga_1.gd"
 
-func _info():
-	pass
-
 func _extInit():
 	._extInit()
-	chaName = "冠军之剑"
+	chaName = FFData.name_2
 	lv = 3
 	evos = []
 	addCdSkill("skill_DivineVeil", 26)
-	addSkillTxt("[圣光幕帘]：冷却26s，技能开启后的5s内，若自身有受到治疗，则为周围其他队友附加护盾，可以抵消[骑士最大生命值10%]的伤害，持续10s")
-	addSkillTxt(TEXT.format("[盾阵]：{TPassive}受到攻击时有30%的概率减少15%的伤害。"))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
 	if not is_connected("onPlusHp", self, "divineVeilTodo"):
 		connect("onPlusHp", self, "divineVeilTodo")
 

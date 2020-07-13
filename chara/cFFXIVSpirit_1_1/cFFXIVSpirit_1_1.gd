@@ -1,17 +1,13 @@
 extends "../cFFXIVSpirit_1/cFFXIVSpirit_1.gd"
 
-func _info():
-	pass
-
 func _extInit():
 	._extInit()
-	chaName = "东天之星-昼"
+	chaName = FFData.name_2
 	lv = 3
 	attAdd.mgiAtkL += 0.10
 	evos = []
 	addCdSkill("skill_Horoscope", 25)
-	addSkillTxt("[袖内抽卡]：冷却25s，连续使用三次[抽卡]")
-	addSkillTxt(TEXT.format("[星位合图]：{TPassive}提高10%的法强"))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
 
 func _connect():
 	._connect()

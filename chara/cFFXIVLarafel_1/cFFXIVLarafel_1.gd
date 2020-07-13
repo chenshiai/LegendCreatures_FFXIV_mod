@@ -1,12 +1,10 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
-
-func _info():
-	pass
+var FFData = preload("./charaData.gd").getCharaData()
 
 func _extInit():
 	._extInit()
 	OCCUPATION = "MagicDPS"
-	chaName = "白魔法师"
+	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
 	attCoe.atk = 2
@@ -19,9 +17,7 @@ func _extInit():
 	addCdSkill("skill_CureII", 9)
 	addCdSkill("skill_CureIII", 14)
 	addCdSkill("skill_Regen", 18)
-	addSkillTxt("""[救疗]：冷却9s，为生命最低的友方单位恢复[80%]法强的生命值
-[医济]：冷却14s，为全体友方单位恢复[50%]法强的HP，并附加[再生]效果，持续8s""")
-	addSkillTxt("[再生]：冷却18s，为生命最低的友方单位附加再生，每秒恢复[10%]法强的HP，持续10s")
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
 const CUREII_PW = 0.80 # 救疗威力
 const CUREIII_PW = 0.50 # 医济威力

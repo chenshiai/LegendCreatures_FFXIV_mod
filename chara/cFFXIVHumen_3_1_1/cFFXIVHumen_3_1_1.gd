@@ -1,11 +1,8 @@
 extends "../cFFXIVHumen_3_1/cFFXIVHumen_3_1.gd"
 
-func _info():
-	pass
-
 func _extInit():
 	._extInit()
-	chaName = "娜休梅拉-传奇"
+	chaName = FFData.name_3
 	attCoe.maxHp = 4
 	attCoe.atk = 5
 	attCoe.def = 3.2
@@ -13,7 +10,7 @@ func _extInit():
 	lv = 4
 	evos = []
 	addCdSkill("skill_Devilment", 18)
-	addSkillTxt("[进攻之探戈]：冷却18s，自身与舞伴的攻击力提高20%，持续8s")
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))
 
 
 func _connect():

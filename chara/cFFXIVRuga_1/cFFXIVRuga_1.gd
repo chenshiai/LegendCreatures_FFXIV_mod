@@ -1,12 +1,10 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
-
-func _info():
-	pass
+var FFData = preload("./charaData.gd").getCharaData()
 
 func _extInit():
 	._extInit()
 	OCCUPATION = "MeleeDPS"
-	chaName = "骑士"
+	chaName = FFData.name_1
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4.5
 	attCoe.atk = 3.7
@@ -18,9 +16,7 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_Grace", 15)
 	addCdSkill("skill_Authority", 6)
-	addSkillTxt(TEXT.format("[钢铁信念]：{TPassive}战斗开始后，提高10%的物理防御，受到的伤害减少20%"))
-	addSkillTxt(TEXT.format("""[深仁厚泽]：冷却15s，为生命最低的友方单位使用治疗魔法，恢复[1200%]法强的生命值
-[王权剑]：冷却6s，对目标造成[350%]的{TPhyHurt}"""))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
 const GRACE_PW = 12 # 深仁厚泽威力
 const AUTHORITY_PW = 3.50 # 王权剑威力

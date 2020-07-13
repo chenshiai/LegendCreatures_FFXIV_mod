@@ -2,13 +2,11 @@ extends "../cFFXIVHumen_3/cFFXIVHumen_3.gd"
 
 func _extInit():
 	._extInit()
-	chaName = "心动之舞"
+	chaName = FFData.name_2
 	lv = 3
 	evos = []
 	addCdSkill("skill_SaberDance", 13)
-	addSkillTxt(TEXT.format("[剑舞]：冷却13s，对目标及周围2格敌人造成[100%]的{TPhyHurt}"))
-	addSkillTxt(TEXT.format("""[防守之桑巴]：{TPassive}战斗开始时，为自身和所有队友附加[防守之桑巴]，受到的伤害减少10%
-不可与吟游诗人的[行吟]、机工士的[策动]效果叠加"""))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
 
 const SABERDANCE_PW = 1 # 剑舞威力
 

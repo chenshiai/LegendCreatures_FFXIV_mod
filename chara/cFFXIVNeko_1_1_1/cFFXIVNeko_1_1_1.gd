@@ -1,11 +1,8 @@
 extends "../cFFXIVNeko_1_1/cFFXIVNeko_1_1.gd"
 
-func _info():
-	pass
-
 func _extInit():
 	._extInit()
-	chaName = "阿尔菲诺-传奇"
+	chaName = FFData.name_3
 	attCoe.maxHp = 4.3
 	attCoe.atk = 3
 	attCoe.mgiAtk = 5
@@ -13,8 +10,7 @@ func _extInit():
 	attCoe.mgiDef = 4.5
 	lv = 4
 	evos = []
-	addSkillTxt(TEXT.format("[我的梦想，就是拯救世界！]：{TPassive}护盾生成量变为[治疗量的225%]"))
-
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))
 
 
 func _connect():

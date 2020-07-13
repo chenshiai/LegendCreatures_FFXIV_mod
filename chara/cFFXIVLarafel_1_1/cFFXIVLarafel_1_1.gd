@@ -2,13 +2,13 @@ extends "../cFFXIVLarafel_1/cFFXIVLarafel_1.gd"
 
 func _extInit():
 	._extInit()
-	chaName = "角尊之白"
+	chaName = FFData.name_2
 	lv = 3
 	evos = []
 	addCdSkill("skill_Benediction", 20)
-	addSkillTxt("[天赐祝福]：冷却20s，为生命最低的友方单位恢复至满血，第一次使用后，此技能冷却延长至60s")
 	addCdSkill("skill_StornIII", 4)
-	addSkillTxt(TEXT.format("[闪耀]：冷却4s，对目标造成[100%]的{TMgiHurt}"))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
+
 
 const STORNIII_PW = 1.0 # 崩石威力
 
@@ -19,7 +19,6 @@ func _onBattleStart():
 	._onBattleStart()
 	var sk = getSkill("skill_Benediction")
 	sk.cd = 20
-	skillStrs[2] = "[天赐祝福]：冷却20s，为生命最低的友方单位恢复至满血，第一次使用后，此技能冷却延长至60s"
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -42,4 +41,3 @@ func benediction():
 	
 	var sk = getSkill("skill_Benediction")
 	sk.cd = 60
-	skillStrs[2] = "[天赐祝福]：冷却60s，为生命最低的友方单位恢复至满血（已经使用过一次）"

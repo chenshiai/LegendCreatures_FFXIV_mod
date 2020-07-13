@@ -1,12 +1,10 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
-
-func _info():
-	pass
+var FFData = preload("./charaData.gd").getCharaData()
 
 func _extInit():
 	._extInit()
 	OCCUPATION = "DistanceDPS"
-	chaName = "赤魔法师"
+	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
 	attCoe.atk = 3
@@ -17,10 +15,8 @@ func _extInit():
 	evos = ["cFFXIVLarafel_3_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_Verthunder", 8)
-	addSkillTxt("白魔元：0 / 100	黑魔元：0 / 100")
-	addSkillTxt(TEXT.format("""[连续咏唱]：{TPassive}攻击型技能会连续释放两次（只触发一次CD效果）
-[赤闪雷/赤疾风]：冷却8s，对目标造成[120%]法强的{TMgiHurt}，随机获得[黑/白]魔元15点
-[魔连攻]：{TPassive}攻击时同时消耗25点黑白魔元，使此次物理攻击造成[500%]的伤害"""))
+	addSkillTxt(FFData.meterage % [0, 0])
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
 const MORGEN = 15 # 释放魔法获得魔元数量
 const MORGEN_MAX = 100 # 魔元上限
@@ -42,7 +38,7 @@ func _onBattleEnd():
 	._onBattleEnd()
 	blackMorgen = 0 # 黑魔元
 	whiteMorgan = 0 # 白魔元
-	skillStrs[0] = "白魔元：%d / 100	黑魔元：%d / 100" % [whiteMorgan, blackMorgen]
+	updateMorgen()
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -60,6 +56,10 @@ func _onAtkChara(atkInfo):
 		whiteMorgan -= REDOUBLEMENT_CAST
 		if self.lv >= 3:
 			verthunder(false, VERFLARE_PW)
+
+func updateMorgen():
+	skillStrs[0] = FFData.meterage % [whiteMorgan, blackMorgen]
+
 
 func morgenLimit():
 	if whiteMorgan > MORGEN_MAX:
@@ -81,6 +81,6 @@ func verthunder(first, pw):
 		whiteMorgan += MORGEN
 
 	morgenLimit()
-	skillStrs[0] = "白魔元：%d / 100	黑魔元：%d / 100" % [whiteMorgan, blackMorgen]
+	updateMorgen()
 	if first:
 		verthunder(false, VERTHUNDER_PW)

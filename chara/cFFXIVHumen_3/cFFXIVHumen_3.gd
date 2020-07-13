@@ -1,9 +1,10 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
+var FFData = preload("./charaData.gd").getCharaData()
 
 func _extInit():
 	._extInit()
 	OCCUPATION = "DistanceDPS"
-	chaName = "舞者"
+	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
 	attCoe.atk = 4
@@ -14,9 +15,7 @@ func _extInit():
 	evos = ["cFFXIVHumen_3_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_DanceStep", 23)
-	addSkillTxt(TEXT.format("[伶俐]：{TPassive}技能可以产生暴击"))
-	addSkillTxt(TEXT.format("[闭式舞姿]：{TPassive}战斗开始时，选择物攻最高与魔攻最高的队友作为舞伴，提高他们与自己的攻击力10%"))
-	addSkillTxt(TEXT.format("[标准舞步]：冷却23s，对四格内的敌人造成[600%]的{TPhyHurt}，同时舞伴与自己的攻击力再提升10%，持续10s"))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
 const DANCESTEP_PW = 6 # 标准舞步威力
 var atkMaxAlly = null # 攻击力最高的队友

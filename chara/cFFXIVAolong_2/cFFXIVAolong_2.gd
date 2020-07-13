@@ -1,5 +1,5 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
-const FFData = preload("./charaData.gd")
+var FFData = preload("./charaData.gd").getCharaData()
 
 const HIGANBANE_PW = 2.50 # 一个印记威力
 const FIVESWORD_PW = 3.60 # 两个印记威力
@@ -28,7 +28,7 @@ func _extInit():
 	lv = 2
 	evos = ["cFFXIVAolong_2_1"]
 	atkEff = "atk_dao"
-	addSkillTxt(TEXT.format(FFData.SKILL_TXT))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
 func _connect():
 	._connect()

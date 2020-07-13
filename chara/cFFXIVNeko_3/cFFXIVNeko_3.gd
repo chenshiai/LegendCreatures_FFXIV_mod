@@ -1,12 +1,10 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
-
-func _info():
-	pass
+var FFData = preload("./charaData.gd").getCharaData()
 
 func _extInit():
 	._extInit()
 	OCCUPATION = "DistanceDPS"
-	chaName = "吟游诗人"
+	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
 	attCoe.atk = 4.1
@@ -18,9 +16,7 @@ func _extInit():
 	addCdSkill("skill_LronJaws", 10)
 	addCdSkill("skill_Ballad", 16)
 	addCdSkill("skill_Paean", 20)
-	addSkillTxt(TEXT.format("""[伶牙俐齿]：冷却10s，对目标发动一次额外的普通攻击，并附加5层[流血][中毒]
-[贤者的叙事谣]：冷却16s，对目标发动一次额外的普通攻击，并使队伍全员攻击伤害提高5%，持续8s，此效果无法叠加
-[大地神的抒情恋歌]：冷却20s，以生命值最少的队员为目标，使其受到的治疗效果提高20%，持续10s"""))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
 func _connect():
 	._connect()

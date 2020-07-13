@@ -1,5 +1,5 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
-const FFData = preload("./charaData.gd")
+var FFData = preload("./charaData.gd").getCharaData()
 
 const PLUSHP = 0.05 # 恢复量
 const BLOODSPILLER_PW = 2.90 # 血溅倍率
@@ -20,7 +20,7 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_Bloodspiller", 10)
 	addSkillTxt(FFData.meterage % [0])
-	addSkillTxt(TEXT.format(FFData.SKILL_TXT))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
 func _connect():
 	._connect()

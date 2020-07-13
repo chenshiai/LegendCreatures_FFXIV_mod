@@ -1,5 +1,5 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
-const FFData = preload("./charaData.gd")
+var FFData = preload("./charaData.gd").getCharaData()
 
 func _extInit():
 	._extInit()

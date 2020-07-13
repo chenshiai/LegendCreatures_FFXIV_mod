@@ -1,11 +1,8 @@
 extends "../cFFXIVNeko_3_1/cFFXIVNeko_3_1.gd"
 
-func _info():
-	pass
-
 func _extInit():
 	._extInit()
-	chaName = "让泰尔-传奇"
+	chaName = FFData.name_3
 	attCoe.maxHp = 4
 	attCoe.atk = 5
 	attCoe.def = 4
@@ -13,7 +10,7 @@ func _extInit():
 	lv = 4
 	evos = []
 	addCdSkill("skill_ApexArrow", 12)
-	addSkillTxt(TEXT.format("[绝峰箭]：冷却12s，射出穿透箭对直线上单位造成[400%]的{TPhyHurt}，并赋予5层[流血]"))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))
 
 const APEXARROW_PW = 4 # 绝峰箭威力
 

@@ -2,11 +2,11 @@ extends "../../2098858773/BossChara.gd"
 
 var limitCutting_pw = 1 # 极限切割威力
 var tornado_pw = 1.2 # 龙卷威力
-var collimation_pw = 0.8 # 照准威力
+var collimation_pw = 1 # 照准威力
 
 var SKILL_TXT = """{c_base}亚历山大绝境战 第二阶段
 
-{c_skill}[极限切割]{/c}：出现在随机一个敌人身边，对其所在位置进行范围斩击，造成{c_phy}[{1}]{/c}的物理伤害，并附加[易伤]，持续4s
+{c_skill}[极限切割]{/c}：出现在随机一个敌人身边，对其所在位置进行范围斩击，造成{c_phy}[{1}]{/c}的物理伤害，并附加[易伤]，持续10s
 然后向随机一个敌人进行冲锋，对冲锋路径上的敌人造成{c_phy}[{1}]{/c}的物理伤害
 {c_skill}[龙卷]{/c}：释放龙卷风，对所有敌人造成{c_phy}[{2}]{/c}的物理伤害
 {c_skill}[光子炮]{/c}：释放光子炮，使所有敌人{c_balance}生命值归1{/c}
@@ -45,9 +45,9 @@ func _init():
 	set_time_axis({
 		"limitCutting": [2, 6, 10, 14, 18, 22, 26, 30],
 		"justiceKicks": [34],
-		"tornado": [44, 75, 105],
+		"tornado": [44, 75, 105, 145, 175],
 		"collimation": [50, 95, 125],
-		"photonGun": [60]
+		"photonGun": [60, 135]
 	})
 	closeReward()
 	FFControl.HpBar.show()
@@ -116,7 +116,7 @@ func limitCutting():
 			chas.append(cha)
 			BUFF_LIST.b_VulnerableSmall.new({
 				"cha": cha,
-				"dur": 4
+				"dur": 10
 			})
 	complexHurt(chas, att.atk * limitCutting_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 

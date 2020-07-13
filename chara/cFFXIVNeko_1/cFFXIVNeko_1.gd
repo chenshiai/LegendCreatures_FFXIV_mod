@@ -1,11 +1,10 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
-func _info():
-	pass
+var FFData = preload("./charaData.gd").getCharaData()
 
 func _extInit():
 	._extInit()
 	OCCUPATION = "MagicDPS"
-	chaName = "学者"
+	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
 	attCoe.atk = 2
@@ -19,9 +18,7 @@ func _extInit():
 	addCdSkill("skill_DeathMgi", 4)
 	addCdSkill("skill_Summon_2", 18)
 	addCdSkill("skill_Summon_3", 20)
-	addSkillTxt(TEXT.format("[死炎法]：冷却4s，对目标造成[90%]的{TMgiHurt}"))
-	addSkillTxt("""[鼓舞激励之策]：冷却10s，为生命最低的友方单位恢复[60%]法强的HP，并为其附加[鼓舞]
-[鼓舞]：可以抵消[治疗量125%]的伤害，持续10s，无法与占星术士的[黑夜领域]叠加""")
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
 const ADLOQUIUM_PW = 0.60 # 鼓舞激励之策威力
 const DEATHMGI_PW = 0.90 # 死炎法威力

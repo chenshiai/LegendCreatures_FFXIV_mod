@@ -1,16 +1,11 @@
 extends "../cFFXIVSpirit_2/cFFXIVSpirit_2.gd"
 
-func _info():
-	pass
-
 func _extInit():
 	._extInit()
-	chaName = "东天之星-夜"
+	chaName = FFData.name_2
 	lv = 3
 	evos = []
-	addSkillTxt(TEXT.format("""[小奥秘卡]：{TPassive}每次使用[抽卡]后，随机释放以下效果
-[王冠之领主]：对攻击目标造成[100%]法强的{TMgiHurt}
-[王冠之贵妇]：为生命值最低的友方单位恢复[100%]法强的HP"""))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
 
 const LORDOFCROWNS_PW = 1
 const LADYOFCROWNS_PW = 1

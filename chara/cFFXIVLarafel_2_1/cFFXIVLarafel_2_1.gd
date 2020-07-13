@@ -1,17 +1,13 @@
 extends "../cFFXIVLarafel_2/cFFXIVLarafel_2.gd"
 
-func _info():
-	pass
-
 func _extInit():
 	._extInit()
-	chaName = "魔石之黑"
+	chaName = FFData.name_2
 	lv = 3
 	evos = []
 	addCdSkill("skill_LeyLines", 50)
 	addCdSkill("skill_Xenoglossy", 30)
-	addSkillTxt("[黑魔纹]：冷却50s，开局立即释放一次，加快自身15%的技能冷却，持续30s")
-	addSkillTxt(TEXT.format("[异言]：冷却30s，对目标造成[750%]法强的{TMgiHurt}"))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
 
 const XENOGLOSSY_PW = 7.5 # 异言威力
 

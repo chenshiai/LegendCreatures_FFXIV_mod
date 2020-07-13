@@ -1,5 +1,5 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
-const FFData = preload("./charaData.gd")
+var FFData = preload("./charaData.gd").getCharaData()
 
 const TRICKATTACK_PW = 3.0 # 攻其不备威力
 const FUMA_PW = 5.0 # 风魔手里剑威力
@@ -29,7 +29,7 @@ func _extInit():
 	atkEff = "atk_dao"
 	addCdSkill("skill_TrickAttack", 15)
 	addCdSkill("skill_Ninjutsu", 11)
-	addSkillTxt(TEXT.format(FFData.SKILL_TXT, colorConfig))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT, colorConfig))
 
 
 func _connect():

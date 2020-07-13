@@ -1,17 +1,13 @@
 extends "../cFFXIVSpirit_3/cFFXIVSpirit_3.gd"
 
-func _info():
-	pass
-
 func _extInit():
 	._extInit()
-	chaName = "红血之龙"
+	chaName = FFData.name_2
 	lv = 3
 	evos = []
 	attAdd.atkL += 0.15
 	addCdSkill("skill_Stardiver", 27)
-	addSkillTxt(TEXT.format("""[坠星冲]：冷却27s，高高跃起，向随机一名敌人猛冲，对落点周围2格的敌人造成[700%]的{TPhyHurt}
-[战斗连祷]：战斗开始后，使所有队友暴击率提高10%"""))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
 
 const STARDIVER_PW = 7.3 # 坠星冲倍率
 

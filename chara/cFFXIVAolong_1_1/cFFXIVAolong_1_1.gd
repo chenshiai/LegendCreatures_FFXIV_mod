@@ -6,7 +6,7 @@ func _extInit():
 	lv = 3
 	evos = []
 	addCdSkill("skill_DarkMissionary", 12)
-	addSkillTxt(TEXT.format(FFData.SKILL_TXT_1))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
 
 func _connect():
 	._connect()

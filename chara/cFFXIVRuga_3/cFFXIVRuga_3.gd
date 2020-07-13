@@ -1,12 +1,10 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
-
-func _info():
-	pass
+var FFData = preload("./charaData.gd").getCharaData()
 
 func _extInit():
 	._extInit()
 	OCCUPATION = "DistanceDPS"
-	chaName = "机工士"
+	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
 	attCoe.atk = 4
@@ -18,9 +16,7 @@ func _extInit():
 	atkEff = "atk_dang"
 	addCdSkill("skill_Autoturret", 3)
 	addCdSkill("skill_Wildfire", 17)
-	addSkillTxt(TEXT.format("""[车式浮空炮塔]：冷却3s，机工士自带的浮空炮塔进行援护射击造成[50%]的{TPhyHurt}
-[超载]：{TPassive}浮空炮攻击5次后进入超载，机工士攻击力提升20%，持续8s。
-[野火]：冷却17s，开局释放一次。对目标附加野火状态，持续7s，结束后爆炸造成[野火期间的攻击次数 x 200%]的{TPhyHurt}"""))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
 const AUTOTURRET_PW = 0.50 # 车式浮空炮威力
 const WILDFIRE_PW = 2.00 # 野火提升威力

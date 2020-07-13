@@ -1,11 +1,8 @@
 extends "../cFFXIVLarafel_1_1/cFFXIVLarafel_1_1.gd"
 
-func _info():
-	pass
-
 func _extInit():
 	._extInit()
-	chaName = "嘉恩·艾·神纳-传奇"
+	chaName = FFData.name_3
 	attCoe.maxHp = 4
 	attCoe.mgiAtk = 5
 	attCoe.def = 3.5
@@ -13,7 +10,7 @@ func _extInit():
 	lv = 4
 	evos = []
 	addCdSkill("skill_Assize", 19)
-	addSkillTxt(TEXT.format("[法令]：冷却19s，对周围3格内的敌人造成[270%]法强的{TMgiHurt}，同时为范围内的队友恢复[90%]法强的HP"))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))
 
 
 const ASSIZE_PW = 2.70 # 法令伤害威力

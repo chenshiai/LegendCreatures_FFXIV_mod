@@ -1,11 +1,8 @@
 extends "../cFFXIVLarafel_3_1/cFFXIVLarafel_3_1.gd"
 
-func _info():
-	pass
-
 func _extInit():
 	._extInit()
-	chaName = "西·如恩·提亚-传奇"
+	chaName = FFData.name_3
 	attCoe.maxHp = 4
 	attCoe.atk = 4
 	attCoe.mgiAtk = 5.5
@@ -13,7 +10,7 @@ func _extInit():
 	attCoe.mgiDef = 4.3
 	lv = 4
 	evos = []
-	addSkillTxt(TEXT.format("[抗争之力]：{TPassive}当黑白魔元失衡时（差距大于30），释放[赤疾风/赤闪雷]会使量少的魔元提高10点"))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))
 
 
 const MORGEN_UP = 10

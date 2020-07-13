@@ -2,7 +2,7 @@ extends "../cFFXIVHumen_2_1/cFFXIVHumen_2_1.gd"
 
 func _extInit():
 	._extInit()
-	chaName = "桑克瑞德-传奇"
+	chaName = FFData.name_3
 	attCoe.maxHp = 6.3
 	attCoe.atk = 4.8
 	attCoe.def = 5.8
@@ -10,7 +10,7 @@ func _extInit():
 	lv = 4
 	evos = []
 	addCdSkill("skill_BlastingZone", 10)
-	addSkillTxt(TEXT.format("[爆破领域]：冷却10s，对目标造成[380%]的{TPhyHurt}"))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))
 
 
 const BLASTINGZONE_PW = 3.80 # 爆破领域威力

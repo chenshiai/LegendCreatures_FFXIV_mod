@@ -1,12 +1,10 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
-
-func _info():
-	pass
+var FFData = preload("./charaData.gd").getCharaData()
 
 func _extInit():
 	._extInit()
 	OCCUPATION = "MagicDPS"
-	chaName = "召唤师"
+	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
 	attCoe.atk = 2
@@ -18,9 +16,7 @@ func _extInit():
 	atkEff = "atk_dang"
 	addCdSkill("skill_RuinIII", 4)
 	addCdSkill("skill_Fester", 10)
-	addSkillTxt(TEXT.format("""[召唤I]：战斗开始时，随机召唤[迦楼罗之灵/伊弗利特之灵/泰坦之灵]与召唤师共同作战
-[毁荡]：冷却4s，对目标造成[90%]法强的{TMgiHurt}
-[溃烂爆发]：冷却10s，对目标造成[120%]法强的{TMgiHurt}，根据目标当前debuff数量提高伤害，每个提高[30%]威力"""))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
 const RUINIII_PW = 0.90 # 毁荡威力
 const FESTER_PW = 1.2 # 溃烂爆发威力

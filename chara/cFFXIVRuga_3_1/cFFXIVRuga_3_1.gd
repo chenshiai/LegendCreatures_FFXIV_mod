@@ -1,17 +1,12 @@
 extends "../cFFXIVRuga_3/cFFXIVRuga_3.gd"
 
-func _info():
-	pass
-
 func _extInit():
 	._extInit()
-	chaName = "咆哮之火"
+	chaName = FFData.name_2
 	lv = 3
 	evos = []
 	addCdSkill("skill_Drill", 12)
-	addSkillTxt(TEXT.format("""[钻头]：冷却12s，对目标造成[400%]的{TPhyHurt}
-[策动]：{TPassive}战斗开始时，为自身和所有队友附加[策动]，受到的伤害减少10%
-不可与吟游诗人的[行吟]、舞者的[防守之桑巴]效果叠加"""))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
 
 const DRILL_PW = 4 # 钻头威力
 

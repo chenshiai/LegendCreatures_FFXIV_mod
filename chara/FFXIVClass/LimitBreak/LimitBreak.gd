@@ -42,8 +42,9 @@ func draw_limitBreak():
 
 
 func init_limitBreak():
+	var layer = sys.main.guankaMsg.lvStep
 	allAtt = Utils.Calculation.getEnemyPower(2)
-	limitBreakVal = (allAtt["atk"] + allAtt["mgiAtk"]) * 50
+	limitBreakVal = (allAtt["atk"] + allAtt["mgiAtk"] + layer + 40) * 50
 
 
 func reset_limitBreak():

@@ -1,16 +1,12 @@
 extends "../cFFXIVNeko_2/cFFXIVNeko_2.gd"
 
-func _info():
-	pass
-
 func _extInit():
 	._extInit()
-	chaName = "首席之唤"
+	chaName = FFData.name_2
 	lv = 3
 	evos = []
 	addCdSkill("skill_Dreadwyrm", 24)
-	addSkillTxt(TEXT.format("""[龙神附体]：冷却24s，自身魔法强度提高20%，持续8s
-[龙神迸发]：{TPassive}龙神附体时，对目标及周围2格内的敌人造成[700%]法强的{TMgiHurt}"""))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))
 
 const ENKINDLEBAHAMUT_PW = 7 # 龙神迸发威力
 

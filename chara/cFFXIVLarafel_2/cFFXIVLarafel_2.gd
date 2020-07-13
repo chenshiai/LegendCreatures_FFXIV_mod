@@ -1,9 +1,10 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
+var FFData = preload("./charaData.gd").getCharaData()
 
 func _extInit():
 	._extInit()
 	OCCUPATION = "MagicDPS"
-	chaName = "黑魔法师"
+	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
 	attCoe.atk = 2
@@ -15,10 +16,7 @@ func _extInit():
 	atkEff = "atk_dang"
 	addCdSkill("skill_FireIII", 26)
 	addCdSkill("skill_Freeze", 4)
-	addSkillTxt(TEXT.format("""[星极火]：{TPassive}[爆炎]释放后，后续的[爆炎]伤害增加30%，延长[玄冰]的冷却
-[灵极冰]：{TPassive}使用[玄冰]后降低[爆炎]的冷却三次，重置[爆炎]的伤害提升阶段"""))
-	addSkillTxt(TEXT.format("""[爆炎]：冷却26s，对目标造成[240%]的{TMgiHurt}
-[玄冰]：冷却4s，对目标及周围一格的敌人造成[150%]的{TMgiHurt}"""))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
 const FIRE_PW = 0.30 # 星极火倍率
 const FREEZE_MAX = 3 # 灵极冰最大值
