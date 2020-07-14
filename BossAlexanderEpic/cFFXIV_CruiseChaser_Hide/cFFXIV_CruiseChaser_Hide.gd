@@ -10,7 +10,7 @@ var SKILL_TXT = """{c_base}亚历山大绝境战 第二阶段
 然后向随机一个敌人进行冲锋，对冲锋路径上的敌人造成{c_phy}[{1}]{/c}的物理伤害
 {c_skill}[龙卷]{/c}：释放龙卷风，对所有敌人造成{c_phy}[{2}]{/c}的物理伤害
 {c_skill}[光子炮]{/c}：释放光子炮，使所有敌人{c_balance}生命值归1{/c}
-{c_skill}[照准]{/c}：对所有敌人所在位置进行轰炸，造成{c_phy}[{3}]{/c}的中范围物理伤害{/c}"""
+{c_skill}[照准]{/c}：对所有敌人所在位置进行轰炸，造成{c_phy}[{3}]{/c}的中范围物理伤害，并附加[易伤]，持续30s{/c}"""
 
 var pwConfig = {
 	"1": "未知",
@@ -201,5 +201,9 @@ func collimation():
 		for area in limitCuttingArea:
 			var v = cell + area
 			var cha = matCha(v)
-			if cha != null and cha != self:
+			if cha != null and cha.team != self.team:
 				FFHurtChara(cha, att.atk * collimation_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+				BUFF_LIST.b_VulnerableSmall.new({
+					"cha": cha,
+					"dur": 30
+				})

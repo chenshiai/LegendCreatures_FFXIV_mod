@@ -19,6 +19,9 @@ static func getCharaData():
 			SKILL_TEXT = """[Grit]：When battle start. Magic defense increased{c_base}(10%){/c}. Reduce damage taken{c_base}(20%){/c}
 [Souleater]：When 3rd normal attack. Damage increased to {c_base}[110%]{/c} and recover HP{c_base}(5%){/c}
 [Bloodspiller]：(10s), Cause {c_phy}[290%]{/c} physical damage"""
+			SKILL_TEXT_1 = """[The Blackest Night]：When BlackBlood achieve 700 points, will release the shield{c_base}(20% of maximum HP){/c}
+[Dark Missionary]：(12s), Reduce magic damage{c_base}(10%)(/c) to all members, lasting 6s"""
+			SKILL_TEXT_2 = "[Living Shadow]：Self damage increased{c_base}(30%){/c}, maximum HP increased"
 		"ja":
 			name_1 = "暗黒の騎士"
 			name_2 = "暗黒の騎士-I"
