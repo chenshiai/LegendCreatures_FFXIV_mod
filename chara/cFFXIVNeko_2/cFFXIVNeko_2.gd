@@ -86,6 +86,6 @@ func recovery():
 	SummonChara = null
 
 func _upS():
-	if SummonChara and (SummonChara.id == "cFFXIV_Summon1" or SummonChara.id == "cFFXIV_Summon3"):
+	if SummonChara and aiCha and (SummonChara.id == "cFFXIV_Summon1" or SummonChara.id == "cFFXIV_Summon3"):
 		SummonChara.normalSpr.position = aiCha.position - position + Vector2(-40, 0)
 

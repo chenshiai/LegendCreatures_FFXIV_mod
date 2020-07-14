@@ -7,7 +7,7 @@ func _extInit():
 	attCoe.atk = 5
 	attCoe.def = 4
 	attCoe.mgiDef = 4
-	attAdd.cri += 0.3
+	attAdd.cri += 0.2
 	lv = 4
 	evos = []
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))

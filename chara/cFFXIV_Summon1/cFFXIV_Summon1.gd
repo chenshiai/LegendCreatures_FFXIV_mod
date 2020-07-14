@@ -19,12 +19,16 @@ func _connect():
 	._connect() 
 
 func skill_lv1():
+	if !Summoner.aiCha or Summoner.isDeath:
+		return
 	normalSpr.position += Vector2(10, -10)
 	Summoner.FFHurtChara(Summoner.aiCha, Summoner.att.mgiAtk * Crimson_pw, PHY, SKILL)
 	yield(reTimer(0.1), "timeout")
 	normalSpr.position -= Vector2(10, -10)
 
 func skill_lv2():
+	if !Summoner.aiCha or Summoner.isDeath:
+		return
 	var cell = Summoner.aiCha.cell
 	var chas = getCellChas(cell, 1)
 	Utils.draw_efftext("烈焰碎击", Summoner.position, "#ff5858")
@@ -33,6 +37,8 @@ func skill_lv2():
 			Summoner.FFHurtChara(i, Summoner.att.mgiAtk * Flaming_pw, MGI, SKILL)
 
 func skill_lv3():
+	if !Summoner.aiCha or Summoner.isDeath:
+		return
 	var cell = Summoner.aiCha.cell
 	var chas = getCellChas(cell, 1)
 	Utils.draw_efftext("地狱之火炎", Summoner.position, "#ff5858")

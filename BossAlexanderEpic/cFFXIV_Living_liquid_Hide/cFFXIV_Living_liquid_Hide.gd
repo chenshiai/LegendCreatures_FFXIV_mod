@@ -77,7 +77,7 @@ func _onBattleStart():
 		"3": "%d%%" % [waves_pw * 100],
 	}
 	skillStrs[1] = (TEXT.format(SKILL_TXT, pwConfig))
-	att.hp = 1000
+	# att.hp = 1000
 
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)

@@ -39,6 +39,7 @@ func _connect():
 	sys.main.connect("onBattleEnd", self, "reward")
 	Retreat.initRetreat()
 	FFChara.openDeathList()
+	
 	for id in CharaList:
 		var cha = sys.main.newChara(id, 1)
 		sys.main.player.addCha(cha)

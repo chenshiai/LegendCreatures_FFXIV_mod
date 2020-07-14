@@ -126,6 +126,8 @@ func limit_treatment():
 					cha.anim.play("del", 100)
 					cha.plusHp(cha.att.maxHp)
 					cha.revive(cha.att.maxHp)
+					cha.set_visible(true)
+					cha.aiOn = true
 				yield(sys.get_tree().create_timer(0.1), "timeout")
 	else:
 		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")

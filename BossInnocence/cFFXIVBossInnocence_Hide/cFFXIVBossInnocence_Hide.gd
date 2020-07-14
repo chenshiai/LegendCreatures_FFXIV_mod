@@ -135,7 +135,7 @@ func wingedReprobation():
 		yield(reTimer(4), "timeout")
 
 		var eff1 = Utils.draw_effect("sword", Vector2(0, y1 * 100), Vector2(0, -50), 0)
-		eff1._initFlyPos(Vector2(800, y1 * 100) , 1600) 
+		eff1._initFlyPos(Vector2(800, y1 * 100) , 1600)
 		var eff2 = Utils.draw_effect("sword", Vector2(0, y2 * 100), Vector2(0, -50), 0)
 		eff2._initFlyPos(Vector2(800, y2 * 100) , 1600)
 		

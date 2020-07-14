@@ -4,7 +4,7 @@ var FFData = preload("./charaData.gd").getCharaData()
 const PLUSHP = 0.05 # 恢复量
 const BLOODSPILLER_PW = 2.90 # 血溅倍率
 var atkCount = 0 # 攻击次数
-var darkCount = 0 # 暗黑值
+var darkCount = 0 # 暗血
 
 func _extInit():
 	._extInit()
@@ -21,9 +21,6 @@ func _extInit():
 	addCdSkill("skill_Bloodspiller", 10)
 	addSkillTxt(FFData.meterage % [0])
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
-
-func _connect():
-	._connect()
 
 func _onBattleStart():
 	._onBattleStart()

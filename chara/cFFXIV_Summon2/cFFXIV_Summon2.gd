@@ -26,6 +26,8 @@ func skill_lv1():
 	normalSpr.position -= Vector2(10, -10)
 
 func skill_lv2():
+	if !Summoner.aiCha or Summoner.isDeath:
+		return
 	var cell = Summoner.aiCha.cell
 	var chas = getCellChas(cell, 1)
 	for i in chas:
@@ -38,6 +40,8 @@ func skill_lv2():
 			})
 
 func skill_lv3():
+	if !Summoner.aiCha or Summoner.isDeath:
+		return
 	var cell = Summoner.aiCha.cell
 	var chas = getCellChas(cell, 1)
 	Utils.draw_efftext("大气爆发", Summoner.position, "#58ff83")

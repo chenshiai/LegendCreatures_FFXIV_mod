@@ -60,7 +60,7 @@ func _onBattleStart():
 	aiOn = false
 	STAGE = "p1"
 	closeReward()
-	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 190
+	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 220
 	limitCutting_pw *= (E_lv / E_num) # 极限切割威力
 	tornado_pw *= (E_lv / E_num) # 龙卷威力
 	collimation_pw *= (E_lv / E_num) # 照准威力
@@ -191,9 +191,9 @@ func collimation():
 	var cellList = []
 	for cha in getAllChas(1):
 		cellList.append(cha.cell)
-		var eff = Utils.draw_effect("dangerS", cha.position, Vector2(0, 0), 2, 2.5)
+		var eff = Utils.draw_effect("dangerS", cha.position, Vector2(0, 0), 1, 2.5)
 		eff.show_on_top = false
-	yield(reTimer(1.8), "timeout")
+	yield(reTimer(2), "timeout")
 
 	for cell in cellList:
 		var pos = sys.main.map.map_to_world(cell)

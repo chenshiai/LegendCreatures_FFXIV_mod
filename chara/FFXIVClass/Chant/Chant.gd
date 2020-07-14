@@ -78,3 +78,4 @@ func interrupt():
 
 func set_chant_position(position):
 	chantBar.rect_position += position
+	laber.rect_position += position
