@@ -104,21 +104,22 @@ func steamWarShip():
 	})
 	var Ship2 = Utils.draw_effect_v2({
 		"dir": Path + "/effects/steamWarShip",
-		"pos": Vector2(850, 150),
+		"pos": Vector2(750, 150),
 		"fps": 0,
 		"dev": Vector2(0, -50),
 		"top": true
 	})
+	yield(reTimer(1), "timeout")
 	var target = rndChas(getAllChas(1), 1)
 	var tposition = target.position
 	var tcell = target.cell
-	yield(reTimer(4), "timeout")
+	yield(reTimer(3), "timeout")
 	if att.hp <= 0 or isDeath:
 		Ship1.queue_free()
 		Ship2.queue_free()
 		return
 	Ship1._initFlyPos(Vector2(-50, 150) + (tposition - Vector2(-50, 150)).normalized() * 1000 , 1600)
-	Ship2._initFlyPos(Vector2(850, 150) + (tposition - Vector2(850, 150)).normalized() * 1000 , 1600)
+	Ship2._initFlyPos(Vector2(750, 150) + (tposition - Vector2(850, 150)).normalized() * 1000 , 1600)
 
 	var chas1 = Utils.lineChas(Vector2(0, 2), tcell, 15)
 	for cha in chas1:

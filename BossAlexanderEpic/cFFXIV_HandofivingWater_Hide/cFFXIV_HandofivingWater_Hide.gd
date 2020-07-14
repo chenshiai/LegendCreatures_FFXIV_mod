@@ -40,8 +40,7 @@ func parting():
 
 	Chant.chantStart("离别之手", 10)
 	yield(reTimer(10), "timeout")
-	print(isDeath, Summoner.isDeath)
-	if att.hp <= 0 or !self.isDeath or !Summoner.isDeath:
+	if att.hp <= 0 or self.isDeath or Summoner.isDeath:
 		return
 	self.img.set_pivot_offset(self.img.rect_size / 2)
 	self.img.set_rotation_degrees(120 * self.dire * -1)
@@ -54,7 +53,7 @@ func parting():
 	elif cellRan(Summoner.cell) >2 and status == "far" and STAGE == "p1":
 		Summoner.Ace()
 
-	if att.hp <= 0:
+	if att.hp <= 0 or self.isDeath or Summoner.isDeath:
 		return
 	self.img.set_rotation_degrees(0)
 	self.normalSpr.position = Vector2(0, 0)

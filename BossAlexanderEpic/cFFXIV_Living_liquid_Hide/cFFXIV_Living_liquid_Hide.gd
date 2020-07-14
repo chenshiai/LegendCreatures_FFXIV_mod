@@ -167,7 +167,7 @@ func wave(cell, chaCell, show = false):
 		var eff1 = Utils.draw_effect("wavedanger", start, Vector2(-125, 0), 2, 3, false, rotation)
 		eff1.show_on_top = false
 		yield(reTimer(3), "timeout")
-		if att.hp <= 0:
+		if att.hp <= 0 or self.isDeath:
 			return
 
 	var eff2 = Utils.draw_effect("wave", start, Vector2(-125, 0), 8, 3, false, rotation)
@@ -189,14 +189,14 @@ func waves():
 	aiOn = false
 	Chant.chantStart("万变水波", 5)
 	yield(reTimer(5), "timeout")
-	if att.hp <= 0:
+	if att.hp <= 0 or self.isDeath:
 		return
 	for cha in getAllChas(1):
 		wave(self.cell, cha.cell, true)
 
 # 万变水波2
 func waves2():
-	if att.hp <= 0:
+	if att.hp <= 0 or self.isDeath:
 		return
 	for cha in getAllChas(1):
 		wave(self.cell, cha.cell, false)
@@ -230,6 +230,8 @@ func over():
 	aiOn = false
 	Chant.chantStart("倾泻-团灭", 15)
 	yield(reTimer(15), "timeout")
+	if att.hp <= 0 or isDeath:
+		return
 	var chas = getAllChas(1)
 	Utils.draw_effect("waterBoom", Vector2(350, 150), Vector2(0, 0), 15, 2)
 	yield(reTimer(0.2), "timeout")
