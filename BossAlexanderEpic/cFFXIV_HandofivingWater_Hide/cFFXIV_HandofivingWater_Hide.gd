@@ -18,7 +18,7 @@ func _extInit():
 	attCoe.atkRan = 1
 	addSkillTxt(TEXT.format(SKILL_TXT))
 	addSkillTxt(TEXT.BOSS_LIVING_LIQUID)
-	
+
 func _init():
 	._init()
 	set_path("cFFXIVBossTheEpicofAlexander_Hide")

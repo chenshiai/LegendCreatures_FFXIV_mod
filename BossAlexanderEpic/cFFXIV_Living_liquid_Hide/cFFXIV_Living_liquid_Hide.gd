@@ -105,7 +105,7 @@ func fluidOscillation():
 	Chant.chantStart("流体震荡", 3)
 	yield(reTimer(3), "timeout")
 	Utils.draw_effect("blastYellow", self.HateTarget.position, Vector2(0, -50), 15)
-	if att.hp <= 0:
+	if att.hp <= 0 or self.isDeath:
 		return
 	var chas = getCellChas(self.HateTarget.cell, 1)
 	complexHurt(chas, att.mgiAtk * fluidOscillation_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
@@ -118,7 +118,7 @@ func pourOut():
 	Utils.draw_effect("waterBoom", Vector2(350, 150), Vector2(0, 0), 15, 2)
 	yield(reTimer(0.2), "timeout")
 
-	if att.hp <= 0:
+	if att.hp <= 0 or self.isDeath:
 		return
 
 	complexHurt(getAllChas(1), att.mgiAtk * pourOut_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
@@ -218,7 +218,7 @@ func waterPolo():
 
 func effInCell(cell):
 	queue_free_eff()
-	if att.hp <= 0 and !tarchwater:
+	if (att.hp <= 0 and !tarchwater) or self.isDeath:
 		return
 	tarchwater = true
 	var cha = matCha(cell)
@@ -230,7 +230,7 @@ func over():
 	aiOn = false
 	Chant.chantStart("倾泻-团灭", 15)
 	yield(reTimer(15), "timeout")
-	if att.hp <= 0 or isDeath:
+	if att.hp <= 0 or self.isDeath:
 		return
 	var chas = getAllChas(1)
 	Utils.draw_effect("waterBoom", Vector2(350, 150), Vector2(0, 0), 15, 2)

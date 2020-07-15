@@ -85,7 +85,7 @@ func fluidOscillation():
 	Chant.chantStart("火箭飞拳", 3)
 	yield(reTimer(3), "timeout")
 	Utils.draw_effect("blastYellow", self.HateTarget.position, Vector2(0, -50), 15)
-	if att.hp <= 0 or isDeath:
+	if att.hp <= 0 or self.isDeath:
 		return
 	var chas = getCellChas(self.HateTarget.cell, 1)
 	complexHurt(chas, att.mgiAtk * fluidOscillation_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
@@ -114,7 +114,7 @@ func steamWarShip():
 	var tposition = target.position
 	var tcell = target.cell
 	yield(reTimer(3), "timeout")
-	if att.hp <= 0 or isDeath:
+	if att.hp <= 0 or self.isDeath:
 		Ship1.queue_free()
 		Ship2.queue_free()
 		return
@@ -142,4 +142,9 @@ func steamWarShip():
 
 # 大火炎放射
 func flaming():
+	pass
+
+
+# 末世宣言
+func doomsdayDeclaration():
 	pass

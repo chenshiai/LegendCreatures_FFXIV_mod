@@ -142,6 +142,9 @@ func justiceKicks():
 	Chant.chantStart("正义飞踢", 3)
 	normalSpr.position = Vector2(0, 0)
 	yield(reTimer(3), "timeout")
+	if att.hp <= 0 or self.isDeath:
+		return
+
 	if STAGE == "p1":
 		var CruiseChaser = sys.main.newChara("cFFXIV_BruteJustice_Hide", 2)
 		sys.main.map.add_child(CruiseChaser)
@@ -161,7 +164,7 @@ func photonGun():
 	yield(reTimer(0.2), "timeout")
 	Utils.draw_effect("energyStorage", Vector2(500, 200), Vector2(0, 0), 13, 6)
 
-	if att.hp <= 0:
+	if att.hp <= 0 or self.isDeath:
 		return
 	for cha in getAllChas(1):
 		cha.att.hp = 1
@@ -175,7 +178,7 @@ func tornado():
 	yield(reTimer(4), "timeout")
 	Utils.draw_effect("lightBlue", position, Vector2(0, -10), 15, 10)
 
-	if att.hp <= 0:
+	if att.hp <= 0 or self.isDeath:
 		return
 
 	complexHurt(getAllChas(1), att.mgiAtk * tornado_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
@@ -185,7 +188,7 @@ func tornado():
 func collimation():
 	Chant.chantStart("照准", 4)
 	yield(reTimer(4), "timeout")
-	if att.hp <= 0:
+	if att.hp <= 0 or self.isDeath:
 		return
 
 	var cellList = []
