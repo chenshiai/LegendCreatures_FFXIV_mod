@@ -30,17 +30,23 @@
   ├──cFFXIVSpirit_2 占星术士-夜 晚上垃圾分类  
   ├──cFFXIVSpirit_3 龙骑士 脆如纸的群体物理输出 埃斯蒂尼安-传奇  
 
-## mod新增机制（对比原版）
-### 护盾
-部分角色拥有给友方单位附加可以抵挡部分伤害的护盾技能
+## 文件结构
+### 全局对象（游戏开始时实例化一次并放在全局变量 globalData.infoDs 中）
+- g_aFFXIVUtils 主要工具
+- g_bFFXIVText 全局文本
+- g_FFXIVBuffList 绝大多数Buff效果在这里定义
+- g_FFXIVChara 与角色相关的操作（比如单位的新增，目前作为讨伐战设置用
+- g_FFXIVRetreat 【退避】的机制与逻辑实现
+- g_FFXIVSoulSkill 装备【灵魂水晶】的机制与实现
 
-### Hot（持续治疗）
-部分角色拥有给友方单位附加持续恢复血量效果的技能
+### 自建对象（不在游戏开始时实例化一次，在需要的时候要主动创建）
+- BaseClass 基础对象，在这里统一引入上面的全局对象，给下面的对象使用
+- BossHpBar boss血条对象，用来创建一个血条显示在屏幕上方
+- Chant 咏唱条对象，用来创建一个咏唱进度条
+- Control 主控制器对象
+- Crusade 讨伐设置面板对象
+- Keyboard 键盘监听对象，开启FFXIV专用的键盘监听
+- LimitBreak 极限技对象，创建极限技条，并实现相关技能
+- musicControl 音乐控制器对象，用来控制mod的音乐播放
+- FFXIVClass 导出对象，将上述全部对象整合起来交给`Utils`使用
 
-### Boss挑战
-在学习天赋【Rain作战记录】后可以挑战已经实装的Boss
-
-### 极限技
-在学习天赋【Rain作战记录】后可以使用极限技来挑战Boss了
-
-还有更多……？
