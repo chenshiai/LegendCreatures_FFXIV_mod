@@ -37,7 +37,6 @@ func _connect():
 	sys.main.connect("onBattleReady", self, "come")
 	sys.main.connect("onBattleStart", self, "run")
 	sys.main.connect("onBattleEnd", self, "reward")
-	Retreat.initRetreat()
 	FFChara.openDeathList()
 	
 	for id in CharaList:

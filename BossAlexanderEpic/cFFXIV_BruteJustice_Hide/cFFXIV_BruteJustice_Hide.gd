@@ -8,9 +8,9 @@ var SKILL_TXT = """{c_base}亚历山大绝境战 第二阶段
 
 {c_skill}[正义飞踢]{/c}：残暴正义号登场！对所有敌人造成{c_phy}[{1}]{/c}的物理伤害
 {c_skill}[蒸汽战轮]{/c}：在场外召唤两个飞轮。先向随机目标瞄准，然后发起冲锋，对路径上的敌人造成{c_phy}[{2}]{/c}的物理伤害，并附加[易伤]，持续10s
-{c_skill}[火箭飞拳]{/c}：{TDeath}对当前目标造成{c_phy}[{3}]{/c}的小范围物理伤害。
-{c_skill}[大火炎放射]{/c}：朝着仇恨目标方向喷射出大范围火焰，对范围内的敌人造成{c_mgi}[{4}]{/c}的魔法伤害{/c}
-{c_skill}[末世宣言]{/c}：跳跃至战场一边，朝着另一边的方向进行扫射。"""
+{c_skill}[火箭飞拳]{/c}：{TDeath}对当前目标造成{c_phy}[{3}]{/c}的小范围物理伤害
+{c_skill}[大火炎放射]{/c}：朝着仇恨目标方向喷射出大范围火焰，对范围内的敌人造成{c_mgi}[{4}]{/c}的魔法伤害
+{c_skill}[末世宣言]{/c}：跳跃至战场一边，朝着另一边的方向进行扫射{/c}"""
 
 var pwConfig = {
 	"1": "未知",
@@ -18,6 +18,12 @@ var pwConfig = {
 	"3": "未知",
 	"4": "未知"
 }
+
+var flamingArea = [
+	Vector2(0, 0), Vector2(1, 0), Vector2(-1, 0),
+	Vector2(0, 1), Vector2(0, -1), Vector2(1, 1),
+	Vector2(-1, 1), Vector2(-1, -1), Vector2(1, -1)
+]
 
 func _extInit():
 	._extInit()
@@ -31,12 +37,15 @@ func _init():
 	STAGE = "p1"
 	set_path("cFFXIVBossTheEpicofAlexander_Hide")
 	set_time_axis({
-		"fluidOscillation": [30, 65, 100, 135],
-		"steamWarShip": [13, 37, 53, 115, 165]
+		# "fluidOscillation": [25, 65, 100, 175],
+		# "steamWarShip": [13, 37, 53, 115, 165],
+		"flaming": [8, 125],
+		"doomsdayDeclaration": [135]
 	})
 	closeReward()
 	FFControl.HpBar.show()
 	FFControl.FFMusic.play(Path, "/music/機工城律動編.oggstr")
+	Utils.background_change(Path, "/background/TheEpicOfAlexander2.png")
 	self.connect("onAtkChara", FFControl.Limit, "limitBreak_up")
 	sys.main.btChas.append(self)
 	self.visible = false
@@ -74,20 +83,18 @@ func justiceKicks():
 	position = sys.main.map.map_to_world(Vector2(4, 2))
 	self.visible = true
 	Utils.draw_shadow(img, position + Vector2(0, -400), position, 25)
-	Utils.background_change(Path, "/background/TheEpicOfAlexander2.png")
 	Utils.draw_effect("bombardment", position, Vector2(0, -50), 6, 6)
 	complexHurt(getAllChas(1), att.atk * justiceKicks_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
 # 火箭飞拳（其实还是流体震荡）
 func fluidOscillation():
 	aiOn = false
-	self.HateTarget = aiCha
 	Chant.chantStart("火箭飞拳", 3)
 	yield(reTimer(3), "timeout")
-	Utils.draw_effect("blastYellow", self.HateTarget.position, Vector2(0, -50), 15)
+	Utils.draw_effect("blastYellow", aiCha.position, Vector2(0, -50), 15)
 	if att.hp <= 0 or self.isDeath:
 		return
-	var chas = getCellChas(self.HateTarget.cell, 1)
+	var chas = getCellChas(aiCha.cell, 1)
 	complexHurt(chas, att.mgiAtk * fluidOscillation_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 	aiOn = true
 
@@ -142,7 +149,31 @@ func steamWarShip():
 
 # 大火炎放射
 func flaming():
-	pass
+	var mv = aiCha.cell
+	var rotation = atan2(aiCha.position.y - position.y, aiCha.position.x - position.x)
+	aiOn = false
+	Chant.chantStart("大火炎放射", 5)
+	yield(reTimer(5), "timeout")
+	if att.hp <= 0 or self.isDeath:
+		return
+
+	Utils.draw_effect_v2({
+		"name": "fireBig",
+		"pos": position,
+		"fps": 7,
+		"dev": Vector2(-100, -65),
+		"scale": Vector2(2, 3),
+		"rotation": rotation
+	})
+	var chas = []
+	for area in flamingArea:
+		var v = mv + area
+		var cha = matCha(v)
+		if cha != null and cha != self:
+			chas.append(cha)
+	print(chas)
+	complexHurt(chas, att.atk * flaming_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+	aiOn = true
 
 
 # 末世宣言

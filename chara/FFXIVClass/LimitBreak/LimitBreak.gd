@@ -2,10 +2,10 @@ extends "../BaseClass.gd"
 
 var Chant
 var allAtt = {}
-
+var isLock = false # 极限技锁
 var limitBreak = null
 var limitBreakLevel:float = 0 # 极限技等级
-var limitBreakVal:float = 0 # 攒满极限技所需要的点数
+var limitBreakVal:float = 1000 # 攒满极限技所需要的点数
 var limitBreakNow:float = 0 # 已有极限点数
 
 var limitUnder = ImageTexture.new()
@@ -52,6 +52,7 @@ func reset_limitBreak():
 	limitBreakNow = 0
 	limitBreak.set_value(0)
 	limitBreak.set_progress_texture(limitProgress0)
+	isLock = false
 
 
 func set_limitBreak_level(value):
@@ -74,67 +75,65 @@ func limitBreak_up(atkInfo):
 	pass
 
 
-func limit_protect():
+func use_limitBreak(type):
 	if limitBreakLevel != 0:
 		var lv = limitBreakLevel
-		Chant.chantStart("极限技-防护", 1)
-		yield(sys.get_tree().create_timer(1), "timeout")
-		reset_limitBreak()
-		for cha in sys.main.btChas:
-			if cha != null and cha.team == 1 and !cha.isDeath:
-				cha.addBuff(limit_protect.new(lv))
-				Utils.draw_effect("shield2", cha.position, Vector2(0, -30), 14, 1)
-				yield(sys.get_tree().create_timer(0.1), "timeout")
+		if isLock:
+			return
+		isLock = true
+		match type:
+			"protect": limit_protect(lv)
+			"attack": limit_attack(lv)
+			"treatment": limit_treatment(lv)
 	else:
 		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")
+	
+
+func limit_protect(lv):
+	Chant.chantStart("极限技-防护", 1)
+	yield(sys.get_tree().create_timer(1), "timeout")
+	reset_limitBreak()
+	for cha in sys.main.btChas:
+		if cha != null and cha.team == 1 and !cha.isDeath:
+			cha.addBuff(limit_protect.new(lv))
+			Utils.draw_effect("shield2", cha.position, Vector2(0, -30), 14, 1)
+			yield(sys.get_tree().create_timer(0.1), "timeout")
 
 
-func limit_attack():
-	if limitBreakLevel != 0:
-		var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
-		var lv = limitBreakLevel
-		Chant.chantStart("极限技-进攻", 1)
-		yield(sys.get_tree().create_timer(1), "timeout")
-		reset_limitBreak()
-		for cha in sys.main.btChas:
-			if cha != null and cha.team == 2 and !cha.isDeath:
-				toolman.hurtChara(cha, (allAtt["atk"] + allAtt["mgiAtk"]) * lv, Chara.HurtType.REAL, Chara.AtkType.SKILL)
-				Utils.draw_effect("fireII", cha.position, Vector2(0, -40), 15, 4)
-				return
-	else:
-		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")
+func limit_attack(lv):
+	var toolman = sys.main.newChara("cFFXIV_zTatalu", 1)
+	toolman.name = "极限技"
+	Chant.chantStart("极限技-进攻", 1)
+	yield(sys.get_tree().create_timer(1), "timeout")
+	reset_limitBreak()
+	for cha in sys.main.btChas:
+		if cha != null and cha.team == 2 and !cha.isDeath:
+			toolman.hurtChara(cha, (allAtt["atk"] + allAtt["mgiAtk"]) * lv, Chara.HurtType.REAL, Chara.AtkType.SKILL)
+			Utils.draw_effect("fireII", cha.position, Vector2(0, -40), 15, 4)
+			return
+	toolman.queue_free()
 
 
-func limit_treatment():
-	if limitBreakLevel != 0:
-		var healStep = limitBreakLevel
-		var canRevive = false
-
-		if healStep == 3:
-			canRevive = true
-
-		healStep = (healStep * healStep * 0.5 + 1.5 * healStep + 1) / 10
-		Chant.chantStart("极限技-治疗", 1)
-		yield(sys.get_tree().create_timer(1), "timeout")
-		reset_limitBreak()
-		for cha in sys.main.btChas:
-			if cha != null and cha.team == 1:
-				if !cha.isDeath:
-					cha.plusHp(cha.att.maxHp * healStep)
-				elif canRevive:
-					cha.isDeath = false
-					cha.anim.play("del", 100)
-					cha.plusHp(cha.att.maxHp)
-					cha.revive(cha.att.maxHp)
-					cha.set_visible(true)
-					cha.aiOn = true
-				yield(sys.get_tree().create_timer(0.1), "timeout")
-	else:
-		sys.newBaseMsg("无法释放!", "极限技槽还没有满一格！！！")
+func limit_treatment(lv):
+	lv = (lv * lv * 0.5 + 1.5 * lv + 1) / 10
+	Chant.chantStart("极限技-治疗", 1)
+	yield(sys.get_tree().create_timer(1), "timeout")
+	reset_limitBreak()
+	for cha in sys.main.btChas:
+		if cha != null and cha.team == 1:
+			if !cha.isDeath:
+				cha.plusHp(cha.att.maxHp * lv)
+			elif lv == 1:
+				cha.isDeath = false
+				cha.anim.play("del", 100)
+				cha.plusHp(cha.att.maxHp)
+				cha.revive(cha.att.maxHp)
+				cha.set_visible(true)
+				cha.aiOn = true
+			yield(sys.get_tree().create_timer(0.1), "timeout")
 
 
-class limit_protect:
-	extends Buff
+class limit_protect	extends Buff:
 	func _init(lv):
 		attInit()
 		self.lv = lv

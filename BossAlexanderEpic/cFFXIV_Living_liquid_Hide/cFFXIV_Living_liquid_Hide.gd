@@ -101,13 +101,12 @@ func StageToP2():
 
 # 流体震荡
 func fluidOscillation():
-	self.HateTarget = aiCha
 	Chant.chantStart("流体震荡", 3)
 	yield(reTimer(3), "timeout")
-	Utils.draw_effect("blastYellow", self.HateTarget.position, Vector2(0, -50), 15)
+	Utils.draw_effect("blastYellow", aiCha.position, Vector2(0, -50), 15)
 	if att.hp <= 0 or self.isDeath:
 		return
-	var chas = getCellChas(self.HateTarget.cell, 1)
+	var chas = getCellChas(aiCha.cell, 1)
 	complexHurt(chas, att.mgiAtk * fluidOscillation_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
 # 倾泻
@@ -208,13 +207,14 @@ func parting():
 
 func waterPolo():
 	queue_free_eff()
-	yield(reTimer(1), "timeout")
 	for item in mapEffect:
 		var startPos = item.cell * 100
-		item.effect = Utils.draw_effect("waterBall", startPos, Vector2(0,-30), 0)
+		var eff = Utils.draw_effect("waterBall", startPos, Vector2(0,-30), 0)
+		item.effect = eff
 		item.effect._initFlyPos(startPos + (self.position - startPos).normalized() * 800, 50)
 		item.effect.show_on_top = true
 		item.effect.connect("onInCell", self, "effInCell")
+
 
 func effInCell(cell):
 	queue_free_eff()

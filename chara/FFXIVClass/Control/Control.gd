@@ -39,6 +39,7 @@ func createControl():
 	Limit = Utils.FFXIVClass.LimitBreak.new() # 创建极限技实例
 	HpBar = Utils.FFXIVClass.BossHpBar.new() # 创建血条实例
 	FFMusic = Utils.FFXIVClass.FFMusic.new() # 创建音乐控制实例
+	Retreat.initRetreat()
 	set_config()
 	keyboard_connect()
 
@@ -177,10 +178,10 @@ func keyboard_connect():
 	Keyboard.connect("key_r", self, "complex_move", ["scatter"])
 	Keyboard.connect("key_e", self, "complex_move", ["aggregate_right"])
 
-	Keyboard.connect("key_z", Limit, "limit_treatment")
-	Keyboard.connect("key_x", Limit, "limit_attack")
+	Keyboard.connect("key_z", Limit, "use_limitBreak", ["treatment"])
+	Keyboard.connect("key_x", Limit, "use_limitBreak", ["attack"])
 	Keyboard.connect("key_v", Retreat, "changeHateTarget")
-	Keyboard.connect("key_c", Limit, "limit_protect")
+	Keyboard.connect("key_c", Limit, "use_limitBreak", ["protect"])
 
 
 func set_config():
@@ -219,9 +220,9 @@ func set_config():
 			"text": "防护",
 			"position": Vector2(440, 22),
 			"target": Limit,
-			"callback": "limit_protect",
+			"callback": "use_limitBreak",
 			"config": {
-				"args": [],
+				"args": ["protect"],
 				"return": true
 			},
 		},
@@ -229,9 +230,9 @@ func set_config():
 			"text": "进攻",
 			"position": Vector2(495, 50),
 			"target": Limit,
-			"callback": "limit_attack",
+			"callback": "use_limitBreak",
 			"config": {
-				"args": [],
+				"args": ["attack"],
 				"return": true
 			},
 		},
@@ -239,9 +240,9 @@ func set_config():
 			"text": "治疗",
 			"position": Vector2(550, 22),
 			"target": Limit,
-			"callback": "limit_treatment",
+			"callback": "use_limitBreak",
 			"config": {
-				"args": [],
+				"args": ["treatment"],
 				"return": true
 			},
 		},
