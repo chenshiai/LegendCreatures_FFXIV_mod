@@ -10,7 +10,7 @@ class BaseSoul:
 
 	var prevCha = toolman
 	var prevSkill = ""
-	
+
 	var att = {
 		"maxHp": 0,
 		"atk": 0,

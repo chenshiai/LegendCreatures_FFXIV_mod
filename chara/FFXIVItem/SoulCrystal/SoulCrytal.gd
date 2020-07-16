@@ -1,5 +1,6 @@
 extends Item
 const Utils = globalData.infoDs["g_aFFXIVUtils"]# 全局工具
+const TEXT = globalData.infoDs["g_bFFXIVText"]
 const Soul = globalData.infoDs["g_FFXIVSoulSkill"]
 const Epilogue = """灵魂水晶，装备给不同的特职会有不同的效果。
 仅限《最终幻想14》的角色，可转变列表如下：

@@ -40,7 +40,7 @@ func _onBattleStart():
 
 func getAtkVal():
 	match OCCUPATION:
-		"MeleeDPS": 
+		"MeleeDPS":
 			return att.atk
 		"MagicDPS":
 			return att.mgiAtk * 0.5
@@ -51,7 +51,7 @@ func getAtkVal():
 
 # func canCri():
 # 	match OCCUPATION:
-# 		"MeleeDPS": 
+# 		"MeleeDPS":
 # 			return true
 # 		"MagicDPS":
 # 			return true
