@@ -10,6 +10,8 @@ const SKILL = Chara.AtkType.SKILL
 const EFF = Chara.AtkType.EFF
 var baseId = ""
 var OCCUPATION = "Default"
+var SoulExample = null
+
 var BallisticSpeed = {
 	"MeleeDPS": 500,
 	"MagicDPS": 300,

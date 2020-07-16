@@ -222,7 +222,7 @@ func _randomAtt(ban1, ban2):
 	for item in randAtt:
 		AllAtt.erase(item)
 	randAtt = []
-	
+
 	# 随机选取两条不重复词条
 	for n in range(2):
 		var att1 = sys.rndListItem(AllAtt)
