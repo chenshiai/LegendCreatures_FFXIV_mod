@@ -4,7 +4,7 @@ const BERSERKERTIME_P1 = 120 # P1狂暴时间
 
 func _extInit():
 	._extInit()
-	chaName = "亚历山大绝境战"
+	chaName = "完美亚历山大"
 	lv = 4
 	self.aiOn = false
 	self.visible = false

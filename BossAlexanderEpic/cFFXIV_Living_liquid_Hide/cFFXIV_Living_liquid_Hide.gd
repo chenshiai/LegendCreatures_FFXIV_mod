@@ -30,7 +30,16 @@ var mapEffect = [
 		"effect": null
 	},
 ]
-
+var mapEffect2 = [
+	{
+		"cell": Vector2(1, 1),
+		"effect": null
+	},
+	{
+		"cell": Vector2(6, 3),
+		"effect": null
+	},
+]
 func queue_free_eff():
 	for item in mapEffect:
 		if item.effect != null:
@@ -67,7 +76,7 @@ func _onBattleStart():
 	._onBattleStart()
 	STAGE = "p1"
 	closeReward()
-	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 380
+	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 400
 	fluidOscillation_pw *= (E_lv / E_num) # 流体震荡威力
 	pourOut_pw *= (E_lv / E_num) # 倾泻威力
 	waves_pw *= (E_lv / E_num) # 水波威力
@@ -77,7 +86,7 @@ func _onBattleStart():
 		"3": "%d%%" % [waves_pw * 100],
 	}
 	skillStrs[1] = (TEXT.format(SKILL_TXT, pwConfig))
-	# att.hp = 1000
+	att.hp = 1000
 
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)
@@ -95,8 +104,8 @@ func _onDeath(atkInfo):
 func StageToP2():
 	if STAGE == "p1":
 		var CruiseChaser = sys.main.newChara("cFFXIV_CruiseChaser_Hide", 2)
-		sys.main.map.add_child(CruiseChaser)
 		if CruiseChaser:
+			sys.main.map.add_child(CruiseChaser)
 			CruiseChaser._onBattleStart()
 
 # 流体震荡
@@ -207,17 +216,20 @@ func parting():
 
 func waterPolo():
 	queue_free_eff()
-	for item in mapEffect:
+	for item in mapEffect2:
 		var startPos = item.cell * 100
 		var eff = Utils.draw_effect("waterBall", startPos, Vector2(0,-30), 0)
+		eff._initFlyPos(startPos + (self.position - startPos).normalized() * 800, 50)
+		eff.show_on_top = true
+		eff.connect("onInCell", self, "effInCell")
 		item.effect = eff
-		item.effect._initFlyPos(startPos + (self.position - startPos).normalized() * 800, 50)
-		item.effect.show_on_top = true
-		item.effect.connect("onInCell", self, "effInCell")
 
 
 func effInCell(cell):
-	queue_free_eff()
+	for item in mapEffect2:
+		if item.effect != null:
+			item.effect.queue_free()
+			item.effect = null
 	if (att.hp <= 0 and !tarchwater) or self.isDeath:
 		return
 	tarchwater = true

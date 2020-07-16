@@ -2,7 +2,6 @@ extends Talent
 var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
 var TEXT = globalData.infoDs["g_bFFXIVText"]
 var FFChara = globalData.infoDs["g_FFXIVChara"] # 角色相关类
-var Retreat = globalData.infoDs["g_FFXIVRetreat"] # 退避机制
 var RandomItem = load("%s%s" % [Utils.Path, "/FFXIVItem/randomItem.gd"])
 var FFControl # 控制面板
 

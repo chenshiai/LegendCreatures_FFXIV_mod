@@ -45,9 +45,9 @@ func _init():
 	set_time_axis({
 		"limitCutting": [2, 6, 10, 14, 18, 22, 26, 30],
 		"justiceKicks": [34],
-		"tornado": [44, 75, 105, 145, 175],
-		"collimation": [50, 95, 125],
-		"photonGun": [60, 135]
+		"tornado": [63, 100, 115, 131, 166],
+		"collimation": [53, 90, 107, 121, 137, 147],
+		"photonGun": [78, 157]
 	})
 	closeReward()
 	FFControl.HpBar.show()
@@ -59,8 +59,7 @@ func _onBattleStart():
 	._onBattleStart()
 	aiOn = false
 	STAGE = "p1"
-	closeReward()
-	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 220
+	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 230
 	limitCutting_pw *= (E_lv / E_num) # 极限切割威力
 	tornado_pw *= (E_lv / E_num) # 龙卷威力
 	collimation_pw *= (E_lv / E_num) # 照准威力
@@ -71,6 +70,7 @@ func _onBattleStart():
 	}
 	skillStrs[1] = (TEXT.format(SKILL_TXT, pwConfig))
 	self.visible = false
+	att.hp = 1000
 
 	for cha in sys.main.btChas:
 		if cha.team == 1:
@@ -80,6 +80,17 @@ func _onHurt(atkInfo):
 	._onHurt(atkInfo)
 	if STAGE == "p1":
 		atkInfo.hurtVal = 0
+
+
+func _upS():
+	._upS()
+	if battleDuration >= 153:
+		battleDuration = 37
+
+func _onDeath(atkInfo):
+	._onDeath(atkInfo)
+	if getAllChas(2).size() == 1:
+		sommAlexander()
 
 func limitCutting():
 	Chant.chantStart("极限切割", 1)
@@ -146,10 +157,10 @@ func justiceKicks():
 		return
 
 	if STAGE == "p1":
-		var CruiseChaser = sys.main.newChara("cFFXIV_BruteJustice_Hide", 2)
-		sys.main.map.add_child(CruiseChaser)
-		if CruiseChaser:
-			CruiseChaser._onBattleStart()
+		var BruteJustice = sys.main.newChara("cFFXIV_BruteJustice_Hide", 2)
+		if BruteJustice:
+			sys.main.map.add_child(BruteJustice)
+			BruteJustice._onBattleStart()
 		else:
 			killSelf()
 	startP2()
@@ -198,6 +209,9 @@ func collimation():
 		eff.show_on_top = false
 	yield(reTimer(2), "timeout")
 
+	if att.hp <= 0 or self.isDeath:
+		return
+
 	for cell in cellList:
 		var pos = sys.main.map.map_to_world(cell)
 		Utils.draw_effect("bombardment", pos, Vector2(0, -50), 6)
@@ -210,3 +224,13 @@ func collimation():
 					"cha": cha,
 					"dur": 30
 				})
+
+func sommAlexander():
+	if STAGE == "p2":
+		for cha in sys.main.btChas:
+			if cha.id == "cFFXIV_Alexander_Epic_Hide":
+				return
+		var Alexander = sys.main.newChara("cFFXIV_Alexander_Epic_Hide", 2)
+		if Alexander:
+			sys.main.map.add_child(Alexander)
+			Alexander._onBattleStart()

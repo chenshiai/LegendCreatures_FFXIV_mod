@@ -86,6 +86,8 @@ func fuma():
 	chas.sort_custom(Utils.Calculation, "sort_MaxMgiAtk")
 
 	var eff = newEff("sk_4_1_2", sprcPos)
+	if chas.size() == 0:
+		return
 	eff._initFlyPos(chas[0].position, 1200)
 	Utils.draw_efftext("风魔", position)
 	FFHurtChara(chas[0], att.atk * FUMA_PW, PHY, SKILL)

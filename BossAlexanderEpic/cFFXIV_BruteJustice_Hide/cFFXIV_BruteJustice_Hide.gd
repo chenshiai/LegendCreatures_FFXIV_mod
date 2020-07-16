@@ -9,8 +9,7 @@ var SKILL_TXT = """{c_base}亚历山大绝境战 第二阶段
 {c_skill}[正义飞踢]{/c}：残暴正义号登场！对所有敌人造成{c_phy}[{1}]{/c}的物理伤害
 {c_skill}[蒸汽战轮]{/c}：在场外召唤两个飞轮。先向随机目标瞄准，然后发起冲锋，对路径上的敌人造成{c_phy}[{2}]{/c}的物理伤害，并附加[易伤]，持续10s
 {c_skill}[火箭飞拳]{/c}：{TDeath}对当前目标造成{c_phy}[{3}]{/c}的小范围物理伤害
-{c_skill}[大火炎放射]{/c}：朝着仇恨目标方向喷射出大范围火焰，对范围内的敌人造成{c_mgi}[{4}]{/c}的魔法伤害
-{c_skill}[末世宣言]{/c}：跳跃至战场一边，朝着另一边的方向进行扫射{/c}"""
+{c_skill}[大火炎放射]{/c}：朝着仇恨目标方向喷射出火焰，对范围内的敌人造成{c_mgi}[{4}]{/c}的魔法伤害{/c}"""
 
 var pwConfig = {
 	"1": "未知",
@@ -37,25 +36,22 @@ func _init():
 	STAGE = "p1"
 	set_path("cFFXIVBossTheEpicofAlexander_Hide")
 	set_time_axis({
-		# "fluidOscillation": [25, 65, 100, 175],
-		# "steamWarShip": [13, 37, 53, 115, 165],
-		"flaming": [8, 125],
-		"doomsdayDeclaration": [135]
+		"fluidOscillation": [29, 43, 66, 96, 122],
+		"steamWarShip": [17, 36, 53, 77, 90, 114, 129],
+		"flaming": [82, 104]
 	})
 	closeReward()
-	FFControl.HpBar.show()
 	FFControl.FFMusic.play(Path, "/music/機工城律動編.oggstr")
 	Utils.background_change(Path, "/background/TheEpicOfAlexander2.png")
 	self.connect("onAtkChara", FFControl.Limit, "limitBreak_up")
 	sys.main.btChas.append(self)
-	self.visible = false
 	Chant.set_chant_position(Vector2(0, 50))
 
 func _onBattleStart():
 	._onBattleStart()
+	self.visible = false
 	STAGE = "p2"
-	closeReward()
-	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 220
+	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 170
 	justiceKicks_pw *= (E_lv / E_num) # 正义飞踢威力
 	steamWarShip_pw *= (E_lv / E_num)
 	fluidOscillation_pw *= (E_lv / E_num)
@@ -68,6 +64,18 @@ func _onBattleStart():
 	}
 	skillStrs[1] = (TEXT.format(SKILL_TXT, pwConfig))
 	justiceKicks()
+	att.hp = 1000
+
+
+func _upS():
+	._upS()
+	if battleDuration >= 116:
+		battleDuration = 0
+
+func _onDeath(atkInfo):
+	._onDeath(atkInfo)
+	if getAllChas(2).size() == 1:
+		sommAlexander()
 
 # 正义飞踢
 func justiceKicks():
@@ -104,23 +112,23 @@ func steamWarShip():
 	Chant.chantStart("蒸汽战轮", 4)
 	var Ship1 = Utils.draw_effect_v2({
 		"dir": Path + "/effects/steamWarShip",
-		"pos": Vector2(-50, 150),
+		"pos": Vector2(-50, 200),
 		"fps": 0,
 		"dev": Vector2(0, -50),
 		"top": true
 	})
 	var Ship2 = Utils.draw_effect_v2({
 		"dir": Path + "/effects/steamWarShip",
-		"pos": Vector2(750, 150),
+		"pos": Vector2(750, 200),
 		"fps": 0,
 		"dev": Vector2(0, -50),
 		"top": true
 	})
-	yield(reTimer(1), "timeout")
+	yield(reTimer(2), "timeout")
 	var target = rndChas(getAllChas(1), 1)
 	var tposition = target.position
 	var tcell = target.cell
-	yield(reTimer(3), "timeout")
+	yield(reTimer(2), "timeout")
 	if att.hp <= 0 or self.isDeath:
 		Ship1.queue_free()
 		Ship2.queue_free()
@@ -161,7 +169,7 @@ func flaming():
 		"name": "fireBig",
 		"pos": position,
 		"fps": 7,
-		"dev": Vector2(-100, -65),
+		"dev": Vector2(-100, 0),
 		"scale": Vector2(2, 3),
 		"rotation": rotation
 	})
@@ -175,7 +183,12 @@ func flaming():
 	complexHurt(chas, att.atk * flaming_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 	aiOn = true
 
-
-# 末世宣言
-func doomsdayDeclaration():
-	pass
+func sommAlexander():
+	if STAGE == "p2":
+		for cha in sys.main.btChas:
+			if cha.id == "cFFXIV_Alexander_Epic_Hide":
+				return
+		var Alexander = sys.main.newChara("cFFXIV_Alexander_Epic_Hide", 2)
+		if Alexander:
+			sys.main.map.add_child(Alexander)
+			Alexander._onBattleStart()
