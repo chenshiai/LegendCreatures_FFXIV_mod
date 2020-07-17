@@ -63,7 +63,7 @@ func growEnd():
 	elif fixed > 0:
 		fixed -= 1
 	GROW_START = false
-	
+
 func expUp(cha):
 	if Level == 5:
 		exp_now = 20
@@ -150,7 +150,6 @@ func _randomAtt(ban1, ban2):
 			"attr": "cri",
 			"range": [0.05, 0.1],
 			"up": [0.01, 0.03],
-		
 		},
 		{
 			"attr": "suck",

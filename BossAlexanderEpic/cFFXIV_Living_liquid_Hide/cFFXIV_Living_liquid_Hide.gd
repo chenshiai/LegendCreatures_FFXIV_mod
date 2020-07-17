@@ -30,16 +30,7 @@ var mapEffect = [
 		"effect": null
 	},
 ]
-var mapEffect2 = [
-	{
-		"cell": Vector2(1, 1),
-		"effect": null
-	},
-	{
-		"cell": Vector2(6, 3),
-		"effect": null
-	},
-]
+
 func queue_free_eff():
 	for item in mapEffect:
 		if item.effect != null:
@@ -53,7 +44,7 @@ func _extInit():
 	attCoe.atkRan = 1
 	addSkillTxt(TEXT.format(SKILL_TXT, pwConfig))
 	addSkillTxt(TEXT.BOSS_LIVING_LIQUID)
-	
+
 func _init():
 	._init()
 	set_path("cFFXIVBossTheEpicofAlexander_Hide")
@@ -70,7 +61,7 @@ func _init():
 	Utils.background_change(Path, "/background/TheEpicOfAlexander.png")
 	FFControl.FFMusic.play(Path, "/music/dregs.oggstr")
 	closeReward()
-	
+
 
 func _onBattleStart():
 	._onBattleStart()
@@ -216,25 +207,21 @@ func parting():
 
 func waterPolo():
 	queue_free_eff()
-	for item in mapEffect2:
+	for item in mapEffect:
 		var startPos = item.cell * 100
-		var eff = Utils.draw_effect("waterBall", startPos, Vector2(0,-30), 0)
-		eff._initFlyPos(startPos + (self.position - startPos).normalized() * 800, 50)
-		eff.show_on_top = true
-		eff.connect("onInCell", self, "effInCell")
-		item.effect = eff
+		item.effect = Utils.draw_effect("waterBall", startPos, Vector2(0,-30), 0)
+		item.effect._initFlyPos(startPos + (self.position - startPos).normalized() * 800, 50)
+		item.effect.show_on_top = true
+		item.effect.connect("onInCell", self, "effInCell")
 
 
 func effInCell(cell):
-	for item in mapEffect2:
-		if item.effect != null:
-			item.effect.queue_free()
-			item.effect = null
 	if (att.hp <= 0 and !tarchwater) or self.isDeath:
 		return
 	tarchwater = true
 	var cha = matCha(cell)
 	if cha != null:
+		queue_free_eff()
 		Ace()
 		Utils.draw_effect("waterBoom", Vector2(350, 150), Vector2(0, 0), 15, 2)
 

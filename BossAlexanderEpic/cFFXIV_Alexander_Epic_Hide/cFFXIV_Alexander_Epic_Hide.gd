@@ -2,10 +2,7 @@ extends "../../2098858773/BossChara.gd"
 
 var SKILL_TXT = """{c_base}亚历山大绝境战 第三阶段
 
-{c_skill}[正义飞踢]{/c}：残暴正义号登场！对所有敌人造成{c_phy}[{1}]{/c}的物理伤害
-{c_skill}[蒸汽战轮]{/c}：在场外召唤两个飞轮。先向随机目标瞄准，然后发起冲锋，对路径上的敌人造成{c_phy}[{2}]{/c}的物理伤害，并附加[易伤]，持续10s
-{c_skill}[火箭飞拳]{/c}：{TDeath}对当前目标造成{c_phy}[{3}]{/c}的小范围物理伤害
-{c_skill}[大火炎放射]{/c}：朝着仇恨目标方向喷射出火焰，对范围内的敌人造成{c_mgi}[{4}]{/c}的魔法伤害{/c}"""
+{c_skill}[时间停止]]{/c}："""
 
 var pwConfig = {
 	"1": "未知",
@@ -47,7 +44,7 @@ func _onBattleStart():
 	STAGE = "p1"
 	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 430
 	skillStrs[1] = (TEXT.format(SKILL_TXT, pwConfig))
-	
+
 	cell = Vector2(4, 0)
 	position = sys.main.map.map_to_world(Vector2(4, 0))
 	Utils.draw_effect_v2({

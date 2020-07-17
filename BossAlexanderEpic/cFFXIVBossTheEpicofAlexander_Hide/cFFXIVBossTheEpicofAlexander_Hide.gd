@@ -9,7 +9,7 @@ func _extInit():
 	self.aiOn = false
 	self.visible = false
 	self.isDeath = true
-	
+
 # 必要的初始化
 func _init():
 	._init()
