@@ -129,7 +129,8 @@ func FFHurtChara(target, atkVal, hurtType, atkType):
 
 func complexHurt(chas, atkVal, hurtType, atkType):
 	for cha in chas:
-		FFHurtChara(cha, atkVal, hurtType, atkType)
+		if cha.team != self.team:
+			FFHurtChara(cha, atkVal, hurtType, atkType)
 
 
 func selfAdaption():
