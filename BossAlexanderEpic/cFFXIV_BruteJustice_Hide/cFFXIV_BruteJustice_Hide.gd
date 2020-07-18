@@ -33,7 +33,6 @@ func _extInit():
 
 func _init():
 	._init()
-	STAGE = "p1"
 	set_path("cFFXIVBossTheEpicofAlexander_Hide")
 	set_time_axis({
 		"fluidOscillation": [29, 43, 66, 96, 122],
@@ -99,9 +98,9 @@ func fluidOscillation():
 	aiOn = false
 	Chant.chantStart("火箭飞拳", 3)
 	yield(reTimer(3), "timeout")
-	Utils.draw_effect("blastYellow", aiCha.position, Vector2(0, -50), 15)
 	if att.hp <= 0 or self.isDeath:
 		return
+	Utils.draw_effect("blastYellow", aiCha.position, Vector2(0, -50), 15)
 	var chas = getCellChas(aiCha.cell, 1)
 	complexHurt(chas, att.mgiAtk * fluidOscillation_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 	aiOn = true
@@ -187,6 +186,7 @@ func sommAlexander():
 	if STAGE == "p2":
 		for cha in sys.main.btChas:
 			if cha.id == "cFFXIV_Alexander_Epic_Hide":
+				print(cha.id)
 				return
 		var Alexander = sys.main.newChara("cFFXIV_Alexander_Epic_Hide", 2)
 		if Alexander:

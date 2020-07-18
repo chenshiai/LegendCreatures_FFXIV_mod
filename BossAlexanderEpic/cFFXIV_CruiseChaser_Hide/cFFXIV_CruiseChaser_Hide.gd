@@ -40,7 +40,6 @@ func _extInit():
 
 func _init():
 	._init()
-	STAGE = "p1"
 	set_path("cFFXIVBossTheEpicofAlexander_Hide")
 	set_time_axis({
 		"limitCutting": [2, 6, 10, 14, 18, 22, 26, 30],
@@ -57,6 +56,7 @@ func _init():
 
 func _onBattleStart():
 	._onBattleStart()
+	self.get_node("ui").visible = false
 	aiOn = false
 	STAGE = "p1"
 	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 230
@@ -148,6 +148,7 @@ func limitCutting():
 func startP2():
 	STAGE = "p2"
 	aiOn = true
+	self.get_node("ui").visible = true
 
 func justiceKicks():
 	Chant.chantStart("正义飞踢", 3)

@@ -38,9 +38,10 @@ func _connect():
 	sys.main.connect("onBattleEnd", self, "reward")
 	FFChara.openDeathList()
 	
-	for id in CharaList:
-		var cha = sys.main.newChara(id, 1)
-		sys.main.player.addCha(cha)
+	# 测试生成角色用
+	# for id in CharaList:
+	# 	var cha = sys.main.newChara(id, 1)
+	# 	sys.main.player.addCha(cha)
 
 class Raid:
 	extends Buff

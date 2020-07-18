@@ -271,7 +271,10 @@ func create_timeAxis(skillAxis):
 # @param {Vector2} bCell - 终点坐标
 # @param {number} num - 长度（单位100）
 # @return {array}
-func lineChas(aCell, bCell, num):
+func lineChas(aCell, bCell, num):	
+	if !sys.main.isMatin(aCell) or !sys.main.isMatin(bCell):
+		return []
+
 	var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
 	var chas = []
 	var aPos = sys.main.map.map_to_world(aCell) + Vector2(50, 50)
