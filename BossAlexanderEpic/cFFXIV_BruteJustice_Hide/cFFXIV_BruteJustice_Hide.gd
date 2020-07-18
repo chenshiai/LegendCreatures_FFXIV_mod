@@ -186,7 +186,6 @@ func sommAlexander():
 	if STAGE == "p2":
 		for cha in sys.main.btChas:
 			if cha.id == "cFFXIV_Alexander_Epic_Hide":
-				print(cha.id)
 				return
 		var Alexander = sys.main.newChara("cFFXIV_Alexander_Epic_Hide", 2)
 		if Alexander:
