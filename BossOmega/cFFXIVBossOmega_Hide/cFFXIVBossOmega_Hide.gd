@@ -48,9 +48,9 @@ func _onBattleStart():
 	atomicRay_pw *= (E_lv / E_num)
 	flaming_pw *= (E_lv / E_num)
 	pwConfig = {
-		"1": "%d" % [mustardBomb_pw * 100],
-		"2": "%d" % [atomicRay_pw * 100],
-		"3": "%d" % [flaming_pw * 100]
+		"1": "%d%%" % [mustardBomb_pw * 100],
+		"2": "%d%%" % [atomicRay_pw * 100],
+		"3": "%d%%" % [flaming_pw * 100]
 	}
 	skillStrs[1] = TEXT.format(SKILL_TXT, pwConfig)
 	upAtt()

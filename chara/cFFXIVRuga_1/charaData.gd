@@ -5,7 +5,7 @@ static func getCharaData():
 
 	var meterage = ""
 
-	var SKILL_TEXT = """[钢铁信念]：{TPassive}战斗开始后，提高10%的物理防御，受到的伤害减少20%
+	var SKILL_TEXT = """[钢铁信念]：{TPassive}提高10%的物理防御，受到的伤害减少20%
 [深仁厚泽]：冷却15s，为生命最低的友方单位使用治疗魔法，恢复[1200%]法强的生命值
 [王权剑]：冷却6s，对目标造成[350%]的{TPhyHurt}"""
 

@@ -148,7 +148,17 @@ Our world's is a fantasy， no more than a test.
 
 var UpdateInfo = {
 	"title": "最终幻想14-更新记录",
-	"content": format("""[color=#64a6b7]【Ver 2.8.3】2020-07-18[/color]
+	"content": format("""[color=#64a6b7]【Ver 2.8.3】2020-07-19[/color]
+【机制调整】
+{c_pro}【骑士】{/c}
+[钢铁意志] 战斗开始时触发 变更为 永久被动效果
+
+{c_pro}【暗黑骑士】{/c}
+[深恶痛绝] 战斗开始时触发 变更为 永久被动效果
+
+【天赋效果】
+角色死亡后，不再会失去[队伍编制][光之加护]的增益效果，直到战斗结束
+
 【职业调整】
 {c_atk}【机工士】{/c}
 [整备] 暴击率 30% -> 20%

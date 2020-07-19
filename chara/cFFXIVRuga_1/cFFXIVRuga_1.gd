@@ -11,6 +11,7 @@ func _extInit():
 	attCoe.mgiAtk = 0.5
 	attCoe.def = 5
 	attCoe.mgiDef = 4
+	attAdd.defL = 0.1
 	lv = 2
 	evos = ["cFFXIVRuga_1_1"]
 	atkEff = "atk_dao"
@@ -26,7 +27,6 @@ func _connect():
 
 func _onBattleStart():
 	._onBattleStart()
-	BUFF_LIST.b_SteelBelief.new({"cha": self})
 	Utils.draw_effect("defense", position, Vector2(0,-60), 14)
 
 

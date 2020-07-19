@@ -634,6 +634,28 @@ class b_Share	extends BaseBuff:
 		eff.position = masCha.position
 
 
+
+# 点名特效
+class b_RollCall extends BaseBuff:
+	func _init(config):
+		_set_config("b_RollCall", config)
+
+	func _connect():
+		eff = Utils.draw_effect_v2({
+			"name": "dianming",
+			"pos": masCha.position,
+			"dev": Vector2(0, -100),
+			"fps": 4,
+			"top": true,
+			"rep": true
+		})
+
+	func _del():
+		eff.queue_free()
+
+	func _process(a):
+		eff.position = masCha.position
+
 # 击飞旋转角色，至少2秒，且为0.8的整数倍
 class RotateCha	extends BaseBuff:
 	var exit = false

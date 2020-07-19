@@ -15,6 +15,7 @@ func _extInit():
 	attCoe.atk = 3.6
 	attCoe.def = 3.6
 	attCoe.mgiDef = 4.4
+	attAdd.mgiDefL = 0.1
 	lv = 2
 	evos = ["cFFXIVAolong_1_1"]
 	atkEff = "atk_dao"
@@ -25,7 +26,6 @@ func _extInit():
 func _onBattleStart():
 	._onBattleStart()
 	atkCount = 0
-	BUFF_LIST.b_Abhor.new({"cha": self})
 
 func _castCdSkill(id):
 	._castCdSkill(id)

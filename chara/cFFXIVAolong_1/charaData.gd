@@ -3,7 +3,7 @@ static func getCharaData():
 	var name_2 = "深渊之暗"
 	var name_3 = "希德勒格-传奇"
 	var meterage = "暗血：%d / 700"
-	var SKILL_TEXT = """[深恶痛绝]：{TPassive}战斗开始时，魔法防御提高10%，受到的伤害减少20%
+	var SKILL_TEXT = """[深恶痛绝]：{TPassive}魔法防御提高10%，受到的伤害减少20%
 [噬魂斩]：{TPassive}第三次普通攻击造成[110%]的伤害，并恢复自身5%的HP
 [血溅]：冷却10s，对目标造成[290%]的{TPhyHurt}"""
 	var SKILL_TEXT_1 = """[至黑之夜]：造成非特效伤害时会累计暗血，达到700点时，释放可以吸收最大生命值20%伤害的护盾

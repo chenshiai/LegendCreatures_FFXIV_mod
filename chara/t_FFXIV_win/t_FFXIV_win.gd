@@ -10,7 +10,7 @@ func _connect():
 func run():
 	for i in sys.main.btChas:
 		if i.team == 1:
-			i.addBuff(LightHard.new(lv))
+			i.addBuff(LightHard.new())
 
 func get_info():
 	return TEXT.T_LIGHT
@@ -18,12 +18,15 @@ func get_info():
 class LightHard:
 	extends Buff
 
-	func _init(lv):
+	func _init():
 		attInit()
 		id = "LightHard"
 		isNegetive = false
 		att.defL = 0.15
 		att.mgiDefL = 0.15
-		self.lv = lv
 
+	func _del():
+		for i in sys.main.btChas:
+			if i.team == 2 and !i.isDeath:
+				masCha.addBuff(LightHard.new())
 		# sys.main.get_node("ui/player/GridContainer").add_child(preload("res://ui/talentBtn/talentBtn.tscn").instance())

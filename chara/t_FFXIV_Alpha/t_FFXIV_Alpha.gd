@@ -10,7 +10,7 @@ var layer = 0 # 当前关卡数
 var lastLayer = 0 # 上一次出现boss的层数
 
 const PROBABILITY = 100 # Boss出现的基本概率
-const BOSS_LAYER = 27 # 在多少关之后概率动态调整
+const BOSS_LAYER = 1 # 在多少关之后概率动态调整
 var probability = PROBABILITY # Boss出现的动态概率
 
 const CharaList = ["cFFXIVAolong_1_1", "cFFXIVAolong_2_1", "cFFXIVAolong_3_1",
@@ -39,9 +39,9 @@ func _connect():
 	FFChara.openDeathList()
 	
 	# 测试生成角色用
-	# for id in CharaList:
-	# 	var cha = sys.main.newChara(id, 1)
-	# 	sys.main.player.addCha(cha)
+	for id in CharaList:
+		var cha = sys.main.newChara(id, 1)
+		sys.main.player.addCha(cha)
 
 class Raid:
 	extends Buff
