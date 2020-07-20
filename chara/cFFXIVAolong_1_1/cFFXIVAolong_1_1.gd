@@ -2,22 +2,16 @@ extends "../cFFXIVAolong_1/cFFXIVAolong_1.gd"
 
 func _extInit():
 	._extInit()
-	chaName = FFData.name_2
+	chaName = "FFXIVAolong_1-name_2"
 	lv = 3
 	evos = []
 	addCdSkill("skill_DarkMissionary", 12)
-	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
-
-func _connect():
-	._connect()
-
-func _onBattleStart():
-	._onBattleStart()
+	addSkillTxt("FFXIVAolong_1-skill_text_1")
 
 func _onBattleEnd():
 	._onBattleEnd()
 	darkCount = 0
-	skillStrs[0] = FFData.meterage % [darkCount]
+	skillStrs[0] = "%s: %d / 700" % [meterage[locale], darkCount]
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -28,7 +22,7 @@ func _onAtkChara(atkInfo:AtkInfo):
 	._onAtkChara(atkInfo)
 	if atkInfo.atkType != EFF:
 		darkCount += atkInfo.atkVal / self.lv
-		skillStrs[0] = FFData.meterage % [darkCount]
+		skillStrs[0] = "%s: %d / 700" % [meterage[locale], darkCount]
 		if darkCount >= 700:
 			darkCount = 0
 			BUFF_LIST.b_TheBlackestNight.new({

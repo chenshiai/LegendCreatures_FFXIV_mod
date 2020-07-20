@@ -1,15 +1,21 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
-var FFData = preload("./charaData.gd").getCharaData()
 
 const PLUSHP = 0.05 # 恢复量
 const BLOODSPILLER_PW = 2.90 # 血溅倍率
 var atkCount = 0 # 攻击次数
 var darkCount = 0 # 暗血
 
+const meterage = {
+	"zh_CN": "暗血",
+	"en": "Blackblood",
+	"ja": "暗血"
+}
+var locale = TranslationServer.get_locale()
+
 func _extInit():
 	._extInit()
 	OCCUPATION = "MeleeDPS"
-	chaName = FFData.name_1
+	chaName = "FFXIVAolong_1-name_1"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 5
 	attCoe.atk = 3.6
@@ -20,8 +26,8 @@ func _extInit():
 	evos = ["cFFXIVAolong_1_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_Bloodspiller", 10)
-	addSkillTxt(FFData.meterage % [0])
-	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
+	addSkillTxt("%s: %d / 700" % [meterage[locale], 0])
+	addSkillTxt("FFXIVAolong_1-skill_text")
 
 func _onBattleStart():
 	._onBattleStart()
