@@ -30,8 +30,8 @@ const SKILL_1_CN = """[至黑之夜]：造成非特效伤害时会累计暗血�
 [暗黑布道]：冷却12s，使队伍全员受到的{TMgiHurt}减少10%，持续6s"""
 const SKILL_1_EN = """[The Blackest Night]：When BlackBlood achieve 700 points, will release the shield{c_base}(20% of maximum HP){/c}
 [Dark Missionary]：(12s), Reduce magic damage{c_base}(10%){/c} to all members, lasting 6s"""
-const SKILL_1_JA = """[ブラックナイト]：特殊効果でないダメージを与えた場合、暗血が累計されて700ポイントに達した時、一定量のダメージを防ぐバリアを張る。最大HPの20%のダメージを軽減する
-[ダークミッショナリー]：12s、一定時間、自身と周囲のパーティメンバーの被魔法ダメージを{c_base}10％{/c}軽減させる、効果時間：6s"""
+const SKILL_1_JA = """[ブラックナイト]：特殊効果でないダメージを与えた場合、暗血が累計されて700ポイントに達した時、一定量のダメージを防ぐバリアを張る。最大HPの{c_base}20%{/c}のダメージを軽減する
+[ダークミッショナリー]：12s、自身と周囲のパーティメンバーの被魔法ダメージを{c_base}10％{/c}軽減させる、効果時間：6s"""
 
 const SKILL_2_CN = "[掠影示现]：{TPassive}令英雄的掠影变为实体与自身并肩作战，与本体同步攻击，造成本体的[30%]的伤害，自身最大生命值提高"
 const SKILL_2_EN = "[Living Shadow]：Self damage increased{c_base}(30%){/c}, maximum HP increased"
