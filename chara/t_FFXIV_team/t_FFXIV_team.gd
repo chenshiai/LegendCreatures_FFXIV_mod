@@ -31,6 +31,7 @@ func run():
 
 class LightTeam:
 	extends Buff
+	var resolve = false
 	func _init():
 		attInit()
 		id = "FFXIVLightTeam"
@@ -40,14 +41,22 @@ class LightTeam:
 		att.mgiAtkL = 0.1
 		att.defL = 0.1
 		att.mgiDefL = 0.1
+	
+	func _connect():
+		sys.main.connect("onCharaDel", self, "run")
+	
+	func run(cha):
+		if cha == masCha:
+			resolve = true
 
 	func _del():
-		for i in sys.main.btChas:
-			if i.team == 2:
-				masCha.addBuff(LightTeam.new())
+		if resolve:
+			masCha.addBuff(LightTeam.new())
+			resolve = false
 
 class FullTeam:
 	extends Buff
+	var resolve = false
 	func _init():
 		attInit()
 		id = "FFXIVFullTeam"
@@ -58,7 +67,15 @@ class FullTeam:
 		att.defL = 0.2
 		att.mgiDefL = 0.2
 
+	func _connect():
+		sys.main.connect("onCharaDel", self, "run")
+	
+	func run(cha):
+		if cha == masCha:
+			resolve = true
+
 	func _del():
-		for i in sys.main.btChas:
-			if i.team == 2 and !i.isDeath:
-				masCha.addBuff(FullTeam.new())
+		if resolve:
+			masCha.addBuff(FullTeam.new())
+			resolve = false
+	

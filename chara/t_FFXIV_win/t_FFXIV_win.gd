@@ -17,7 +17,7 @@ func get_info():
 
 class LightHard:
 	extends Buff
-
+	var resolve = false
 	func _init():
 		attInit()
 		id = "LightHard"
@@ -25,8 +25,16 @@ class LightHard:
 		att.defL = 0.15
 		att.mgiDefL = 0.15
 
+	func _connect():
+		sys.main.connect("onCharaDel", self, "run")
+	
+	func run(cha):
+		if cha == masCha:
+			resolve = true
+
 	func _del():
-		for i in sys.main.btChas:
-			if i.team == 2 and !i.isDeath:
-				masCha.addBuff(LightHard.new())
+		if resolve:
+			masCha.addBuff(LightHard.new())
+			resolve = false
+	
 		# sys.main.get_node("ui/player/GridContainer").add_child(preload("res://ui/talentBtn/talentBtn.tscn").instance())
