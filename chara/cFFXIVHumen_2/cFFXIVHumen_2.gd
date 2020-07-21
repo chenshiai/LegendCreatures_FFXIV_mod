@@ -1,10 +1,9 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
-var FFData = preload("./charaData.gd").getCharaData()
 
 func _extInit():
 	._extInit()
 	OCCUPATION = "MeleeDPS"
-	chaName = FFData.name_1
+	chaName = "FFXIVHumen_2-name_1"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4.5
 	attCoe.atk = 4
@@ -14,7 +13,7 @@ func _extInit():
 	evos = ["cFFXIVHumen_2_1"]
 	atkEff = "atk_dao"
 	addCdSkill("skill_BowShock", 9)
-	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
+	addSkillTxt("FFXIVHumen_2-skill_text")
 
 const BOWSHOCK_PW = 2.60 # 弓形冲波威力
 

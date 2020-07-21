@@ -2,7 +2,7 @@ extends "../cFFXIVHumen_2_1/cFFXIVHumen_2_1.gd"
 
 func _extInit():
 	._extInit()
-	chaName = FFData.name_3
+	chaName = "FFXIVHumen_2-name_3"
 	attCoe.maxHp = 6.3
 	attCoe.atk = 4.8
 	attCoe.def = 5.8
@@ -10,7 +10,7 @@ func _extInit():
 	lv = 4
 	evos = []
 	addCdSkill("skill_BlastingZone", 10)
-	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))
+	addSkillTxt("FFXIVHumen_2-skill_text_2")
 
 
 const BLASTINGZONE_PW = 3.80 # 爆破领域威力

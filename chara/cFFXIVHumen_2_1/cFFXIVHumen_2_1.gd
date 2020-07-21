@@ -1,14 +1,12 @@
 extends "../cFFXIVHumen_2/cFFXIVHumen_2.gd"
 
-var SKILL_TXT_1 = TEXT.format("""""")
-
 func _extInit():
 	._extInit()
-	chaName = FFData.name_2
+	chaName = "FFXIVHumen_2-name_2"
 	lv = 3
 	attAdd.spd += 0.3
 	evos = []
-	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
+	addSkillTxt("FFXIVHumen_2-skill_text_1")
 
 var superbolide = true # 是否可以释放火流星
 func _connect():
