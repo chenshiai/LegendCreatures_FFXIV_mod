@@ -68,11 +68,10 @@ func set_limitBreak_level(value):
 
 
 func limitBreak_up(atkInfo):
-	if limitBreak.value < 1000:
+	if limitBreak.value < 1000 and atkInfo.atkCha != atkInfo.hitCha:
 		limitBreakNow += atkInfo.atkVal
 		limitBreak.set_value(limitBreakNow * 1000 / limitBreakVal)
 		set_limitBreak_level(limitBreak.value)
-	pass
 
 
 func use_limitBreak(type):
