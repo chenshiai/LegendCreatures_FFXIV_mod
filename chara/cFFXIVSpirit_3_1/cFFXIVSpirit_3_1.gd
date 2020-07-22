@@ -37,7 +37,10 @@ func stardiver():
 	var mv = Vector2(cell.x, cell.y)
 	mv.x = cha.cell.x
 	mv.y = cha.cell.y
-	var vs = [Vector2(0, 0), Vector2(1, 0), Vector2(-1, 0), Vector2(0, 1), Vector2(0, -1), Vector2(1, 1), Vector2(-1, 1), Vector2(-1, -1), Vector2(1, -1)]
+	var vs = [Vector2(0, 0), Vector2(1, 0), Vector2(-1, 0),
+		Vector2(0, 1), Vector2(0, -1), Vector2(1, 1),
+		Vector2(-1, 1), Vector2(-1, -1), Vector2(1, -1)
+	]
 	for i in vs:
 		var v = mv + i
 		if matCha(v) == null and sys.main.isMatin(v):
