@@ -1,4 +1,5 @@
 extends "../cFFXIVNeko_3/cFFXIVNeko_3.gd"
+const REFULGENT_PW = 3.30 # 辉煌箭威力
 
 func _extInit():
 	._extInit()
@@ -7,14 +8,11 @@ func _extInit():
 	evos = []
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
 
-const REFULGENT_PW = 3.30 # 辉煌箭威力
-
-func _connect():
-	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
 	troubadour()
+
 
 func troubadour():
 	var ailys = getAllChas(2)
@@ -22,10 +20,12 @@ func troubadour():
 		if cha != null:
 			BUFF_LIST.b_Troubadour.new({"cha": cha})
 
+
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)
 	if atkInfo.atkType == AtkType.NORMAL and sys.rndPer(20):
 		refulgent()
+
 
 func refulgent():
 	Utils.draw_efftext("辉煌箭！", position, "#fff000")

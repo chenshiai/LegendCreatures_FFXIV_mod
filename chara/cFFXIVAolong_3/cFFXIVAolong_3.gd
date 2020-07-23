@@ -15,7 +15,7 @@ var colorConfig = {
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "MeleeDPS"
+	OCCUPATION = "CloseCombat"
 	chaName = FFData.name_1
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4
@@ -32,12 +32,10 @@ func _extInit():
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT, colorConfig))
 
 
-func _connect():
-	._connect()
-
 func _onBattleStart():
 	._onBattleStart()
 	Assassinate = false
+
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -45,7 +43,7 @@ func _castCdSkill(id):
 		trickAttack()
 	if id == "skill_Ninjutsu":
 		ninjutsu()
-		# Utils.draw_effect("whirlwind", Vector2(position.x, position.y - 1), Vector2(0,-40), 15, 1, false)
+
 
 func trickAttack():
 	FFHurtChara(aiCha, att.atk * TRICKATTACK_PW, PHY, SKILL)
@@ -53,6 +51,7 @@ func trickAttack():
 		"cha": aiCha,
 		"dur": 10
 	})
+
 
 func ninjutsu():
 	var Mudra = [] # 结印数组
@@ -80,6 +79,7 @@ func ninjutsu():
 		1: raiton()
 		2: hyoton()
 
+
 # 风魔手里剑
 func fuma():
 	var chas = getAllChas(1)
@@ -94,10 +94,12 @@ func fuma():
 	Utils.draw_efftext("风魔", position)
 	FFHurtChara(chas[0], att.atk * FUMA_PW, PHY, SKILL)
 
+
 # 雷遁之术
 func raiton():
 	Utils.draw_efftext("雷遁", position)
 	FFHurtChara(aiCha, att.atk * RAITON_PW, MGI, SKILL)
+
 
 # 冰遁之术
 func hyoton():
@@ -111,6 +113,7 @@ func hyoton():
 		for i in chas:
 			FFHurtChara(i, att.atk * HYOTON_PW, MGI, SKILL)
 			i.addBuff(b_jieShuang.new(5))
+
 
 # 火遁之术
 func katon():

@@ -1,9 +1,14 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 var FFData = preload("./charaData.gd").getCharaData()
 
+const ADLOQUIUM_PW = 0.60 # 鼓舞激励之策威力
+const DEATHMGI_PW = 0.90 # 死炎法威力
+var shield_pw = 1.25 # 护盾生成量
+var SummonChara = null # 召唤兽节点
+
 func _extInit():
 	._extInit()
-	OCCUPATION = "MagicDPS"
+	OCCUPATION = "Treatment"
 	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -20,13 +25,6 @@ func _extInit():
 	addCdSkill("skill_Summon_3", 20)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
-const ADLOQUIUM_PW = 0.60 # 鼓舞激励之策威力
-const DEATHMGI_PW = 0.90 # 死炎法威力
-var shield_pw = 1.25 # 护盾生成量
-var SummonChara = null # 召唤兽节点
-
-func _connect():
-	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
@@ -41,6 +39,7 @@ func _onBattleEnd():
 	self.get_node("spr").remove_child(SummonChara)
 	SummonChara = null
 
+
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Adloquium":
@@ -52,6 +51,7 @@ func _castCdSkill(id):
 		SummonChara.skill_lv2()
 	if id == "skill_Summon_3":
 		SummonChara.skill_lv3()
+
 
 func deathMgi():
 	var d:Eff = newEff("sk_feiDang",sprcPos)

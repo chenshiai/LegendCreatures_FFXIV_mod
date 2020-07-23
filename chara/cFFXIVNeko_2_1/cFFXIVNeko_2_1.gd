@@ -1,4 +1,5 @@
 extends "../cFFXIVNeko_2/cFFXIVNeko_2.gd"
+const ENKINDLEBAHAMUT_PW = 7 # 龙神迸发威力
 
 func _extInit():
 	._extInit()
@@ -8,13 +9,6 @@ func _extInit():
 	addCdSkill("skill_Dreadwyrm", 24)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))
 
-const ENKINDLEBAHAMUT_PW = 7 # 龙神迸发威力
-
-func _connect():
-	._connect()
-
-func _onBattleStart():
-	._onBattleStart()
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -23,8 +17,10 @@ func _castCdSkill(id):
 		enkindleBahamut(self.lv)
 		SummonChara.skill_lv3()
 
+
 func dreadwyrm():
 	BUFF_LIST.b_Dreadwyrm.new({"cha": self, "dur": 8})
+
 
 func enkindleBahamut(lv):
 	var cell = aiCha.cell

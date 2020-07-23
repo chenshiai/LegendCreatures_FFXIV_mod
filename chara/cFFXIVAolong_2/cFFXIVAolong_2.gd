@@ -16,7 +16,7 @@ signal swordPpressure
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "MeleeDPS"
+	OCCUPATION = "CloseCombat"
 	chaName = FFData.name_1
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4
@@ -30,12 +30,11 @@ func _extInit():
 	atkEff = "atk_dao"
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
-func _connect():
-	._connect()
 
 func _onBattleEnd():
 	._onBattleEnd()
 	reset()
+
 
 func normalAtkChara(cha):
 	.normalAtkChara(cha)
@@ -52,13 +51,12 @@ func normalAtkChara(cha):
 		else:
 			getFlash("flower")
 
-func _castCdSkill(id):
-	._castCdSkill(id)
 
 func _onAtkInfo(atkInfo: AtkInfo):
 	._onAtkInfo(atkInfo)
 	if atkInfo.atkCha == self and atkInfo.atkType == Chara.AtkType.SKILL:
 		atkInfo.canCri = true
+
 
 func iaijutsu():
 	if flash == 1:
@@ -72,6 +70,7 @@ func iaijutsu():
 		beforIaijutsu = SETSUGEKKA_PW
 	yield(reTimer(0.3), "timeout")
 	reset()
+
 
 # 获得对应的印记
 func getFlash(name):
@@ -92,6 +91,7 @@ func getFlash(name):
 				flash += 1
 				Utils.draw_efftext("花", position, "#ff558d")
 
+
 # 纷乱雪月花
 func setsugekka(skill_pw):
 	emit_signal("swordPpressure")
@@ -101,6 +101,7 @@ func setsugekka(skill_pw):
 	Utils.draw_effect("slash2", aiCha.position, Vector2(0,-30), 10, 1.3)
 	FFHurtChara(aiCha, att.atk * skill_pw, PHY, SKILL)
 	normalSpr.position = Vector2(0, 0)
+
 
 # 重置所有状态
 func reset():

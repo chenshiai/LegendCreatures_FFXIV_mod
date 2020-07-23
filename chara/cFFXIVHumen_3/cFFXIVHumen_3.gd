@@ -1,9 +1,13 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 var FFData = preload("./charaData.gd").getCharaData()
 
+const DANCESTEP_PW = 6 # 标准舞步威力
+var atkMaxAlly = null # 攻击力最高的队友
+var mgiAtkMaxAlly = null # 法强最高的队友
+
 func _extInit():
 	._extInit()
-	OCCUPATION = "DistanceDPS"
+	OCCUPATION = "LongRange"
 	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -17,21 +21,17 @@ func _extInit():
 	addCdSkill("skill_DanceStep", 23)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
-const DANCESTEP_PW = 6 # 标准舞步威力
-var atkMaxAlly = null # 攻击力最高的队友
-var mgiAtkMaxAlly = null # 法强最高的队友
-
-func _connect():
-	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
 	setDancePartner()
 
+
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_DanceStep":
 		danceStep()
+
 
 func _onAtkInfo(atkInfo: AtkInfo):
 	._onAtkInfo(atkInfo)
@@ -54,6 +54,7 @@ func setDancePartner():
 		BUFF_LIST.b_DancingPartner.new({"cha": atkMaxAlly})
 
 	BUFF_LIST.b_DancingPartner.new({"cha": self})
+
 
 # 标准舞步
 func danceStep():

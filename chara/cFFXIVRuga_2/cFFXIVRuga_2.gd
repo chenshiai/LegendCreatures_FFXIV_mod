@@ -1,9 +1,13 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 var FFData = preload("./charaData.gd").getCharaData()
 
+var fightGas = 0
+const FIGHTGAS_PW = 2.10 # 斗气斩威力
+const FIGHTGAS_N_PW = 0.20 # 斗气提升威力
+
 func _extInit():
 	._extInit()
-	OCCUPATION = "MeleeDPS"
+	OCCUPATION = "CloseCombat"
 	chaName = FFData.name_1
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4
@@ -17,16 +21,11 @@ func _extInit():
 	addCdSkill("skill_FightGas", 10)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
-var fightGas = 0
-const FIGHTGAS_PW = 2.10 # 斗气斩威力
-const FIGHTGAS_N_PW = 0.20 # 斗气提升威力
-
-func _connect():
-	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
 	fightGas = 0
+
 
 func _onAtkChara(atkInfo:AtkInfo):
 	._onAtkChara(atkInfo)
@@ -35,16 +34,19 @@ func _onAtkChara(atkInfo:AtkInfo):
 		if sys.rndPer(35) and fightGas < 5:
 			fightGasUp()
 
+
+func _castCdSkill(id):
+	._castCdSkill(id)
+	if id == "skill_FightGas":
+		fightGasAtk()
+
+
 func fightGasUp():
 	fightGas += 1
 	Utils.draw_efftext("斗气", position, "#ff6631")
 	if fightGas >= 5:
 		fightGasAtk()
 
-func _castCdSkill(id):
-	._castCdSkill(id)
-	if id == "skill_FightGas":
-		fightGasAtk()
 
 func fightGasAtk():
 	FFHurtChara(aiCha, att.atk * (FIGHTGAS_PW + FIGHTGAS_N_PW * fightGas), PHY, SKILL)

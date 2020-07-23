@@ -3,7 +3,7 @@ var FFData = preload("./charaData.gd").getCharaData()
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "MeleeDPS"
+	OCCUPATION = "Protect"
 	chaName = FFData.name_1
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4.7
@@ -16,21 +16,18 @@ func _extInit():
 	addCdSkill("skill_Shiver", 10)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
-func _connect():
-	._connect()
 
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Shiver":
 		shiver()
 
-func _onBattleStart():
-	._onBattleStart()
-
-func shiver():
-	plusHp(att.maxHp * 0.20)
-	BUFF_LIST.b_Shiver.new({"cha": self, "dur": 10})
 
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)
 	atkInfo.hurtVal *= 0.80
+
+
+func shiver():
+	plusHp(att.maxHp * 0.20)
+	BUFF_LIST.b_Shiver.new({"cha": self, "dur": 10})

@@ -9,15 +9,10 @@ func _extInit():
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
 
 
-func _connect():
-	._connect()
-
-func _onBattleStart():
-	._onBattleStart()
-
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)
 	atkInfo.hurtVal *= 1.30
+
 
 func _castCdSkill(id):
 	._castCdSkill(id)

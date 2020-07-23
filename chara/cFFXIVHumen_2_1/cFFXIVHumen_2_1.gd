@@ -1,4 +1,5 @@
 extends "../cFFXIVHumen_2/cFFXIVHumen_2.gd"
+var superbolide = true # 是否可以释放火流星
 
 func _extInit():
 	._extInit()
@@ -8,13 +9,11 @@ func _extInit():
 	evos = []
 	addSkillTxt("FFXIVHumen_2-skill_text_1")
 
-var superbolide = true # 是否可以释放火流星
-func _connect():
-	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
 	superbolide = true
+
 
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)
@@ -29,6 +28,7 @@ func _onHurt(atkInfo):
 			Utils.draw_effect("shieldBlue", position, Vector2(0, -20), 14, 2)
 			att.hp = 1
 			superbolide = false
+
 
 func _onAtkChara(atkInfo:AtkInfo):
 	._onAtkChara(atkInfo)

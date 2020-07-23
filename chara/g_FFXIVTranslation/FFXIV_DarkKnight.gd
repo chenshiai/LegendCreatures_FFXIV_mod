@@ -37,31 +37,24 @@ const SKILL_2_CN = "[掠影示现]：{TPassive}令英雄的掠影变为实体与
 const SKILL_2_EN = "[Living Shadow]：Self damage increased{c_base}(30%){/c}, maximum HP increased"
 const SKILL_2_JA = "[影身具現]：自身と共に戦う「英雄の影身」を具現化する、本体の{c_base}[30%]{/c}の傷つけることをもたらして、自身の最大の生命値は高めます。"
 
-const skill_text = {
-		"zh_CN": SKILL_CN,
-		"en": SKILL_EN,
-		"ja": SKILL_JA
-	}
-
-const skill_text_1 = {
-	"zh_CN": SKILL_1_CN,
-	"en": SKILL_1_EN,
-	"ja": SKILL_1_JA
-}
-
-const skill_text_2 = {
-	"zh_CN": SKILL_2_CN,
-	"en": SKILL_2_EN,
-	"ja": SKILL_2_JA
-}
-
-
 func _init():
 	addTr({
 		"%s-name_1" % [baseName]: name_1,
 		"%s-name_2" % [baseName]: name_2,
 		"%s-name_3" % [baseName]: name_3,
-		"%s-skill_text" % [baseName]: skill_text,
-		"%s-skill_text_1" % [baseName]: skill_text_1,
-		"%s-skill_text_2" % [baseName]: skill_text_2,
+		"%s-skill_text" % [baseName]: {
+			"zh_CN": SKILL_CN,
+			"en": SKILL_EN,
+			"ja": SKILL_JA
+		},
+		"%s-skill_text_1" % [baseName]: {
+			"zh_CN": SKILL_1_CN,
+			"en": SKILL_1_EN,
+			"ja": SKILL_1_JA
+		},
+		"%s-skill_text_2" % [baseName]: {
+			"zh_CN": SKILL_2_CN,
+			"en": SKILL_2_EN,
+			"ja": SKILL_2_JA
+		},
 	})

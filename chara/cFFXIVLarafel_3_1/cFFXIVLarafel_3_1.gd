@@ -7,17 +7,13 @@ func _extInit():
 	evos = []
 	addCdSkill("skill_Manafication", 20)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
-	
-func _connect():
-	._connect()
 
-func _onBattleStart():
-	._onBattleStart()
 
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Manafication":
 		manafication()
+
 
 func manafication():
 	Utils.draw_efftext("倍增！", position)

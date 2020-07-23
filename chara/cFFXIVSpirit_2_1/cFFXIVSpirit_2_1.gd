@@ -1,5 +1,8 @@
 extends "../cFFXIVSpirit_2/cFFXIVSpirit_2.gd"
 
+const LORDOFCROWNS_PW = 1
+const LADYOFCROWNS_PW = 1
+
 func _extInit():
 	._extInit()
 	chaName = FFData.name_2
@@ -7,14 +10,6 @@ func _extInit():
 	evos = []
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
 
-const LORDOFCROWNS_PW = 1
-const LADYOFCROWNS_PW = 1
-
-func _connect():
-	._connect()
-
-func _onBattleStart():
-	._onBattleStart()
 
 func _castCdSkill(id):
 	._castCdSkill(id)

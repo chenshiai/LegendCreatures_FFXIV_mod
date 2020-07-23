@@ -13,16 +13,11 @@ func _extInit():
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))
 
 
-func _connect():
-	._connect()
-
-func _onBattleStart():
-	._onBattleStart()
-
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Devilment":
 		devilment()
+
 
 # 进攻探戈
 func devilment():

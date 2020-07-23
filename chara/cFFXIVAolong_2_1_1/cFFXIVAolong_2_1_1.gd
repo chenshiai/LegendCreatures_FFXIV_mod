@@ -1,9 +1,8 @@
 extends "../cFFXIVAolong_2_1/cFFXIVAolong_2_1.gd"
 
+const SHOHA_PW = 4 # 照破威力
 var ShohaCount = 0
 
-func _info():
-	pass
 
 func _extInit():
 	._extInit()
@@ -18,15 +17,11 @@ func _extInit():
 	if not is_connected("swordPpressure", self, "Shoha"):
 		connect("swordPpressure", self, "Shoha")
 
-const SHOHA_PW = 4 # 照破威力
-
-
-func _connect():
-	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
 	ShohaCount = 0
+
 
 func Shoha():
 	ShohaCount += 1

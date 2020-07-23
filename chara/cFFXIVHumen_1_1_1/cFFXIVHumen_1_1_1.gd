@@ -18,13 +18,12 @@ func _extInit():
 	addSkillTxt(TEXT.format("[地毁人亡]：冷却12s，对周围2格内的敌人造成[180%]的{TPhyHurt}"))
 	addSkillTxt("[死斗]：濒死时开启，不会死亡(除特定攻击外)，持续7s，然后恢复20%的生命值，最多触发一次")
 
-func _connect():
-	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
 	livingDead = false
 	deadTime = 7
+
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -32,6 +31,7 @@ func _castCdSkill(id):
 		var chas = getCellChas(cell, 2)
 		for i in chas:
 			FFHurtChara(i, att.atk * DECIMATE_PW, PHY, SKILL)
+
 
 func _onHurt(atkInfo:AtkInfo):
 	._onHurt(atkInfo)
@@ -41,6 +41,7 @@ func _onHurt(atkInfo:AtkInfo):
 			livingDead = true
 		elif livingDead and deadTime >= 0:
 			atkInfo.hurtVal = 0
+
 
 func _upS():
 	._upS()

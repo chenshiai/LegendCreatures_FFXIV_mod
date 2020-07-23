@@ -1,9 +1,13 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 var FFData = preload("./charaData.gd").getCharaData()
 
+const CUREII_PW = 0.80 # 救疗威力
+const CUREIII_PW = 0.50 # 医济威力
+const REGEN_PW = 0.10 # 再生威力
+
 func _extInit():
 	._extInit()
-	OCCUPATION = "MagicDPS"
+	OCCUPATION = "Treatment"
 	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -19,15 +23,6 @@ func _extInit():
 	addCdSkill("skill_Regen", 18)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
-const CUREII_PW = 0.80 # 救疗威力
-const CUREIII_PW = 0.50 # 医济威力
-const REGEN_PW = 0.10 # 再生威力
-
-func _connect():
-	._connect()
-
-func _onBattleStart():
-	._onBattleStart()
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -38,6 +33,7 @@ func _castCdSkill(id):
 	if id == "skill_Regen":
 		regen()
 
+
 # 救疗
 func cureII():
 	var chas = getAllChas(2)
@@ -45,6 +41,7 @@ func cureII():
 
 	if chas[0] != null:
 		chas[0].plusHp(att.mgiAtk * CUREII_PW)
+
 
 # 医济		
 func cureIII():
@@ -59,6 +56,7 @@ func cureIII():
 			})
 			cha.plusHp(att.mgiAtk * CUREIII_PW)
 			yield(reTimer(0.1), "timeout")
+
 
 # 再生
 func regen():

@@ -1,9 +1,14 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 var FFData = preload("./charaData.gd").getCharaData()
 
+const RUINIII_PW = 0.90 # 毁荡威力
+const FESTER_PW = 1.2 # 溃烂爆发威力
+const FESTER_N_PW = 0.30 # 层数提升威力
+var SummonChara = null
+
 func _extInit():
 	._extInit()
-	OCCUPATION = "MagicDPS"
+	OCCUPATION = "Magic"
 	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -18,13 +23,6 @@ func _extInit():
 	addCdSkill("skill_Fester", 10)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
-const RUINIII_PW = 0.90 # 毁荡威力
-const FESTER_PW = 1.2 # 溃烂爆发威力
-const FESTER_N_PW = 0.30 # 层数提升威力
-var SummonChara = null
-
-func _connect():
-	._connect()
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -36,13 +34,16 @@ func _castCdSkill(id):
 		if lv >= 3:
 			SummonChara.skill_lv2()
 
+
 func _onBattleStart():
 	._onBattleStart()
 	summon()
 
+
 func _onBattleEnd():
 	._onBattleEnd()
 	recovery()
+
 
 # 毁荡	
 func ruinIII():
@@ -50,6 +51,7 @@ func ruinIII():
 	d._initFlyCha(aiCha)
 	yield(d, "onReach")
 	FFHurtChara(aiCha, att.mgiAtk * RUINIII_PW, MGI, SKILL)
+
 
 # 溃烂爆发	
 func fester():
@@ -61,6 +63,7 @@ func fester():
 		if bf.isNegetive:
 			sf += 1
 	FFHurtChara(aiCha, att.mgiAtk * (FESTER_PW + FESTER_N_PW * sf), MGI, SKILL)
+
 
 # 召唤
 func summon():
@@ -74,16 +77,19 @@ func summon():
 		id = "cFFXIV_Summon3"
 	present(id)
 
+
 # 显灵
 func present(id):
 	SummonChara = sys.main.newChara(id, self.team)
 	SummonChara.Summoner = self
 	self.get_node("spr").add_child(SummonChara)
 
+
 # 召回
 func recovery():
 	self.get_node("spr").remove_child(SummonChara)
 	SummonChara = null
+
 
 func _upS():
 	if SummonChara and aiCha and (SummonChara.id == "cFFXIV_Summon1" or SummonChara.id == "cFFXIV_Summon3"):

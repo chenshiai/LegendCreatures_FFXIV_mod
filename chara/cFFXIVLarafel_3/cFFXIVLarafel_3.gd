@@ -1,9 +1,19 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 var FFData = preload("./charaData.gd").getCharaData()
 
+const MORGEN = 15 # 释放魔法获得魔元数量
+const MORGEN_MAX = 100 # 魔元上限
+const VERTHUNDER_PW = 1.20 # 魔法威力
+const REDOUBLEMENT_PW = 5 # 魔连攻威力
+const REDOUBLEMENT_CAST = 25 # 魔连攻消耗魔元值
+const VERFLARE_PW = 2.40 # 赤核爆威力
+
+var blackMorgen = 0 # 黑魔元
+var whiteMorgan = 0 # 白魔元
+
 func _extInit():
 	._extInit()
-	OCCUPATION = "DistanceDPS"
+	OCCUPATION = "Magic"
 	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -18,21 +28,6 @@ func _extInit():
 	addSkillTxt(FFData.meterage % [0, 0])
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
-const MORGEN = 15 # 释放魔法获得魔元数量
-const MORGEN_MAX = 100 # 魔元上限
-const VERTHUNDER_PW = 1.20 # 魔法威力
-const REDOUBLEMENT_PW = 5 # 魔连攻威力
-const REDOUBLEMENT_CAST = 25 # 魔连攻消耗魔元值
-const VERFLARE_PW = 2.40 # 赤核爆威力
-
-var blackMorgen = 0 # 黑魔元
-var whiteMorgan = 0 # 白魔元
-
-func _connect():
-	._connect()
-
-func _onBattleStart():
-	._onBattleStart()
 
 func _onBattleEnd():
 	._onBattleEnd()
@@ -40,10 +35,12 @@ func _onBattleEnd():
 	whiteMorgan = 0 # 白魔元
 	updateMorgen()
 
+
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Verthunder" and aiCha != null:
 		verthunder(true, VERTHUNDER_PW)
+
 
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)
@@ -57,6 +54,7 @@ func _onAtkChara(atkInfo):
 		if self.lv >= 3:
 			verthunder(false, VERFLARE_PW)
 
+
 func updateMorgen():
 	skillStrs[0] = FFData.meterage % [whiteMorgan, blackMorgen]
 
@@ -66,6 +64,7 @@ func morgenLimit():
 		whiteMorgan = MORGEN_MAX
 	if blackMorgen > MORGEN_MAX:
 		blackMorgen = MORGEN_MAX
+
 
 # 赤闪雷/赤疾风
 func verthunder(first, pw):

@@ -1,5 +1,8 @@
 extends "../cFFXIVNeko_1/cFFXIVNeko_1.gd"
 
+const SUCCOR_PW = 0.50 # 士高气昂之策威力
+const SACREDSOIL_PW = 0.05 # 野战治疗阵恢复力
+
 func _extInit():
 	._extInit()
 	chaName = FFData.name_2
@@ -9,14 +12,6 @@ func _extInit():
 	addCdSkill("skill_SacredSoil", 20)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
 
-const SUCCOR_PW = 0.50 # 士高气昂之策威力
-const SACREDSOIL_PW = 0.05 # 野战治疗阵恢复力
-
-func _connect():
-	._connect()
-
-func _onBattleStart():
-	._onBattleStart()
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -24,6 +19,7 @@ func _castCdSkill(id):
 		succor()
 	if id == "skill_SacredSoil":
 		sacredSoil()
+
 
 func succor():
 	var allys = getCellChas(cell, 4, 2)
@@ -38,6 +34,7 @@ func succor():
 			})
 			Utils.draw_effect("shield", cha.position, Vector2(0,-30), 14)
 			yield(reTimer(0.1), "timeout")
+
 
 func sacredSoil():
 	Utils.draw_efftext("野战治疗阵！", position, "#1a8a00")

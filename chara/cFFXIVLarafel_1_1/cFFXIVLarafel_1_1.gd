@@ -1,4 +1,5 @@
 extends "../cFFXIVLarafel_1/cFFXIVLarafel_1.gd"
+const STORNIII_PW = 1.0 # 崩石威力
 
 func _extInit():
 	._extInit()
@@ -10,15 +11,11 @@ func _extInit():
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
 
 
-const STORNIII_PW = 1.0 # 崩石威力
-
-func _connect():
-	._connect()
-
 func _onBattleStart():
 	._onBattleStart()
 	var sk = getSkill("skill_Benediction")
 	sk.cd = 20
+
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -27,11 +24,13 @@ func _castCdSkill(id):
 	if id == "skill_StornIII":
 		stornIII()
 
+
 func stornIII():
 	var d:Eff = newEff("sk_feiDang",sprcPos)
 	d._initFlyCha(aiCha)
 	yield(d, "onReach")
 	FFHurtChara(aiCha, att.mgiAtk * STORNIII_PW, MGI, SKILL)
+
 
 func benediction():
 	var chas = getAllChas(2)

@@ -1,4 +1,5 @@
 extends "../cFFXIVLarafel_3_1/cFFXIVLarafel_3_1.gd"
+const MORGEN_UP = 10
 
 func _extInit():
 	._extInit()
@@ -12,14 +13,6 @@ func _extInit():
 	evos = []
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))
 
-
-const MORGEN_UP = 10
-
-func _connect():
-	._connect()
-
-func _onBattleStart():
-	._onBattleStart()
 
 func _castCdSkill(id):
 	._castCdSkill(id)

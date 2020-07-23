@@ -13,18 +13,18 @@ func _extInit():
 	addCdSkill("skill_ArmorCrush", 16)
 	addSkillTxt(FFData.SKILL_TEXT_2)
 
-func _connect():
-	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
 	yield(reTimer(0.5), "timeout")
 	call_deferred("armorCrush")
 
+
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_ArmorCrush":
 		armorCrush()
+
 
 func armorCrush():
 	if aiCha.aiCha != self:

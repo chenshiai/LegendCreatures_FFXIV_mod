@@ -13,17 +13,21 @@ var OCCUPATION = "Default"
 var SoulExample = null
 
 var BallisticSpeed = {
-	"MeleeDPS": 500,
-	"MagicDPS": 300,
-	"DistanceDPS": 800,
+	"Protect": 500,
+	"CloseCombat": 500,
+	"Magic": 400,
+	"LongRange": 800,
+	"Treatment": 300,
 	"Default": 450,
 }
 
 var FFHurtType = {
-	"MeleeDPS": PHY,
-	"MagicDPS": MGI,
-	"DistanceDPS": PHY,
-	"Default": PHY
+	"Protect": PHY,
+	"CloseCombat": PHY,
+	"Magic": MGI,
+	"LongRange": PHY,
+	"Treatment": MGI,
+	"Default": PHY,
 }
 
 
@@ -37,30 +41,21 @@ func _extInit():
 	attCoe.def = 1
 	attCoe.mgiDef = 1
 
-func _onBattleStart():
-	._onBattleStart()
 
 func getAtkVal():
 	match OCCUPATION:
-		"MeleeDPS":
+		"Protect":
 			return att.atk
-		"MagicDPS":
+		"CloseCombat":
+			return att.atk
+		"Magic":
 			return att.mgiAtk * 0.5
-		"DistanceDPS":
+		"LongRange":
 			return att.atk * 1.1
+		"Treatment":
+			return att.mgiAtk * 0.5
 		"Default":
 			return att.atk
-
-# func canCri():
-# 	match OCCUPATION:
-# 		"MeleeDPS":
-# 			return true
-# 		"MagicDPS":
-# 			return true
-# 		"DistanceDPS":
-# 			return true
-# 		"Default":
-# 			return true
 
 
 func normalAtkChara(cha):
@@ -80,3 +75,7 @@ func normalAtkChara(cha):
 func FFHurtChara(target, atkVal, hurtType, atkType):
 	if target != null and !target.isDeath:
 		self.hurtChara(target, atkVal, hurtType, atkType)
+
+
+func get_OCCUPATION():
+	return OCCUPATION

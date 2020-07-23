@@ -14,7 +14,7 @@ var locale = TranslationServer.get_locale()
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "MeleeDPS"
+	OCCUPATION = "Protect"
 	chaName = "FFXIVAolong_1-name_1"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 5

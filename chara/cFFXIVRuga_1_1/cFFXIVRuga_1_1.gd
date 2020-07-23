@@ -1,5 +1,9 @@
 extends "../cFFXIVRuga_1/cFFXIVRuga_1.gd"
 
+var hasDivineVeil = false
+var divineVeilDur = 5
+var selfExample = null
+
 func _extInit():
 	._extInit()
 	chaName = FFData.name_2
@@ -10,31 +14,27 @@ func _extInit():
 	if not is_connected("onPlusHp", self, "divineVeilTodo"):
 		connect("onPlusHp", self, "divineVeilTodo")
 
-var hasDivineVeil = false
-var divineVeilDur = 5
-var selfExample = null
-func _connect():
-	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
 	hasDivineVeil = false
+
 
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_DivineVeil":
 		divineVeil()
 
+
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)
 	if sys.rndPer(30):
 		atkInfo.hurtVal *= 0.85
 
-func over():
-	pass
 
 func divineVeil():
 	hasDivineVeil = true
+
 
 func divineVeilTodo(val):
 	if hasDivineVeil:
@@ -52,6 +52,7 @@ func divineVeilTodo(val):
 					"HD": att.maxHp * 0.1
 				})
 				yield(reTimer(0.1), "timeout")
+
 
 func _upS():
 	._upS()

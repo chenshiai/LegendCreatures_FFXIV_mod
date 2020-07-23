@@ -1,9 +1,19 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 var FFData = preload("./charaData.gd").getCharaData()
 
+const FIRE_PW = 0.30 # 星极火倍率
+const FREEZE_MAX = 3 # 灵极冰最大值
+const FIRE_CD = 23 # 每次减火系魔法的cd值
+const FIREIII_PW = 2.40 # 爆炎威力
+const FREEZE_PW = 1.50 # 玄冰威力
+var handleSkillFire = null # 获取当前爆炎技能
+var handleSkillFreeze = null # 获取当前玄冰技能
+var fire = 0 # 星极火当前阶段
+var freeze = 0 # 灵极冰当前层数
+
 func _extInit():
 	._extInit()
-	OCCUPATION = "MagicDPS"
+	OCCUPATION = "Magic"
 	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -18,18 +28,6 @@ func _extInit():
 	addCdSkill("skill_Freeze", 4)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
-const FIRE_PW = 0.30 # 星极火倍率
-const FREEZE_MAX = 3 # 灵极冰最大值
-const FIRE_CD = 23 # 每次减火系魔法的cd值
-const FIREIII_PW = 2.40 # 爆炎威力
-const FREEZE_PW = 1.50 # 玄冰威力
-var handleSkillFire = null # 获取当前爆炎技能
-var handleSkillFreeze = null # 获取当前玄冰技能
-var fire = 0 # 星极火当前阶段
-var freeze = 0 # 灵极冰当前层数
-
-func _connect():
-	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
@@ -38,12 +36,14 @@ func _onBattleStart():
 	fire = 0
 	freeze = 0
 
+
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_FireIII":
 		fireIII()
 	if id == "skill_Freeze":
 		freezeIII()
+
 
 # 火三
 func fireIII():
@@ -52,6 +52,7 @@ func fireIII():
 	FFHurtChara(aiCha, att.mgiAtk * (FIREIII_PW + FIRE_PW * fire), MGI, SKILL)
 	enhanced()
 
+
 # 消耗灵极心，提高火阶段，减少火3cd，重置冰cd
 func enhanced():
 	handleSkillFreeze.nowTime = 0
@@ -59,6 +60,7 @@ func enhanced():
 	if freeze > 0:
 		freeze -= 1
 		handleSkillFire.nowTime = FIRE_CD
+
 
 # 冰三		
 func freezeIII():

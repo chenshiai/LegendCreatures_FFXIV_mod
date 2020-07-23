@@ -34,31 +34,24 @@ const SKILL_2_CN = "[爆破领域]：冷却10s，对目标造成[380%]的{TPhyHu
 const SKILL_2_EN = "[Blasting Zone]：(10s), Cause {c_phy}[380%]{/c} physical damage"
 const SKILL_2_JA = "[ブラスティングゾーン]：10s、目標に対して{c_phy}[380%]{/c}の物理的ダメージを与える"
 
-const skill_text = {
-		"zh_CN": SKILL_CN,
-		"en": SKILL_EN,
-		"ja": SKILL_JA
-	}
-
-const skill_text_1 = {
-	"zh_CN": SKILL_1_CN,
-	"en": SKILL_1_EN,
-	"ja": SKILL_1_JA
-}
-
-const skill_text_2 = {
-	"zh_CN": SKILL_2_CN,
-	"en": SKILL_2_EN,
-	"ja": SKILL_2_JA
-}
-
-
 func _init():
 	addTr({
 		"%s-name_1" % [baseName]: name_1,
 		"%s-name_2" % [baseName]: name_2,
 		"%s-name_3" % [baseName]: name_3,
-		"%s-skill_text" % [baseName]: skill_text,
-		"%s-skill_text_1" % [baseName]: skill_text_1,
-		"%s-skill_text_2" % [baseName]: skill_text_2,
+		"%s-skill_text" % [baseName]: {
+			"zh_CN": SKILL_CN,
+			"en": SKILL_EN,
+			"ja": SKILL_JA
+		},
+		"%s-skill_text_1" % [baseName]: {
+			"zh_CN": SKILL_1_CN,
+			"en": SKILL_1_EN,
+			"ja": SKILL_1_JA
+		},
+		"%s-skill_text_2" % [baseName]: {
+			"zh_CN": SKILL_2_CN,
+			"en": SKILL_2_EN,
+			"ja": SKILL_2_JA
+		},
 	})

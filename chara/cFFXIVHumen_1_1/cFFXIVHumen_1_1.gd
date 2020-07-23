@@ -13,12 +13,10 @@ func _extInit():
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
 
 
-func _connect():
-	._connect()
-
 func _onBattleStart():
 	._onBattleStart()
 	fc = false
+
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -27,6 +25,7 @@ func _castCdSkill(id):
 
 	if id == "skill_InnerRelease":
 		BUFF_LIST.b_InnerRelease.new({"cha": self, "dur": 8})
+
 
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)

@@ -1,4 +1,5 @@
 extends "../cFFXIVSpirit_3/cFFXIVSpirit_3.gd"
+const STARDIVER_PW = 7.3 # 坠星冲倍率
 
 func _extInit():
 	._extInit()
@@ -9,19 +10,17 @@ func _extInit():
 	addCdSkill("skill_Stardiver", 27)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
 
-const STARDIVER_PW = 7.3 # 坠星冲倍率
-
-func _connect():
-	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
 	battleLitany()
 
+
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Stardiver":
 		stardiver()
+
 
 func stardiver():
 	aiOn = false
@@ -59,6 +58,7 @@ func stardiver():
 	var chas = getCellChas(cell, 2)
 	for i in chas:
 		FFHurtChara(i, att.atk * STARDIVER_PW, PHY, SKILL)
+
 
 func battleLitany():
 	var ailys = getAllChas(2)

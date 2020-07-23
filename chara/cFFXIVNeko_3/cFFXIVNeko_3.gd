@@ -3,7 +3,7 @@ var FFData = preload("./charaData.gd").getCharaData()
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "DistanceDPS"
+	OCCUPATION = "LongRange"
 	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -18,11 +18,6 @@ func _extInit():
 	addCdSkill("skill_Paean", 20)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
-func _connect():
-	._connect()
-
-func _onBattleStart():
-	._onBattleStart()
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -33,11 +28,13 @@ func _castCdSkill(id):
 	if id == "skill_Paean":
 		paean()
 
+
 # 伶牙俐齿
 func lronjaws():
 	normalAtkChara(aiCha)
 	aiCha.addBuff(b_zhonDu.new(5))
 	aiCha.addBuff(b_liuXue.new(5))
+
 
 # 贤者的叙事谣
 func ballad():
@@ -45,6 +42,7 @@ func ballad():
 	var chas = getAllChas(2)
 	for cha in chas :
 		BUFF_LIST.b_Ballad.new({"cha": cha, "dur": 8})
+
 
 # 大地神的抒情恋歌
 func paean():

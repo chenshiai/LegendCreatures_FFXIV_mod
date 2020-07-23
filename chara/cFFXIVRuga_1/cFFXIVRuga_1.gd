@@ -1,9 +1,12 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 var FFData = preload("./charaData.gd").getCharaData()
 
+const GRACE_PW = 12 # 深仁厚泽威力
+const AUTHORITY_PW = 3.50 # 王权剑威力
+
 func _extInit():
 	._extInit()
-	OCCUPATION = "MeleeDPS"
+	OCCUPATION = "Protect"
 	chaName = FFData.name_1
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4.5
@@ -19,11 +22,6 @@ func _extInit():
 	addCdSkill("skill_Authority", 6)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
-const GRACE_PW = 12 # 深仁厚泽威力
-const AUTHORITY_PW = 3.50 # 王权剑威力
-
-func _connect():
-	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
@@ -41,6 +39,7 @@ func _onHurt(atkInfo):
 	._onHurt(atkInfo)
 	atkInfo.hurtVal *= 0.80
 
+
 # 深仁厚泽		
 func grace():
 	var chas = getAllChas(2)
@@ -49,6 +48,7 @@ func grace():
 	if chas[0] != null:
 		chas[0].plusHp(att.mgiAtk * GRACE_PW)
 		Utils.draw_effect("laser", chas[0].position, Vector2(0, -60), 7, 1)
+
 
 # 王权剑		
 func authority():

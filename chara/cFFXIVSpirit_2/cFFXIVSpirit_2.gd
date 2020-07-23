@@ -1,9 +1,12 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 var FFData = preload("./charaData.gd").getCharaData()
 
+const STARPHASE_PW = 0.60 # 阳星威力
+const MALEFIC_PW = 0.7 # 煞星威力
+
 func _extInit():
 	._extInit()
-	OCCUPATION = "MagicDPS"
+	OCCUPATION = "Treatment"
 	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -19,15 +22,11 @@ func _extInit():
 	addCdSkill("skill_StarPhase", 16)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
-const STARPHASE_PW = 0.60 # 阳星威力
-const MALEFIC_PW = 0.7 # 煞星威力
-
-func _connect():
-	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
 	drawCard()
+
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -38,11 +37,13 @@ func _castCdSkill(id):
 	if id == "skill_Malefic":
 		malefic()
 
+
 func malefic():
 	var d:Eff = newEff("sk_feiDang",sprcPos)
 	d._initFlyCha(aiCha)
 	yield(d, "onReach")
 	FFHurtChara(aiCha, att.mgiAtk * MALEFIC_PW, MGI, SKILL)
+
 
 func drawCard():
 	var n = sys.rndRan(0, 5)
@@ -70,6 +71,7 @@ func drawCard():
 	for cha in chas:
 		if cha != null and bf != null:
 			BUFF_LIST[bf].new({"cha": cha, "dur": 20})
+
 
 # 阳星相位
 func starPhase(lv):

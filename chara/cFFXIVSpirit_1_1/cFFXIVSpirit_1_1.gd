@@ -9,11 +9,6 @@ func _extInit():
 	addCdSkill("skill_Horoscope", 25)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
 
-func _connect():
-	._connect()
-
-func _onBattleStart():
-	._onBattleStart()
 
 func _castCdSkill(id):
 	._castCdSkill(id)

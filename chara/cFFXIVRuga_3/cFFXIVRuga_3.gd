@@ -1,9 +1,15 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 var FFData = preload("./charaData.gd").getCharaData()
 
+const AUTOTURRET_PW = 0.50 # 车式浮空炮威力
+const WILDFIRE_PW = 2.00 # 野火提升威力
+var autoCount = 0 # 浮空炮攻击次数
+var fireCount = 1 # 野火提升阶段
+var fireChara = null # 被施加了野火的目标
+
 func _extInit():
 	._extInit()
-	OCCUPATION = "DistanceDPS"
+	OCCUPATION = "LongRange"
 	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -18,14 +24,6 @@ func _extInit():
 	addCdSkill("skill_Wildfire", 17)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
-const AUTOTURRET_PW = 0.50 # 车式浮空炮威力
-const WILDFIRE_PW = 2.00 # 野火提升威力
-var autoCount = 0 # 浮空炮攻击次数
-var fireCount = 1 # 野火提升阶段
-var fireChara = null # 被施加了野火的目标
-
-func _connect():
-	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
@@ -35,12 +33,14 @@ func _onBattleStart():
 	yield(reTimer(1), "timeout")
 	call_deferred("wildfire")
 
+
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Autoturret":
 		autoturret(true)
 	if id == "skill_Wildfire":
 		wildfire()
+
 
 func _onAtkChara(atkInfo):
 	._onAtkChara(atkInfo)
@@ -53,16 +53,16 @@ func _onAtkChara(atkInfo):
 			fireCount = 0
 			fireChara = null
 
+
 # 车式浮空炮
 func autoturret(addCount):
 	if addCount:
 		autoCount += 1
-
 	if autoCount > 4:
 		autoCount = 0
 		BUFF_LIST.b_Overload.new({"cha": self, "dur": 13})
-
 	FFHurtChara(aiCha, att.atk * AUTOTURRET_PW, PHY, SKILL)
+
 
 # 野火
 func wildfire():

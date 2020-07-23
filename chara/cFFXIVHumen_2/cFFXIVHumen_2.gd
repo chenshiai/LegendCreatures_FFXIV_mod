@@ -1,8 +1,9 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
+const BOWSHOCK_PW = 2.60 # 弓形冲波威力
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "MeleeDPS"
+	OCCUPATION = "Protect"
 	chaName = "FFXIVHumen_2-name_1"
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4.5
@@ -15,18 +16,17 @@ func _extInit():
 	addCdSkill("skill_BowShock", 9)
 	addSkillTxt("FFXIVHumen_2-skill_text")
 
-const BOWSHOCK_PW = 2.60 # 弓形冲波威力
-
-func _connect():
-	._connect()
-
-func _onBattleStart():
-	._onBattleStart()
 
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_BowShock":
 		bowShock()
+
+
+func _onHurt(atkInfo:AtkInfo):
+	._onHurt(atkInfo)
+	atkInfo.hurtVal *= 0.80
+
 
 # 弓形冲波
 func bowShock():
@@ -35,6 +35,3 @@ func bowShock():
 		FFHurtChara(i, att.atk * BOWSHOCK_PW, PHY, SKILL)
 		i.addBuff(b_shaoZhuo.new(4))
 
-func _onHurt(atkInfo:AtkInfo):
-	._onHurt(atkInfo)
-	atkInfo.hurtVal *= 0.80

@@ -13,9 +13,6 @@ func _extInit():
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))
 
 
-func _connect():
-	._connect()
-
 func _onBattleStart():
 	._onBattleStart()
 	shield_pw = 2.25

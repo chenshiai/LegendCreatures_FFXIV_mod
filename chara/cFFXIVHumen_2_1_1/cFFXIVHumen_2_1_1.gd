@@ -1,4 +1,5 @@
 extends "../cFFXIVHumen_2_1/cFFXIVHumen_2_1.gd"
+const BLASTINGZONE_PW = 3.80 # 爆破领域威力
 
 func _extInit():
 	._extInit()
@@ -12,14 +13,6 @@ func _extInit():
 	addCdSkill("skill_BlastingZone", 10)
 	addSkillTxt("FFXIVHumen_2-skill_text_2")
 
-
-const BLASTINGZONE_PW = 3.80 # 爆破领域威力
-
-func _connect():
-	._connect()
-
-func _onBattleStart():
-	._onBattleStart()
 		
 func _castCdSkill(id):
 	._castCdSkill(id)

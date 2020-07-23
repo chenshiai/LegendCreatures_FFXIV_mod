@@ -1,9 +1,12 @@
 extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
 var FFData = preload("./charaData.gd").getCharaData()
 
+const HIGHJUMP_PW = 3.30 # 高跳威力
+const GEIRSKOGUL_PW = 4.00 # 武神枪威力
+
 func _extInit():
 	._extInit()
-	OCCUPATION = "MeleeDPS"
+	OCCUPATION = "CloseCombat"
 	chaName = FFData.name_1
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4
@@ -17,19 +20,16 @@ func _extInit():
 	addCdSkill("skill_DragonBlood", 12)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
-const HIGHJUMP_PW = 3.30 # 高跳威力
-const GEIRSKOGUL_PW = 4.00 # 武神枪威力
-
-func _connect():
-	._connect()
 
 func _onBattleStart():
 	._onBattleStart()
 	call_deferred("highJump")
 
+
 func _onBattleEnd():
 	._onBattleEnd()
 	normalSpr.position = Vector2(0, 0)
+
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -62,6 +62,7 @@ func highJump():
 		Utils.draw_shadow(img,  position + Vector2(0, -150), position, 40)
 		normalSpr.position = Vector2(0, 0)
 		aiOn = true
+
 
 func geirskogul():
 	if aiCha != null:

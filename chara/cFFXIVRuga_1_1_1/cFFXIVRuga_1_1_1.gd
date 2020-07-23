@@ -14,12 +14,10 @@ func _extInit():
 	addCdSkill("skill_Superbolide", 70)
 
 
-func _connect():
-	._connect()
-
 func _onBattleStart():
 	._onBattleStart()
 	BUFF_LIST.b_Superbolide.new({"cha": self, "dur": 10})
+
 
 func _castCdSkill(id):
 	._castCdSkill(id)

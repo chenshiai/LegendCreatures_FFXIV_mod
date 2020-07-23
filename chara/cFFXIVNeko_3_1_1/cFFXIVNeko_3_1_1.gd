@@ -1,4 +1,5 @@
 extends "../cFFXIVNeko_3_1/cFFXIVNeko_3_1.gd"
+const APEXARROW_PW = 4 # 绝峰箭威力
 
 func _extInit():
 	._extInit()
@@ -12,24 +13,19 @@ func _extInit():
 	addCdSkill("skill_ApexArrow", 12)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))
 
-const APEXARROW_PW = 4 # 绝峰箭威力
-
-func _connect():
-	._connect()
-
-func _onBattleStart():
-	._onBattleStart()
 
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_ApexArrow":
 		apexArrow()
 
+
 func apexArrow():
 	if aiCha != null:
 		var eff:Eff = newEff("sk_chuanTouJian", sprcPos)
 		eff._initFlyPos(position + (aiCha.position - position).normalized() * 1000, 800)
 		eff.connect("onInCell", self, "effInCell")
+
 
 func effInCell(cell):
 	var cha = matCha(cell)

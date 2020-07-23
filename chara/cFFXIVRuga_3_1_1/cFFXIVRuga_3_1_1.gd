@@ -12,11 +12,6 @@ func _extInit():
 	evos = []
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))
 
-func _connect():
-	._connect() #保留继承的处理
-
-func _onBattleStart():
-	._onBattleStart()
 
 func _castCdSkill(id):
 	._castCdSkill(id)
@@ -25,6 +20,7 @@ func _castCdSkill(id):
 		autoturret(false)
 		yield(reTimer(0.2), "timeout")
 		autoturret(false)
+
 
 func _onAtkInfo(atkInfo: AtkInfo):
 	._onAtkInfo(atkInfo)

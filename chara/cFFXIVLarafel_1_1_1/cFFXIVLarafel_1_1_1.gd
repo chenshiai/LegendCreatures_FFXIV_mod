@@ -1,5 +1,8 @@
 extends "../cFFXIVLarafel_1_1/cFFXIVLarafel_1_1.gd"
 
+const ASSIZE_PW = 2.70 # 法令伤害威力
+const ASSIZE_HEAL_PW = 0.90 # 法令治疗威力
+
 func _extInit():
 	._extInit()
 	chaName = FFData.name_3
@@ -13,19 +16,11 @@ func _extInit():
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))
 
 
-const ASSIZE_PW = 2.70 # 法令伤害威力
-const ASSIZE_HEAL_PW = 0.90 # 法令治疗威力
-
-func _connect():
-	._connect()
-
-func _onBattleStart():
-	._onBattleStart()
-
 func _castCdSkill(id):
 	._castCdSkill(id)
 	if id == "skill_Assize":
 		assize()
+
 
 func assize():
 	var allys = getCellChas(self.cell, 3, 2)

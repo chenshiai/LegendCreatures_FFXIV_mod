@@ -1,7 +1,5 @@
 extends "../cFFXIVAolong_2/cFFXIVAolong_2.gd"
 
-func _info():
-	pass
 
 func _extInit():
 	._extInit()
@@ -11,11 +9,6 @@ func _extInit():
 	addCdSkill("skill_Tsubame", 14)
 	addSkillTxt(FFData.SKILL_TEXT_1)
 
-func _connect():
-	._connect()
-
-func _onBattleStart():
-	._onBattleStart()
 
 func _castCdSkill(id):
 	._castCdSkill(id)

@@ -12,10 +12,3 @@ func _extInit():
 	lv = 4
 	evos = []
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))
-
-
-func _connect():
-	._connect()
-
-func _onBattleStart():
-	._onBattleStart()

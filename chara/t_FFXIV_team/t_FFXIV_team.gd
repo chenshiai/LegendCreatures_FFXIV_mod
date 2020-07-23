@@ -1,6 +1,7 @@
 extends Talent
 var TEXT = globalData.infoDs["g_bFFXIVText"]
-
+var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
+var OCCUPATION = []
 func init():
 	name = "队伍编制"
 
@@ -15,67 +16,110 @@ func _connect():
 func population(talent = null):
 	player.renKou = 10
 
-func run():
-	var count = 0
-	for i in sys.main.btChas:
-		if i.team == 1:
-			count += 1
 
+func run():
+	OCCUPATION = []
+	var count = 0
+	for cha in sys.main.btChas:
+		if cha.team == 1 and cha.has_method("get_OCCUPATION"):
+			match cha.get_OCCUPATION():
+				"Protect":
+					addBuff("Protect")
+				"CloseCombat":
+					addBuff("CloseCombat")
+				"Magic":
+					addBuff("Magic")
+				"LongRange":
+					addBuff("LongRange")
+				"Treatment":
+					addBuff("Treatment")
+
+
+func addBuff(className):
+	if OCCUPATION.has(className):
+		return
+	OCCUPATION.append(className)
 	for cha in sys.main.btChas:
 		if cha.team == 1:
-			if count >= 8:
-				cha.addBuff(FullTeam.new())
-			elif count >= 4:
-				cha.addBuff(LightTeam.new())
+			cha.addBuff(self[className].new())
 
 
-class LightTeam:
-	extends Buff
+class Team extends Buff:
 	var resolve = false
 	func _init():
 		attInit()
-		id = "FFXIVLightTeam"
 		isNegetive = false
+
+	func _connect():
+		sys.main.connect("onCharaDel", self, "run")
+	
+	func run(cha):
+		if cha == masCha:
+			resolve = true
+
+# 防护职业 生命上限提高10% 双抗提高10%
+class Protect extends Team:
+	func _init():
+		id = "FFXIV_protect_team"
 		att.maxHpL = 0.1
-		att.atkL = 0.1
-		att.mgiAtkL = 0.1
 		att.defL = 0.1
 		att.mgiDefL = 0.1
-	
-	func _connect():
-		sys.main.connect("onCharaDel", self, "run")
-	
-	func run(cha):
-		if cha == masCha:
-			resolve = true
 
 	func _del():
 		if resolve:
-			masCha.addBuff(LightTeam.new())
+			masCha.addBuff(Protect.new())
 			resolve = false
 
-class FullTeam:
-	extends Buff
-	var resolve = false
+
+# 近战职业 生命上限提高5% 攻击力提高10%
+class CloseCombat extends Team:
 	func _init():
-		attInit()
-		id = "FFXIVFullTeam"
-		isNegetive = false
-		att.maxHpL = 0.2
-		att.atkL = 0.2
-		att.mgiAtkL = 0.2
-		att.defL = 0.2
-		att.mgiDefL = 0.2
-
-	func _connect():
-		sys.main.connect("onCharaDel", self, "run")
-	
-	func run(cha):
-		if cha == masCha:
-			resolve = true
+		id = "FFXIV_close_combat_team"
+		att.maxHpL = 0.05
+		att.atkL = 0.1
 
 	func _del():
 		if resolve:
-			masCha.addBuff(FullTeam.new())
+			masCha.addBuff(CloseCombat.new())
 			resolve = false
-	
+
+
+# 魔法职业 法强提高10% 双抗提高5%
+class Magic extends Team:
+	func _init():
+		id = "FFXIV_magic_team"
+		att.mgiAtkL = 0.1
+		att.defL = 0.05
+		att.mgiDefL = 0.05
+
+	func _del():
+		if resolve:
+			masCha.addBuff(Magic.new())
+			resolve = false
+
+
+# 远程职业 攻击力提高10% 双抗提高5%
+class LongRange extends Team:
+	func _init():
+		id = "FFXIV_long_range_team"
+		att.atkL = 0.1
+		att.defL = 0.05
+		att.mgiDefL = 0.05
+
+	func _del():
+		if resolve:
+			masCha.addBuff(LongRange.new())
+			resolve = false
+
+
+# 治疗职业 法强提高10% 生命上限提高5%
+class Treatment extends Team:
+	func _init():
+		id = "FFXIV_treatment_team"
+		att.mgiAtkL = 0.1
+		att.maxHpL = 0.05
+
+	func _del():
+		if resolve:
+			masCha.addBuff(Treatment.new())
+			resolve = false
