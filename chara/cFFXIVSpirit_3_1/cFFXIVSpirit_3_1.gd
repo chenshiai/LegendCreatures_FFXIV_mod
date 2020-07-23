@@ -64,4 +64,5 @@ func battleLitany():
 	var ailys = getAllChas(2)
 	for cha in ailys:
 		if cha != null:
+			yield(reTimer(0.05), "timeout")
 			BUFF_LIST.b_Litany.new({"cha": cha})
