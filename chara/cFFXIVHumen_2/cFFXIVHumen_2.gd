@@ -4,7 +4,7 @@ const BOWSHOCK_PW = 2.60 # 弓形冲波威力
 func _extInit():
 	._extInit()
 	OCCUPATION = "Protect"
-	chaName = "FFXIVHumen_2-name_1"
+	chaName = tr("FFXIVHumen_2-name_1")
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4.5
 	attCoe.atk = 4

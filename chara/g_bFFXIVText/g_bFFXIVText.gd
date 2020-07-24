@@ -28,6 +28,7 @@ var Config = {
 	"c_atk": "[color=%s]" % [COLOR.ATTACK], # 进攻职业
 	"c_tre": "[color=%s]" % [COLOR.TREATMENT], # 治疗职业
 	"c_skill": "[color=%s]" % [COLOR.SKILL], # 技能文本色
+	"c_death": "[color=%s]" % [COLOR.DEATH],
 	"/c": "[/color]",
 	"TItemSoul": "[color=#f6ff00][灵魂水晶][/color]",
 	"TDeath": "[color=%s]死刑！！[/color]" % [COLOR.DEATH],
@@ -60,6 +61,15 @@ const COLOR = {
 	"EWER": "#229fff",
 	"SPIRE": "#fcda72",
 	"SKILL": "#48daff"
+}
+
+const Occupation = {
+	"Protect": "[color=%s][防护职业][/color]" % [COLOR.PROTECT],
+	"CloseCombat": "[color=%s][近战职业][/color]" % [COLOR.ATTACK],
+	"Magic": "[color=%s][魔法职业][/color]" % [COLOR.ATTACK],
+	"LongRange": "[color=%s][远程职业][/color]" % [COLOR.ATTACK],
+	"Treatment": "[color=%s][治疗职业][/color]" % [COLOR.TREATMENT],
+	"Default": "",
 }
 
 const Instructions = {
@@ -108,12 +118,12 @@ BOSS战可以使用极限技能！！！
 来自《最终幻想14》"""
 
 const T_TEAM = """根据当前上场职业种类提供额外加成。
-[防护职业] 全队生命上限提高10%，双抗提高10%
-[近战职业] 全队攻击力提高10%，生命上限提高5%
-[远程职业] 全队攻击力提高10%，双抗提高5%
-[魔法职业] 全队魔法强度提高10%，双抗提高5%
-[治疗职业] 全队魔法强度提高10%，生命上限提高5%
-不同的职业最多加成一次
+{c_pro}[防护职业]{/c} 全队生命上限提高10%，双抗提高10%
+{c_atk}[近战职业]{/c} 全队攻击力提高10%，生命上限提高5%
+{c_atk}[远程职业]{/c} 全队攻击力提高10%，双抗提高5%
+{c_atk}[魔法职业]{/c} 全队魔法强度提高10%，双抗提高5%
+{c_tre}[治疗职业]{/c} 全队魔法强度提高10%，生命上限提高5%
+{c_death}不同的职业最多加成一次{/c}
 [注意]：最大人口数量将被固定为10
 来自《最终幻想14》"""
 
@@ -153,6 +163,10 @@ Our world's is a fantasy， no more than a test.
 var UpdateInfo = {
 	"title": "最终幻想14-更新记录",
 	"content": format("""[color=#64a6b7]【Ver 2.8.5】2020-07-24[/color]
+【代码优化】
+【文本优化】
+现在点开角色信息面板可以看到相应的职业
+
 天赋 【队伍编制】 重做：
 根据当前上场职业种类提供额外加成。
 [防护职业] 全队生命上限提高10%，双抗提高10%

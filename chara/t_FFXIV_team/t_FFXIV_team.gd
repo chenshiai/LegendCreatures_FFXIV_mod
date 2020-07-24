@@ -6,7 +6,7 @@ func init():
 	name = "队伍编制"
 
 func get_info():
-	return TEXT.T_TEAM
+	return TEXT.format(TEXT.T_TEAM)
 
 func _connect():
 	sys.main.connect("onBattleStart", self, "run")

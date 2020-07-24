@@ -30,6 +30,10 @@ var FFHurtType = {
 	"Default": PHY,
 }
 
+func _init():
+	if not is_connected("onPressed", self, "show_OCCUPATION"): 
+		connect("onPressed", self, "show_OCCUPATION")
+
 
 func _extInit():
 	._extInit()
@@ -47,9 +51,9 @@ func getAtkVal():
 		"Protect":
 			return att.atk
 		"CloseCombat":
-			return att.atk
+			return att.atk * 1.1
 		"Magic":
-			return att.mgiAtk * 0.5
+			return att.mgiAtk * 0.6
 		"LongRange":
 			return att.atk * 1.1
 		"Treatment":
@@ -79,3 +83,11 @@ func FFHurtChara(target, atkVal, hurtType, atkType):
 
 func get_OCCUPATION():
 	return OCCUPATION
+
+
+func show_OCCUPATION(chara):
+	var regex = RegEx.new()
+	regex.compile("\\[/color\\]")
+	var charaInfo = sys.get_node("/root/topUi/charaInfoMsg")
+	var txt = charaInfo.get_node("txt")
+	txt.bbcode_text = regex.sub(txt.bbcode_text, "[/color] " + TEXT.Occupation[OCCUPATION])
