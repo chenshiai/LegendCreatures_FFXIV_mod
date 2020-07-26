@@ -1,10 +1,11 @@
 extends "../../2098858773/BossChara.gd"
 
-var divinePunishmentRay_pw = 3 # 神罚射线威力
+var divinePunishmentRay_pw = 2.5 # 神罚射线威力
 var millionSacred_pw = 1.5 # 百万神圣威力
 var holyJudgment_pw = 5.5 # 神圣审判威力
 var lightning_pw = 1.8 # 闪电威力
 var share_pw = 13 # 分摊威力
+
 var SKILL_TXT = """{c_base}亚历山大绝境战 第三阶段
 
 {c_skill}[时间停止]{/c}：将敌人的时间停止，并给予审判
@@ -17,8 +18,6 @@ var SKILL_TXT = """{c_base}亚历山大绝境战 第三阶段
 var pwConfig = {
 	"1": "未知",
 	"2": "未知",
-	"3": "未知",
-	"4": "未知"
 }
 
 
@@ -56,6 +55,15 @@ func _onBattleStart():
 	aiOn = false
 	STAGE = "p3"
 	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 620
+	divinePunishmentRay_pw *= (E_lv / E_num) # 神罚射线威力
+	millionSacred_pw *= (E_lv / E_num) # 百万神圣威力
+	holyJudgment_pw *= (E_lv / E_num) # 神圣审判威力
+	lightning_pw *= (E_lv / E_num) # 闪电威力
+	share_pw *= (E_lv / E_num) # 分摊威力
+	var pwConfig = {
+		"1": "%d%%" % [divinePunishmentRay_pw * 100],
+		"2": "%d%%" % [millionSacred_pw * 100],
+	}
 	skillStrs[1] = (TEXT.format(SKILL_TXT, pwConfig))
 
 	cell = Vector2(4, 0)
@@ -70,6 +78,11 @@ func _onBattleStart():
 	self.visible = true
 	self.isDeath = true
 	sonicBoom(true)
+
+
+func _onDeath(atkInfo):
+	._onDeath(atkInfo)
+	sommAlexander()
 
 
 func spaceTime(position):
