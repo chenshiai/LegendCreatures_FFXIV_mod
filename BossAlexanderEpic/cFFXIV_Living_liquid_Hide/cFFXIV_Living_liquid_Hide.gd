@@ -78,6 +78,7 @@ func _onBattleStart():
 	}
 	skillStrs[1] = TEXT.format(SKILL_TXT, pwConfig)
 	att.hp = 1000
+	upAtt()
 
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)

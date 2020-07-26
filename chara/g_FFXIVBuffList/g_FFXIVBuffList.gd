@@ -644,7 +644,7 @@ class b_RollCall extends BaseBuff:
 		eff = Utils.draw_effect_v2({
 			"name": "dianming",
 			"pos": masCha.position,
-			"dev": Vector2(0, -100),
+			"dev": Vector2(0, -120),
 			"fps": 4,
 			"top": true,
 			"rep": true

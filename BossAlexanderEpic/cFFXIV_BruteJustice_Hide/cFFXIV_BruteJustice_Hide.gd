@@ -33,6 +33,7 @@ func _extInit():
 
 func _init():
 	._init()
+	sys.main.btChas.append(self)
 	set_path("cFFXIVBossTheEpicofAlexander_Hide")
 	set_time_axis({
 		"fluidOscillation": [29, 43, 66, 96, 122],
@@ -43,7 +44,6 @@ func _init():
 	FFControl.FFMusic.play(Path, "/music/機工城律動編.oggstr")
 	Utils.background_change(Path, "/background/TheEpicOfAlexander2.png")
 	self.connect("onAtkChara", FFControl.Limit, "limitBreak_up")
-	sys.main.btChas.append(self)
 	Chant.set_chant_position(Vector2(0, 50))
 
 func _onBattleStart():
@@ -64,6 +64,7 @@ func _onBattleStart():
 	skillStrs[1] = (TEXT.format(SKILL_TXT, pwConfig))
 	justiceKicks()
 	att.hp = 1000
+	upAtt()
 
 
 func _upS():

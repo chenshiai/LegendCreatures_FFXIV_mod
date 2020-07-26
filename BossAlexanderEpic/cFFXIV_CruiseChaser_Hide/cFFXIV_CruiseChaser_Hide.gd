@@ -70,7 +70,8 @@ func _onBattleStart():
 	}
 	skillStrs[1] = (TEXT.format(SKILL_TXT, pwConfig))
 	self.visible = false
-	att.hp = 1000
+	att.hp = 5000
+	upAtt()
 
 	for cha in sys.main.btChas:
 		if cha.team == 1:
@@ -96,7 +97,7 @@ func limitCutting():
 	Chant.chantStart("极限切割", 1)
 	self.visible = true
 	vs.shuffle()
-	normalSpr.position = Vector2(0, -450)
+	normalSpr.position = Vector2(0, -800)
 	yield(reTimer(0.2), "timeout")
 
 	var target = rndChas(getAllChas(1), 1)

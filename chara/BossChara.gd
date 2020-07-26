@@ -199,9 +199,9 @@ func healPlayer(cha):
 	if !cha.isSumm and cha.team == 1:
 		match cha.lv:
 			1: sys.main.player.hp += 2
-			2: sys.main.player.hp += 4
-			3: sys.main.player.hp += 7
-			4: sys.main.player.hp += 10
+			2: sys.main.player.hp += 5
+			3: sys.main.player.hp += 10
+			4: sys.main.player.hp += 15
 
 
 func killSelf():

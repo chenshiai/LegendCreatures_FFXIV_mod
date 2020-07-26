@@ -27,8 +27,12 @@ func stardiver():
 	normalSpr.position = Vector2(0, -450)
 	Utils.draw_shadow(img, position, position + Vector2(0, -450), 40)
 	yield(reTimer(0.2), "timeout")
-
-	var cha = rndChas(getAllChas(1), 1)
+	var chas = getAllChas(1)
+	var cha
+	if chas.size() > 0:
+	 cha = rndChas(chas, 1)
+	else:
+		return
 	if cha == null or cha.isDeath:
 		normalSpr.position = Vector2(0, 0)
 		return
@@ -55,8 +59,8 @@ func stardiver():
 
 	aiOn = true
 	normalSpr.position = Vector2(0, 0)
-	var chas = getCellChas(cell, 2)
-	for i in chas:
+	var chas2 = getCellChas(cell, 2)
+	for i in chas2:
 		FFHurtChara(i, att.atk * STARDIVER_PW, PHY, SKILL)
 
 

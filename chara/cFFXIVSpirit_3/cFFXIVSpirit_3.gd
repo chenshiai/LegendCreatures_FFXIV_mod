@@ -41,8 +41,12 @@ func _castCdSkill(id):
 
 func highJump():
 	var chas = getAllChas(1)
+	var cha
+	if chas.size() > 0:
+	 cha = chas[0]
+	else:
+		return
 	chas.sort_custom(Utils.Calculation, "sort_MinHp")
-	var cha = chas[0]
 	if cha != null:
 		aiOn = false
 		normalSpr.position = Vector2(0, -800)
