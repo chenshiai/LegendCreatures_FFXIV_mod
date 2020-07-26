@@ -2,7 +2,7 @@ extends "../cFFXIVAolong_1/cFFXIVAolong_1.gd"
 
 func _extInit():
 	._extInit()
-	chaName = "FFXIVAolong_1-name_2"
+	chaName = tr("FFXIVAolong_1-name_2")
 	lv = 3
 	evos = []
 	addCdSkill("skill_DarkMissionary", 12)

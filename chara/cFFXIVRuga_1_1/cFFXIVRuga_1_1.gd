@@ -11,8 +11,13 @@ func _extInit():
 	evos = []
 	addCdSkill("skill_DivineVeil", 26)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
-	if not is_connected("onPlusHp", self, "divineVeilTodo"):
-		connect("onPlusHp", self, "divineVeilTodo")
+	# if not is_connected("onPlusHp", self, "divineVeilTodo"):
+	# 	connect("onPlusHp", self, "divineVeilTodo")
+
+
+func _connect():
+	._connect()
+	connect("onPlusHp", self, "divineVeilTodo")
 
 
 func _onBattleStart():

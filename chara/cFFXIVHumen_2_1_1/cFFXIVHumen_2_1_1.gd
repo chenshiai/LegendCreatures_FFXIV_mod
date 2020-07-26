@@ -3,7 +3,7 @@ const BLASTINGZONE_PW = 3.80 # 爆破领域威力
 
 func _extInit():
 	._extInit()
-	chaName = "FFXIVHumen_2-name_3"
+	chaName = tr("FFXIVHumen_2-name_3")
 	attCoe.maxHp = 6.3
 	attCoe.atk = 4.8
 	attCoe.def = 5.8

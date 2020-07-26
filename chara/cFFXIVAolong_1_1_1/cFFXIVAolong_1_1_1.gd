@@ -2,7 +2,7 @@ extends "../cFFXIVAolong_1_1/cFFXIVAolong_1_1.gd"
 
 func _extInit():
 	._extInit()
-	chaName = "FFXIVAolong_1-name_3"
+	chaName = tr("FFXIVAolong_1-name_3")
 	attCoe.maxHp = 9
 	attCoe.atk = 4.6
 	attCoe.def = 5.9

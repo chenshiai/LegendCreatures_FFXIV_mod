@@ -3,7 +3,7 @@ var superbolide = true # 是否可以释放火流星
 
 func _extInit():
 	._extInit()
-	chaName = "FFXIVHumen_2-name_2"
+	chaName = tr("FFXIVHumen_2-name_2")
 	lv = 3
 	attAdd.spd += 0.3
 	evos = []
