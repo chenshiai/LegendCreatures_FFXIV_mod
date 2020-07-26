@@ -59,7 +59,6 @@ func _init():
 		"over": [140]
 	})
 	Utils.background_change(Path, "/background/TheEpicOfAlexander.png")
-	FFControl.FFMusic.play(Path, "/music/dregs.oggstr")
 	closeReward()
 
 
@@ -78,6 +77,7 @@ func _onBattleStart():
 	}
 	skillStrs[1] = TEXT.format(SKILL_TXT, pwConfig)
 	att.hp = 1000
+	FFControl.FFMusic.play(Path, "/music/dregs.oggstr")
 	upAtt()
 
 func _onHurt(atkInfo):

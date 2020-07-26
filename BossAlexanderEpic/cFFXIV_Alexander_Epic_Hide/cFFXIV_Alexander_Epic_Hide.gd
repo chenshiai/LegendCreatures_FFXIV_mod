@@ -225,7 +225,7 @@ func millionSacred():
 func holyJudgment():
 	aiOn = false
 	STAGE = "p4"
-	Chant.chantStart("神圣审判", 30)
+	Chant.chantStart("神圣审判", 29)
 	yield(reTimer(30), "timeout")
 	if att.hp <= 0 or self.isDeath:
 		return
