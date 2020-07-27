@@ -13,12 +13,12 @@ var OCCUPATION = "Default"
 var SoulExample = null
 
 var BallisticSpeed = {
-	"Protect": 500,
-	"CloseCombat": 500,
-	"Magic": 400,
-	"LongRange": 800,
-	"Treatment": 300,
-	"Default": 450,
+	"Protect": 600,
+	"CloseCombat": 700,
+	"Magic": 500,
+	"LongRange": 1000,
+	"Treatment": 400,
+	"Default": 500,
 }
 
 var FFHurtType = {
@@ -62,19 +62,22 @@ func getAtkVal():
 			return att.atk
 
 
+func set_AtkInfo():
+	atkInfo.rate = 1
+	atkInfo.isCri = false
+	atkInfo.canCri = true
+	atkInfo.atkVal = getAtkVal()
+	atkInfo.hurtType = FFHurtType[OCCUPATION]
+	atkInfo.atkType = NORMAL
+
+
 func normalAtkChara(cha):
 	var eff = newEff(atkEff, sprcPos)
 	eff._initFlyCha(cha, BallisticSpeed[OCCUPATION])
 	_onNormalAtk(cha)
+	set_AtkInfo()
 	yield(eff, "onReach")
-	if sys.isClass(cha, "Chara"):
-		atkInfo.rate = 1
-		atkInfo.isCri = false
-		atkInfo.canCri = true
-		atkInfo.atkVal = getAtkVal()
-		atkInfo.hurtType = FFHurtType[OCCUPATION]
-		atkInfo.atkType = NORMAL
-		atkRun(cha)
+	atkRun(cha)
 
 func FFHurtChara(target, atkVal, hurtType, atkType):
 	if target != null and !target.isDeath:
@@ -90,4 +93,4 @@ func show_OCCUPATION(chara):
 	regex.compile("\\[/color\\]")
 	var charaInfo = sys.get_node("/root/topUi/charaInfoMsg")
 	var txt = charaInfo.get_node("txt")
-	txt.bbcode_text = regex.sub(txt.bbcode_text, "[/color] " + TEXT.Occupation[OCCUPATION])
+	txt.bbcode_text = regex.sub(txt.bbcode_text, "[/color]	" + TEXT.Occupation[OCCUPATION])

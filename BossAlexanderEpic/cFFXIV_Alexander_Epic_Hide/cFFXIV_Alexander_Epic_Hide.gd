@@ -1,9 +1,9 @@
 extends "../../2098858773/BossChara.gd"
 
-var divinePunishmentRay_pw = 2.5 # 神罚射线威力
+var divinePunishmentRay_pw = 1.5 # 神罚射线威力
 var millionSacred_pw = 1.5 # 百万神圣威力
 var holyJudgment_pw = 5.5 # 神圣审判威力
-var lightning_pw = 1.8 # 闪电威力
+var lightning_pw = 1.3 # 闪电威力
 var share_pw = 13 # 分摊威力
 
 var SKILL_TXT = """{c_base}亚历山大绝境战 第三阶段
@@ -82,7 +82,7 @@ func _onBattleStart():
 
 func _onDeath(atkInfo):
 	._onDeath(atkInfo)
-	sommAlexander()
+	# sommAlexander()
 
 
 func spaceTime(position):
@@ -137,11 +137,11 @@ func lightning(chas):
 		Utils.draw_effect("ePrcC_30", i.position, Vector2(0, -50), 5, Vector2(2, 3))
 		var cha = getCellChas(i.cell, 1)
 		for j in cha:
-			FFHurtChara(j, att.mgiAtk * lightning_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 			BUFF_LIST.b_VulnerableSmall.new({
 				"cha": j,
 				"dur": 4
 			})
+			FFHurtChara(j, att.mgiAtk * lightning_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
 
 # 分摊

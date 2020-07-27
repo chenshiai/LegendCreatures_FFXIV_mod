@@ -76,7 +76,7 @@ func _onBattleStart():
 		"3": "%d%%" % [waves_pw * 100],
 	}
 	skillStrs[1] = TEXT.format(SKILL_TXT, pwConfig)
-	att.hp = 1000
+	# att.hp = 1000
 	FFControl.FFMusic.play(Path, "/music/dregs.oggstr")
 	upAtt()
 
@@ -96,6 +96,7 @@ func _onDeath(atkInfo):
 func StageToP2():
 	if STAGE == "p1":
 		var CruiseChaser = sys.main.newChara("cFFXIV_CruiseChaser_Hide", 2)
+		var CruiseChaser = sys.main.newChara("cFFXIVBossTheEpicofAlexander_Hide", 2)
 		if CruiseChaser:
 			sys.main.map.add_child(CruiseChaser)
 			CruiseChaser._onBattleStart()
