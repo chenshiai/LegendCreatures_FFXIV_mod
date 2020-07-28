@@ -35,7 +35,5 @@ func _onBattleStart():
 
 
 func _onDeath(atkInfo):
-	._onDeath(atkInfo)
-	isDeath = false
-	plusHp(att.maxHp * 1, false)
-	
+	# ._onDeath(atkInfo)
+	print("我无敌了！")

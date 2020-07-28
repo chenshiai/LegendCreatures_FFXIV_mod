@@ -64,9 +64,19 @@
 ### 完整的伤害周期
 1. 先新建`AtkInfo`实例
 2. 将实例传入 `_onAtkInfo(atkInfo: AtkInfo)`，在这里面可以进行初步修改
-3. 将实例进行暴击、闪避、失明判断，以及伤害数值计算
-4. 将实例传入 `_onHurt(atkInfo: AtkInfo)`，通常在这里面修改最终伤害值
-5. 将实例传入 `_onHurtEnd(atkInfo: AtkInfo)`，伤害已经完成了，在这里面修改没有意义
+3. 将实例进行暴击、闪避、失明判断，以及伤害数值计算（具体顺序不清楚
+4. 将计算后的实例传入 `_onHurt(atkInfo: AtkInfo)`，通常在这里面修改最终伤害值
+5. 角色根据接收到的`AtkInfo`实例进行扣血交互，和伤害显示
+6. 将实例传入 `_onHurtEnd(atkInfo: AtkInfo)`，伤害已经完成了，在这里面修改没有意义
 
+
+### 何时新建`AtkInfo`实例
 1. 角色自带一个`AtkInfo`实例，每次普通攻击都会使用自带的`AtkInfo`实例
-2. `hurtChara()`会临时新建一个`AtkInfo`实例，所以修改这个实例不会影响角色本身自带的实例
+2. 使用`hurtChara()`会临时新建一个`AtkInfo`实例，所以修改这个实例不会影响角色本身自带的实例
+
+### 单位死亡时发生了什么
+1. 死亡单位发送`onDeath`信号，同时抛出致死的`AtkInfo`实例
+2. 死亡单位执行 `_onDeath(atkInfo: AtkInfo)` 死亡时的一系列操作函数
+3. 击杀者发送`onKillChara`信号，同时抛出致死的`AtkInfo`实例
+4. 击杀者执行 `_onKillChara(atkInfo: AtkInfo)` 击杀时的一系列操作
+5. 最后系统`sys.main`发送`onCharaDel`信号，同时抛出死亡单位
