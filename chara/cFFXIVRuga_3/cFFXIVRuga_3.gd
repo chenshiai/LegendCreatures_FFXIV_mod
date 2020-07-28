@@ -1,4 +1,4 @@
-extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
+extends "../BaseChara/FFXIVBaseChara.gd"
 var FFData = preload("./charaData.gd").getCharaData()
 
 const AUTOTURRET_PW = 0.50 # 车式浮空炮威力

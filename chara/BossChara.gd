@@ -82,7 +82,7 @@ func _onCharaDel(cha):
 				count += 1
 
 		if count == 0:
-			var tata = sys.main.newChara("cFFXIV_zTatalu", 1)
+			var tata = sys.main.newChara("cFFXIV_Tatalu", 1)
 			sys.main.map.add_child(tata)
 			tata.isSumm = true
 			killSelf()

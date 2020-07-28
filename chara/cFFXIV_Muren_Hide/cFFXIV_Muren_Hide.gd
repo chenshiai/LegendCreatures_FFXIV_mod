@@ -1,4 +1,4 @@
-extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
+extends "../BaseChara/FFXIVBaseChara.gd"
 
 func _info():
 	pass
@@ -25,11 +25,11 @@ func _onBattleStart():
 	# var path = self.direc
 	# var im = Image.new()
 	# var imt = ImageTexture.new()
-	# im.load(path + "cFFXIV_zTatalu/cha.png")
+	# im.load(path + "cFFXIV_Tatalu/cha.png")
 	# imt.create_from_image(im)
 	# img.texture_normal = imt
-	BUFF_LIST.b_Adloquium.new({"cha": self, "HD": 800, "dur": 10})
-	BUFF_LIST.b_Adloquium.new({"cha": self, "HD": 800, "dur": 10})
+	# BUFF_LIST.b_Adloquium.new({"cha": self, "HD": 800, "dur": 10})
+	# BUFF_LIST.b_Adloquium.new({"cha": self, "HD": 800, "dur": 10})
 	# BUFF_LIST.b_Adloquium.new({"cha": self, "HD": 800, "dur": 10})
 
 

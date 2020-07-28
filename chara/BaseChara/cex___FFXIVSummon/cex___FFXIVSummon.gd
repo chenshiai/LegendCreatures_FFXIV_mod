@@ -1,4 +1,4 @@
-extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
+extends "../BaseChara/FFXIVBaseChara.gd"
 
 var Summoner = null
 

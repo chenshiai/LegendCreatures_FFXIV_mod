@@ -1,4 +1,4 @@
-extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
+extends "../BaseChara/FFXIVBaseChara.gd"
 var FFData = preload("./charaData.gd").getCharaData()
 
 const HIGHJUMP_PW = 3.30 # 高跳威力

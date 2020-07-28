@@ -1,4 +1,4 @@
-extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
+extends "../BaseChara/FFXIVBaseChara.gd"
 var FFData = preload("./charaData.gd").getCharaData()
 
 const HIGANBANE_PW = 2.50 # 一个印记威力

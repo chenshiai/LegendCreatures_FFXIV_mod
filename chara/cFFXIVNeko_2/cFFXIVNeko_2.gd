@@ -1,4 +1,4 @@
-extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
+extends "../BaseChara/FFXIVBaseChara.gd"
 var FFData = preload("./charaData.gd").getCharaData()
 
 const RUINIII_PW = 0.90 # 毁荡威力

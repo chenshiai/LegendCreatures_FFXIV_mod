@@ -1,4 +1,4 @@
-extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
+extends "../BaseChara/FFXIVBaseChara.gd"
 var FFData = preload("./charaData.gd").getCharaData()
 
 const DANCESTEP_PW = 6 # 标准舞步威力

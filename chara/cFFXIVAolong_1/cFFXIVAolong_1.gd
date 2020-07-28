@@ -1,4 +1,4 @@
-extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
+extends "../BaseChara/FFXIVBaseChara.gd"
 
 const PLUSHP = 0.05 # 恢复量
 const BLOODSPILLER_PW = 2.90 # 血溅倍率

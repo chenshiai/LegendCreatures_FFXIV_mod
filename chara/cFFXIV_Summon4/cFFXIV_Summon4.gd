@@ -1,4 +1,4 @@
-extends "../cex___FFXIVSummon/cex___FFXIVSummon.gd"
+extends "../BaseChara/FFXIVSummon.gd"
 
 func _info():
 	pass

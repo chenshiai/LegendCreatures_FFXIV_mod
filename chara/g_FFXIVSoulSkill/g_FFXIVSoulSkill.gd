@@ -1,7 +1,7 @@
 class BaseSoul:
 	const Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
 	const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
-	var toolman = sys.main.newChara("cFFXIV_zTatalu", 2) # 工具人
+	var toolman = sys.main.newChara("cFFXIV_Tatalu", 2) # 工具人
 
 	var masTeam
 	var masCha

@@ -16,7 +16,7 @@ func _init():
 
 
 func dataInit():
-	Path = chaData.infoDs["cFFXIV_zTatalu"].dir
+	Path = chaData.infoDs["cFFXIV_Tatalu"].dir
 	if Path != null:
 		FFXIVClass = load(Path + "/FFXIVClass/FFXIVClass.gd").new()
 	else:
@@ -275,7 +275,7 @@ func lineChas(aCell, bCell, num):
 	if !sys.main.isMatin(aCell) or !sys.main.isMatin(bCell):
 		return []
 
-	var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
+	var toolman = sys.main.newChara("cFFXIV_Tatalu", 2)
 	var chas = []
 	var aPos = sys.main.map.map_to_world(aCell) + Vector2(50, 50)
 	var bPos = sys.main.map.map_to_world(bCell) + Vector2(50, 50)
@@ -297,7 +297,7 @@ func lineChas(aCell, bCell, num):
 # @param {number} damage - 最大伤害值
 # @return {number} 衰减后的伤害值
 func attenuationDamage(startCell, targetCell, damage):
-	var toolman = sys.main.newChara("cFFXIV_zTatalu", 2)
+	var toolman = sys.main.newChara("cFFXIV_Tatalu", 2)
 	var length = toolman.cellRan(startCell, targetCell)
 	return damage / (1 + length)
 

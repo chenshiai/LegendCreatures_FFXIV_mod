@@ -100,7 +100,7 @@ func limit_protect(lv):
 
 
 func limit_attack(lv):
-	var toolman = sys.main.newChara("cFFXIV_zTatalu", 1)
+	var toolman = sys.main.newChara("cFFXIV_Tatalu", 1)
 	toolman.name = "极限技"
 	Chant.chantStart("极限技-进攻", 1)
 	yield(sys.get_tree().create_timer(1), "timeout")

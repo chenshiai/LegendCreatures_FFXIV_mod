@@ -1,4 +1,4 @@
-extends "../cex___FFXIVBaseChara/cex___FFXIVBaseChara.gd"
+extends "../BaseChara/FFXIVBaseChara.gd"
 const BOWSHOCK_PW = 2.60 # 弓形冲波威力
 
 func _extInit():

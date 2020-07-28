@@ -132,7 +132,7 @@
   cFFXIV_Summon3_1: [Reference: 4475],
   cFFXIV_Summon3_1_1: [Reference: 4476],
   cFFXIV___Muren: [Reference: 4478],
-  cFFXIV_zTatalu: [Reference: 4477],
+  cFFXIV_Tatalu: [Reference: 4477],
   ca1: [Reference: 4317],
   ca1_1: [Reference: 4318],
   ca1_1_1: [Reference: 4319],
