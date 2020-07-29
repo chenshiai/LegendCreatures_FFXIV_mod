@@ -109,12 +109,12 @@ func triangleAttack():
 
 	yield(reTimer(0.5), "timeout")
 	setCell(Vector2(0, 0))
+	yield(reTimer(1), "timeout")
+	setCell(Vector2(0, 5))
 	yield(reTimer(0.9), "timeout")
-	setCell(Vector2(0, 4))
-	yield(reTimer(0.8), "timeout")
-	setCell(Vector2(7, 4))
-	yield(reTimer(1.4), "timeout")
-	setCell(Vector2(7, 2))
+	setCell(Vector2(8, 5))
+	yield(reTimer(1.5), "timeout")
+	setCell(Vector2(8, 3))
 
 	Chant.chantStart("三角攻击", 7)
 	yield(reTimer(5), "timeout")
@@ -125,9 +125,9 @@ func triangleAttack():
 		yield(reTimer(0.1), "timeout")
 	normalSpr.position = Vector2(0, 0)
 
-	Utils.draw_effect("sanjiao", Vector2(300, 350), Vector2(0, -30), 7, 3)
+	Utils.draw_effect("sanjiao", Vector2(400, 350), Vector2(0, -30), 7, 3)
 	yield(reTimer(0.2), "timeout")
-	Utils.draw_effect("sanjiao", Vector2(300, 120), Vector2(0, -30), 9, 3)
+	Utils.draw_effect("sanjiao", Vector2(400, 120), Vector2(0, -30), 9, 3)
 	yield(reTimer(0.2), "timeout")
 	Utils.draw_effect("sanjiao", Vector2(400, 225), Vector2(0, -30), 13, 3)
 	

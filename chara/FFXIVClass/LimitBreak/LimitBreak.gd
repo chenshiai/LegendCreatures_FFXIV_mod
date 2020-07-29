@@ -19,7 +19,7 @@ func _init():
 	pass
 
 func draw_limitBreak():
-	Chant = Utils.FFXIVClass.Chant.new(Vector2(400, 400))
+	Chant = Utils.FFXIVClass.Chant.new(Vector2(400, 500))
 	limitBreak = TextureProgress.new() # 极限技UI节点
 
 	limitUnder = Utils.load_texture(Utils.Path, "/img/limitBreak_under.png")
@@ -37,7 +37,7 @@ func draw_limitBreak():
 	limitBreak.set_min(0)
 	limitBreak.set_value(0)
 	limitBreak.set_visible(true)
-	limitBreak.set_position(Vector2(380, 526))
+	limitBreak.set_position(Vector2(380, 626))
 	sys.main.get_node("ui").add_child(limitBreak)
 
 

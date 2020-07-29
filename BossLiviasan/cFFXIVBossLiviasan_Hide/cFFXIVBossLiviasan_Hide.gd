@@ -54,7 +54,7 @@ func _init():
 	call_deferred("setPos")
 
 func setPos():
-	normalSpr.position = Vector2(-60, 75)
+	normalSpr.position = Vector2(-60, 85)
 	sprcPos = Vector2(-60, 0)
 	self.get_node("ui/hpBar").scale *= 2
 
@@ -102,8 +102,8 @@ func _upS():
 	._upS()
 	if aiCha.isDeath or aiCha == null:
 		aiCha = sys.rndListItem(getAllChas(1))
-	setCell(Vector2(4, 0))
-	position = sys.main.map.map_to_world(Vector2(4, 0))
+	setCell(Vector2(5, 0))
+	position = sys.main.map.map_to_world(Vector2(5, 0))
 
 
 # 神龙的普攻
@@ -179,10 +179,10 @@ func theTideRoared():
 		return
 	Utils.draw_effect_v2({
 		"name": "waterBoom",
-		"pos": Vector2(350, 150),
+		"pos": Vector2(450, 200),
 		"fps": 15,
 		"dev": Vector2(0, 0),
-		"scale": 2
+		"scale": Vector2(2.5, 2.4)
 	})
 
 	var chas = getAllChas(1)
@@ -199,7 +199,7 @@ func offshoreCurrent():
 		dev = 0
 		pos = position + Vector2(-130, 0)
 	elif type == 1:
-		dev = 4
+		dev = 5
 		pos = position + Vector2(80, 0)
 
 	Utils.draw_effect_v2({
@@ -214,7 +214,7 @@ func offshoreCurrent():
 	
 	if att.hp <= 0 or self.isDeath:
 		return
-	for i in range(4):
+	for i in range(5):
 		Utils.draw_effect_v2({
 			"name": "wave",
 			"pos": Vector2((i + dev) * 100, 0),
@@ -226,7 +226,7 @@ func offshoreCurrent():
 		})
 
 	for cha in getAllChas(1):
-		if cha.cell.x < dev + 4 and cha.cell.x >= dev:
+		if cha.cell.x < dev + 5 and cha.cell.x >= dev:
 			FFHurtChara(cha, att.mgiAtk * offshoreCurrent_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 			BUFF_LIST.b_waterDown.new({
 				"cha": cha,
@@ -251,14 +251,14 @@ func maelstrom():
 func vertical(dev):
 	Utils.draw_effect_v2({
 		"dir": Path +"/effects/maelstrom",
-		"pos": Vector2(150 + (400 * dev), 0),
+		"pos": Vector2(150 + (550 * dev), 0),
 		"fps": 1,
 		"dev": Vector2(0, -100)
 	})
 	yield(reTimer(4), "timeout")
-	Utils.draw_shadow(img, Vector2(150 + (400 * dev), 0), Vector2(150 + (400 * dev), 800), 20)
+	Utils.draw_shadow(img, Vector2(150 + (550 * dev), 0), Vector2(150 + (550 * dev), 800), 20)
 	for cha in getAllChas(1):
-		if cha.cell.x < (dev * 4) + 4 and cha.cell.x >= (dev * 4):
+		if cha.cell.x < (dev * 5) + 5 and cha.cell.x >= (dev * 5):
 			FFHurtChara(cha, att.mgiAtk * maelstrom_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 			BUFF_LIST.b_waterDown.new({
 				"cha": cha,
@@ -269,14 +269,14 @@ func vertical(dev):
 func horizontal(dev):
 	Utils.draw_effect_v2({
 		"dir": Path +"/effects/maelstrom",
-		"pos": Vector2(0, 100 + (250 * dev)),
+		"pos": Vector2(0, 50 + (350 * dev)),
 		"fps": 1,
 		"dev": Vector2(0, 0)
 	})
 	yield(reTimer(4), "timeout")
 	Utils.draw_shadow(img, Vector2(0, 250 + (250 * dev)), Vector2(1200, 250 + (250 * dev)), 20)
 	for cha in getAllChas(1):
-		if cha.cell.y <= (dev * 3) + 1 and cha.cell.y >= (dev * 3):
+		if cha.cell.y <= (dev * 3) + 2 and cha.cell.y >= (dev * 3):
 			FFHurtChara(cha, att.mgiAtk * maelstrom_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 			BUFF_LIST.b_waterDown.new({
 				"cha": cha,

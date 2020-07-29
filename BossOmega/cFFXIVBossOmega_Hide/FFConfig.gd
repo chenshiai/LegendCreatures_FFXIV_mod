@@ -2,7 +2,7 @@ const CrusadeInfo = {
   "id": "cFFXIVBossOmega_Hide",
   "text": "欧米茄时空狭缝 第11层",
   "tips": "05:00",
-  "position": Vector2(6, 2),
+  "position": Vector2(8, 2),
 }
 
 # 最终幻想14 Boss拓展包配置文件

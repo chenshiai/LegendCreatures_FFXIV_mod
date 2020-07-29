@@ -45,9 +45,9 @@ var pwConfig = {
 var mapEffect = {
 	"puddle": null,
 	"area": [
-		Vector2(2, 1), Vector2(3, 1), Vector2(4, 1), Vector2(5, 1),
-		Vector2(2, 2), Vector2(3, 2), Vector2(4, 2), Vector2(5, 2),
-		Vector2(2, 3), Vector2(3, 3), Vector2(4, 3), Vector2(5, 3),
+		Vector2(6, 1), Vector2(3, 1), Vector2(4, 1), Vector2(5, 1),
+		Vector2(6, 2), Vector2(3, 2), Vector2(4, 2), Vector2(5, 2),
+		Vector2(6, 3), Vector2(3, 3), Vector2(4, 3), Vector2(5, 3),
 	]
 }
 
@@ -71,7 +71,7 @@ func _init():
 		"icicles": [26, 66, 106, 146],
 		"leftOrRigth": [33, 73, 113, 153, 360],
 		"reincarnation": [45, 85, 125, 165],
-		"P2summon": [206],
+		"P2summon": [210],
 		"protostar": [280],
 		"uptial": [306, 308, 310, 312, 314, 316, 318],
 		"P3Start": [322],
@@ -80,6 +80,7 @@ func _init():
 	})
 	Utils.background_change(Path, "/background/CrystallizationSpace.png")
 	FFControl.FFMusic.play(Path, "/music/DragonFantasy1.ogg.oggstr")
+	self.get_node("ui/hpBar").scale *= 2
 
 
 func _castCdSkill(id):
@@ -184,7 +185,7 @@ func changeStage(p):
 
 	# p2转场
 	if STAGE == "p2":
-		normalSpr.position = Vector2(0, -400)
+		normalSpr.position = Vector2(0, -800)
 		self.visible = false
 		Utils.draw_shadow(img,  position, position + Vector2(0, -300), 25)
 		battleDuration = 180
@@ -204,31 +205,31 @@ func changeStage(p):
 
 		yield(reTimer(3), "timeout")
 		Utils.background_change(Path, "/background/CrystallizationSpace2.png")
-		Utils.draw_shadow(img, Vector2(400, 600), Vector2(400, 0), 25)
+		Utils.draw_shadow(img, Vector2(400, 700), Vector2(400, -200), 25)
 		
 		for cha in sys.main.btChas:
 			if cha != null and !cha.isDeath and cha != self:
 				BUFF_LIST.RotateCha.new({"cha": cha, "dur": 19.2})
 				
 		yield(reTimer(18), "timeout")
-		Utils.draw_shadow(img, Vector2(400, 600), Vector2(400, 0), 25)
+		Utils.draw_shadow(img, Vector2(400, 700), Vector2(400, -200), 25)
 		Utils.background_change(Path, "/background/CrystallizationSpace3.png")
 		FFControl.showControl()
 		Chant.chantStart("原恒星", 75)
 
 	if STAGE == "p3":
-		setCell(Vector2(4, 0))
-		position = sys.main.map.map_to_world(Vector2(4, 0))
+		setCell(Vector2(5, 0))
+		position = sys.main.map.map_to_world(Vector2(5, 0))
 		normalSpr.position = Vector2(0, 0)
 
 
 # 召唤小龙
 func P2summon():
 	summonDragon(Vector2(0, 0), 5)
-	summonDragon(Vector2(7, 0), 5)
-	summonDragon(Vector2(0, 4), 5)
+	summonDragon(Vector2(9, 0), 5)
+	summonDragon(Vector2(0, 5), 5)
 	summonDragon(Vector2(3, 2), 5, true)
-	summonDragon(Vector2(7, 4), 5)
+	summonDragon(Vector2(9, 5), 5)
 	P2summonCount -= 1
 
 # 距离衰减AOE以及召唤的实现
@@ -313,8 +314,8 @@ func attack(cha, count):
 func wrathOfTheEarth():
 	Chant.chantStart("大地之怒", 6)
 	yield(reTimer(6), "timeout")
-	Utils.draw_effect("beatficVision", Vector2(350, 200), Vector2(0, -30), 10, 4)
-	if att.hp <= 0:
+	Utils.draw_effect("beatficVision", Vector2(450, 200), Vector2(0, 0), 10, Vector2(5, 4.8))
+	if att.hp <= 0 or self.isDeath:
 		return
 	var chas = getAllChas(1)
 	for i in chas:
@@ -335,7 +336,7 @@ func reincarnation():
 	sharedamage()
 
 func sharedamage():
-	if att.hp <= 0 and STAGE != "p1":
+	if att.hp <= 0 and STAGE != "p1" or self.isDeath:
 		return
 	Utils.draw_effect("death", aiCha.position, Vector2(0, -130), 10, 2)
 	var chas = getCellChas(aiCha.cell, 2, 1)
@@ -354,7 +355,7 @@ func blowingSnow():
 		eff.position = pos
 		yield(reTimer(0.1), "timeout")
 
-	if att.hp <= 0 or STAGE == "p2":
+	if att.hp <= 0 or STAGE == "p2" or self.isDeath:
 		return
 
 	var chas = getAllChas(1)
@@ -363,12 +364,14 @@ func blowingSnow():
 			FFHurtChara(i, att.mgiAtk * blowingSnow_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
 	yield(reTimer(1), "timeout")
-	if att.hp <= 0:
+	if att.hp <= 0 or self.isDeath:
 		return
 
 	if mapEffect.puddle == null:
 		mapEffect.puddle = Utils.draw_effect_out(Path + "/effects/puddle", Vector2(position.x, position.y), Vector2(25, 75), 13, 2, true)
 		mapEffect.puddle.show_on_top = false
+
+
 # 闪电/超新星
 func leftOrRigth():
 	var type = sys.rndRan(0, 1)
@@ -379,7 +382,7 @@ func leftOrRigth():
 
 	queue_free_eff()
 
-	if att.hp <= 0 or STAGE == "p2":
+	if att.hp <= 0 or STAGE == "p2" or self.isDeath:
 		return
 
 	if type == 0:
@@ -413,45 +416,44 @@ func supernova():
 func icicles():
 	Chant.chantStart("召唤冰柱", 4)
 	var type = sys.rndRan(0, 1)
-	var chas1
-	var chas2
-	var vertical = [1, 2]
+	var vertical = [1, 2, 3]
 
 	if type == 0:
-		vertical = [1, 2]
+		vertical = [1, 2, 3]
 	elif type == 1:
-		vertical = [5, 6]
+		vertical = [6, 7, 8]
 
 	var x1 = vertical[0]
 	var x2 = vertical[1]
+	var x3 = vertical[2]
 	
 	Utils.draw_effect("danger", Vector2(x1 * 100, -1), Vector2(-300, 0), 2, 1, false, deg2rad(90))
 	Utils.draw_effect("danger", Vector2(x2 * 100, -1), Vector2(-300, 0), 2, 1, false, deg2rad(90))
+	Utils.draw_effect("danger", Vector2(x3 * 100, -1), Vector2(-300, 0), 2, 1, false, deg2rad(90))
 	yield(reTimer(4), "timeout")
-	if att.hp <= 0 or STAGE == "p2":
+	if att.hp <= 0 or STAGE == "p2" or self.isDeath:
 		return
 
-	var eff1 = Utils.draw_effect("icicles", Vector2(x1 * 100, 400), Vector2(0, -50), 4)
+	var eff1 = Utils.draw_effect("icicles", Vector2(x1 * 100, 500), Vector2(0, -50), 4)
 	eff1._initFlyPos(Vector2(x1 * 100, 0), 1600)
-	var eff2 = Utils.draw_effect("icicles", Vector2(x2 * 100, 400), Vector2(0, -50), 4)
+	var eff2 = Utils.draw_effect("icicles", Vector2(x2 * 100, 500), Vector2(0, -50), 4)
 	eff2._initFlyPos(Vector2(x2 * 100, 0), 1600)
+	var eff3 = Utils.draw_effect("icicles", Vector2(x3 * 100, 500), Vector2(0, -50), 4)
+	eff3._initFlyPos(Vector2(x3 * 100, 0), 1600)
 
-	chas1 = Utils.lineChas(Vector2(x1, 0), Vector2(x1, 5), 5)
+	var chas1 = Utils.lineChas(Vector2(x1, 0), Vector2(x1, 5), 6)
+	chas1 += Utils.lineChas(Vector2(x2, 0), Vector2(x2, 5), 6)
+	chas1 += Utils.lineChas(Vector2(x3, 0), Vector2(x3, 5), 6)
 	for cha in chas1:
 		if cha.team != team :
 			FFHurtChara(cha, att.mgiAtk * icicles_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 			BUFF_LIST.b_VulnerableSmall.new({"cha": cha, "dur": 20})
 
-	chas2 = Utils.lineChas(Vector2(x2, 0), Vector2(x2, 5), 5)
-	for cha in chas2:
-		if cha.team != team :
-			FFHurtChara(cha, att.mgiAtk * icicles_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
-			BUFF_LIST.b_VulnerableSmall.new({"cha": cha, "dur": 20})
 
 # 原恒星
 func protostar(overtime = true):
 	Utils.draw_effect("energyStorage", position, Vector2(0, 0), 15, 6)
-	Utils.draw_effect("beatficVision", Vector2(350, 200), Vector2(0, -30), 10, 4)
+	Utils.draw_effect("beatficVision", Vector2(450, 200), Vector2(0, 0), 10, Vector2(5, 4.8))
 	var chas = getAllChas(1)
 	for i in chas:
 		if overtime:
@@ -474,7 +476,7 @@ class laser extends Buff:
 		life = dur
 		Utils.draw_effect("danger", Vector2(x * 100, -1), Vector2(-300, 0), 2, 1, false, deg2rad(90))
 		yield(sys.get_tree().create_timer(3), "timeout")
-		var effect = Utils.draw_effect("icicles", Vector2(x * 100, 400), Vector2(0, -50), 4)
+		var effect = Utils.draw_effect("icicles", Vector2(x * 100, 500), Vector2(0, -50), 4)
 		effect._initFlyPos(Vector2(x * 100, 0), 1600)
 
 		chas = Utils.lineChas(Vector2(x, 0), Vector2(x, 5), 5)
@@ -487,7 +489,7 @@ func trillionChop():
 	Chant.chantStart("万亿斩击", 5)
 	self.HateTarget = aiCha
 	yield(reTimer(5), "timeout")
-	if att.hp <=0:
+	if att.hp <=0 or self.isDeath:
 		return
 	if self.HateTarget != null:
 		Utils.draw_effect("zhua", self.HateTarget.position, Vector2(0, -30), 15, 3)
@@ -498,12 +500,9 @@ func trillionChop():
 func tsunami():
 	Chant.chantStart("大海啸-团灭", 30)
 	yield(reTimer(31), "timeout")
-	if att.hp <=0:
+	if att.hp <=0 or self.isDeath:
 		return
-	var chas = getAllChas(1)
-	for i in chas:
-		i.att.hp = -1
-		FFHurtChara(i, i.att.maxHp, Chara.HurtType.REAL, Chara.AtkType.SKILL)
+	Ace()
 
 
 func _upS():
@@ -512,18 +511,18 @@ func _upS():
 		aiCha = sys.rndListItem(getAllChas(1))
 
 	if STAGE == "p1":
-		setCell(Vector2(4, 0))
-		position = sys.main.map.map_to_world(Vector2(4, 0))
+		setCell(Vector2(5, 0))
+		position = sys.main.map.map_to_world(Vector2(5, 0))
 
 	if STAGE == "p2":
-		setCell(Vector2(7, 2))
-		position = sys.main.map.map_to_world(Vector2(7, 2))
+		setCell(Vector2(9, 2))
+		position = sys.main.map.map_to_world(Vector2(9, 2))
 		# 从p2开始，每秒累计原恒星的威力
 		protostar_pw += 0.02
 
 	if STAGE == "p3":
-		setCell(Vector2(4, 0))
-		position = sys.main.map.map_to_world(Vector2(4, 0))
+		setCell(Vector2(5, 0))
+		position = sys.main.map.map_to_world(Vector2(5, 0))
 
 	if STAGE == "p1" and battleDuration > BERSERKERTIME_P1 and (battleDuration % 5 == 0):
 		# p1阶段超过180s，狂暴

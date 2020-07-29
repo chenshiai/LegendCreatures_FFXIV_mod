@@ -2,7 +2,7 @@ const CrusadeInfo = {
   "id": "cFFXIVBossInnocence_Hide",
   "text": "无瑕灵君歼極战",
   "tips": "05:00",
-  "position": Vector2(6, 2),
+  "position": Vector2(8, 2),
 }
 
 # 最终幻想14 Boss拓展包配置文件

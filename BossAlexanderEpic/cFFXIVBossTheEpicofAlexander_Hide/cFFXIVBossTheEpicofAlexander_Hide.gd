@@ -29,6 +29,7 @@ func _extInit():
 # 必要的初始化
 func _init():
 	._init()
+	sys.main.btChas.append(self)
 	set_path("cFFXIVBossTheEpicofAlexander_Hide")
 	FFControl.HpBar.show()
 	connect("onHurtEnd", FFControl.HpBar, "hpDown")

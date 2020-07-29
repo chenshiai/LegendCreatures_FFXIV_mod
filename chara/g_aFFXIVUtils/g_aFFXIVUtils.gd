@@ -193,7 +193,7 @@ func draw_button_v2(btnConfig):
 	var key = getVal(btnConfig, "key", false)
 	if key:
 		var sc = ShortCut.new()
-		var keyborad = InputEnventKey.new()
+		var keyborad = InputEventKey.new()
 		keyborad.scancode = key
 		sc.set_shortcut(keyborad)
 		button.shortcut = sc

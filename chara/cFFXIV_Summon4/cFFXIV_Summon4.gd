@@ -31,7 +31,6 @@ func skill_lv1():
 func skill_lv2():
 	var allys = getAllChas(2)
 	allys.shuffle()
-	Utils.draw_efftext("仙光的低语", Summoner.position, "#1a8a00")
 
 	for cha in allys:
 		if cha != null:
@@ -45,7 +44,6 @@ func skill_lv2():
 func skill_lv3():
 	var allys = getAllChas(2)
 	allys.shuffle()
-	Utils.draw_efftext("异想的祥光", Summoner.position, "#1a8a00")
 	for cha in allys:
 		if cha != null and !cha.isDeath:
 			cha.plusHp(Summoner.att.mgiAtk * BLESSING_PW)

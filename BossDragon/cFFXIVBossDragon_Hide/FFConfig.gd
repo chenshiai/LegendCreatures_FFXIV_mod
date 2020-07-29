@@ -2,7 +2,7 @@ const CrusadeInfo = {
   "id": "cFFXIVBossDragon_Hide",
   "text": "神龙幻想歼灭战",
   "tips": "05:00",
-  "position": Vector2(4, 0),
+  "position": Vector2(5, 0),
 }
 
 # 最终幻想14 Boss拓展包配置文件

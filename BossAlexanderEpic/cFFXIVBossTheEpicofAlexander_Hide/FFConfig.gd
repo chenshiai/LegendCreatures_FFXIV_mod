@@ -2,7 +2,7 @@ const CrusadeInfo = {
   "id": "cFFXIV_Living_liquid_Hide",
   "text": "亚历山大绝境战",
   "tips": "10:00",
-  "position": Vector2(6, 2)
+  "position": Vector2(8, 3)
 }
 
 # 最终幻想14 Boss拓展包配置文件

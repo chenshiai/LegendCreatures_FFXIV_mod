@@ -46,14 +46,14 @@ func createControl():
 	sys.main.connect("onBattleStart", self, "moveControlInit")
 	sys.main.connect("onBattleEnd", self, "controlFree")
 
-	SwitchButton = Utils.draw_ui_button("展开", Vector2(1073, 495), self, "switch", {"return": true})
+	SwitchButton = Utils.draw_ui_button("展开", Vector2(1073, 595), self, "switch", {"return": true})
 	sys.main.get_node("ui").add_child(SwitchButton)
 	render_panel()
 
 
 func render_panel():
 	ControlPanel = NinePatchRect.new()
-	ControlPanel.rect_position = Vector2(350, 430)
+	ControlPanel.rect_position = Vector2(350, 530)
 
 	Crusade = Utils.FFXIVClass.Crusade.new() # 创建讨伐管理面板实例
 	ControlPanel.add_child(Crusade.CrusadeMsg)
@@ -330,16 +330,16 @@ func set_config():
 
 	MapArea = {
 		"scatter": {
-			"left_top": [Vector2(0, 1), Vector2(1, 0), Vector2(3, 0)],
-			"left_bottom": [Vector2(0, 3), Vector2(2, 4)],
-			"right_top": [Vector2(5, 0), Vector2(7, 1)],
-			"right_bottom": [Vector2(4, 4), Vector2(6, 4), Vector2(7, 3)]
+			"left_top": [Vector2(0, 0), Vector2(2, 0), Vector2(4, 0), Vector2(0, 2)],
+			"left_bottom": [Vector2(0, 4), Vector2(1, 5), Vector2(3, 5)],
+			"right_top": [Vector2(6, 0), Vector2(8, 0), Vector2(9, 1)],
+			"right_bottom": [Vector2(5, 5), Vector2(7, 5), Vector2(9, 5), Vector2(9, 3)]
 		},
 		"parallel": {
-			"left_top": [Vector2(0, 0), Vector2(1, 0), Vector2(2, 0), Vector2(3, 0)],
-			"left_bottom": [Vector2(0, 4), Vector2(1, 4), Vector2(2, 4), Vector2(3, 4)],
-			"right_top": [Vector2(4, 0), Vector2(5, 0), Vector2(6, 0), Vector2(7, 0)],
-			"right_bottom": [Vector2(4, 4), Vector2(5, 4), Vector2(6, 4), Vector2(7, 4)]
+			"left_top": [Vector2(4, 0), Vector2(1, 0), Vector2(2, 0), Vector2(3, 0)],
+			"left_bottom": [Vector2(4, 5), Vector2(1, 5), Vector2(2, 5), Vector2(3, 5)],
+			"right_top": [Vector2(5, 0), Vector2(6, 0), Vector2(7, 0), Vector2(8, 0)],
+			"right_bottom": [Vector2(8, 5), Vector2(5, 5), Vector2(6, 5), Vector2(7, 5)]
 		},
 		"aggregate_left": {
 			"left_top": [Vector2(1, 1), Vector2(2, 1), Vector2(1, 2), Vector2(2, 2)],
@@ -348,9 +348,9 @@ func set_config():
 			"right_bottom": [Vector2(2, 2), Vector2(3, 2), Vector2(2, 3), Vector2(3, 3)]
 		},
 		"aggregate_right": {
-			"right_top": [Vector2(5, 1), Vector2(6, 1), Vector2(5, 2), Vector2(6, 2)],
-			"right_bottom": [Vector2(6, 2), Vector2(5, 2), Vector2(6, 3), Vector2(5, 3)],
-			"left_bottom": [Vector2(5, 2), Vector2(5, 3), Vector2(4, 2), Vector2(4, 3)],
-			"left_top": [Vector2(4, 1), Vector2(4, 2), Vector2(5, 1), Vector2(5, 2)]
+			"right_top": [Vector2(7, 1), Vector2(8, 1), Vector2(7, 2), Vector2(8, 2)],
+			"right_bottom": [Vector2(8, 2), Vector2(7, 2), Vector2(8, 3), Vector2(7, 3)],
+			"left_bottom": [Vector2(7, 2), Vector2(7, 3), Vector2(6, 2), Vector2(6, 3)],
+			"left_top": [Vector2(6, 1), Vector2(6, 2), Vector2(7, 1), Vector2(7, 2)]
 		},
 	}

@@ -33,7 +33,8 @@ func _onBattleStart():
 	# BUFF_LIST.b_Adloquium.new({"cha": self, "HD": 800, "dur": 10})
 
 
-
 func _onDeath(atkInfo):
-	# ._onDeath(atkInfo)
-	print("我无敌了！")
+	._onDeath(atkInfo)
+	isDeath = false
+	plusHp(att.maxHp * 1, false)
+		

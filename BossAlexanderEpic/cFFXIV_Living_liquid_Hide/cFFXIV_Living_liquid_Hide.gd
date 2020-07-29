@@ -95,7 +95,7 @@ func _onDeath(atkInfo):
 
 func StageToP2():
 	if STAGE == "p1":
-		var CruiseChaser = sys.main.newChara("cFFXIV_CruiseChaser_Hide", 2)
+		# var CruiseChaser = sys.main.newChara("cFFXIV_CruiseChaser_Hide", 2)
 		var CruiseChaser = sys.main.newChara("cFFXIVBossTheEpicofAlexander_Hide", 2)
 		if CruiseChaser:
 			sys.main.map.add_child(CruiseChaser)

@@ -1,5 +1,5 @@
 # 最终幻想14 Boss模板文件
-# 版本号 0.1.4 2020/07/13
+# 版本号 0.1.5 2020/07/28
 extends Chara
 const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"] # Buff列表
 const Utils = globalData.infoDs["g_aFFXIVUtils"] # FFXIV全局工具
@@ -146,7 +146,7 @@ func selfAdaption():
 		E_spd = allAtt.spd
 		E_num = allAtt.num
 		E_lv = allAtt.lv
-		attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 750
+		attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 700
 		attInfo.atk = (E_def + E_maxHp / 8) / E_num + layer * 3
 		attInfo.mgiAtk = (E_mgiDef + E_maxHp / 8) / E_num + layer * 3
 		attInfo.def = (E_atk + layer * 2) / E_num

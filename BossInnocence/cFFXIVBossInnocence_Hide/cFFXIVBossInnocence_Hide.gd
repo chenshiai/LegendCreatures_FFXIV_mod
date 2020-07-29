@@ -105,7 +105,7 @@ func wingedReprobation():
 	var chas2
 
 	if type == 0:
-		var vertical = [0, 1, 2, 3, 4, 5, 6, 7]
+		var vertical = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 		vertical.shuffle()
 		var x1 = vertical.pop_front()
 		var x2 = vertical.pop_back()
@@ -123,7 +123,7 @@ func wingedReprobation():
 		chas2 = Utils.lineChas( Vector2(x2, 0), Vector2(x2, 5), 5)
 
 	elif type == 1:
-		var transverse = [0, 1, 2, 3, 4]
+		var transverse = [0, 1, 2, 3, 4, 6]
 		transverse.shuffle()
 		var y1 = transverse.pop_front()
 		var y2 = transverse.pop_back()
@@ -137,10 +137,10 @@ func wingedReprobation():
 		var eff2 = Utils.draw_effect("sword", Vector2(0, y2 * 100), Vector2(0, -50), 0)
 		eff2._initFlyPos(Vector2(800, y2 * 100) , 1600)
 		
-		chas1 = Utils.lineChas(Vector2(0, y1), Vector2(8, y1), 9)
-		chas2 = Utils.lineChas(Vector2(0, y2), Vector2(8, y2), 9)
+		chas1 = Utils.lineChas(Vector2(0, y1), Vector2(8, y1), 10)
+		chas2 = Utils.lineChas(Vector2(0, y2), Vector2(8, y2), 10)
 	
-	if att.hp <=0:
+	if att.hp <=0 or self.isDeath:
 		return
 	for cha in chas1:
 		if cha.team != team :
@@ -158,12 +158,15 @@ func shadowReaver():
 	yield(reTimer(3), "timeout")
 	var chas = getAllChas(1)
 	Utils.draw_effect("energyStorage", Vector2(350, 0), Vector2(0, 0), 13, 6)
+	Utils.draw_effect("energyStorage", Vector2(500, 200), Vector2(0, 0), 13, 6)
 	yield(reTimer(0.2), "timeout")
 	Utils.draw_effect("energyStorage", Vector2(150, 150), Vector2(0, 0), 13, 6)
+	Utils.draw_effect("energyStorage", Vector2(350, 0), Vector2(0, 0), 13, 6)
 	yield(reTimer(0.2), "timeout")
 	Utils.draw_effect("energyStorage", Vector2(500, 200), Vector2(0, 0), 13, 6)
+	Utils.draw_effect("energyStorage", Vector2(150, 150), Vector2(0, 0), 13, 6)
 
-	if att.hp <=0:
+	if att.hp <= 0 or self.isDeath:
 		return
 	for i in chas:
 		if i != null:
@@ -180,23 +183,23 @@ func flammingSword():
 
 	Chant.chantStart("回转火焰剑！", 5)
 	yield(reTimer(1), "timeout")
-	Utils.draw_effect("flammingSword", Vector2(350, 150), Vector2(0, 0), 12, 4)
+	Utils.draw_effect("flammingSword", Vector2(350, 150), Vector2(0, 0), 12, Vector2(5, 4.8))
 	yield(reTimer(0.5), "timeout")
-	Utils.draw_effect("flammingSword", Vector2(350, 125), Vector2(0, 0), 14, 3)
+	Utils.draw_effect("flammingSword", Vector2(350, 125), Vector2(0, 0), 14, Vector2(3.75, 3.6))
 	yield(reTimer(0.5), "timeout")
-	Utils.draw_effect("flammingSword", Vector2(350, 100), Vector2(0, 0), 16, 2)
+	Utils.draw_effect("flammingSword", Vector2(350, 100), Vector2(0, 0), 16, Vector2(2.5, 2.4))
 
 	var eff = Utils.draw_effect("light2", Vector2(350, 150), Vector2(0, 0), 0, 4)
 	yield(reTimer(3), "timeout")
 
-	if att.hp <= 0:
+	if att.hp <= 0 or self.isDeath:
 		return
 	var chas = getAllChas(1)
 	for i in chas:
 		if i != null:
 			hurtChara(i, att.atk * flammingSword_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
-	Utils.draw_effect("beatficVision", Vector2(350, 200), Vector2(0, -30), 10, 4)
+	Utils.draw_effect("beatficVision", Vector2(450, 200), Vector2(0, 0), 10, Vector2(5, 4.8))
 	eff.queue_free()
 	yield(reTimer(2), "timeout")
 	self.aiOn = true
@@ -219,7 +222,7 @@ func beatficVision():
 	normalSpr.position = deviation
 	Utils.draw_shadow(img,  position, position + deviation, 40)
 	beatficVisionDamage()
-	Utils.draw_effect("beatficVision", Vector2(350, 200), Vector2(0, -30), 10, 4)
+	Utils.draw_effect("beatficVision", Vector2(450, 200), Vector2(0, 0), 10, Vector2(5, 4.8))
 
 	yield(reTimer(2), "timeout")
 	Utils.draw_shadow(img, position + Vector2(0, -250), position, 40)
@@ -230,7 +233,7 @@ func beatficVision():
 	self.isDeath = false
 
 func beatficVisionDamage():
-	if att.hp <= 0:
+	if att.hp <= 0 or self.isDeath:
 		return
 	var chas = getAllChas(1)
 	for i in chas:
@@ -243,13 +246,13 @@ func leftOrRight():
 	normalSpr.position = Vector2(0, -800)
 	Utils.draw_shadow(img, position, position + Vector2(0, -250), 40)
 
-	if matCha(Vector2(7, 2)) == null:
-		setCell(Vector2(7, 2))
-		position = sys.main.map.map_to_world(Vector2(7, 2))
+	if matCha(Vector2(9, 2)) == null:
+		setCell(Vector2(9, 2))
+		position = Vector2(900, 250)
 		deviation = Vector2(-1200, 0)
 	else:
 		setCell(Vector2(0, 2))
-		position = sys.main.map.map_to_world(Vector2(0, 2))
+		position = Vector2(0, 250)
 		deviation = Vector2(1200, 0)
 
 func _upS():

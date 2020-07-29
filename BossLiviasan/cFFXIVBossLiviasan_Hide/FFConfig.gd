@@ -2,7 +2,7 @@ const CrusadeInfo = {
   "id": "cFFXIVBossLiviasan_Hide",
   "text": "伊甸希望乐园 觉醒之章3",
   "tips": "05:00",
-  "position": Vector2(4, 0),
+  "position": Vector2(5, 0),
 }
 
 # 最终幻想14 Boss拓展包配置文件
