@@ -39,8 +39,6 @@ func _init():
 	Utils.background_change(Path, "/background/PerfectThrone.png")
 	FFControl.FFMusic.play(Path, "/music/Innocence.oggstr")
 
-func _connect():
-	._connect()
 
 func _onBattleStart():
 	._onBattleStart()

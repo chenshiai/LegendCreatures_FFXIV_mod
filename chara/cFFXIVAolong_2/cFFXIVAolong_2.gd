@@ -17,6 +17,7 @@ signal swordPpressure
 func _extInit():
 	._extInit()
 	OCCUPATION = "CloseCombat"
+	SKILL_CRI = true
 	chaName = FFData.name_1
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4
@@ -50,12 +51,6 @@ func normalAtkChara(cha):
 			getFlash("moon")
 		else:
 			getFlash("flower")
-
-
-func _onAtkInfo(atkInfo: AtkInfo):
-	._onAtkInfo(atkInfo)
-	if atkInfo.atkCha == self and atkInfo.atkType == Chara.AtkType.SKILL:
-		atkInfo.canCri = true
 
 
 func iaijutsu():

@@ -183,6 +183,31 @@ func draw_ui_button(text, position, target, callback, config):
 		sys.main.get_node("ui").add_child(button)
 
 
+func draw_button_v2(btnConfig):
+	var button = Button.new()
+	var target = getVal(btnConfig, "target", self)
+	var callback = getVal(btnConfig, "callback", "")
+	var args = getVal(btnConfig, "args", [])
+	button.connect("pressed", target, callback, args)
+
+	var key = getVal(btnConfig, "key", false)
+	if key:
+		var sc = ShortCut.new()
+		var keyborad = InputEnventKey.new()
+		keyborad.scancode = key
+		sc.set_shortcut(keyborad)
+		button.shortcut = sc
+		button.shortcut_in_tooltip = true
+
+	button.text = getVal(btnConfig, "text", "按钮")
+	button.rect_position = getVal(btnConfig, "position", Vector2(0, 0))
+
+	if getVal(btnConfig, "return", false):
+		return button
+	else:
+		sys.main.get_node("ui").add_child(button)
+
+
 # 绘制残影
 # @param {Image} img - 目标图片
 # @param {Vector2} startPositon - 起点

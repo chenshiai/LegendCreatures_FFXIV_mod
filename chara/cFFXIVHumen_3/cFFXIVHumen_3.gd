@@ -8,6 +8,7 @@ var mgiAtkMaxAlly = null # 法强最高的队友
 func _extInit():
 	._extInit()
 	OCCUPATION = "LongRange"
+	SKILL_CRI = true
 	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -32,11 +33,6 @@ func _castCdSkill(id):
 	if id == "skill_DanceStep":
 		danceStep()
 
-
-func _onAtkInfo(atkInfo: AtkInfo):
-	._onAtkInfo(atkInfo)
-	if atkInfo.atkCha == self and atkInfo.atkType == SKILL:
-		atkInfo.canCri = true
 
 # 寻找舞伴		
 func setDancePartner():

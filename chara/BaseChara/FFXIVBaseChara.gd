@@ -11,6 +11,7 @@ const EFF = Chara.AtkType.EFF
 var baseId = ""
 var OCCUPATION = "Default"
 var SoulExample = null
+var SKILL_CRI = false
 
 var BallisticSpeed = {
 	"Protect": 600,
@@ -46,6 +47,11 @@ func _extInit():
 	attCoe.def = 3
 	attCoe.mgiDef = 3
 	lv = 1
+
+func _onAtkInfo(atkInfo: AtkInfo):
+	._onAtkInfo(atkInfo)
+	if atkInfo.atkCha == self and atkInfo.atkType == SKILL and SKILL_CRI:
+		atkInfo.canCri = true
 
 
 func getAtkVal():

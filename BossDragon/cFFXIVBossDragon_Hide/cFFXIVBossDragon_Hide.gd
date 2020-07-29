@@ -45,9 +45,9 @@ var pwConfig = {
 var mapEffect = {
 	"puddle": null,
 	"area": [
-		Vector2(2, 1), Vector2(3, 1), Vector2(4, 1), Vector2(5, 1), 
-		Vector2(2, 2), Vector2(3, 2), Vector2(4, 2), Vector2(5, 2), 
-		Vector2(2, 3), Vector2(3, 3), Vector2(4, 3), Vector2(5, 3), 
+		Vector2(2, 1), Vector2(3, 1), Vector2(4, 1), Vector2(5, 1),
+		Vector2(2, 2), Vector2(3, 2), Vector2(4, 2), Vector2(5, 2),
+		Vector2(2, 3), Vector2(3, 3), Vector2(4, 3), Vector2(5, 3),
 	]
 }
 
@@ -80,10 +80,6 @@ func _init():
 	})
 	Utils.background_change(Path, "/background/CrystallizationSpace.png")
 	FFControl.FFMusic.play(Path, "/music/DragonFantasy1.ogg.oggstr")
-
-
-func _connect():
-	._connect()
 
 
 func _castCdSkill(id):
