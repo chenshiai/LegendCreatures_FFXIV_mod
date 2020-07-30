@@ -218,8 +218,7 @@ func changeStage(p):
 		Chant.chantStart("原恒星", 75)
 
 	if STAGE == "p3":
-		setCell(Vector2(5, 0))
-		position = sys.main.map.map_to_world(Vector2(5, 0))
+		fixed(Vector2(5, 0))
 		normalSpr.position = Vector2(0, 0)
 
 
@@ -510,19 +509,13 @@ func _upS():
 	if aiCha.isDeath or aiCha == null:
 		aiCha = sys.rndListItem(getAllChas(1))
 
-	if STAGE == "p1":
-		setCell(Vector2(5, 0))
-		position = sys.main.map.map_to_world(Vector2(5, 0))
+	if STAGE == "p1" or STAGE == "p3":
+		fixed(Vector2(5, 0))
 
 	if STAGE == "p2":
-		setCell(Vector2(9, 2))
-		position = sys.main.map.map_to_world(Vector2(9, 2))
+		fixed(Vector2(9, 2))
 		# 从p2开始，每秒累计原恒星的威力
 		protostar_pw += 0.02
-
-	if STAGE == "p3":
-		setCell(Vector2(5, 0))
-		position = sys.main.map.map_to_world(Vector2(5, 0))
 
 	if STAGE == "p1" and battleDuration > BERSERKERTIME_P1 and (battleDuration % 5 == 0):
 		# p1阶段超过180s，狂暴

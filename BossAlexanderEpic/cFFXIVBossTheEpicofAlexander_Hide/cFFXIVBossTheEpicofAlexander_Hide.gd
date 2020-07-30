@@ -39,16 +39,16 @@ func _init():
 	call_deferred("setPos")
 
 func setPos():
-	normalSpr.position = Vector2(-52, 5)
-	sprcPos = Vector2(-52, 0)
+	# normalSpr.position = Vector2(0, 5)
+	# sprcPos = Vector2(-52, 0)
 	self.get_node("ui/hpBar").visible = false
 	self.show_on_top = false
 
 
 func _onBattleStart():
 	._onBattleStart()
-	cell = Vector2(4, 2)
-	position = sys.main.map.map_to_world(Vector2(4, 2))
+	fixed(Vector2(5, 3))
+
 
 func _onBattleEnd():
 	._onBattleEnd()
@@ -62,5 +62,4 @@ func _onHurt(atkInfo):
 
 func _upS():
 	._upS()
-	setCell(Vector2(4, 2))
-	position = sys.main.map.map_to_world(Vector2(4, 2))
+	fixed(Vector2(5, 3))

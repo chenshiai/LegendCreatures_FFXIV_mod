@@ -26,7 +26,7 @@ var mapEffect = [
 		"effect": null
 	},
 	{
-		"cell": Vector2(6, 3),
+		"cell": Vector2(8, 4),
 		"effect": null
 	},
 ]
@@ -76,7 +76,7 @@ func _onBattleStart():
 		"3": "%d%%" % [waves_pw * 100],
 	}
 	skillStrs[1] = TEXT.format(SKILL_TXT, pwConfig)
-	# att.hp = 1000
+	att.hp = 1000
 	FFControl.FFMusic.play(Path, "/music/dregs.oggstr")
 	upAtt()
 
@@ -95,8 +95,8 @@ func _onDeath(atkInfo):
 
 func StageToP2():
 	if STAGE == "p1":
-		# var CruiseChaser = sys.main.newChara("cFFXIV_CruiseChaser_Hide", 2)
-		var CruiseChaser = sys.main.newChara("cFFXIVBossTheEpicofAlexander_Hide", 2)
+		var CruiseChaser = sys.main.newChara("cFFXIV_CruiseChaser_Hide", 2)
+		# var CruiseChaser = sys.main.newChara("cFFXIVBossTheEpicofAlexander_Hide", 2)
 		if CruiseChaser:
 			sys.main.map.add_child(CruiseChaser)
 			CruiseChaser._onBattleStart()
@@ -165,13 +165,13 @@ func wave(cell, chaCell, show = false):
 	var rotation = atan2(chaPosition.y - start.y, chaPosition.x - start.x)
 
 	if show:
-		var eff1 = Utils.draw_effect("wavedanger", start, Vector2(-125, 0), 2, 3, false, rotation)
+		var eff1 = Utils.draw_effect("wavedanger", start, Vector2(-125, 0), 2, Vector2(5, 3), false, rotation)
 		eff1.show_on_top = false
 		yield(reTimer(3), "timeout")
 		if att.hp <= 0 or self.isDeath:
 			return
 
-	var eff2 = Utils.draw_effect("wave", start, Vector2(-125, 0), 8, 3, false, rotation)
+	var eff2 = Utils.draw_effect("wave", start, Vector2(-125, 0), 8, Vector2(5, 3), false, rotation)
 	eff2.show_on_top = false
 
 	var chas = Utils.lineChas(cell, chaCell, 15)

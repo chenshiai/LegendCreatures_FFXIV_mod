@@ -79,16 +79,16 @@ func _onDeath(atkInfo):
 
 # 正义飞踢
 func justiceKicks():
-	var cha = matCha(Vector2(4, 2))
+	var cha = matCha(Vector2(5, 3))
 	if cha != null:
 		if cha.team == 1:
 			FFControl.complex_move("scatter")
 		else:
 			FFControl.complex_move("scatter")
-			cha.setCell(Vector2(3, 2))
+			cha.setCell(Vector2(5, 3))
 
-	cell = Vector2(4, 2)
-	position = sys.main.map.map_to_world(Vector2(4, 2))
+	cell = Vector2(5, 3)
+	position = sys.main.map.map_to_world(Vector2(5, 3))
 	self.visible = true
 	Utils.draw_shadow(img, position + Vector2(0, -400), position, 25)
 	Utils.draw_effect("bombardment", position, Vector2(0, -50), 6, 6)
@@ -112,19 +112,23 @@ func steamWarShip():
 	Chant.chantStart("蒸汽战轮", 4)
 	var Ship1 = Utils.draw_effect_v2({
 		"dir": Path + "/effects/steamWarShip",
-		"pos": Vector2(-50, 200),
+		"pos": Vector2(-50, 250),
 		"fps": 0,
 		"dev": Vector2(0, -50),
 		"top": true
 	})
 	var Ship2 = Utils.draw_effect_v2({
 		"dir": Path + "/effects/steamWarShip",
-		"pos": Vector2(750, 200),
+		"pos": Vector2(950, 250),
 		"fps": 0,
 		"dev": Vector2(0, -50),
 		"top": true
 	})
 	yield(reTimer(2), "timeout")
+	if att.hp <= 0 or self.isDeath:
+		Ship1.queue_free()
+		Ship2.queue_free()
+		return
 	var target = rndChas(getAllChas(1), 1)
 	var tposition = target.position
 	var tcell = target.cell
@@ -133,10 +137,11 @@ func steamWarShip():
 		Ship1.queue_free()
 		Ship2.queue_free()
 		return
-	Ship1._initFlyPos(Vector2(-50, 150) + (tposition - Vector2(-50, 150)).normalized() * 1000 , 1600)
-	Ship2._initFlyPos(Vector2(750, 150) + (tposition - Vector2(850, 150)).normalized() * 1000 , 1600)
+	Ship1._initFlyPos(Vector2(-50, 150) + (tposition - Vector2(-50, 150)).normalized() * 1200 , 1800)
+	Ship2._initFlyPos(Vector2(750, 150) + (tposition - Vector2(850, 150)).normalized() * 1200 , 1800)
 
-	var chas1 = Utils.lineChas(Vector2(0, 2), tcell, 15)
+	var chas1 = Utils.lineChas(Vector2(0, 2), tcell, 18)
+	chas1 += Utils.lineChas(Vector2(9, 2), tcell, 15)
 	for cha in chas1:
 		if cha.team != team :
 			FFHurtChara(cha, att.atk * steamWarShip_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
@@ -144,16 +149,6 @@ func steamWarShip():
 				"cha": cha,
 				"dur": 10
 			})
-
-	var chas2 = Utils.lineChas(Vector2(7, 2), tcell, 15)
-	for cha in chas2:
-		if cha.team != team :
-			FFHurtChara(cha, att.atk * steamWarShip_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
-			BUFF_LIST.b_VulnerableSmall.new({
-				"cha": cha,
-				"dur": 10
-			})
-
 
 # 大火炎放射
 func flaming():
@@ -181,6 +176,7 @@ func flaming():
 			chas.append(cha)
 	print(chas)
 	complexHurt(chas, att.atk * flaming_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+	yield(reTimer(1), "timeout")
 	aiOn = true
 
 func sommAlexander():

@@ -66,8 +66,8 @@ func _onBattleStart():
 	}
 	skillStrs[1] = (TEXT.format(SKILL_TXT, pwConfig))
 
-	cell = Vector2(4, 0)
-	position = sys.main.map.map_to_world(Vector2(4, 0))
+	cell = Vector2(5, 0)
+	position = sys.main.map.map_to_world(Vector2(5, 0))
 	Utils.draw_effect_v2({
 		"name": "changeStage",
 		"pos": Vector2(350, 150),
@@ -82,7 +82,11 @@ func _onBattleStart():
 
 func _onDeath(atkInfo):
 	._onDeath(atkInfo)
-	# sommAlexander()
+	if STAGE == "p3":
+		var Alexander = sys.main.newChara("cFFXIVBossTheEpicofAlexander_Hide", 2)
+		if Alexander:
+			sys.main.map.add_child(Alexander)
+			Alexander._onBattleStart()
 
 
 func spaceTime(position):
@@ -95,6 +99,7 @@ func spaceTime(position):
 	})
 
 func sonicBoom(BGM = false):
+	spaceTime(self.position)
 	aiOn = false
 	Chant.chantStart("时间停止", 4)
 	if BGM:
@@ -157,9 +162,9 @@ func divinePunishmentRay():
 	Chant.chantStart("神罚射线", 3)
 	yield(reTimer(3), "timeout")
 	divine()
-	yield(reTimer(1.5), "timeout")
+	yield(reTimer(1), "timeout")
 	divine()
-	yield(reTimer(1.5), "timeout")
+	yield(reTimer(1), "timeout")
 	divine()
 	aiOn = true
 
@@ -209,7 +214,7 @@ func crossSacrament(hasChant = true):
 			"pos": position,
 			"dev": item.dev,
 			"fps": 14,
-			"scale": Vector2(-4, 2),
+			"scale": Vector2(-4.5, 2),
 			"rotation": item.ro
 		})
 	for cha in chas:
@@ -268,11 +273,11 @@ func leftOrRight():
 	var pos2
 	var type = sys.rndRan(0, 1)
 	if type == 0:
-		pos = Vector2(6, 2)
-		pos2 = Vector2(1, 2)
+		pos = Vector2(8, 3)
+		pos2 = Vector2(1, 3)
 	elif type == 1:
-		pos = Vector2(1, 2)
-		pos2 = Vector2(6, 2)
+		pos = Vector2(1, 3)
+		pos2 = Vector2(8, 3)
 
 	if matCha(pos) == null:
 		setCell(pos)

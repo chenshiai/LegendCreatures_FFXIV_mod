@@ -1,7 +1,7 @@
 var Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
 const TEXT = globalData.infoDs["g_bFFXIVText"]
 
-const TranslationList = ["FFXIV_Astrologian", "FFXIV_DarkKnight", "FFXIV_Gunbreaker", "FFXIV_Bard", "FFXIV_BlackMage",
+const TranslationList = ["FFXIV_Astrologian_1", "FFXIV_Astrologian_2", "FFXIV_DarkKnight", "FFXIV_Gunbreaker", "FFXIV_Bard", "FFXIV_BlackMage",
 	"FFXIV_Dancer", "FFXIV_Dragoon", "FFXIV_Machinist", "FFXIV_Monk", "FFXIV_Ninja", "FFXIV_Paladin", "FFXIV_RedMage",
 	"FFXIV_Samurai", "FFXIV_Scholar", "FFXIV_Summoner", "FFXIV_Warrior", "FFXIV_WhiteMage"]
 

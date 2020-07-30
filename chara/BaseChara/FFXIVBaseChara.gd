@@ -1,3 +1,5 @@
+# 最终幻想14 角色模板文件
+# 版本号 0.1.5 2020/07/31
 extends Chara
 const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
 const Utils = globalData.infoDs["g_aFFXIVUtils"]
