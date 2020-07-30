@@ -46,7 +46,13 @@ func createControl():
 	sys.main.connect("onBattleStart", self, "moveControlInit")
 	sys.main.connect("onBattleEnd", self, "controlFree")
 
-	SwitchButton = Utils.draw_ui_button("展开", Vector2(1073, 595), self, "switch", {"return": true})
+	SwitchButton = Utils.draw_button_v2({
+		"text": "展开",
+		"target": self,
+		"position": Vector2(1073, 595),
+		"callback": "switch",
+		"return": true,
+	})
 	sys.main.get_node("ui").add_child(SwitchButton)
 	render_panel()
 
@@ -59,8 +65,8 @@ func render_panel():
 	ControlPanel.add_child(Crusade.CrusadeMsg)
 
 	for button in ButtonConfig:
-		var bt = Utils.draw_ui_button(button.text, button.position, button.target, button.callback, button.config)
-		ControlPanel.add_child(bt)
+		var btn = Utils.draw_button_v2(button)
+		ControlPanel.add_child(btn)
 
 	sys.main.get_node("ui").add_child(ControlPanel)
 	switch()
@@ -120,15 +126,15 @@ func complex_move(mapArea):
 	if throttle: # 节流状态，不下达指令
 		delay()
 		return
-	
+
 	order_throttle() # 开启节流，下达指令
 	for cha in PlayerChas:
-		if cha.cell.x <= 3:
-			if cha.cell.y > 2:
+		if cha.cell.x <= 4:
+			if cha.cell.y > 3:
 				select_area(cha, mapArea, "left_bottom")
 			else:
 				select_area(cha, mapArea, "left_top")
-		elif cha.cell.y > 2:
+		elif cha.cell.y > 3:
 			select_area(cha, mapArea, "right_bottom")
 		else:
 			select_area(cha, mapArea, "right_top")
@@ -136,7 +142,7 @@ func complex_move(mapArea):
 
 # 选择当前区域内最近地点移动
 func select_area(cha, mapArea, area, count = 1):
-	var minDistance = 20
+	var minDistance = 30
 	var targetCell = Vector2(0, 0)
 
 	if count >= 4:
@@ -172,7 +178,7 @@ func keyboard_connect():
 	Keyboard.connect("key_a", self, "horizontal_move", [Vector2(-1, 0)])
 	Keyboard.connect("key_s", self, "horizontal_move", [Vector2(0, 1)])
 	Keyboard.connect("key_d", self, "horizontal_move", [Vector2(1, 0)])
-	
+
 	Keyboard.connect("key_t", self, "complex_move", ["parallel"])
 	Keyboard.connect("key_q", self, "complex_move", ["aggregate_left"])
 	Keyboard.connect("key_r", self, "complex_move", ["scatter"])
@@ -191,140 +197,110 @@ func set_config():
 			"position": Vector2(610, 0),
 			"target": Utils,
 			"callback": "showInfomation",
-			"config": {
-				"args": [TEXT.Instructions],
-				"return": true
-			},
+			"args": [TEXT.Instructions],
+			"return": true
 		},
 		{
 			"text": "讨伐设置",
 			"position": Vector2(610, 50),
 			"target": self,
 			"callback": "showCrusade",
-			"config": {
-				"args": [],
-				"return": true
-			}
+			"return": true
 		},
 		{
 			"text": "退避",
 			"position": Vector2(495, 0),
 			"target": Retreat,
 			"callback": "changeHateTarget",
-			"config": {
-				"args": [],
-				"return": true
-			},
+			"return": true
 		},
 		{
 			"text": "防护",
 			"position": Vector2(440, 22),
 			"target": Limit,
 			"callback": "use_limitBreak",
-			"config": {
-				"args": ["protect"],
-				"return": true
-			},
+			"args": ["protect"],
+			"return": true
 		},
 		{
 			"text": "进攻",
 			"position": Vector2(495, 50),
 			"target": Limit,
 			"callback": "use_limitBreak",
-			"config": {
-				"args": ["attack"],
-				"return": true
-			},
+			"args": ["attack"],
+			"return": true
 		},
 		{
 			"text": "治疗",
 			"position": Vector2(550, 22),
 			"target": Limit,
 			"callback": "use_limitBreak",
-			"config": {
-				"args": ["treatment"],
-				"return": true
-			},
+			"args": ["treatment"],
+			"return": true
 		},
 		{
 			"text": "左移",
 			"position": Vector2(0, 22),
 			"target": self,
 			"callback": "horizontal_move",
-			"config": {
-				"args": [Vector2(-1, 0)],
-				"return": true
-			},
+			"args": [Vector2(-1, 0)],
+			"return": true
 		},
 		{
 			"text": "右移",
 			"position": Vector2(110, 22),
 			"target": self,
 			"callback": "horizontal_move",
-			"config": {
-				"args": [Vector2(1, 0)],
-				"return": true
-			},
+			"args": [Vector2(1, 0)],
+			"return": true
 		},
 		{
 			"text": "上移",
 			"position": Vector2(55, 0),
 			"target": self,
 			"callback": "horizontal_move",
-			"config": {
-				"args": [Vector2(0, -1)],
-				"return": true
-			},
+			"args": [Vector2(0, -1)],
+			"return": true
 		},
 		{
 			"text": "下移",
 			"position": Vector2(55, 50),
 			"target": self,
 			"callback": "horizontal_move",
-			"config": {
-				"args": [Vector2(0, 1)],
-				"return": true
-			},
+			"args": [Vector2(0, 1)],
+			"return": true
 		},
 		{
 			"text": "分散",
 			"position": Vector2(275, 50),
 			"target": self,
 			"callback": "complex_move",
-			"config": {
-				"args": ["scatter"],
-				"return": true
-			},
+			"args": ["scatter"],
+			"return": true
 		},
 		{
 			"text": "平行",
 			"position": Vector2(275, 0),
 			"target": self,
 			"callback": "complex_move",
-			"config": {
-				"args": ["parallel"],
-				"return": true
-			},
+			"args": ["parallel"],
+			"return": true
 		},
 		{
 			"text": "左集",
 			"position": Vector2(220, 22),
 			"target": self,
 			"callback": "complex_move",
-			"config": {
-				"args": ["aggregate_left"],
-				"return": true
-			},
+			"args": ["aggregate_left"],
+			"return": true
 		},
 		{
 			"text": "右集",
 			"position": Vector2(330, 22),
 			"target": self,
 			"callback": "complex_move",
-			"config": {
-				"args": ["aggregate_right"],
-				"return": true
-			},
+			"args": ["aggregate_right"],
+			"return": true
 		},
 	]
 

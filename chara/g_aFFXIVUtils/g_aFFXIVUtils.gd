@@ -162,7 +162,7 @@ func draw_efftext(text, position, color = "#ffffff", up = true):
 	eff._initFlyPos(position + Vector2(20, 0), 20)
 
 
-# 绘制按钮UI
+# 绘制按钮UI - 废弃不维护
 # @param {string} text - 按钮文案
 # @param {Vector2} position - 按钮定位（相对父级）
 # @param {Object} target - 连接到的对象
@@ -182,7 +182,7 @@ func draw_ui_button(text, position, target, callback, config):
 	else:
 		sys.main.get_node("ui").add_child(button)
 
-
+# 绘制按钮UI - 新版本按钮绘制
 func draw_button_v2(btnConfig):
 	var button = Button.new()
 	var target = getVal(btnConfig, "target", self)
