@@ -47,6 +47,7 @@ func setPos():
 
 func _onBattleStart():
 	._onBattleStart()
+	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 580
 	fixed(Vector2(5, 3))
 
 

@@ -178,13 +178,13 @@ func flammingSword():
 
 	Chant.chantStart("回转火焰剑！", 5)
 	yield(reTimer(1), "timeout")
-	Utils.draw_effect("flammingSword", Vector2(400, 150), Vector2(0, 0), 12, Vector2(5, 4.8))
+	Utils.draw_effect("flammingSword", Vector2(450, 150), Vector2(0, 0), 12, Vector2(5, 4.8))
 	yield(reTimer(0.5), "timeout")
-	Utils.draw_effect("flammingSword", Vector2(400, 125), Vector2(0, 0), 14, Vector2(3.75, 3.6))
+	Utils.draw_effect("flammingSword", Vector2(450, 125), Vector2(0, 0), 14, Vector2(3.75, 3.6))
 	yield(reTimer(0.5), "timeout")
-	Utils.draw_effect("flammingSword", Vector2(400, 100), Vector2(0, 0), 16, Vector2(2.5, 2.4))
+	Utils.draw_effect("flammingSword", Vector2(450, 100), Vector2(0, 0), 16, Vector2(2.5, 2.4))
 
-	var eff = Utils.draw_effect("light2", Vector2(400, 200), Vector2(0, 0), 0, Vector2(5, 4.8))
+	var eff = Utils.draw_effect("light2", Vector2(450, 200), Vector2(0, 0), 0, Vector2(5, 4.8))
 	yield(reTimer(3), "timeout")
 
 	var chas = getAllChas(1)

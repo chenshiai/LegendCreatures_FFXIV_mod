@@ -82,7 +82,7 @@ func _onBattleStart():
 
 func _onDeath(atkInfo):
 	._onDeath(atkInfo)
-	if STAGE == "p3":
+	if STAGE != "p0"
 		var Alexander = sys.main.newChara("cFFXIVBossTheEpicofAlexander_Hide", 2)
 		if Alexander:
 			sys.main.map.add_child(Alexander)

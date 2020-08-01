@@ -76,7 +76,7 @@ func _onBattleStart():
 		"3": "%d%%" % [waves_pw * 100],
 	}
 	skillStrs[1] = TEXT.format(SKILL_TXT, pwConfig)
-	att.hp = 1000
+	# att.hp = 1000
 	FFControl.FFMusic.play(Path, "/music/dregs.oggstr")
 	upAtt()
 

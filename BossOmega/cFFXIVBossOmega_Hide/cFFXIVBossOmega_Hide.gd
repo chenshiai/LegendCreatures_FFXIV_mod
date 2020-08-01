@@ -105,7 +105,7 @@ func triangleAttack():
 	STAGE = "p2"
 	self.aiOn = false
 	for cha in getAllChas(1):
-		BUFF_LIST.b_StaticTimeUnlock.new({"cha": cha, "dur": 10})
+		BUFF_LIST.b_StaticTimeUnlock.new({"cha": cha, "dur": 12})
 
 	yield(reTimer(0.5), "timeout")
 	setCell(Vector2(0, 0))
