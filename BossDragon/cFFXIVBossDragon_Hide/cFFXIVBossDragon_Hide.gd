@@ -262,6 +262,7 @@ class attenuation extends Buff:
 		life = dur
 		eff = Utils.draw_effect("attenuation", position, Vector2(0, -12), 7, 4, true)
 	func _del():
+		._del()
 		eff.queue_free()
 
 # 小龙击杀完毕，P2召唤结束
@@ -335,7 +336,7 @@ func reincarnation():
 	sharedamage()
 
 func sharedamage():
-	if att.hp <= 0 and STAGE != "p1" or self.isDeath:
+	if att.hp <= 0 or STAGE != "p1" or self.isDeath:
 		return
 	Utils.draw_effect("death", aiCha.position, Vector2(0, -130), 10, 2)
 	var chas = getCellChas(aiCha.cell, 2, 1)

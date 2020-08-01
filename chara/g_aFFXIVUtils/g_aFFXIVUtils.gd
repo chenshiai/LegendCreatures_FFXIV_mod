@@ -202,6 +202,10 @@ func draw_button_v2(btnConfig):
 	button.text = getVal(btnConfig, "text", "按钮")
 	button.rect_position = getVal(btnConfig, "position", Vector2(0, 0))
 
+	
+	if btnConfig.has("size"):
+		button.set_size(btnConfig.size)
+
 	if getVal(btnConfig, "return", false):
 		return button
 	else:

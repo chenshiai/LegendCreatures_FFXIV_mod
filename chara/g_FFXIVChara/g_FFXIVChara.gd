@@ -50,7 +50,7 @@ func rndRanBoss():
 
 func clear(bosscha):
 	var cha
-	for i in range(0,9):
+	for i in range(0,10):
 		for j in range(0,6):
 			cha = sys.main.matCha(Vector2(i, j))
 			if cha != null and cha.team != 1 and cha != bosscha:

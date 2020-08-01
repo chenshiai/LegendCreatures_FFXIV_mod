@@ -98,6 +98,7 @@ class b_LivingDeath extends BaseBuff:
 		atkInfo.hurtVal = 0
 
 	func _del():
+		._del()
 		if life < 0:
 			masCha.att.hp = -1
 
@@ -628,6 +629,7 @@ class b_Share	extends BaseBuff:
 		eff = Utils.draw_effect("share", masCha.position, Vector2(0, -20), 8, 3, true)
 
 	func _del():
+		._del()
 		eff.queue_free()
 
 	func _process(a):
@@ -651,6 +653,7 @@ class b_RollCall extends BaseBuff:
 		})
 
 	func _del():
+		._del()
 		eff.queue_free()
 
 	func _process(a):
@@ -683,6 +686,7 @@ class RotateCha	extends BaseBuff:
 			else:
 				return
 	func _del():
+		._del()
 		target.get_node("ui").visible = true
 		target.normalSpr.position = Vector2(0, 0)
 		target.img.set_rotation_degrees(0)
@@ -697,6 +701,7 @@ class b_StaticTime extends BaseBuff:
 	func _connect():
 		masCha.aiOn = false
 	func _del():
+		._del()
 		if !masCha.hasBuff("b_StaticTimeUnlock"):
 			masCha.aiOn = true
 	func _upS():
@@ -709,6 +714,7 @@ class b_StaticTimeUnlock extends BaseBuff:
 	func _connect():
 		masCha.aiOn = false
 	func _del():
+		._del()
 		masCha.aiOn = true
 	func _upS():
 		masCha.aiOn = false

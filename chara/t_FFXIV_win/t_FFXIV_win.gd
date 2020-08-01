@@ -33,6 +33,7 @@ class LightHard:
 			resolve = true
 
 	func _del():
+		._del()
 		if resolve:
 			masCha.addBuff(LightHard.new())
 			resolve = false

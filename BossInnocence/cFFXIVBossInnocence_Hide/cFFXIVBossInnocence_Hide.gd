@@ -101,8 +101,7 @@ func righteousBolt():
 func wingedReprobation():
 	Chant.chantStart("断罪飞翔", 4)
 	var type = sys.rndRan(0, 1)
-	var chas1
-	var chas2
+	var chas1 = []
 
 	if type == 0:
 		var vertical = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -115,12 +114,12 @@ func wingedReprobation():
 		yield(reTimer(4), "timeout")
 
 		var eff1 = Utils.draw_effect("sword", Vector2(x1 * 100, 0), Vector2(0, -50), 0)
-		eff1._initFlyPos(Vector2(x1 * 100, 500), 1600)
+		eff1._initFlyPos(Vector2(x1 * 100, 600), 1600)
 		var eff2 = Utils.draw_effect("sword", Vector2(x2 * 100, 0), Vector2(0, -50), 0)
-		eff2._initFlyPos(Vector2(x2 * 100, 500), 1600)
+		eff2._initFlyPos(Vector2(x2 * 100, 600), 1600)
 
-		chas1 = Utils.lineChas( Vector2(x1, 0), Vector2(x1, 5), 5)
-		chas2 = Utils.lineChas( Vector2(x2, 0), Vector2(x2, 5), 5)
+		chas1 += Utils.lineChas( Vector2(x1, 0), Vector2(x1, 5), 5)
+		chas1 += Utils.lineChas( Vector2(x2, 0), Vector2(x2, 5), 5)
 
 	elif type == 1:
 		var transverse = [0, 1, 2, 3, 4, 6]
@@ -133,12 +132,12 @@ func wingedReprobation():
 		yield(reTimer(4), "timeout")
 
 		var eff1 = Utils.draw_effect("sword", Vector2(0, y1 * 100), Vector2(0, -50), 0)
-		eff1._initFlyPos(Vector2(800, y1 * 100) , 1600)
+		eff1._initFlyPos(Vector2(1000, y1 * 100) , 1600)
 		var eff2 = Utils.draw_effect("sword", Vector2(0, y2 * 100), Vector2(0, -50), 0)
-		eff2._initFlyPos(Vector2(800, y2 * 100) , 1600)
+		eff2._initFlyPos(Vector2(1000, y2 * 100) , 1600)
 		
-		chas1 = Utils.lineChas(Vector2(0, y1), Vector2(8, y1), 10)
-		chas2 = Utils.lineChas(Vector2(0, y2), Vector2(8, y2), 10)
+		chas1 += Utils.lineChas(Vector2(0, y1), Vector2(8, y1), 10)
+		chas1 += Utils.lineChas(Vector2(0, y2), Vector2(8, y2), 10)
 	
 	if att.hp <=0 or self.isDeath:
 		return
@@ -147,10 +146,6 @@ func wingedReprobation():
 			hurtChara(cha, att.mgiAtk * wingedReprobation_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 			BUFF_LIST.b_VulnerableSmall.new({"cha": cha, "dur": 15})
 
-	for cha in chas2:
-		if cha.team != team :
-			hurtChara(cha, att.mgiAtk * wingedReprobation_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
-			BUFF_LIST.b_VulnerableSmall.new({"cha": cha, "dur": 15})
 
 # 夺影
 func shadowReaver():
@@ -158,12 +153,12 @@ func shadowReaver():
 	yield(reTimer(3), "timeout")
 	var chas = getAllChas(1)
 	Utils.draw_effect("energyStorage", Vector2(350, 0), Vector2(0, 0), 13, 6)
-	Utils.draw_effect("energyStorage", Vector2(500, 200), Vector2(0, 0), 13, 6)
+	Utils.draw_effect("energyStorage", Vector2(800, 200), Vector2(0, 0), 13, 6)
 	yield(reTimer(0.2), "timeout")
-	Utils.draw_effect("energyStorage", Vector2(150, 150), Vector2(0, 0), 13, 6)
+	Utils.draw_effect("energyStorage", Vector2(250, 150), Vector2(0, 0), 13, 6)
 	Utils.draw_effect("energyStorage", Vector2(350, 0), Vector2(0, 0), 13, 6)
 	yield(reTimer(0.2), "timeout")
-	Utils.draw_effect("energyStorage", Vector2(500, 200), Vector2(0, 0), 13, 6)
+	Utils.draw_effect("energyStorage", Vector2(800, 500), Vector2(0, 0), 13, 6)
 	Utils.draw_effect("energyStorage", Vector2(150, 150), Vector2(0, 0), 13, 6)
 
 	if att.hp <= 0 or self.isDeath:
@@ -183,17 +178,15 @@ func flammingSword():
 
 	Chant.chantStart("回转火焰剑！", 5)
 	yield(reTimer(1), "timeout")
-	Utils.draw_effect("flammingSword", Vector2(350, 150), Vector2(0, 0), 12, Vector2(5, 4.8))
+	Utils.draw_effect("flammingSword", Vector2(400, 150), Vector2(0, 0), 12, Vector2(5, 4.8))
 	yield(reTimer(0.5), "timeout")
-	Utils.draw_effect("flammingSword", Vector2(350, 125), Vector2(0, 0), 14, Vector2(3.75, 3.6))
+	Utils.draw_effect("flammingSword", Vector2(400, 125), Vector2(0, 0), 14, Vector2(3.75, 3.6))
 	yield(reTimer(0.5), "timeout")
-	Utils.draw_effect("flammingSword", Vector2(350, 100), Vector2(0, 0), 16, Vector2(2.5, 2.4))
+	Utils.draw_effect("flammingSword", Vector2(400, 100), Vector2(0, 0), 16, Vector2(2.5, 2.4))
 
-	var eff = Utils.draw_effect("light2", Vector2(350, 150), Vector2(0, 0), 0, 4)
+	var eff = Utils.draw_effect("light2", Vector2(400, 200), Vector2(0, 0), 0, Vector2(5, 4.8))
 	yield(reTimer(3), "timeout")
 
-	if att.hp <= 0 or self.isDeath:
-		return
 	var chas = getAllChas(1)
 	for i in chas:
 		if i != null:
@@ -233,8 +226,6 @@ func beatficVision():
 	self.isDeath = false
 
 func beatficVisionDamage():
-	if att.hp <= 0 or self.isDeath:
-		return
 	var chas = getAllChas(1)
 	for i in chas:
 		if i != null:

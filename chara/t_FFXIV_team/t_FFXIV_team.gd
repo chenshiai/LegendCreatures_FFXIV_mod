@@ -66,6 +66,7 @@ class Protect extends Team:
 		att.mgiDefL = 0.1
 
 	func _del():
+		._del()
 		if resolve:
 			masCha.addBuff(Protect.new())
 			resolve = false
@@ -79,6 +80,7 @@ class CloseCombat extends Team:
 		att.atkL = 0.1
 
 	func _del():
+		._del()
 		if resolve:
 			masCha.addBuff(CloseCombat.new())
 			resolve = false
@@ -93,6 +95,7 @@ class Magic extends Team:
 		att.mgiDefL = 0.05
 
 	func _del():
+		._del()
 		if resolve:
 			masCha.addBuff(Magic.new())
 			resolve = false
@@ -107,6 +110,7 @@ class LongRange extends Team:
 		att.mgiDefL = 0.05
 
 	func _del():
+		._del()
 		if resolve:
 			masCha.addBuff(LongRange.new())
 			resolve = false
@@ -120,6 +124,7 @@ class Treatment extends Team:
 		att.maxHpL = 0.05
 
 	func _del():
+		._del()
 		if resolve:
 			masCha.addBuff(Treatment.new())
 			resolve = false
