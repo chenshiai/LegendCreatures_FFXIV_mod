@@ -160,7 +160,7 @@ func flaming2():
 func flaming(cell, chaCell):
 	var start = cell * 100
 	var chaPosition = chaCell * 100
-	var rotation = atan2(chaPosition.y - start.y, chaPosition.x - start.x)
+	var rotation = (chaPosition - start).angle()
 	Utils.draw_effect_v2({
 		"name": "wave",
 		"pos": start,

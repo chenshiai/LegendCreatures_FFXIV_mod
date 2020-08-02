@@ -70,7 +70,7 @@ func _onBattleStart():
 	}
 	skillStrs[1] = (TEXT.format(SKILL_TXT, pwConfig))
 	self.visible = false
-	# att.hp = 5000
+	att.hp = 5000
 	upAtt()
 
 	for cha in sys.main.btChas:
@@ -116,7 +116,7 @@ func limitCutting():
 
 	normalSpr.position = Vector2(0, 0)
 	Utils.draw_shadow(img, position + Vector2(0, -250), position, 60)
-	var rotation = atan2(target.position.y - position.y, target.position.x - position.x)
+	var rotation = (target.position - position).angle()
 	yield(reTimer(1), "timeout")
 	var effLimit = Utils.draw_effect_out(Path + "/effects/limitCutting", position, Vector2(-95, 0), 15, 1, false, rotation)
 	effLimit.show_on_top = false

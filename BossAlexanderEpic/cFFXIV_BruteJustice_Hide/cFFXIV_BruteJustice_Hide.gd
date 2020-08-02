@@ -63,7 +63,7 @@ func _onBattleStart():
 	}
 	skillStrs[1] = (TEXT.format(SKILL_TXT, pwConfig))
 	justiceKicks()
-	# att.hp = 1000
+	att.hp = 1000
 	upAtt()
 
 
@@ -153,7 +153,7 @@ func steamWarShip():
 # 大火炎放射
 func flaming():
 	var mv = aiCha.cell
-	var rotation = atan2(aiCha.position.y - position.y, aiCha.position.x - position.x)
+	var rotation = (aiCha.position - position).angle()
 	aiOn = false
 	Chant.chantStart("大火炎放射", 5)
 	yield(reTimer(5), "timeout")

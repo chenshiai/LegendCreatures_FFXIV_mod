@@ -218,3 +218,63 @@ func killSelf():
 	for i in getAllChas(2):
 		FFHurtChara(i, att.maxHp * 2, Chara.HurtType.REAL, Chara.AtkType.SKILL)
 	sys.newBaseMsg(TEXT.Insurance.title, TEXT.Insurance.content)
+
+
+func leftOrRight():
+	var pos
+	var pos2
+	var type = sys.rndRan(0, 1)
+	if type == 0:
+		pos = Vector2(8, 3)
+		pos2 = Vector2(1, 3)
+	elif type == 1:
+		pos = Vector2(1, 3)
+		pos2 = Vector2(8, 3)
+
+	if matCha(pos) == null:
+		setCell(pos)
+		self.position = sys.main.map.map_to_world(pos)
+	else:
+		setCell(pos2)
+		self.position = sys.main.map.map_to_world(pos2)
+
+# -------------------- 地面选取 ---------------------------
+func get_area_chas(type, x = Vector2(0, 1), y = Vector2(0, 1)):
+	var chas = []
+	var x1 = 0
+	var x2 = 0
+	var y1 = 0
+	var y2 = 0
+	match type:
+		"left_top":
+			x1 = 0
+			x2 = 4
+			y1 = 0
+			y2 = 2
+		"left_bottom":
+			x1 = 0
+			x2 = 4
+			y1 = 3
+			y2 = 6
+		"right_top":
+			x1 = 5
+			x2 = 10
+			y1 = 0
+			y2 = 2
+		"right_bottom":
+			x1 = 5
+			x2 = 10
+			y1 = 2
+			y2 = 3
+		"custom":
+			x1 = x.x
+			x2 = y.x
+			y1 = x.y
+			y2 = y.y
+	for i in range(x1, x2 + 1):
+		for j in range(y1, y2 + 1):
+			var cha = sys.main.matCha(Vector2(i, j))
+			if cha != null and cha.team == 1:
+				chas.append(cha)
+	return chas
+

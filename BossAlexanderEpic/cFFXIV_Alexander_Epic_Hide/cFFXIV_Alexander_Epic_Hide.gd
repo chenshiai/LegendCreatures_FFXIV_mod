@@ -82,7 +82,7 @@ func _onBattleStart():
 
 func _onDeath(atkInfo):
 	._onDeath(atkInfo)
-	if STAGE != "p0"
+	if STAGE != "p0":
 		var Alexander = sys.main.newChara("cFFXIVBossTheEpicofAlexander_Hide", 2)
 		if Alexander:
 			sys.main.map.add_child(Alexander)
@@ -99,11 +99,11 @@ func spaceTime(position):
 	})
 
 func sonicBoom(BGM = false):
-	spaceTime(self.position)
 	aiOn = false
 	Chant.chantStart("时间停止", 4)
 	if BGM:
 		FFControl.FFMusic.play(Path, "/music/無限停止.oggstr")
+		spaceTime(self.position)
 	var chas = getAllChas(1)
 	var type = sys.rndRan(0, 1)
 	var target = rndChas(chas, 1)
@@ -151,7 +151,13 @@ func lightning(chas):
 
 # 分摊
 func share(target):
-	Utils.draw_effect("ePrcC_30", target.position, Vector2(0, -50), 5, 4)
+	# Utils.draw_effect("ePrcC_30", target.position, Vector2(0, -50), 5, 4)
+	Utils.draw_effect_v2({
+		"dir": Path + "/effects/share",
+		"pos": target.position,
+		"dev": Vector2(0, -150),
+		"fps": 8,
+	})
 	var chas = getCellChas(target.cell, 2, 1)
 	for cha in chas:
 		FFHurtChara(cha, att.mgiAtk * share_pw / chas.size(), Chara.HurtType.MGI, Chara.AtkType.SKILL)
@@ -268,20 +274,3 @@ func TimeAndSpaceSneakingMarch():
 	self.isDeath = false
 	aiOn = true
 
-func leftOrRight():
-	var pos
-	var pos2
-	var type = sys.rndRan(0, 1)
-	if type == 0:
-		pos = Vector2(8, 3)
-		pos2 = Vector2(1, 3)
-	elif type == 1:
-		pos = Vector2(1, 3)
-		pos2 = Vector2(8, 3)
-
-	if matCha(pos) == null:
-		setCell(pos)
-		self.position = sys.main.map.map_to_world(pos)
-	else:
-		setCell(pos2)
-		self.position = sys.main.map.map_to_world(pos2)

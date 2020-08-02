@@ -153,7 +153,7 @@ func cleftFlow(first = true):
 		start = position + Vector2(100, 0)
 		target = aiCha
 
-	var	rotation = atan2(target.position.y - start.y, target.position.x - start.x)
+	var	rotation = (target.position - start).angle()
 	Utils.draw_effect_v2({
 		"name": "wave",
 		"pos": start,
