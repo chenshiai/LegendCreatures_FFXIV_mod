@@ -44,7 +44,10 @@ func _init():
 		# "righteousBolt": [],
 		# "instruction": [10, 20, 30, 40],
 		# "theSupremeJudgment": [10, 30, 50],
-		"futureObservations": [10]
+		# "futureObservations": [10],
+		# "futureObserDetermine": [41],
+		"timePrison": [5],
+		"prisonCha": [13, 18, 23, 28, 33, 38, 43, 48]
 	})
 	FFControl.HpBar.show()
 	connect("onHurtEnd", FFControl.HpBar, "hpDown")
@@ -64,7 +67,7 @@ func _onBattleStart():
 	var cha = matCha(Vector2(5, 3))
 	if cha != null and cha.team == 1:
 		FFControl.complex_move("scatter")
-	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 580
+	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 480
 	divinePunishmentRay_pw *= (E_lv / E_num) # 加罪罚威力
 	righteousBolt_pw *= (E_lv / E_num) # 诛罚威力
 	theSupremeJudgment_pw *= (E_lv / E_num) # 大审判威力
@@ -77,7 +80,9 @@ func _onBattleStart():
 	}
 	skillStrs[1] = (TEXT.format(SKILL_TXT, pwConfig))
 	fixed(Vector2(5, 3))
-
+	for cha in sys.main.btChas:
+		if cha.team == 1:
+			cha.addBuff(b_LongAtk.new(2))
 
 func _onBattleEnd():
 	._onBattleEnd()
@@ -105,6 +110,7 @@ func divinePunishmentRay():
 	yield(reTimer(1), "timeout")
 	divine()
 	aiOn = true
+
 
 func divine():
 	if att.hp <= 0 or self.isDeath:
@@ -140,7 +146,7 @@ func instruction():
 
 
 # 行动指令
-func actionInstruction(chant = true, observa = false):
+func actionInstruction(chant = true, shadow = false):
 	if chant:
 		Chant.chantStart("行动指令", 3)
 		yield(reTimer(3), "timeout")
@@ -160,18 +166,17 @@ func actionInstruction(chant = true, observa = false):
 		if not cha.isMoveIng:
 			cha.att.hp = -1
 			FFHurtChara(cha, cha.att.maxHp, Chara.HurtType.MGI, Chara.AtkType.EFF)
-	self.aiOn = true
 	yield(reTimer(2), "timeout")
 	if att.hp <= 0 or self.isDeath:
 		self.aiOn = true
 		return
-	if observa:
+	if shadow:
 		return
-	staticInstruction()
+	self.aiOn = true
 
 
 # 静止指令
-func staticInstruction(chant = true, observa = false):
+func staticInstruction(chant = true, shadow = false):
 	if chant:
 		Chant.chantStart("静止指令", 3)
 		yield(reTimer(3), "timeout")
@@ -195,10 +200,12 @@ func staticInstruction(chant = true, observa = false):
 	if att.hp <= 0 or self.isDeath:
 		self.aiOn = true
 		return
-	if observa:
+	if shadow:
 		return
-	staticInstruction()
+	self.aiOn = true
 
+
+# 至圣大审判
 func theSupremeJudgment():
 	self.aiOn = false
 	Chant.chantStart("至圣大审判", 4)
@@ -257,6 +264,7 @@ func theSupremeJudgment():
 		yield(reTimer(2), "timeout")
 	continuousPunishment()
 
+
 # 连坐罪
 func continuousPunishment():
 	var chas = getAllChas(1)
@@ -272,68 +280,242 @@ func continuousPunishment():
 		FFHurtChara(cha, att.mgiAtk * continuousPunishment_pw / chas.size(), Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
 
-# --------------------- 下面是未来观测的实现逻辑 --------------------
-var CharaList = []
-var ImgList = []
-var Separation = [
-	Vector2(250, 0),
-	Vector2(-50, 400),
-	Vector2(750, 600),
-	Vector2(950, 100),
-]
-var positionList = [
-	Vector2(350, -50),
-	Vector2(250, 50),
-	Vector2(250, 250),
-	Vector2(250, 450),
-	Vector2(450, 450),
-	Vector2(650, 450),
-	Vector2(750, 350),
-	Vector2(750, 150),
-	Vector2(750, -50),
-	Vector2(550, -50),
-]
-# 存放未来观测的技能序列
-var SkillList = []
+# 闪电
+func lightning():
+	for i in getAllChas(1):
+		Utils.draw_effect("ePrcC_30", i.position, Vector2(0, -50), 5, Vector2(2, 3))
+		var cha = getCellChas(i.cell, 1)
+		for j in cha:
+			BUFF_LIST.b_VulnerableSmall.new({
+				"cha": j,
+				"dur": 4
+			})
+			FFHurtChara(j, att.mgiAtk * divinePunishmentRay_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
-func targetDirec(id):
-	return chaData.infoDs[id].dir + "/%s" % [id]
+
+# 分摊
+func share():
+	var target = rndChas(getAllChas(1), 1)
+	Utils.draw_effect_v2({
+		"dir": Path + "/effects/share",
+		"pos": target.position,
+		"dev": Vector2(0, -150),
+		"fps": 8,
+	})
+	var chas = getCellChas(target.cell, 2, 1)
+	for cha in chas:
+		FFHurtChara(cha, att.mgiAtk * continuousPunishment_pw / chas.size(), Chara.HurtType.MGI, Chara.AtkType.SKILL)
+
+
+# --------------------- 下面是未来观测的实现逻辑 --------------------
+var SkillList = [] # 存放未来观测的技能序列
+var ImgList = []
+var SelfImg = []
+var Separation = [
+	{
+		"pos": Vector2(250, 0), "ro": deg2rad(90), "dev": Vector2(75, 0),
+		"area": [Vector2(1, 0), Vector2(3, 5)]
+	},
+	{
+		"pos": Vector2(-50, 400), "ro": deg2rad(0), "dev": Vector2(75, -25),
+		"area": [Vector2(0, 2), Vector2(9, 5)]
+	},
+	{
+		"pos": Vector2(750, 600), "dev": Vector2(75, 0), "ro": deg2rad(270),
+		"area": [Vector2(6, 0), Vector2(8, 5)]
+	},
+	{
+		"pos": Vector2(950, 100), "dev": Vector2(75, 25), "ro": deg2rad(180),
+		"area": [Vector2(0, 0), Vector2(9, 2)]
+	},
+]
+var positionList = [Vector2(350, -50), Vector2(250, 50), Vector2(250, 250), Vector2(250, 450), Vector2(450, 450),
+	Vector2(650, 450), Vector2(750, 350), Vector2(750, 150), Vector2(750, -50), Vector2(550, -50),]
+
 
 # 未来观测！
 func futureObservations():
 	self.aiOn = false
 	Chant.chantStart("未来观测", 4)
 	yield(reTimer(5), "timeout")
-	var selfPath = targetDirec(self.id)
-	for pos in Separation:
-		Utils.draw_effect_v2({
-			"pos": pos,
+	var selfPath = chaData.infoDs[id].dir + "/%s" % [id]
+	for item in Separation:
+		SelfImg.append(Utils.draw_effect_v2({
+			"pos": item.pos,
 			"dir": selfPath,
 			"fps": 0,
 			"dev": Vector2(0, -150),
 			"top": false
-		})
+		}))
 		Utils.draw_effect_v2({
 			"dir": Path + "/effects/spaceTime",
-			"pos": pos,
+			"pos": item.pos,
 			"dev": Vector2(0, -50),
 			"fps": 10,
 			"scale": Vector2(-2, 2)
 		})
-
-	Chant.chantStart("未来确定", 20)
-	yield(reTimer(3), "timeout")
+	Chant.chantStart("未来确定", 25)
 	for cha in getAllChas(1):
 		ImgList.append(b_futureObservations.new(cha, self))
 
+	# 行动/静止指令
+	yield(reTimer(3), "timeout")
+	if sys.rndPer(50):
+		SkillList.append("static")
+		yield(reTimer(3), "timeout")
+		effMove()
+		for item in ImgList:
+			Utils.draw_effect_v2({
+				"dir": Path + "/effects/darkSword",
+				"pos": item.eff.position + Vector2(0, -250),
+				"fps": 0,
+				"dev": Vector2(0, -30)
+			})._initFlyPos(item.eff.position, 500)
+	else:
+		SkillList.append("action")
+		for item in ImgList:
+			Utils.draw_effect_v2({
+				"dir": Path + "/effects/lightSword",
+				"pos": item.eff.position + Vector2(0, -250),
+				"fps": 0,
+				"dev": Vector2(0, -30)
+			})._initFlyPos(item.eff.position, 500)
+		yield(reTimer(3), "timeout")
+		effMove()
+
+	# 分散/分摊攻击
 	yield(reTimer(5), "timeout")
+	if sys.rndPer(50):
+		SkillList.append("lightning")
+		for item in ImgList:
+			Utils.draw_effect("ePrcC_30", item.eff.position, Vector2(0, -50), 5, Vector2(2, 3))
+	else:
+		SkillList.append("share")
+		Utils.draw_effect_v2({
+			"dir": Path + "/effects/share",
+			"pos": sys.rndListItem(ImgList).eff.position,
+			"dev": Vector2(0, -50),
+			"fps": 8,
+		})
+	
+	# 行动/静止指令与第一次相反
+	yield(reTimer(3), "timeout")
+	if SkillList[0] == "static":
+		SkillList.append("action")
+		for item in ImgList:
+			Utils.draw_effect_v2({
+				"dir": Path + "/effects/lightSword",
+				"pos": item.eff.position + Vector2(0, -250),
+				"fps": 0,
+				"dev": Vector2(0, -30)
+			})._initFlyPos(item.eff.position, 500)
+	else:
+		SkillList.append("static")
+		for item in ImgList:
+			Utils.draw_effect_v2({
+				"dir": Path + "/effects/darkSword",
+				"pos": item.eff.position + Vector2(0, -250),
+				"fps": 0,
+				"dev": Vector2(0, -30)
+			})._initFlyPos(item.eff.position, 500)
+
+	# 十字圣礼
+	yield(reTimer(3), "timeout")
+	crossSacrament_shadow()
+
+
+func crossSacrament_shadow():
+	var n = sys.rndRan(0, 3)
+	SkillList.append(n)
+	for i in range(4):
+		var index = i + n
+		if index >= 4:
+			index = 0
+		var item = Separation[index]
+		Utils.draw_effect_v2({
+			"name": "sanjiao",
+			"pos": item.pos,
+			"dev": item.dev,
+			"fps": 14,
+			"scale": Vector2(-4.5, 2),
+			"rotation": item.ro
+		})
+		yield(reTimer(2), "timeout")
+
+
+# 未来确定！
+func futureObserDetermine():
+	self.aiOn = false
+	self.visible = false
+	
+	for item in ImgList:
+		item.isDel = true
+	Utils.draw_effect_v2({
+		"dir": Path + "/effects/spaceTime",
+		"pos": position,
+		"dev": Vector2(0, -50),
+		"fps": 10,
+		"scale": Vector2(-2, 2)
+	})
+	for cha in getAllChas(1):
+		BUFF_LIST.b_StaticTimeUnlock.new({"cha": cha, "dur": 25})
+
+	yield(reTimer(3), "timeout")
+	if SkillList[0] == "action":
+		actionInstruction(false, true)
+	else:
+		staticInstruction(false, true)
+
+	yield(reTimer(5), "timeout")
+	if SkillList[1] == "share":
+		share()
+	else:
+		lightning()
+
+	yield(reTimer(3), "timeout")
+	if SkillList[2] == "action":
+		actionInstruction(false, true)
+	else:
+		staticInstruction(false, true)
+
+	yield(reTimer(3), "timeout")
+	crossSacrament()
+
+func crossSacrament():
+	var n = SkillList[3]
+	for i in range(4):
+		var index = i + n
+		if index >= 4:
+			index = 0
+		var item = Separation[index]
+		Utils.draw_effect_v2({
+			"name": "sanjiao",
+			"pos": item.pos,
+			"dev": item.dev,
+			"fps": 14,
+			"scale": Vector2(-4.5, 2),
+			"rotation": item.ro
+		})
+		var chas = []
+		chas += get_area_chas("custom", item.area[0], item.area[1])
+		for cha in chas:
+			if cha != null and !cha.isDeath and cha.team != self.team:
+				cha.att.hp = -1
+				FFHurtChara(cha, att.mgiAtk * divinePunishmentRay_pw, Chara.HurtType.REAL, Chara.AtkType.EFF)
+		yield(reTimer(2), "timeout")
+	self.aiOn = true
+	self.visible = true
+	for img in SelfImg:
+		img.queue_free()
+
+func effMove():
 	for i in range(ImgList.size()):
 		if i > positionList.size():
 			break
 		ImgList[i].move(positionList[i])
 
 
-
+# 角色分身
 class b_futureObservations extends Buff:
 	var Utils = globalData.infoDs["g_aFFXIVUtils"]
 	func _init(cha, target):
@@ -352,3 +534,68 @@ class b_futureObservations extends Buff:
 		for i in range(10):
 			yield(sys.get_tree().create_timer(0.05), "timeout")
 			eff.position +=  steps
+
+
+# --------------- 下面是时间牢狱的实现 -----------
+var prisonArea = [
+	[Vector2(6, 1), Vector2(7, 1), Vector2(8, 1)],
+	[Vector2(8, 2), Vector2(9, 2), Vector2(8, 3), Vector2(9, 3)],
+	[Vector2(6, 4), Vector2(7, 4), Vector2(8, 4)],
+	[Vector2(4, 4), Vector2(5, 4), Vector2(4, 5), Vector2(5, 5)],
+	[Vector2(2, 4), Vector2(3, 4), Vector2(1, 4)],
+	[Vector2(0, 2), Vector2(1, 2), Vector2(0, 3), Vector2(1, 3)],
+	[Vector2(1, 1), Vector2(2, 1), Vector2(3, 1)],
+]
+
+var prisonPos = [
+	Vector2(735, 40),
+	Vector2(840, 180),
+	Vector2(750, 300),
+	Vector2(450, 400),
+	Vector2(180, 300),
+	Vector2(75, 200),
+	Vector2(185, 50),
+]
+
+var prisonEff = []
+
+func timePrison():
+	self.aiOn = false
+	Chant.chantStart("时间牢狱", 45)
+	for pos in prisonPos:
+		Utils.draw_effect_v2({
+			"dir": Path + "/effects/gear",
+			"fps": 5,
+			"pos": pos + Vector2(0, -240),
+			"rep": true
+		})._initFlyPos(pos, 30)
+		yield(reTimer(5), "timeout")
+
+
+func prisonCha():
+	var cha = getPrisonCha()
+	if cha:
+		prisonEff.append(Utils.draw_effect_v2({
+			"dir": Path + "/effects/prison",
+			"fps": 0,
+			"scale": 2,
+			"pos": cha.position,
+			"dev": Vector2(0, -50)
+		}))
+		cha.isDeath = true
+		FFControl.PlayerChas.erase(cha)
+	else:
+		Ace()
+
+func getPrisonCha():
+	var area = prisonArea.pop_front()
+	if area:
+		for pos in area:
+			if matCha(pos):
+				return matCha(pos)
+	return false
+
+func _onDeath(atkInfo):
+	._onDeath(atkInfo)
+	for eff in prisonEff:
+		eff.queue_free()

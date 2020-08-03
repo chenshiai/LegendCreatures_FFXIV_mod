@@ -18,7 +18,7 @@ const CharaList = ["cFFXIVAolong_1_1", "cFFXIVAolong_2_1", "cFFXIVAolong_3_1",
 	"cFFXIVLarafel_1_1", "cFFXIVLarafel_2_1", "cFFXIVLarafel_3_1",
 	"cFFXIVNeko_1_1", "cFFXIVNeko_2_1", "cFFXIVNeko_3_1",
 	"cFFXIVRuga_1_1", "cFFXIVRuga_2_1", "cFFXIVRuga_3_1",
-	"cFFXIVSpirit_1_1", "cFFXIVSpirit_2_1", "cFFXIVSpirit_3_1"]
+	"cFFXIVSpirit_1_1", "cFFXIVSpirit_2_1", "cFFXIVSpirit_3_1", "cFFXIV_Tatalu"]
 
 
 func init():

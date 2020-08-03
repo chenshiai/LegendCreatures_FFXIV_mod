@@ -238,6 +238,14 @@ func leftOrRight():
 		setCell(pos2)
 		self.position = sys.main.map.map_to_world(pos2)
 
+
+class b_LongAtk:
+	extends Buff
+	func _init(ran = 1):
+		attInit()
+		id = "b_longAtk"
+		att.atkRan = ran
+
 # -------------------- 地面选取 ---------------------------
 func get_area_chas(type, x = Vector2(0, 1), y = Vector2(0, 1)):
 	var chas = []
