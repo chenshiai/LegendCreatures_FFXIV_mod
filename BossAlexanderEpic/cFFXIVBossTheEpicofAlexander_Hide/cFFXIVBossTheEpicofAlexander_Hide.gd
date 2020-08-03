@@ -47,7 +47,7 @@ func _init():
 		# "futureObservations": [10],
 		# "futureObserDetermine": [41],
 		"timePrison": [5],
-		"prisonCha": [13, 18, 23, 28, 33, 38, 43, 48]
+		"prisonCha": [13, 18, 23, 28, 33, 38, 43, 50]
 	})
 	FFControl.HpBar.show()
 	connect("onHurtEnd", FFControl.HpBar, "hpDown")
@@ -58,7 +58,7 @@ func _init():
 
 func setPos():
 	self.get_node("ui/hpBar").visible = false
-	self.show_on_top = false
+	# self.show_on_top = false
 
 
 func _onBattleStart():
@@ -582,7 +582,10 @@ func prisonCha():
 			"pos": cha.position,
 			"dev": Vector2(0, -50)
 		}))
-		cha.isDeath = true
+		BUFF_LIST.b_FrozenCdSkill.new({"cha": cha})
+		BUFF_LIST.b_StaticTimeUnlock.new({"cha": cha})
+		cha.att.hp = -1
+		FFHurtChara(cha, att.mgiAtk * divinePunishmentRay_pw, Chara.HurtType.REAL, 999999)
 		FFControl.PlayerChas.erase(cha)
 	else:
 		Ace()
