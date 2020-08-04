@@ -113,8 +113,7 @@ func divinePunishmentRay():
 
 
 func divine():
-	if att.hp <= 0 or self.isDeath:
-		return
+	if att.hp <= 0 or self.isDeath: return
 	Utils.draw_effect("blastYellow", aiCha.position, Vector2(0, -50), 15)
 	var chas = getCellChas(aiCha.cell, 1)
 	complexHurt(chas, att.mgiAtk * divinePunishmentRay_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
@@ -242,6 +241,7 @@ func theSupremeJudgment():
 				"top": false,
 			})
 		yield(reTimer(2), "timeout")
+		if att.hp <= 0 or self.isDeath: return
 
 	for item in type:
 		for pos in item.pos:
@@ -262,6 +262,7 @@ func theSupremeJudgment():
 				"dur": 10
 			})
 		yield(reTimer(2), "timeout")
+		if att.hp <= 0 or self.isDeath: return
 	continuousPunishment()
 
 
@@ -291,20 +292,6 @@ func lightning():
 				"dur": 4
 			})
 			FFHurtChara(j, att.mgiAtk * divinePunishmentRay_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
-
-
-# 分摊
-func share():
-	var target = rndChas(getAllChas(1), 1)
-	Utils.draw_effect_v2({
-		"dir": Path + "/effects/share",
-		"pos": target.position,
-		"dev": Vector2(0, -150),
-		"fps": 8,
-	})
-	var chas = getCellChas(target.cell, 2, 1)
-	for cha in chas:
-		FFHurtChara(cha, att.mgiAtk * continuousPunishment_pw / chas.size(), Chara.HurtType.MGI, Chara.AtkType.SKILL)
 
 
 # --------------------- 下面是未来观测的实现逻辑 --------------------
@@ -338,6 +325,7 @@ func futureObservations():
 	self.aiOn = false
 	Chant.chantStart("未来观测", 4)
 	yield(reTimer(5), "timeout")
+	if att.hp <= 0 or self.isDeath: return
 	var selfPath = chaData.infoDs[id].dir + "/%s" % [id]
 	for item in Separation:
 		SelfImg.append(Utils.draw_effect_v2({
@@ -363,6 +351,7 @@ func futureObservations():
 	if sys.rndPer(50):
 		SkillList.append("static")
 		yield(reTimer(3), "timeout")
+		if att.hp <= 0 or self.isDeath: return
 		effMove()
 		for item in ImgList:
 			Utils.draw_effect_v2({
@@ -381,10 +370,12 @@ func futureObservations():
 				"dev": Vector2(0, -30)
 			})._initFlyPos(item.eff.position, 500)
 		yield(reTimer(3), "timeout")
+		if att.hp <= 0 or self.isDeath: return
 		effMove()
 
 	# 分散/分摊攻击
 	yield(reTimer(5), "timeout")
+	if att.hp <= 0 or self.isDeath: return
 	if sys.rndPer(50):
 		SkillList.append("lightning")
 		for item in ImgList:
@@ -397,9 +388,10 @@ func futureObservations():
 			"dev": Vector2(0, -50),
 			"fps": 8,
 		})
-	
+
 	# 行动/静止指令与第一次相反
 	yield(reTimer(3), "timeout")
+	if att.hp <= 0 or self.isDeath: return
 	if SkillList[0] == "static":
 		SkillList.append("action")
 		for item in ImgList:
@@ -421,6 +413,7 @@ func futureObservations():
 
 	# 十字圣礼
 	yield(reTimer(3), "timeout")
+	if att.hp <= 0 or self.isDeath: return
 	crossSacrament_shadow()
 
 
@@ -441,13 +434,14 @@ func crossSacrament_shadow():
 			"rotation": item.ro
 		})
 		yield(reTimer(2), "timeout")
+		if att.hp <= 0 or self.isDeath: return
 
 
 # 未来确定！
 func futureObserDetermine():
 	self.aiOn = false
 	self.visible = false
-	
+
 	for item in ImgList:
 		item.isDel = true
 	Utils.draw_effect_v2({
@@ -461,24 +455,28 @@ func futureObserDetermine():
 		BUFF_LIST.b_StaticTimeUnlock.new({"cha": cha, "dur": 25})
 
 	yield(reTimer(3), "timeout")
+	if att.hp <= 0 or self.isDeath: return
 	if SkillList[0] == "action":
 		actionInstruction(false, true)
 	else:
 		staticInstruction(false, true)
 
 	yield(reTimer(5), "timeout")
+	if att.hp <= 0 or self.isDeath: return
 	if SkillList[1] == "share":
-		share()
+		continuousPunishment()
 	else:
 		lightning()
 
 	yield(reTimer(3), "timeout")
+	if att.hp <= 0 or self.isDeath: return
 	if SkillList[2] == "action":
 		actionInstruction(false, true)
 	else:
 		staticInstruction(false, true)
 
 	yield(reTimer(3), "timeout")
+	if att.hp <= 0 or self.isDeath: return
 	crossSacrament()
 
 func crossSacrament():
@@ -503,6 +501,8 @@ func crossSacrament():
 				cha.att.hp = -1
 				FFHurtChara(cha, att.mgiAtk * divinePunishmentRay_pw, Chara.HurtType.REAL, Chara.AtkType.EFF)
 		yield(reTimer(2), "timeout")
+		if att.hp <= 0 or self.isDeath: return
+
 	self.aiOn = true
 	self.visible = true
 	for img in SelfImg:
@@ -570,6 +570,7 @@ func timePrison():
 			"rep": true
 		})._initFlyPos(pos, 30)
 		yield(reTimer(5), "timeout")
+		if att.hp <= 0 or self.isDeath: return
 
 
 func prisonCha():
