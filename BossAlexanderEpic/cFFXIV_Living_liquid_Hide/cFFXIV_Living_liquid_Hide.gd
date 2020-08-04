@@ -76,7 +76,7 @@ func _onBattleStart():
 		"3": "%d%%" % [waves_pw * 100],
 	}
 	skillStrs[1] = TEXT.format(SKILL_TXT, pwConfig)
-	att.hp = 1000
+	# att.hp = 1000
 	FFControl.FFMusic.play(Path, "/music/dregs.oggstr")
 	upAtt()
 
@@ -95,8 +95,8 @@ func _onDeath(atkInfo):
 
 func StageToP2():
 	if STAGE == "p1":
-		# var CruiseChaser = sys.main.newChara("cFFXIV_CruiseChaser_Hide", 2)
-		var CruiseChaser = sys.main.newChara("cFFXIVBossTheEpicofAlexander_Hide", 2)
+		var CruiseChaser = sys.main.newChara("cFFXIV_CruiseChaser_Hide", 2)
+		# var CruiseChaser = sys.main.newChara("cFFXIVBossTheEpicofAlexander_Hide", 2)
 		if CruiseChaser:
 			sys.main.map.add_child(CruiseChaser)
 			CruiseChaser._onBattleStart()
@@ -116,7 +116,7 @@ func pourOut():
 	aiOn = false
 	Chant.chantStart("倾泻", 4)
 	yield(reTimer(4), "timeout")
-	Utils.draw_effect("waterBoom", Vector2(350, 150), Vector2(0, 0), 15, 2)
+	Utils.draw_effect("waterBoom", Vector2(450, 200), Vector2(0, 0), 15, Vector2(5, 4.8))
 	yield(reTimer(0.2), "timeout")
 
 	if att.hp <= 0 or self.isDeath:

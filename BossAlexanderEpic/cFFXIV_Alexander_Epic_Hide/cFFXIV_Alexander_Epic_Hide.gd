@@ -70,8 +70,9 @@ func _onBattleStart():
 	position = sys.main.map.map_to_world(Vector2(5, 0))
 	Utils.draw_effect_v2({
 		"name": "changeStage",
-		"pos": Vector2(350, 150),
+		"pos": Vector2(450, 200),
 		"fps": 6,
+		"scale": Vector2(1.25, 1.2)
 	})
 	yield(reTimer(1), "timeout")
 	Utils.background_change(Path, "/background/TheEpicOfAlexander3.png")

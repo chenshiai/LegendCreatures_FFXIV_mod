@@ -40,14 +40,14 @@ func _init():
 	sys.main.btChas.append(self)
 	set_path("cFFXIVBossTheEpicofAlexander_Hide")
 	set_time_axis({
-		# "divinePunishmentRay": [],
-		# "righteousBolt": [],
-		# "instruction": [10, 20, 30, 40],
-		# "theSupremeJudgment": [10, 30, 50],
-		# "futureObservations": [10],
-		# "futureObserDetermine": [41],
-		"timePrison": [5],
-		"prisonCha": [13, 18, 23, 28, 33, 38, 43, 50]
+		"divinePunishmentRay": [25, 110, 185],
+		"righteousBolt": [32, 117, 187],
+		"instruction": [10, 20],
+		"theSupremeJudgment": [200],
+		"futureObservations": [50, 130],
+		"futureObserDetermine": [81, 161],
+		"timePrison": [220],
+		"prisonCha": [228, 233, 238, 243, 248, 253, 258, 265]
 	})
 	FFControl.HpBar.show()
 	connect("onHurtEnd", FFControl.HpBar, "hpDown")
@@ -64,10 +64,16 @@ func setPos():
 func _onBattleStart():
 	._onBattleStart()
 	STAGE = "p4"
+	Utils.draw_effect_v2({
+		"name": "changeStage",
+		"pos": Vector2(450, 200),
+		"fps": 6,
+		"scale": Vector2(1.25, 1.2)
+	})
 	var cha = matCha(Vector2(5, 3))
 	if cha != null and cha.team == 1:
 		FFControl.complex_move("scatter")
-	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 480
+	# attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 480
 	divinePunishmentRay_pw *= (E_lv / E_num) # 加罪罚威力
 	righteousBolt_pw *= (E_lv / E_num) # 诛罚威力
 	theSupremeJudgment_pw *= (E_lv / E_num) # 大审判威力
@@ -84,15 +90,10 @@ func _onBattleStart():
 		if cha.team == 1:
 			cha.addBuff(b_LongAtk.new(2))
 
-func _onBattleEnd():
-	._onBattleEnd()
-
-
-func _onCharaDel(cha):
-	._onCharaDel(cha)
-
 func _onHurt(atkInfo):
 	._onHurt(atkInfo)
+	if STAGE == "p5":
+		atkInfo.hurtVal = 0
 
 func _upS():
 	._upS()
@@ -194,7 +195,7 @@ func staticInstruction(chant = true, shadow = false):
 		if cha.isMoveIng:
 			cha.att.hp = -1
 			FFHurtChara(cha, cha.att.maxHp, Chara.HurtType.MGI, Chara.AtkType.EFF)
-	self.aiOn = true
+
 	yield(reTimer(2), "timeout")
 	if att.hp <= 0 or self.isDeath:
 		self.aiOn = true
@@ -305,7 +306,7 @@ var Separation = [
 	},
 	{
 		"pos": Vector2(-50, 400), "ro": deg2rad(0), "dev": Vector2(75, -25),
-		"area": [Vector2(0, 2), Vector2(9, 5)]
+		"area": [Vector2(0, 3), Vector2(9, 5)]
 	},
 	{
 		"pos": Vector2(750, 600), "dev": Vector2(75, 0), "ro": deg2rad(270),
@@ -423,7 +424,7 @@ func crossSacrament_shadow():
 	for i in range(4):
 		var index = i + n
 		if index >= 4:
-			index = 0
+			index -= 4
 		var item = Separation[index]
 		Utils.draw_effect_v2({
 			"name": "sanjiao",
@@ -439,11 +440,13 @@ func crossSacrament_shadow():
 
 # 未来确定！
 func futureObserDetermine():
+	STAGE = "p5"
 	self.aiOn = false
 	self.visible = false
 
 	for item in ImgList:
 		item.isDel = true
+	ImgList = []
 	Utils.draw_effect_v2({
 		"dir": Path + "/effects/spaceTime",
 		"pos": position,
@@ -484,7 +487,7 @@ func crossSacrament():
 	for i in range(4):
 		var index = i + n
 		if index >= 4:
-			index = 0
+			index -= 4
 		var item = Separation[index]
 		Utils.draw_effect_v2({
 			"name": "sanjiao",
@@ -507,6 +510,9 @@ func crossSacrament():
 	self.visible = true
 	for img in SelfImg:
 		img.queue_free()
+	SelfImg = []
+	SkillList = []
+	STAGE = "p4"
 
 func effMove():
 	for i in range(ImgList.size()):
@@ -603,3 +609,6 @@ func _onDeath(atkInfo):
 	._onDeath(atkInfo)
 	for eff in prisonEff:
 		eff.queue_free()
+
+	for img in SelfImg:
+		img.queue_free()

@@ -63,7 +63,7 @@ func _onBattleStart():
 	}
 	skillStrs[1] = (TEXT.format(SKILL_TXT, pwConfig))
 	justiceKicks()
-	att.hp = 1000
+	# att.hp = 1000
 	upAtt()
 
 

@@ -70,7 +70,7 @@ func _onBattleStart():
 	}
 	skillStrs[1] = (TEXT.format(SKILL_TXT, pwConfig))
 	self.visible = false
-	att.hp = 5000
+	# att.hp = 5000
 	upAtt()
 
 	for cha in sys.main.btChas:

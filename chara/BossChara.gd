@@ -1,5 +1,5 @@
 # 最终幻想14 Boss模板文件
-# 版本号 0.1.6 2020/07/31
+# 版本号 0.1.7 2020/08/04
 extends Chara
 const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"] # Buff列表
 const Utils = globalData.infoDs["g_aFFXIVUtils"] # FFXIV全局工具
