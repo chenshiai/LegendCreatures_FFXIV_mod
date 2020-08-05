@@ -13,7 +13,7 @@ func _extInit():
 	attAdd.cri += 0.2
 	lv = 2
 	evos = ["cFFXIVNeko_3_1"]
-	addCdSkill("skill_LronJaws", 10)
+	addCdSkill("skill_LronJaws", 5)
 	addCdSkill("skill_Ballad", 16)
 	addCdSkill("skill_Paean", 20)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))

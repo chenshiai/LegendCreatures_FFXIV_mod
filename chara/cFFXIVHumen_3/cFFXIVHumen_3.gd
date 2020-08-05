@@ -15,7 +15,7 @@ func _extInit():
 	attCoe.atk = 4
 	attCoe.def = 2.8
 	attCoe.mgiDef = 2.8
-	attAdd.cri += 0.3
+	attAdd.cri += 0.1
 	lv = 2
 	evos = ["cFFXIVHumen_3_1"]
 	atkEff = "atk_dao"

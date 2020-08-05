@@ -1,5 +1,5 @@
 extends "../cFFXIVNeko_3/cFFXIVNeko_3.gd"
-const REFULGENT_PW = 3.30 # 辉煌箭威力
+const REFULGENT_PW = 3.50 # 辉煌箭威力
 
 func _extInit():
 	._extInit()

@@ -163,9 +163,18 @@ Our world's is a fantasy， no more than a test.
 var UpdateInfo = {
 	"title": "最终幻想14-更新记录",
 	"content": format("""[color=#64a6b7]【Ver 2.8.6】2020-08-04[/color]
-新增BOSS战：《亚历山大绝境战》现在可到工坊中订阅！！
+【优化代码】
+【文本优化】
+【新增BOSS战】
+《亚历山大绝境战》现在可到工坊中订阅！！
 
-优化了部分代码
+【职业调整】
+{c_atk}【舞者】{/c}
+基础暴击率加成 30% -> 10%
+
+{c_atk}【吟游诗人】{/c}
+【伶牙俐齿】 冷却时间 10s -> 5s
+【辉煌箭】 伤害系数 330% -> 350%
 
 [color=#64a6b7]【Ver 2.8.5】2020-07-24[/color]
 【代码优化】

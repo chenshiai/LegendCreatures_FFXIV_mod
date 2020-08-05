@@ -7,7 +7,7 @@ func _extInit():
 	lv = 3
 	evos = []
 	addCdSkill("skill_Dreadwyrm", 24)
-	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))
+	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
 
 
 func _castCdSkill(id):
