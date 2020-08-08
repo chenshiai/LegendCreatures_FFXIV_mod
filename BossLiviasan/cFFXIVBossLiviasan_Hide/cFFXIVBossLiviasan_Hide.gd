@@ -1,5 +1,5 @@
 extends "../../2098858773/BossChara.gd"
-
+const WaterPro = 13
 var BASE = """[color=#ffffff]
 虽然受到了出乎意料的袭击，不过已经获得了伊甸控制权的一行人终于要开始为重新取回属性之力而行动起来。
 据于里昂热所说，最初应该激活的属性乃是所有生命之源的水属性之力。
@@ -163,10 +163,14 @@ func cleftFlow(first = true):
 		"rotation": rotation,
 		"top": false
 	})
-	FFHurtChara(target, att.mgiAtk * cleftFlow_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
-	BUFF_LIST.b_waterDown.new({
-		"cha": target,
-		"dur": 4
+	FFHurtChara(target, att.mgiAtk * cleftFlow_pw, Chara.HurtType.MGI, WaterPro)
+	BUFF_LIST.b_decreasedTolerance.new({
+		"cha": cha,
+		"dur": 4,
+		"text": "水耐性下降·大",
+		"pw": 99,
+		"atkType": WaterPro,
+		"color": "#00a8ff"
 	})
 	if first:
 		yield(reTimer(1), "timeout")
@@ -186,7 +190,7 @@ func theTideRoared():
 	})
 
 	var chas = getAllChas(1)
-	complexHurt(chas, att.mgiAtk * theTideRoared_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+	complexHurt(chas, att.mgiAtk * theTideRoared_pw, Chara.HurtType.MGI, WaterPro)
 
 
 
@@ -227,10 +231,14 @@ func offshoreCurrent():
 
 	for cha in getAllChas(1):
 		if cha.cell.x < dev + 5 and cha.cell.x >= dev:
-			FFHurtChara(cha, att.mgiAtk * offshoreCurrent_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
-			BUFF_LIST.b_waterDown.new({
+			FFHurtChara(cha, att.mgiAtk * offshoreCurrent_pw, Chara.HurtType.MGI, WaterPro)
+			BUFF_LIST.b_decreasedTolerance.new({
 				"cha": cha,
-				"dur": 15
+				"dur": 15,
+				"text": "水耐性下降·大",
+				"pw": 99,
+				"atkType": WaterPro,
+				"color": "#00a8ff"
 			})
 
 func maelstrom():
@@ -259,10 +267,14 @@ func vertical(dev):
 	Utils.draw_shadow(img, Vector2(150 + (550 * dev), 0), Vector2(150 + (550 * dev), 800), 20)
 	for cha in getAllChas(1):
 		if cha.cell.x < (dev * 5) + 5 and cha.cell.x >= (dev * 5):
-			FFHurtChara(cha, att.mgiAtk * maelstrom_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
-			BUFF_LIST.b_waterDown.new({
+			FFHurtChara(cha, att.mgiAtk * maelstrom_pw, Chara.HurtType.MGI, WaterPro)
+			BUFF_LIST.b_decreasedTolerance.new({
 				"cha": cha,
-				"dur": 15
+				"dur": 15,
+				"text": "水耐性下降·大",
+				"pw": 99,
+				"atkType": WaterPro,
+				"color": "#00a8ff"
 			})
 	
 
@@ -277,10 +289,14 @@ func horizontal(dev):
 	Utils.draw_shadow(img, Vector2(0, 250 + (250 * dev)), Vector2(1200, 250 + (250 * dev)), 20)
 	for cha in getAllChas(1):
 		if cha.cell.y <= (dev * 3) + 2 and cha.cell.y >= (dev * 3):
-			FFHurtChara(cha, att.mgiAtk * maelstrom_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
-			BUFF_LIST.b_waterDown.new({
+			FFHurtChara(cha, att.mgiAtk * maelstrom_pw, Chara.HurtType.MGI, WaterPro)
+			BUFF_LIST.b_decreasedTolerance.new({
 				"cha": cha,
-				"dur": 15
+				"dur": 15,
+				"text": "水耐性下降·大",
+				"pw": 99,
+				"atkType": WaterPro,
+				"color": "#00a8ff"
 			})
 	yield(reTimer(1), "timeout")
 	self.isDeath = false
