@@ -68,7 +68,7 @@ func _onBattleStart():
 	._onBattleStart()
 	STAGE = "p1"
 	closeReward()
-	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 400
+	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 390
 	fluidOscillation_pw *= (E_lv / E_num) # 流体震荡威力
 	pourOut_pw *= (E_lv / E_num) # 倾泻威力
 	waves_pw *= (E_lv / E_num) # 水波威力

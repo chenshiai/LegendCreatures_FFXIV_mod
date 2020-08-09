@@ -59,7 +59,7 @@ func _onBattleStart():
 	self.get_node("ui").visible = false
 	aiOn = false
 	STAGE = "p1"
-	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 230
+	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 210
 	limitCutting_pw *= (E_lv / E_num) # 极限切割威力
 	tornado_pw *= (E_lv / E_num) # 龙卷威力
 	collimation_pw *= (E_lv / E_num) # 照准威力

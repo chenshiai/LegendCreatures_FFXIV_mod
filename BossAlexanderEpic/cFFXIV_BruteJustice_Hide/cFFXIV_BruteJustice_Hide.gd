@@ -50,7 +50,7 @@ func _onBattleStart():
 	._onBattleStart()
 	self.visible = false
 	STAGE = "p2"
-	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 170
+	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 160
 	justiceKicks_pw *= (E_lv / E_num) # 正义飞踢威力
 	steamWarShip_pw *= (E_lv / E_num)
 	fluidOscillation_pw *= (E_lv / E_num)

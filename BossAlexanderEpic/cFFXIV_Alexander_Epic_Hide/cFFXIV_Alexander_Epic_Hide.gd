@@ -54,7 +54,7 @@ func _onBattleStart():
 	self.visible = false
 	aiOn = false
 	STAGE = "p3"
-	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 620
+	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 610
 	divinePunishmentRay_pw *= (E_lv / E_num) # 神罚射线威力
 	millionSacred_pw *= (E_lv / E_num) # 百万神圣威力
 	holyJudgment_pw *= (E_lv / E_num) # 神圣审判威力
