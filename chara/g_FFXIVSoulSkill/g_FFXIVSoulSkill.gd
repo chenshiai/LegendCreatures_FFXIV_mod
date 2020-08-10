@@ -1,5 +1,6 @@
 class BaseSoul:
 	const Utils = globalData.infoDs["g_aFFXIVUtils"] # 全局工具
+	const TEXT = globalData.infoDs["g_bFFXIVText"]
 	const BUFF_LIST = globalData.infoDs["g_FFXIVBuffList"]
 	var toolman = sys.main.newChara("cFFXIV_Tatalu", 2) # 工具人
 
@@ -46,23 +47,23 @@ class BaseSoul:
 					prevCha.skills.erase(skill)
 					prevCha = null
 
-class DarkKnight:
-	extends BaseSoul
+class DarkKnight extends BaseSoul:
 	var maxTreatmentVolume = 0
 	var treatmentVolume = 0
 	var switch = true
 	func _init(cha):
 		._init(cha)
-		name = "[color=#432f2e]暗黑骑士之证"
-		info = "灵魂的水晶，刻有历代暗黑骑士的记忆和灵魂。\n"\
-			+ "[行尸走肉]\n"\
+		name = "{c_pro}暗黑骑士之证{/c}"
+		info = "{c_base}灵魂的水晶，刻有历代暗黑骑士的记忆和灵魂。\n"\
+			+ "{c_skill}[行尸走肉]{/c}\n"\
 			+ "一场战斗最多触发一次。\n"\
 			+ "濒死时附加[活死人]状态，免疫死亡(特殊攻击除外)，持续10s。\n"\
 			+ "期间累计受到[50%最大生命]的治疗量后，解除[活死人]状态。\n"\
-			+ "持续时间结束[活死人]尚未解除，则会立即重伤死亡。"
-		att.maxHp = 300
-		att.def = 10
-		att.mgiDef = 20
+			+ "持续时间结束[活死人]尚未解除，则会立即重伤死亡。{/c}"
+
+		att.maxHp = 500
+		att.def = 40
+		att.mgiDef = 45
 		_connect()
 
 	func _connect():
@@ -92,20 +93,19 @@ class DarkKnight:
 				if bf != null:
 					bf.isDel = true
 
-class Gunbreaker:
-	extends BaseSoul
+class Gunbreaker extends BaseSoul:
 	func _init(cha):
 		._init(cha)
-		name = "[color=#ae9a37]绝枪战士之证"
-		info = "灵魂的水晶，刻有历代绝枪战士的记忆和觉悟。\n"\
-			+ "[光之心]\n"\
-			+ "一定时间内，令自身和周围队员所受到的[color=#00e4ff]魔法伤害[/color]减轻10%。\n"\
+		name = "{c_pro}绝枪战士之证{/c}"
+		info = "{c_base}灵魂的水晶，刻有历代绝枪战士的记忆和觉悟。{/c}\n"\
+			+ "{c_skill}[光之心]{/c}\n"\
+			+ "一定时间内，令自身和周围队员所受到的{c_mgi}魔法伤害{/c}减轻10%。\n"\
 			+ "此效果不可叠加。\n"\
 			+ "冷却20s，持续10s。"
-		att.maxHp = 250
-		att.atk = 20
-		att.def = 20
-		att.mgiDef = 10
+		att.maxHp = 350
+		att.atk = 40
+		att.def = 40
+		att.mgiDef = 30
 		setCdSkill("skill_HeartOfLight", 20)
 		_connect()
 
@@ -120,18 +120,17 @@ class Gunbreaker:
 					BUFF_LIST.b_HeartOfLight.new({"cha": cha, "dur": 10})
 			allys = null
 
-class Bard:
-	extends BaseSoul
+class Bard extends BaseSoul:
 	func _init(cha):
 		._init(cha)
-		name = "[color=#9caa42]吟游诗人之证"
-		info = "灵魂的水晶，刻有历代吟游诗人的记忆和旋律。\n"\
-			+ "[魔人的安魂曲]\n"\
-			+ "战斗开始时，对所有敌方附加[魔法易伤]状态，\n使其受到的[color=#00e4ff]魔法伤害[/color]提高10%。\n"\
+		name = "{c_atk}吟游诗人之证{/c}"
+		info = "{c_base}灵魂的水晶，刻有历代吟游诗人的记忆和旋律。{/c}\n"\
+			+ "{c_skill}[魔人的安魂曲]{/c}\n"\
+			+ "战斗开始时，对所有敌方附加[魔法易伤]状态，\n使其受到的{c_mgi}魔法伤害{/c}提高10%。\n"\
 			+ "此效果不可叠加。\n"\
 			+ "            ———— 纪念曾经的魔人曲"
-		att.maxHp = 100
-		att.atk = 30
+		att.maxHp = 200
+		att.atk = 60
 		att.cri = 0.10
 		_connect()
 
@@ -145,20 +144,19 @@ class Bard:
 					BUFF_LIST.b_RequiemOfTheDevil.new({"cha": cha})
 
 
-class Dragoon:
-	extends BaseSoul
+class Dragoon extends BaseSoul:
 	var count = 1
 	var Dragon = false
 
 	func _init(cha):
 		._init(cha)
-		name = "[color=#4752b8]龙骑士之证"
-		info = "灵魂的水晶，刻有历代龙骑士的记忆和决心。\n"\
-			+ "[红莲龙血]\n"\
+		name = "{c_atk}龙骑士之证{/c}"
+		info = "{c_base}灵魂的水晶，刻有历代龙骑士的记忆和决心。{/c}\n"\
+			+ "{c_skill}[红莲龙血]{/c}\n"\
 			+ "使用两次[高跳]后，再使用[武神枪]可以进入[红莲龙血]状态。\n"\
 			+ "[红莲龙血]：攻击力提升15%，持续15s。"
-		att.maxHp = 150
-		att.atk = 30
+		att.maxHp = 250
+		att.atk = 60
 		_connect()
 
 	func _connect():
@@ -188,8 +186,8 @@ class BlackMage:
 			+ "[天语]\n"\
 			+ "战斗开始时，为自身附加[天语]效果，提升自身[15%][20%][25%]的伤害。\n"\
 			+ "根据黑魔法师的等级来调整。"
-		att.maxHp = 100
-		att.mgiAtk = 30
+		att.maxHp = 200
+		att.mgiAtk = 60
 		att.mgiPen = 30
 		_connect()
 
@@ -209,9 +207,9 @@ class Astrologian:
 			+ "使自身及周围2格范围内的队友所受到的伤害减轻10%。\n"\
 			+ "此效果不可叠加。\n"\
 			+ "冷却24s，持续10s"
-		att.maxHp = 100
+		att.maxHp = 200
 		att.def = 20
-		att.mgiAtk = 15
+		att.mgiAtk = 50
 		setCdSkill("skill_Collective", 24)
 		_connect()
 
@@ -235,8 +233,8 @@ class Samurai:
 			+ "[必杀剑-震天]\n"\
 			+ "对目标造成[200%]的[color=#ff7522]物理伤害[/color]。\n"\
 			+ "冷却8s"
-		att.maxHp = 150
-		att.atk = 30
+		att.maxHp = 250
+		att.atk = 65
 		setCdSkill("skill_Shinten", 8)
 		_connect()
 
@@ -256,10 +254,10 @@ class Warrior:
 			+ "[泰然自若]\n"\
 			+ "恢复自身[300%]攻击力的生命值。\n"\
 			+ "冷却15s"
-		att.maxHp = 250
-		att.atk = 20
-		att.def = 10
-		att.mgiDef = 10
+		att.maxHp = 450
+		att.atk = 40
+		att.def = 20
+		att.mgiDef = 20
 		setCdSkill("skill_Equilibrium", 15)
 		_connect()
 
@@ -279,9 +277,9 @@ class RedMage:
 			+ "[赤治疗]\n"\
 			+ "为生命最低的友方单位恢复[80%]法强的生命值。\n"\
 			+ "冷却16s"
-		att.maxHp = 100
-		att.mgiAtk = 15
-		att.atk = 15
+		att.maxHp = 200
+		att.mgiAtk = 50
+		att.cd = 0.15
 		setCdSkill("skill_Vercure", 16)
 		_connect()
 
@@ -305,9 +303,10 @@ class Monk:
 			+ "[真言]\n"\
 			+ "使自身和周围友方单位受到的治疗效果提高10%\n"\
 			+ "冷却24s，持续10s"
-		att.maxHp = 150
-		att.atk = 20
+		att.maxHp = 250
+		att.atk = 60
 		att.def = 20
+		att.mgiDef = 20
 
 		setCdSkill("skill_Mantra", 24)
 		_connect()
@@ -332,9 +331,10 @@ class Paladin:
 			+ "[安魂祈祷]\n"\
 			+ "自身魔法强度提高50点。\n"\
 			+ "冷却27s，持续15s"
-		att.maxHp = 250
+		att.maxHp = 350
 		att.mgiAtk = 10
-		att.def = 20
+		att.def = 40
+		att.mgiDef = 40
 		setCdSkill("skill_Requiescat", 27)
 		_connect()
 
@@ -353,22 +353,11 @@ class Ninja:
 		info = "灵魂的水晶，刻有历代忍者的记忆和精神。\n"\
 			+ "[风遁之术]\n"\
 			+ "获得15%的冷却缩减。"
-		att.maxHp = 150
-		att.atk = 20
+		att.maxHp = 250
+		att.atk = 50
 		att.def = 10
 		att.mgiDef = 10
 		att.cd = 0.15
-		# setCdSkill("skill_Dream", 14)
-	# 	_connect()
-	
-	# func _connect():
-	# 	masCha.connect("onCastCdSkill", self, "dream")
-
-	# func dream(id):
-	# 	if id == "skill_Dream" and masCha.aiCha != null:
-	# 		masCha.normalAtkChara(masCha.aiCha)
-	# 		masCha.normalAtkChara(masCha.aiCha)
-	# 		masCha.normalAtkChara(masCha.aiCha)
 
 class WhiteMage:
 	extends BaseSoul
@@ -378,8 +367,8 @@ class WhiteMage:
 		info = "灵魂的水晶，刻有历代白魔法师的记忆和圣迹。\n"\
 			+ "[神速咏唱]\n"\
 			+ "获得15%的冷却缩减。"
-		att.maxHp = 100
-		att.mgiAtk = 20
+		att.maxHp = 200
+		att.mgiAtk = 50
 		att.cd = 0.15
 
 class Scholar:
@@ -391,8 +380,8 @@ class Scholar:
 			+ "[连环计]\n"\
 			+ "对目标施加[连环计]，10%的概率使其受到伤害变为双倍。\n"\
 			+ "冷却15s，持续8s"
-		att.maxHp = 100
-		att.mgiAtk = 20
+		att.maxHp = 200
+		att.mgiAtk = 50
 		att.mgiDef = 10
 
 		setCdSkill("skill_ChainStratagem", 15)
@@ -414,11 +403,11 @@ class Summoner:
 			+ "[三重灾祸]\n"\
 			+ "对目标及周围一格的敌人施加[剧毒菌][瘴暍]。\n"\
 			+ "冷却15s，持续10s"
-		att.maxHp = 100
-		att.mgiAtk = 30
+		att.maxHp = 200
+		att.mgiAtk = 50
 		setCdSkill("skill__TriDisaster", 15)
 		_connect()
-	
+
 	func _connect():
 		masCha.connect("onCastCdSkill", self, "triDisaster")
 
@@ -438,8 +427,8 @@ class Machinist:
 		info = "与其他灵魂水晶不同，这颗水晶上尚未刻下历史的记忆。\n"\
 			+ "[火焰喷射器]\n"\
 			+ "[color=#e5e5e5]被动[/color]，普通攻击会对目标及其周围一格的敌人附加2层[烧灼]"
-		att.maxHp = 100
-		att.atk = 30
+		att.maxHp = 200
+		att.atk = 60
 		_connect()
 
 	func _connect():
@@ -461,8 +450,8 @@ class Dancer:
 			+ "[扇舞·急]\n"\
 			+ "[color=#e5e5e5]被动[/color]，普通攻击有30%概率触发。\n"\
 			+ "对目标及周围2格敌人造成[100%]的[color=#ff7522]物理伤害[/color]。"
-		att.maxHp = 100
-		att.atk = 30
+		att.maxHp = 200
+		att.atk = 60
 		_connect()
 
 	func _connect():
