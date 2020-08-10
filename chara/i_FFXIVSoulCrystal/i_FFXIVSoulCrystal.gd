@@ -1,6 +1,7 @@
 extends Item
 const Utils = globalData.infoDs["g_aFFXIVUtils"]# 全局工具
 const Soul = globalData.infoDs["g_FFXIVSoulSkill"]
+const TEXT = globalData.infoDs["g_bFFXIVText"]
 const Epilogue = """灵魂水晶，装备给不同的特职会有不同的效果。
 仅限《最终幻想14》的角色，可转变列表如下：
 	[color=#432f2e]暗黑骑士之证
@@ -128,8 +129,8 @@ func setInitAtt():
 	att.pen = 0
 
 func setEquipmentInfo():
-	name = SoulExample.name
-	info = SoulExample.info
+	name = TEXT.format(SoulExample.name)
+	info = TEXT.format(SoulExample.info)
 	att.maxHp = SoulExample.att.maxHp
 	att.cd = SoulExample.att.cd
 	att.atk = SoulExample.att.atk
