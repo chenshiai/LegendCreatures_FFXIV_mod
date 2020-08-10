@@ -26,6 +26,7 @@ func _extInit():
 	attCoe.mgiDef = 2.8
 	attAdd.atkL += 0.10
 	attAdd.spd += 0.10
+	attAdd.cri -= 0.1
 	lv = 2
 	evos = ["cFFXIVAolong_2_1"]
 	atkEff = "atk_dao"
@@ -43,7 +44,7 @@ func normalAtkChara(cha):
 	if atkCount == 7:
 		atkCount = 0
 		iaijutsu()
-	elif atkCount % 2 == 0:
+	else:
 		var n = sys.rndRan(0, 2)
 		if n == 0 :
 			getFlash("snow")
@@ -91,7 +92,7 @@ func getFlash(name):
 func setsugekka(skill_pw):
 	emit_signal("swordPpressure")
 	Utils.draw_shadow(img, position, aiCha.position)
-	normalSpr.position = (aiCha.position - position) / 3
+	normalSpr.position = (aiCha.position - position) / 3 * self.dire
 	yield(reTimer(0.3), "timeout")
 	Utils.draw_effect("slash2", aiCha.position, Vector2(0,-30), 10, 1.3)
 	FFHurtChara(aiCha, att.atk * skill_pw, PHY, SKILL)

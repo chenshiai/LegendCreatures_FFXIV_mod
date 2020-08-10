@@ -15,7 +15,8 @@ func _castCdSkill(id):
 	if id == "skill_Dreadwyrm":
 		dreadwyrm()
 		enkindleBahamut(self.lv)
-		SummonChara.skill_lv3()
+		if self.lv == 4:
+			SummonChara.skill_lv3()
 
 
 func dreadwyrm():

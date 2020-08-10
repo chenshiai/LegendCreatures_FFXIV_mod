@@ -41,7 +41,7 @@ func _init():
 	set_path("cFFXIVBossTheEpicofAlexander_Hide")
 	set_time_axis({
 		"divinePunishmentRay": [25, 110, 185],
-		"righteousBolt": [32, 117, 187],
+		"righteousBolt": [32, 117, 192],
 		"instruction": [10, 20],
 		"theSupremeJudgment": [200],
 		"futureObservations": [50, 130],

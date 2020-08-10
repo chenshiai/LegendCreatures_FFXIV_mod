@@ -6,7 +6,7 @@ const MORGEN_MAX = 100 # 魔元上限
 const VERTHUNDER_PW = 1.20 # 魔法威力
 const REDOUBLEMENT_PW = 5 # 魔连攻威力
 const REDOUBLEMENT_CAST = 25 # 魔连攻消耗魔元值
-const VERFLARE_PW = 2.40 # 赤核爆威力
+const VERFLARE_PW = 2.30 # 赤核爆威力
 
 var blackMorgen = 0 # 黑魔元
 var whiteMorgan = 0 # 白魔元
@@ -17,8 +17,8 @@ func _extInit():
 	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
-	attCoe.atk = 3
-	attCoe.mgiAtk = 3.9
+	attCoe.atk = 2
+	attCoe.mgiAtk = 4.2
 	attCoe.def = 3
 	attCoe.mgiDef = 3
 	lv = 2

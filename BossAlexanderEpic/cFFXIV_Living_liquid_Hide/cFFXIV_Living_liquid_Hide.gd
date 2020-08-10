@@ -1,5 +1,7 @@
 extends "../../2098858773/BossChara.gd"
 const BERSERKERTIME_P1 = 140 # P1狂暴时间
+const WaterPro = 13
+
 var HandoWater = null
 var fluidOscillation_pw = 2.5 # 流体震荡威力
 var pourOut_pw = 1.2 # 倾泻威力
@@ -76,7 +78,7 @@ func _onBattleStart():
 		"3": "%d%%" % [waves_pw * 100],
 	}
 	skillStrs[1] = TEXT.format(SKILL_TXT, pwConfig)
-	# att.hp = 1000
+	# att.hp = 500
 	FFControl.FFMusic.play(Path, "/music/dregs.oggstr")
 	upAtt()
 
@@ -109,7 +111,7 @@ func fluidOscillation():
 	if att.hp <= 0 or self.isDeath:
 		return
 	var chas = getCellChas(aiCha.cell, 1)
-	complexHurt(chas, att.mgiAtk * fluidOscillation_pw, Chara.HurtType.PHY, Chara.AtkType.SKILL)
+	complexHurt(chas, att.mgiAtk * fluidOscillation_pw, Chara.HurtType.PHY, WaterPro)
 
 # 倾泻
 func pourOut():
@@ -122,7 +124,7 @@ func pourOut():
 	if att.hp <= 0 or self.isDeath:
 		return
 
-	complexHurt(getAllChas(1), att.mgiAtk * pourOut_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+	complexHurt(getAllChas(1), att.mgiAtk * pourOut_pw, Chara.HurtType.MGI, WaterPro)
 
 	for item in mapEffect:
 		if item.effect == null:
@@ -178,10 +180,14 @@ func wave(cell, chaCell, show = false):
 
 	for cha in chas:
 		if cha.team != team :
-			FFHurtChara(cha, att.atk * waves_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
-			BUFF_LIST.b_waterDown.new({
+			FFHurtChara(cha, att.atk * waves_pw, Chara.HurtType.MGI, WaterPro)
+			BUFF_LIST.b_decreasedTolerance.new({
 				"cha": cha,
-				"dur": 15
+				"dur": 15,
+				"text": "水耐性下降·大",
+				"pw": 99,
+				"atkType": WaterPro,
+				"color": "#00a8ff"
 			})
 
 
@@ -225,7 +231,7 @@ func effInCell(cell):
 	if cha != null:
 		queue_free_eff()
 		Ace()
-		Utils.draw_effect("waterBoom", Vector2(350, 150), Vector2(0, 0), 15, 2)
+		Utils.draw_effect("waterBoom", Vector2(350, 150), Vector2(0, 0), 15, Vector2(5, 4.8))
 
 func over():
 	aiOn = false
@@ -234,7 +240,7 @@ func over():
 	if att.hp <= 0 or self.isDeath:
 		return
 	var chas = getAllChas(1)
-	Utils.draw_effect("waterBoom", Vector2(350, 150), Vector2(0, 0), 15, 2)
+	Utils.draw_effect("waterBoom", Vector2(350, 150), Vector2(0, 0), 15, Vector2(5, 4.8))
 	yield(reTimer(0.2), "timeout")
 
 	if att.hp <= 0:

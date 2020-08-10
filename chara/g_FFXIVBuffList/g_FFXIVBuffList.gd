@@ -83,6 +83,8 @@ class b_TheBlackestNight extends BassShield:
 		self.shieldValue = _get(config, "HD", 0)
 	func _connect():
 		._connect()
+		if masCha.team == 2:
+			return
 		Utils.draw_efftext("至黑之夜", masCha.position, "#872a8b")
 
 # 活死人，无敌，但是还是会死
@@ -92,6 +94,8 @@ class b_LivingDeath extends BaseBuff:
 
 	func _connect():
 		masCha.connect("onHurt", self, "run")
+		if masCha.team == 2:
+			return
 		Utils.draw_efftext("活死人", masCha.position, "#d0d0d0")
 
 	func run(atkInfo:AtkInfo):
@@ -125,6 +129,8 @@ class b_ArmorCrush extends BaseBuff:
 		att.mgiDefL -= _get(config, "PW", 0)
 
 	func _connect():
+		if masCha.team == 2:
+			return
 		Utils.draw_efftext("强甲破点突", masCha.position, "#59DFD7", false)
 
 	func _upS():
@@ -138,6 +144,8 @@ class b_Shiver extends BaseBuff:
 		att.reHp = 0.20
 
 	func _connect():
+		if masCha.team == 2:
+			return
 		Utils.draw_efftext("战栗", masCha.position, "#3cff00")
 
 # 原初的解放，提高暴击率
@@ -147,6 +155,8 @@ class b_InnerRelease extends BaseBuff:
 		att.cri = 1
 
 	func _connect():
+		if masCha.team == 2:
+			return
 		Utils.draw_efftext("原初的解放", masCha.position, "#ff0000")
 
 
@@ -173,6 +183,8 @@ class b_HeartOfLight extends ReduceDamage:
 
 	func _connect():
 		._connect()
+		if masCha.team == 2:
+			return
 		Utils.draw_efftext("光之心", masCha.position, "#59DFD7")
 
 	func _upS():
@@ -186,6 +198,8 @@ class b_DancingPartner extends BaseBuff:
 		att.mgiAtkL = 0.10
 
 	func _connect():
+		if masCha.team == 2:
+			return
 		Utils.draw_efftext("舞伴", masCha.position, "#F7BC79")
 
 # 伶俐，攻击力提高
@@ -225,6 +239,8 @@ class b_LeyLines extends BaseBuff:
 		att.cd = 0.15
 
 	func _connect():
+		if masCha.team == 2:
+			return
 		Utils.draw_efftext("黑魔纹", masCha.position, "#cb2dff")
 
 	func _upS():
@@ -263,6 +279,8 @@ class b_Adloquium	extends BassShield:
 
 	func _connect():
 		._connect()
+		if masCha.team == 2:
+			return
 		Utils.draw_efftext("鼓舞", masCha.position, "#1a8a00")
 
 	func _upS():
@@ -312,6 +330,8 @@ class b_Dreadwyrm	extends BaseBuff:
 		att.mgiAtkL = 0.20
 
 	func _connect():
+		if masCha.team == 2:
+			return
 		Utils.draw_efftext("附体", masCha.position, "#21f2ff")
 
 	func _upS():
@@ -426,6 +446,8 @@ class b_DivineVeil extends BassShield:
 
 	func _connect():
 		._connect()
+		if masCha.team == 2:
+			return
 		Utils.draw_efftext("圣光幕帘", masCha.position, "#a6d8ff")
 
 	func _upS():
@@ -437,6 +459,8 @@ class b_Mantra extends BaseBuff:
 		att.reHp = 0.10
 
 	func _connect():
+		if masCha.team == 2:
+			return
 		Utils.draw_efftext("真言", masCha.position, "#ffd0a6")
 
 	func _upS():
@@ -460,6 +484,8 @@ class b_Overload extends BaseBuff:
 		att.atkL = 0.20
 
 	func _connect():
+		if masCha.team == 2:
+			return
 		Utils.draw_efftext("过载", masCha.position, "#ff5f5f")
 
 	func _upS():
@@ -541,6 +567,8 @@ class b_Night	extends BassShield:
 
 	func _connect():
 		._connect()
+		if masCha.team == 2:
+			return
 		Utils.draw_efftext("黑夜领域", masCha.position, "#d05fff")
 
 	func _upS():
@@ -554,6 +582,8 @@ class b_Collective extends ReduceDamage:
 
 	func _connect():
 		._connect()
+		if masCha.team == 2:
+			return
 		Utils.draw_efftext("命运之轮", masCha.position, "#00fcff")
 
 	func _upS():
@@ -566,6 +596,8 @@ class b_Litany extends BaseBuff:
 		att.cri += 0.10
 	
 	func _connect():
+		if masCha.team == 2:
+			return
 		Utils.draw_efftext("战斗连祷", masCha.position, "#99bfff")
 
 
@@ -576,6 +608,8 @@ class b_LifeOfTheDragon	extends BaseBuff:
 		att.atkL = 0.15
 
 	func _connect():
+		if masCha.team == 2:
+			return
 		Utils.draw_efftext("红莲龙血", masCha.position, "#ff0000")
 
 	func _upS():
@@ -606,18 +640,26 @@ class b_VulnerableLarge	extends BaseBuff:
 		if atkInfo.atkType == NORMAL:
 			atkInfo.hurtVal *= 99
 
-# 水耐性下降·大
-class b_waterDown	extends BaseBuff:
-	func _init(config):
-		_set_config("b_waterDown", config)
 
+# 耐性下降·大
+# 新版耐性下降buff，可以支持各种自定义攻击类型
+class b_decreasedTolerance extends BaseBuff:
+	var atkType
+	var text
+	var color
+	func _init(config):
+		atkType = _get(config, "atkType", Chara.AtkType.SKILL)
+		pw = _get(config, "pw", 1)
+		text = _get(config, "text", "耐性下降")
+		color = _get(config, "color", "#ffffff")
+		_set_config(text, config)
 	func _connect():
 		masCha.connect("onHurt", self, "run")
-		Utils.draw_efftext("水耐性下降·大", masCha.position, "#00a8ff", false)
+		Utils.draw_efftext(text, masCha.position, color, false)
 
 	func run(atkInfo):
-		if atkInfo.hurtType == Chara.HurtType.MGI and atkInfo.atkType == Chara.AtkType.SKILL:
-			atkInfo.hurtVal *= 99
+		if atkInfo.atkType == atkType:
+			atkInfo.hurtVal *= pw
 
 
 # 分摊特效

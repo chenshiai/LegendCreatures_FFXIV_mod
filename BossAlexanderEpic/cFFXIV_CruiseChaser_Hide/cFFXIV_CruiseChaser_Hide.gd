@@ -90,7 +90,7 @@ func _upS():
 
 func _onDeath(atkInfo):
 	._onDeath(atkInfo)
-	if getAllChas(2).size() == 1:
+	if getAllChas(2).size() == 1 and atkInfo.atkCha.team == 1:
 		sommAlexander()
 
 func limitCutting():

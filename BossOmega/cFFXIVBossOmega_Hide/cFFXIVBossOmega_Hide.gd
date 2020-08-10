@@ -30,10 +30,10 @@ func _init():
 	._init()
 	set_time_axis({
 		"mustardBomb": [25, 55, 100, 125, 155],
-		"atomicRay": [2, 20, 40, 60, 145, 180, 190],
-		"flaming2": [10, 90, 165],
+		"atomicRay": [2, 18, 40, 60, 145, 180, 190, 200],
+		"flaming2": [10, 31, 90, 165],
 		"triangleAttack": [70],
-		"over": [200]
+		"over": [210]
 	})
 	set_path("cFFXIVBossOmega_Hide")
 	FFControl = Utils.getFFControl()
@@ -43,7 +43,7 @@ func _init():
 func _onBattleStart():
 	._onBattleStart()
 	STAGE = "p1"
-	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 720
+	attInfo.maxHp = (E_atk + E_mgiAtk + layer) / E_num * 640
 	mustardBomb_pw *= (E_lv / E_num)
 	atomicRay_pw *= (E_lv / E_num)
 	flaming_pw *= (E_lv / E_num)
@@ -135,10 +135,10 @@ func triangleAttack():
 	for cha in chas:
 		yield(reTimer(0.1), "timeout")
 		if cha.hasBuff("limit_protect"):
-			FFHurtChara(cha, att.mgiAtk * triangleAttack_pw, Chara.HurtType.MGI, Chara.AtkType.SKILL)
+			FFHurtChara(cha, att.mgiAtk * triangleAttack_pw, Chara.HurtType.MGI, 2333)
 		else:
 			cha.att.hp = -1
-			FFHurtChara(cha, 100, Chara.HurtType.REAL, Chara.AtkType.SKILL)
+			FFHurtChara(cha, 100, Chara.HurtType.REAL, 2333)
 
 	yield(reTimer(2), "timeout")
 	self.aiOn = true
@@ -162,10 +162,10 @@ func flaming(cell, chaCell):
 	var chaPosition = chaCell * 100
 	var rotation = (chaPosition - start).angle()
 	Utils.draw_effect_v2({
-		"name": "wave",
+		"name": "flam",
 		"pos": start,
 		"dev": Vector2(-125, 0),
-		"fps": 8,
+		"fps": 12,
 		"scale": 3,
 		"rotation": rotation,
 		"top": false
