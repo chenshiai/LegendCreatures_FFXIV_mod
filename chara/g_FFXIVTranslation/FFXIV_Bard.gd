@@ -32,7 +32,7 @@ const SKILL_1_CN = """[辉煌箭]：{TPassive}普通攻击有{c_base}20%{/c}的�
 不可与舞者的{c_skill}[防守之桑巴]{/c}、机工士的{c_skill}[策动]{/c}效果叠加"""
 
 const SKILL_1_EN = """[Refulgent Arrow]：Trigger with {c_base}20%{/c} probability in Normal-Attack, causing {c_phy}[350%]{/c} physical damage to the target
-[Troubadour]：Reduce damage taken by allies by {c_base}10%{/c}, Cannot be superimposed with {c_skill}[Tactician]{/c} and {c_skill}[Shield Samba]{/c}"
+[Troubadour]：Reduce damage taken by allies by {c_base}10%{/c}, Cannot be superimposed with {c_skill}[Tactician]{/c} and {c_skill}[Shield Samba]{/c}"""
 
 const SKILL_1_JA = """"""
 

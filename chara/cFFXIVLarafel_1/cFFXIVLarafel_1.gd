@@ -5,6 +5,9 @@ const CUREII_PW = 0.80 # 救疗威力
 const CUREIII_PW = 0.50 # 医济威力
 const REGEN_PW = 0.10 # 再生威力
 
+func _init():
+	logoImgName = "WhiteMage"
+
 func _extInit():
 	._extInit()
 	OCCUPATION = "Treatment"

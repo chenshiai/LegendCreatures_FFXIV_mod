@@ -54,12 +54,12 @@ class DarkKnight extends BaseSoul:
 	func _init(cha):
 		._init(cha)
 		name = "{c_pro}暗黑骑士之证{/c}"
-		info = "{c_base}灵魂的水晶，刻有历代暗黑骑士的记忆和灵魂。\n"\
+		info = "{c_base}灵魂的水晶，刻有历代暗黑骑士的记忆和灵魂。{/c}\n"\
 			+ "{c_skill}[行尸走肉]{/c}\n"\
 			+ "一场战斗最多触发一次。\n"\
 			+ "濒死时附加[活死人]状态，免疫死亡(特殊攻击除外)，持续10s。\n"\
 			+ "期间累计受到[50%最大生命]的治疗量后，解除[活死人]状态。\n"\
-			+ "持续时间结束[活死人]尚未解除，则会立即重伤死亡。{/c}"
+			+ "持续时间结束[活死人]尚未解除，则会立即重伤死亡。"
 
 		att.maxHp = 500
 		att.def = 40
@@ -126,7 +126,7 @@ class Bard extends BaseSoul:
 		name = "{c_atk}吟游诗人之证{/c}"
 		info = "{c_base}灵魂的水晶，刻有历代吟游诗人的记忆和旋律。{/c}\n"\
 			+ "{c_skill}[魔人的安魂曲]{/c}\n"\
-			+ "战斗开始时，对所有敌方附加[魔法易伤]状态，\n使其受到的{c_mgi}魔法伤害{/c}提高10%。\n"\
+			+ "战斗开始时，使所有敌人受到的{c_mgi}魔法伤害{/c}提高8%。\n"\
 			+ "此效果不可叠加。\n"\
 			+ "            ———— 纪念曾经的魔人曲"
 		att.maxHp = 200
@@ -177,14 +177,13 @@ class Dragoon extends BaseSoul:
 			count = 0
 			BUFF_LIST.b_LifeOfTheDragon.new({"cha": masCha, "dur": 15})
 
-class BlackMage:
-	extends BaseSoul
+class BlackMage extends BaseSoul:
 	func _init(cha):
 		._init(cha)
-		name = "[color=#312d3a]黑魔法师之证"
-		info = "灵魂的水晶，刻有历代黑魔法师的记忆和魔力。\n"\
-			+ "[天语]\n"\
-			+ "战斗开始时，为自身附加[天语]效果，提升自身[15%][20%][25%]的伤害。\n"\
+		name = "{c_atk}黑魔法师之证{/c}"
+		info = "{c_base}灵魂的水晶，刻有历代黑魔法师的记忆和魔力。{/c}\n"\
+			+ "{c_skill}[天语]{/c}\n"\
+			+ "战斗开始时，为自身附加{c_skill}[天语]{/c}效果，提升自身[15%][20%][25%]的伤害。\n"\
 			+ "根据黑魔法师的等级来调整。"
 		att.maxHp = 200
 		att.mgiAtk = 60
@@ -197,14 +196,13 @@ class BlackMage:
 	func enochian():
 		BUFF_LIST.b_Enochian.new({"cha": masCha, "lv": masCha.lv})
 
-class Astrologian:
-	extends BaseSoul
+class Astrologian extends BaseSoul:
 	func _init(cha):
 		._init(cha)
-		name = "[color=#eba058]占星术士之证"
-		info = "灵魂的水晶，刻有历代占星术士的记忆和知识。\n"\
-			+ "[命运之轮]\n"\
-			+ "使自身及周围2格范围内的队友所受到的伤害减轻10%。\n"\
+		name = "{c_tre}占星术士之证{/c}"
+		info = "{c_base}灵魂的水晶，刻有历代占星术士的记忆和知识。{/c}\n"\
+			+ "{c_skill}[命运之轮]{/c}\n"\
+			+ "使自身及队友所受到的伤害减轻{c_base}10%{/c}。\n"\
 			+ "此效果不可叠加。\n"\
 			+ "冷却24s，持续10s"
 		att.maxHp = 200
@@ -218,20 +216,19 @@ class Astrologian:
 
 	func collective(id):
 		if id == "skill_Collective":
-			var allys = masCha.getCellChas(masCha.cell, 2, 2)
+			var allys = masCha.getAllChas(2)
 			for cha in allys:
 				if cha != null:
 					BUFF_LIST.b_Collective.new({"cha": cha, "dur": 10})
 			allys = null
 
-class Samurai:
-	extends BaseSoul
+class Samurai extends BaseSoul:
 	func _init(cha):
 		._init(cha)
-		name = "[color=#faefd0]武士之证"
-		info = "灵魂的水晶，刻有历代武士的记忆和大义。\n"\
-			+ "[必杀剑-震天]\n"\
-			+ "对目标造成[200%]的[color=#ff7522]物理伤害[/color]。\n"\
+		name = "{c_atk}武士之证{/c}"
+		info = "{c_base}灵魂的水晶，刻有历代武士的记忆和大义。{/c}\n"\
+			+ "{c_skill}[必杀剑-震天]{/c}\n"\
+			+ "对目标造成{c_phy}[200%]{/c}的物理伤害。\n"\
 			+ "冷却8s"
 		att.maxHp = 250
 		att.atk = 65
@@ -245,14 +242,13 @@ class Samurai:
 		if id == "skill_Shinten" and masCha.aiCha != null:
 			masCha.hurtChara(masCha.aiCha, masCha.att.atk * 2.0, Chara.HurtType.PHY, Chara.AtkType.SKILL)
 
-class Warrior:
-	extends BaseSoul
+class Warrior extends BaseSoul:
 	func _init(cha):
 		._init(cha)
-		name = "[color=#bd555a]战士之证"
-		info = "灵魂的水晶，刻有历代战士的记忆和斗志。\n"\
-			+ "[泰然自若]\n"\
-			+ "恢复自身[300%]攻击力的生命值。\n"\
+		name = "{c_pro}战士之证{/c}"
+		info = "{c_base}灵魂的水晶，刻有历代战士的记忆和斗志。{/c}\n"\
+			+ "{c_skill}[泰然自若]{/c}\n"\
+			+ "恢复自身攻击力[300%]的生命值。\n"\
 			+ "冷却15s"
 		att.maxHp = 450
 		att.atk = 40
@@ -268,18 +264,17 @@ class Warrior:
 		if id == "skill_Equilibrium":
 			masCha.plusHp(masCha.att.atk * 3)
 
-class RedMage:
-	extends BaseSoul
+class RedMage extends BaseSoul:
 	func _init(cha):
 		._init(cha)
-		name = "[color=#c12957]赤魔法师之证"
-		info = "灵魂的水晶，刻有历代赤魔法师的记忆和心血。\n"\
-			+ "[赤治疗]\n"\
+		name = "{c_atk}赤魔法师之证{/c}"
+		info = "{c_base}灵魂的水晶，刻有历代赤魔法师的记忆和心血。{/c}\n"\
+			+ "{c_skill}[赤治疗]{/c}\n"\
 			+ "为生命最低的友方单位恢复[80%]法强的生命值。\n"\
 			+ "冷却16s"
 		att.maxHp = 200
 		att.mgiAtk = 50
-		att.cd = 0.15
+		att.cd = 0.1
 		setCdSkill("skill_Vercure", 16)
 		_connect()
 
@@ -294,14 +289,13 @@ class RedMage:
 			if chas[0] != null:
 				chas[0].plusHp(masCha.att.mgiAtk * 0.8)
 
-class Monk:
-	extends BaseSoul
+class Monk extends BaseSoul:
 	func _init(cha):
 		._init(cha)
-		name = "[color=#a48a21]武僧之证"
-		info = "灵魂的水晶，刻有历代武僧的记忆和气概。\n"\
-			+ "[真言]\n"\
-			+ "使自身和周围友方单位受到的治疗效果提高10%\n"\
+		name = "{c_atk}武僧之证{/c}"
+		info = "{c_base}灵魂的水晶，刻有历代武僧的记忆和气概。{/c}\n"\
+			+ "{c_skill}[真言]{/c}\n"\
+			+ "使自身及友方单位受到的治疗效果提高{c_base}10%{/c}\n"\
 			+ "冷却24s，持续10s"
 		att.maxHp = 250
 		att.atk = 60
@@ -322,13 +316,12 @@ class Monk:
 					BUFF_LIST.b_Mantra.new({"cha": cha, "dur": 10})
 			allys = null
 
-class Paladin:
-	extends BaseSoul
+class Paladin extends BaseSoul:
 	func _init(cha):
 		._init(cha)
-		name = "[color=#7b9ea4]骑士之证"
-		info = "灵魂的水晶，刻有历代骑士的记忆和荣誉。\n"\
-			+ "[安魂祈祷]\n"\
+		name = "{c_pro}骑士之证{/c}"
+		info = "{c_base}灵魂的水晶，刻有历代骑士的记忆和荣誉。{/c}\n"\
+			+ "{c_skill}[安魂祈祷]{/c}\n"\
 			+ "自身魔法强度提高50点。\n"\
 			+ "冷却27s，持续15s"
 		att.maxHp = 350
@@ -345,13 +338,12 @@ class Paladin:
 		if id == "skill_Requiescat":
 			BUFF_LIST.b_Requiescat.new({"cha": masCha, "dur": 15})
 
-class Ninja:
-	extends BaseSoul
+class Ninja extends BaseSoul:
 	func _init(cha):
 		._init(cha)
-		name = "[color=#6f5e5d]忍者之证"
-		info = "灵魂的水晶，刻有历代忍者的记忆和精神。\n"\
-			+ "[风遁之术]\n"\
+		name = "{c_atk}忍者之证{/c}"
+		info = "{c_base}灵魂的水晶，刻有历代忍者的记忆和精神。{/c}\n"\
+			+ "{c_skill}[风遁之术]{/c}\n"\
 			+ "获得15%的冷却缩减。"
 		att.maxHp = 250
 		att.atk = 50
@@ -359,26 +351,24 @@ class Ninja:
 		att.mgiDef = 10
 		att.cd = 0.15
 
-class WhiteMage:
-	extends BaseSoul
+class WhiteMage extends BaseSoul:
 	func _init(cha):
 		._init(cha)
-		name = "[color=#c5bc94]白魔法师之证"
-		info = "灵魂的水晶，刻有历代白魔法师的记忆和圣迹。\n"\
-			+ "[神速咏唱]\n"\
+		name = "{c_tre}白魔法师之证{/c}"
+		info = "{c_base}灵魂的水晶，刻有历代白魔法师的记忆和圣迹。{/c}\n"\
+			+ "{c_skill}[神速咏唱]{/c}\n"\
 			+ "获得15%的冷却缩减。"
 		att.maxHp = 200
 		att.mgiAtk = 50
 		att.cd = 0.15
 
-class Scholar:
-	extends BaseSoul
+class Scholar extends BaseSoul:
 	func _init(cha):
 		._init(cha)
-		name = "[color=#5251cb]学者之证"
-		info = "灵魂的水晶，刻有历代学者的记忆和学识。\n"\
-			+ "[连环计]\n"\
-			+ "对目标施加[连环计]，10%的概率使其受到伤害变为双倍。\n"\
+		name = "{c_tre}学者之证{/c}"
+		info = "{c_base}灵魂的水晶，刻有历代学者的记忆和学识。{/c}\n"\
+			+ "{c_skill}[连环计]{/c}\n"\
+			+ "对目标施加[连环计]，使其受到伤害有10%的概率变为双倍。\n"\
 			+ "冷却15s，持续8s"
 		att.maxHp = 200
 		att.mgiAtk = 50
@@ -394,13 +384,12 @@ class Scholar:
 		if id == "skill_ChainStratagem" and masCha.aiCha != null:
 			BUFF_LIST.b_ChainStratagem.new({"cha": masCha.aiCha, "dur": 8})
 
-class Summoner:
-	extends BaseSoul
+class Summoner extends BaseSoul:
 	func _init(cha):
 		._init(cha)
-		name = "[color=#4b8e13]召唤师之证"
-		info = "灵魂的水晶，刻有历代召唤师的记忆和真理。\n"\
-			+ "[三重灾祸]\n"\
+		name = "{c_atk}召唤师之证{/c}"
+		info = "{c_base}灵魂的水晶，刻有历代召唤师的记忆和真理。{/c}\n"\
+			+ "{c_skill}[三重灾祸]{/c}\n"\
 			+ "对目标及周围一格的敌人施加[剧毒菌][瘴暍]。\n"\
 			+ "冷却15s，持续10s"
 		att.maxHp = 200
@@ -419,14 +408,13 @@ class Summoner:
 				BUFF_LIST.b_Miasma.new({"cha": i, "cas": masCha, "dur": 10})
 				yield(sys.get_tree().create_timer(0.1), "timeout")
 
-class Machinist:
-	extends BaseSoul
+class Machinist extends BaseSoul:
 	func _init(cha):
 		._init(cha)
-		name = "[color=#6cc7c0]机工士之证"
-		info = "与其他灵魂水晶不同，这颗水晶上尚未刻下历史的记忆。\n"\
-			+ "[火焰喷射器]\n"\
-			+ "[color=#e5e5e5]被动[/color]，普通攻击会对目标及其周围一格的敌人附加2层[烧灼]"
+		name = "{c_atk}机工士之证{/c}"
+		info = "{c_base}与其他灵魂水晶不同，这颗水晶上尚未刻下历史的记忆。{/c}\n"\
+			+ "{c_skill}[火焰喷射器]{/c}\n"\
+			+ "普通攻击会对目标及其周围一格的敌人附加2层[烧灼]"
 		att.maxHp = 200
 		att.atk = 60
 		_connect()
@@ -441,15 +429,14 @@ class Machinist:
 					if i != null:
 						i.addBuff(b_shaoZhuo.new(2))
 
-class Dancer:
-	extends BaseSoul
+class Dancer extends BaseSoul:
 	func _init(cha):
 		._init(cha)
-		name = "[color=#ecb1d7]舞者之证"
-		info = "灵魂的水晶，刻有历代舞者的记忆和舞蹈。\n"\
-			+ "[扇舞·急]\n"\
-			+ "[color=#e5e5e5]被动[/color]，普通攻击有30%概率触发。\n"\
-			+ "对目标及周围2格敌人造成[100%]的[color=#ff7522]物理伤害[/color]。"
+		name = "{c_atk}舞者之证{/c}"
+		info = "{c_base}灵魂的水晶，刻有历代舞者的记忆和舞蹈。{/c}\n"\
+			+ "{c_skill}[扇舞·急]{/c}\n"\
+			+ "普通攻击有30%概率触发。\n"\
+			+ "对目标及周围2格敌人造成{c_phy}[100%]{/c}的物理伤害。"
 		att.maxHp = 200
 		att.atk = 60
 		_connect()

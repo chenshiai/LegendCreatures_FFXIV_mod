@@ -14,7 +14,7 @@ var baseId = ""
 var OCCUPATION = "Default"
 var SoulExample = null
 var SKILL_CRI = false
-
+var logoImgName = ""
 var BallisticSpeed = {
 	"Protect": 600,
 	"CloseCombat": 700,
@@ -104,3 +104,10 @@ func show_OCCUPATION(chara):
 	var charaInfo = sys.get_node("/root/topUi/charaInfoMsg")
 	var txt = charaInfo.get_node("txt")
 	txt.bbcode_text = regex.sub(txt.bbcode_text, "[/color]	" + TEXT.Occupation[OCCUPATION])
+	
+	if logoImgName != "":
+		var logo = TextureButton.new()
+		var logoImg = Utils.load_texture(Utils.Path, "/img/%s.png" % [logoImgName])
+		logo.set_normal_texture(logoImg)
+		logo.rect_position = Vector2(300, 20)
+		charaInfo.add_child(logo)

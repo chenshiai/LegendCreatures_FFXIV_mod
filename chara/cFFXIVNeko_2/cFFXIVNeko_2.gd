@@ -6,6 +6,9 @@ const FESTER_PW = 1.2 # 溃烂爆发威力
 const FESTER_N_PW = 0.30 # 层数提升威力
 var SummonChara = null
 
+func _init():
+	logoImgName = "Summoner"
+
 func _extInit():
 	._extInit()
 	OCCUPATION = "Magic"

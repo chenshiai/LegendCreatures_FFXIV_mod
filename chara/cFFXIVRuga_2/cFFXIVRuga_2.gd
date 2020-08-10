@@ -5,6 +5,9 @@ var fightGas = 0
 const FIGHTGAS_PW = 2.10 # 斗气斩威力
 const FIGHTGAS_N_PW = 0.20 # 斗气提升威力
 
+func _init():
+	logoImgName = "Monk"
+
 func _extInit():
 	._extInit()
 	OCCUPATION = "CloseCombat"

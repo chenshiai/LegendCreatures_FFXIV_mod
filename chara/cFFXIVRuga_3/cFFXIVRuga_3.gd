@@ -7,6 +7,9 @@ var autoCount = 0 # 浮空炮攻击次数
 var fireCount = 1 # 野火提升阶段
 var fireChara = null # 被施加了野火的目标
 
+func _init():
+	logoImgName = "Machinist"
+
 func _extInit():
 	._extInit()
 	OCCUPATION = "LongRange"

@@ -4,6 +4,9 @@ var FFData = preload("./charaData.gd").getCharaData()
 const HIGHJUMP_PW = 3.30 # 高跳威力
 const GEIRSKOGUL_PW = 4.00 # 武神枪威力
 
+func _init():
+	logoImgName = "Dragoon"
+
 func _extInit():
 	._extInit()
 	OCCUPATION = "CloseCombat"

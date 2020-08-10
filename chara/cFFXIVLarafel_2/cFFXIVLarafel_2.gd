@@ -11,6 +11,9 @@ var handleSkillFreeze = null # 获取当前玄冰技能
 var fire = 0 # 星极火当前阶段
 var freeze = 0 # 灵极冰当前层数
 
+func _init():
+	logoImgName = "BlackMage"
+
 func _extInit():
 	._extInit()
 	OCCUPATION = "Magic"

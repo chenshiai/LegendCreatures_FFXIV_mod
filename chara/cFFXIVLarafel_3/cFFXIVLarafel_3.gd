@@ -11,6 +11,9 @@ const VERFLARE_PW = 2.30 # 赤核爆威力
 var blackMorgen = 0 # 黑魔元
 var whiteMorgan = 0 # 白魔元
 
+func _init():
+	logoImgName = "RedMage"
+
 func _extInit():
 	._extInit()
 	OCCUPATION = "Magic"

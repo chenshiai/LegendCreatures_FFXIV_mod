@@ -1,6 +1,9 @@
 extends "../BaseChara/FFXIVBaseChara.gd"
 const BOWSHOCK_PW = 2.60 # 弓形冲波威力
 
+func _init():
+	logoImgName = "Gunbreaker"
+
 func _extInit():
 	._extInit()
 	OCCUPATION = "Protect"

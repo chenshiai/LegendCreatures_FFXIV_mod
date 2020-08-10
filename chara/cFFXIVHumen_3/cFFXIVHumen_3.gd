@@ -5,6 +5,9 @@ const DANCESTEP_PW = 6 # 标准舞步威力
 var atkMaxAlly = null # 攻击力最高的队友
 var mgiAtkMaxAlly = null # 法强最高的队友
 
+func _init():
+	logoImgName = "Dancer"
+
 func _extInit():
 	._extInit()
 	OCCUPATION = "LongRange"

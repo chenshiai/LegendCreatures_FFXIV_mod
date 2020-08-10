@@ -1,6 +1,9 @@
 extends "../BaseChara/FFXIVBaseChara.gd"
 var FFData = preload("./charaData.gd").getCharaData()
 
+func _init():
+	logoImgName = "Warrior"
+
 func _extInit():
 	._extInit()
 	OCCUPATION = "Protect"

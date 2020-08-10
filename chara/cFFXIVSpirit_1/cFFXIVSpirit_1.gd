@@ -4,6 +4,9 @@ var FFData = preload("./charaData.gd").getCharaData()
 const STARPHASE_PW = 0.60 # 阳星威力
 const MALEFIC_PW = 0.7 # 煞星威力
 
+func _init():
+	logoImgName = "Astrologian"
+
 func _extInit():
 	._extInit()
 	OCCUPATION = "Treatment"

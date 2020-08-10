@@ -13,6 +13,10 @@ var colorConfig = {
 	"jin": "[color=#fdff57]『人』[/color]" # 2
 }
 
+
+func _init():
+	logoImgName = "Ninja"
+
 func _extInit():
 	._extInit()
 	OCCUPATION = "CloseCombat"

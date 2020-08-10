@@ -12,6 +12,9 @@ const meterage = {
 }
 var locale = TranslationServer.get_locale()
 
+func _init():
+	logoImgName = "DarkKnight"
+
 func _extInit():
 	._extInit()
 	OCCUPATION = "Protect"

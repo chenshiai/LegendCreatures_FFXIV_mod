@@ -4,6 +4,9 @@ var FFData = preload("./charaData.gd").getCharaData()
 const GRACE_PW = 12 # 深仁厚泽威力
 const AUTHORITY_PW = 3.50 # 王权剑威力
 
+func _init():
+	logoImgName = "Paladin"
+
 func _extInit():
 	._extInit()
 	OCCUPATION = "Protect"

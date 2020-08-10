@@ -6,6 +6,9 @@ const DEATHMGI_PW = 0.90 # 死炎法威力
 var shield_pw = 1.25 # 护盾生成量
 var SummonChara = null # 召唤兽节点
 
+func _init():
+	logoImgName = "Scholar"
+
 func _extInit():
 	._extInit()
 	OCCUPATION = "Treatment"

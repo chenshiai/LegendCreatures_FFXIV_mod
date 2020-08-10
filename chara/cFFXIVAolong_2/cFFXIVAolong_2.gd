@@ -14,6 +14,11 @@ var beforIaijutsu = 0 # 上一次雪月花的威力
 
 signal swordPpressure
 
+
+func _init():
+	logoImgName = "Samurai"
+
+
 func _extInit():
 	._extInit()
 	OCCUPATION = "CloseCombat"
