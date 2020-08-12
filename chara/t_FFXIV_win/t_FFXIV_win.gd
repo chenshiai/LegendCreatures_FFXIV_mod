@@ -36,6 +36,5 @@ class LightHard:
 		._del()
 		if resolve:
 			masCha.addBuff(LightHard.new())
-			resolve = false
 	
 		# sys.main.get_node("ui/player/GridContainer").add_child(preload("res://ui/talentBtn/talentBtn.tscn").instance())

@@ -107,7 +107,12 @@ func show_OCCUPATION(chara):
 	
 	if logoImgName != "":
 		var logo = TextureButton.new()
+		var original = TextureButton.new()
 		var logoImg = Utils.load_texture(Utils.Path, "/img/%s.png" % [logoImgName])
+		var originalImg = Utils.load_texture(Utils.Path, "/img/%sOri.png" % [logoImgName])
 		logo.set_normal_texture(logoImg)
-		logo.rect_position = Vector2(300, 20)
+		original.set_normal_texture(originalImg)
+		logo.rect_position = Vector2(950, 20)
+		original.rect_position = Vector2(950, 20)
 		charaInfo.add_child(logo)
+		charaInfo.add_child(original)

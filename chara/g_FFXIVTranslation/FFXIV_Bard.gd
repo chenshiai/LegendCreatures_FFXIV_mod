@@ -2,18 +2,18 @@ extends "./g_FFXIVTranslation.gd"
 const baseName = "FFXIVNeko_3"
 const name_1 = {
 	"zh_CN": "吟游诗人",
-	"en": "",
-	"ja": ""
+	"en": "Bard",
+	"ja": "吟遊詩人"
 }
 const name_2 = {
 	"zh_CN": "红叶之诗",
-	"en": "",
-	"ja": ""
+	"en": "Bard-I",
+	"ja": "吟遊詩人-I"
 }
 const name_3 = {
 	"zh_CN": "让尔泰-传奇",
-	"en": "",
-	"ja": ""
+	"en": "Bard-II",
+	"ja": "吟遊詩人-II"
 }
 
 const SKILL_CN = """[伶牙俐齿]：冷却5s，对目标发动一次额外的普通攻击，并附加5层[流血][中毒]
@@ -24,7 +24,9 @@ const SKILL_EN = """[Iron Jaws]：(5s), Launch an additional Normal-Attack on th
 [Mage's Ballad]：(16s), Launch an additional Normal-Attack on the target, And increases ally damage by {c_base}5%{/c} for 8 seconds. This effect cannot be stacked
 [Nature's Minne]：(20s), Increases the healing effect of HP's least allies by {c_base}20%{/c}, lasting for 10 seconds"""
 
-const SKILL_JA = """"""
+const SKILL_JA = """[アイアンジョー]：5s、ターゲットに対して追加的な通常攻撃を1回発動し、「流血」「中毒」を5回追加します
+[賢人のバラード]：16s、ターゲットに対して追加の通常攻撃を1回発動し、味方の攻撃ダメージを{c_base}5%{/c}アップさせ、8秒継続します。この効果は重複しません
+[地神のミンネ]：20s、ライフポイントが最も少ない隊員を目指し、治療効果を20%向上させ、10 s持続させる"""
 
 
 const SKILL_1_CN = """[辉煌箭]：{TPassive}普通攻击有{c_base}20%{/c}的概率触发，对目标造成{c_phy}[350%]{/c}的物理伤害
@@ -34,7 +36,8 @@ const SKILL_1_CN = """[辉煌箭]：{TPassive}普通攻击有{c_base}20%{/c}的�
 const SKILL_1_EN = """[Refulgent Arrow]：Trigger with {c_base}20%{/c} probability in Normal-Attack, causing {c_phy}[350%]{/c} physical damage to the target
 [Troubadour]：Reduce damage taken by allies by {c_base}10%{/c}, Cannot be superimposed with {c_skill}[Tactician]{/c} and {c_skill}[Shield Samba]{/c}"""
 
-const SKILL_1_JA = """"""
+const SKILL_1_JA = """
+[リフルジェントアロー]：通常攻撃時に{c_base}20%{/c}の確率でトリガし、ターゲットに{c_phy}［350%］{/c}の物理ダメージを与える。"""
 
 
 const SKILL_2_CN = "[绝峰箭]：冷却12s，射出穿透箭对直线上单位造成{c_phy}[400%]{/c}的物理伤害，并赋予5层[流血]"

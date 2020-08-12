@@ -6,7 +6,8 @@ const TranslationList = ["FFXIV_Astrologian_1", "FFXIV_Astrologian_2", "FFXIV_Da
 	"FFXIV_Samurai", "FFXIV_Scholar", "FFXIV_Summoner", "FFXIV_Warrior", "FFXIV_WhiteMage"]
 
 func _init():
-	call_deferred("loadTranslation")
+	pass
+	# call_deferred("loadTranslation")
 
 func loadTranslation():
 	for name in TranslationList:

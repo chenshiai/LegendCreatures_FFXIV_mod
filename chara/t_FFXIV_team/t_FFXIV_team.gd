@@ -69,7 +69,6 @@ class Protect extends Team:
 		._del()
 		if resolve:
 			masCha.addBuff(Protect.new())
-			resolve = false
 
 
 # 近战职业 生命上限提高5% 攻击力提高10%
@@ -83,7 +82,6 @@ class CloseCombat extends Team:
 		._del()
 		if resolve:
 			masCha.addBuff(CloseCombat.new())
-			resolve = false
 
 
 # 魔法职业 法强提高10% 双抗提高5%
@@ -98,7 +96,6 @@ class Magic extends Team:
 		._del()
 		if resolve:
 			masCha.addBuff(Magic.new())
-			resolve = false
 
 
 # 远程职业 攻击力提高10% 双抗提高5%
@@ -113,7 +110,6 @@ class LongRange extends Team:
 		._del()
 		if resolve:
 			masCha.addBuff(LongRange.new())
-			resolve = false
 
 
 # 治疗职业 法强提高10% 生命上限提高5%
@@ -127,4 +123,3 @@ class Treatment extends Team:
 		._del()
 		if resolve:
 			masCha.addBuff(Treatment.new())
-			resolve = false
