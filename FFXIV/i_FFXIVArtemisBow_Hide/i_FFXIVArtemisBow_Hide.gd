@@ -2,15 +2,15 @@ extends "../FFXIVItem/AncientWeapons/AncientWeapons.gd"
 
 func _init():
 	._init()
-	ItemName = "星辰杖%s"
+	ItemName = "月神之弓%s"
 	name = ItemName % [STEP[Level]]
 	info = _getEpilogue()
-	att.mgiAtk = 25
-	att.mgiPen = 10
+	att.atk = 30
+	att.spd = 0.1
 
 func updateAtt():
-	att.mgiAtk += 6
-	att.mgiPen += 3
+	att.atk += 7
+	att.spd += 0.03
 	for item in randAtt:
 		att[item.attr] += rand_range(item.up[0], item.up[1])
 
@@ -18,7 +18,6 @@ func updateAtt():
 func _connect():
 	._connect()
 	if !randAtt.size() > 0:
-		_randomAtt("mgiAtk", "mgiPen")
-
-	self.connect("randomAtt", self, "_randomAtt", ["mgiAtk", "mgiPen"])
+		_randomAtt("atk", "spd")
+	self.connect("randomAtt", self, "_randomAtt", ["atk", "spd"])
 	self.connect("updateAtt", self, "updateAtt")

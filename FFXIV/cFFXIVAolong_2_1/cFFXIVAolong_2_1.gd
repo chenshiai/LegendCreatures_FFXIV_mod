@@ -6,7 +6,7 @@ func _extInit():
 	chaName = FFData.name_2
 	lv = 3
 	evos = []
-	addCdSkill("skill_Tsubame", 14)
+	addCdSkill("skill_Tsubame", 18)
 	addSkillTxt(FFData.SKILL_TEXT_1)
 
 

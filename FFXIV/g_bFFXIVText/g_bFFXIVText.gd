@@ -162,7 +162,19 @@ Our world's is a fantasy， no more than a test.
 
 var UpdateInfo = {
 	"title": "最终幻想14-更新记录",
-	"content": format("""[color=#64a6b7]【Ver 2.8.7】2020-08-08[/color]
+	"content": format("""[color=#64a6b7]【Ver 2.8.8】2020-08-15[/color]
+【职业调整】
+{c_atk}【武士】{/c}
+[燕回返]：冷却时间 14s -> 18s
+
+【视觉显示】
+在角色信息面板新增了职业原画以及职业图标。
+加长了读条的长度和血条的长度。
+
+【BUG修复】
+修复了学者在2级时可以释放小仙女4级的技能
+
+[color=#64a6b7]【Ver 2.8.7】2020-08-08[/color]
 【机制调整】
 降低了所有BOSS在高层数时的攻击力加成
 新增BOSS的攻击力类型，部分BOSS的攻击无法被装备【道服】所抵挡
