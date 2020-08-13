@@ -8,10 +8,10 @@ var SummonChara = null # 召唤兽节点
 
 func _init():
 	logoImgName = "Scholar"
+	OCCUPATION = "Treatment"
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "Treatment"
 	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -24,8 +24,6 @@ func _extInit():
 	atkEff = "atk_dang"
 	addCdSkill("skill_Adloquium", 10)
 	addCdSkill("skill_DeathMgi", 4)
-	addCdSkill("skill_Summon_2", 18)
-	addCdSkill("skill_Summon_3", 20)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT))
 
 
@@ -35,7 +33,7 @@ func _onBattleStart():
 		SummonChara = sys.main.newChara("cFFXIV_Summon4", self.team)
 		SummonChara.Summoner = self
 		self.get_node("spr").add_child(SummonChara)
-		
+
 
 func _onBattleEnd():
 	._onBattleEnd()
@@ -61,7 +59,7 @@ func deathMgi():
 	d._initFlyCha(aiCha)
 	yield(d, "onReach")
 	FFHurtChara(aiCha, att.mgiAtk * DEATHMGI_PW, MGI, SKILL)
-		
+
 
 # 鼓舞激励之策
 func adloquium():
@@ -69,7 +67,7 @@ func adloquium():
 	chas.sort_custom(Utils.Calculation, "sort_MinHpP")
 
 	if chas[0] != null:
-		chas[0].plusHp(att.mgiAtk * ADLOQUIUM_PW)
+		chas[0].plusHp(att.mgiAtk * ADLOQUIUM_PW, false)
 		BUFF_LIST.b_Adloquium.new({
 			"cha": chas[0],
 			"dur": 10,

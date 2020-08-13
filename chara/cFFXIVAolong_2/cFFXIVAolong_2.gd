@@ -17,11 +17,11 @@ signal swordPpressure
 
 func _init():
 	logoImgName = "Samurai"
+	OCCUPATION = "CloseCombat"
 
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "CloseCombat"
 	SKILL_CRI = true
 	chaName = FFData.name_1
 	attCoe.atkRan = 1

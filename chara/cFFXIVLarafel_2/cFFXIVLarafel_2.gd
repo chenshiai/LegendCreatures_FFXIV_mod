@@ -13,10 +13,10 @@ var freeze = 0 # 灵极冰当前层数
 
 func _init():
 	logoImgName = "BlackMage"
+	OCCUPATION = "Magic"
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "Magic"
 	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3

@@ -7,10 +7,10 @@ var mgiAtkMaxAlly = null # 法强最高的队友
 
 func _init():
 	logoImgName = "Dancer"
+	OCCUPATION = "LongRange"
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "LongRange"
 	SKILL_CRI = true
 	chaName = FFData.name_1
 	attCoe.atkRan = 3

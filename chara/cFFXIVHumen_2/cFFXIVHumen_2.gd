@@ -3,10 +3,10 @@ const BOWSHOCK_PW = 2.60 # 弓形冲波威力
 
 func _init():
 	logoImgName = "Gunbreaker"
+	OCCUPATION = "Protect"
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "Protect"
 	chaName = tr("FFXIVHumen_2-name_1")
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4.5

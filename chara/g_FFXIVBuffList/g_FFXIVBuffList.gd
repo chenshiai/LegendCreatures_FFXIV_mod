@@ -229,7 +229,7 @@ class b_Regen extends BaseBuff:
 		hot = _get(config, "hot", 0)
 
 	func _upS():
-		masCha.plusHp(hot)
+		masCha.plusHp(hot, false)
 		life = clamp(life, 0, 18)
 
 # 黑魔纹，冷却缩减
@@ -295,18 +295,16 @@ class b_SacredSoil extends ReduceDamage:
 		hot = _get(config, "hot", 0)
 
 	func _upS():
-		masCha.plusHp(hot)
+		masCha.plusHp(hot, false)
 		life = clamp(life, 0, 10)
 
-# 仙光的低语
+# 仙光的低语 -> 异想的幻光
 class b_Whispering extends BaseBuff:
-	var hot = 0
 	func _init(config):
 		_set_config("b_Whispering", config)
-		hot = _get(config, "hot", 0)
+		att.reHp = 0.10
 
 	func _upS():
-		masCha.plusHp(hot)
 		life = clamp(life, 0, 10)
 
 # 连环计
@@ -332,7 +330,7 @@ class b_Dreadwyrm	extends BaseBuff:
 	func _connect():
 		if masCha.team == 2:
 			return
-		Utils.draw_efftext("附体", masCha.position, "#21f2ff")
+		Utils.draw_efftext("龙神附体", masCha.position, "#21f2ff")
 
 	func _upS():
 		life = clamp(life, 0, 8)
@@ -554,7 +552,7 @@ class b_LuckyStar	extends BaseBuff:
 		hot = _get(config, "hot", 0)
 
 	func _upS():
-		masCha.plusHp(hot)
+		masCha.plusHp(hot, false)
 		life = clamp(life, 0, 8)
 
 # 黑夜领域，护盾。可以吸收一定数值的伤害

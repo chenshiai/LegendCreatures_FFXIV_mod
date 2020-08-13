@@ -7,10 +7,10 @@ const REGEN_PW = 0.10 # 再生威力
 
 func _init():
 	logoImgName = "WhiteMage"
+	OCCUPATION = "Treatment"
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "Treatment"
 	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3
@@ -46,19 +46,18 @@ func cureII():
 		chas[0].plusHp(att.mgiAtk * CUREII_PW)
 
 
-# 医济		
+# 医济
 func cureIII():
 	var allys = getAllChas(2)
 	allys.shuffle()
 	for cha in allys:
-		if cha != null and !cha.isDeath:
-			BUFF_LIST.b_Regen.new({
-				"cha": cha,
-				"dur": 8,
-				"hot": att.mgiAtk * REGEN_PW
-			})
-			cha.plusHp(att.mgiAtk * CUREIII_PW)
-			yield(reTimer(0.1), "timeout")
+		cha.plusHp(att.mgiAtk * CUREIII_PW)
+		BUFF_LIST.b_Regen.new({
+			"cha": cha,
+			"dur": 8,
+			"hot": att.mgiAtk * REGEN_PW
+		})
+		yield(reTimer(0.1), "timeout")
 
 
 # 再生

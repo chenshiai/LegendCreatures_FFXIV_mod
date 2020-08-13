@@ -104,7 +104,7 @@ func show_OCCUPATION(chara):
 	var charaInfo = sys.get_node("/root/topUi/charaInfoMsg")
 	var txt = charaInfo.get_node("txt")
 	txt.bbcode_text = regex.sub(txt.bbcode_text, "[/color]	" + TEXT.Occupation[OCCUPATION])
-	
+
 	if logoImgName != "":
 		var logo = TextureButton.new()
 		var original = TextureButton.new()

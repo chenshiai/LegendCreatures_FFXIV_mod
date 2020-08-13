@@ -10,6 +10,7 @@ func _extInit():
 	attCoe.mgiDef = 4.5
 	lv = 4
 	evos = []
+	addCdSkill("skill_Summon_3", 20)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_2))
 
 

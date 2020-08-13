@@ -16,10 +16,10 @@ var colorConfig = {
 
 func _init():
 	logoImgName = "Ninja"
+	OCCUPATION = "CloseCombat"
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "CloseCombat"
 	chaName = FFData.name_1
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4

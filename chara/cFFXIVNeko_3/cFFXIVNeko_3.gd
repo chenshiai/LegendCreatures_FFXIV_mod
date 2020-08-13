@@ -3,10 +3,10 @@ var FFData = preload("./charaData.gd").getCharaData()
 
 func _init():
 	logoImgName = "Bard"
+	OCCUPATION = "LongRange"
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "LongRange"
 	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3

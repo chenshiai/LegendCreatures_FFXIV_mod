@@ -7,10 +7,10 @@ const FIGHTGAS_N_PW = 0.20 # 斗气提升威力
 
 func _init():
 	logoImgName = "Monk"
+	OCCUPATION = "CloseCombat"
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "CloseCombat"
 	chaName = FFData.name_1
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4

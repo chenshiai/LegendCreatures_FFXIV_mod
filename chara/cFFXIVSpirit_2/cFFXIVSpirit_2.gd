@@ -6,10 +6,10 @@ const MALEFIC_PW = 0.7 # 煞星威力
 
 func _init():
 	logoImgName = "Astrologian"
+	OCCUPATION = "Treatment"
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "Treatment"
 	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3

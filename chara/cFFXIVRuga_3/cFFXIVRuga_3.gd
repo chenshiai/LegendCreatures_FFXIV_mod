@@ -9,10 +9,10 @@ var fireChara = null # 被施加了野火的目标
 
 func _init():
 	logoImgName = "Machinist"
+	OCCUPATION = "LongRange"
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "LongRange"
 	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3

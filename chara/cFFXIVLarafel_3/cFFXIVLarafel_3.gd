@@ -13,10 +13,10 @@ var whiteMorgan = 0 # 白魔元
 
 func _init():
 	logoImgName = "RedMage"
+	OCCUPATION = "Magic"
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "Magic"
 	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3

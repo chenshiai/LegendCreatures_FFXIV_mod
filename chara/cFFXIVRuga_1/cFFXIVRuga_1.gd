@@ -6,10 +6,10 @@ const AUTHORITY_PW = 3.50 # 王权剑威力
 
 func _init():
 	logoImgName = "Paladin"
+	OCCUPATION = "Protect"
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "Protect"
 	chaName = FFData.name_1
 	attCoe.atkRan = 1
 	attCoe.maxHp = 4.5

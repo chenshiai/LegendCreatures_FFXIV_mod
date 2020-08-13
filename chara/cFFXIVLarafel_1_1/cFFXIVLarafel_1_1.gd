@@ -37,6 +37,6 @@ func benediction():
 	chas.sort_custom(Utils.Calculation, "sort_MinHpP")
 	if chas[0] != null:
 		chas[0].plusHp(chas[0].att.maxHp)
-	
+
 	var sk = getSkill("skill_Benediction")
 	sk.cd = 60

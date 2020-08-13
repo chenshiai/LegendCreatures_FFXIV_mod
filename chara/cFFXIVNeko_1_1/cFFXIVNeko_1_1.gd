@@ -10,6 +10,7 @@ func _extInit():
 	evos = []
 	addCdSkill("skill_Succor", 17)
 	addCdSkill("skill_SacredSoil", 20)
+	addCdSkill("skill_Summon_2", 18)
 	addSkillTxt(TEXT.format(FFData.SKILL_TEXT_1))
 
 
@@ -38,12 +39,10 @@ func succor():
 
 func sacredSoil():
 	Utils.draw_efftext("野战治疗阵！", position, "#1a8a00")
-	# Utils.draw_effect("Sacred", position, Vector2(0, -50), 7, 1, true)
 	var allys = getCellChas(cell, 3, 2)
 	for cha in allys:
-		if cha != null:
-			BUFF_LIST.b_SacredSoil.new({
-				"cha": cha,
-				"dur": 10,
-				"hot": att.mgiAtk * SACREDSOIL_PW
-			})
+		BUFF_LIST.b_SacredSoil.new({
+			"cha": cha,
+			"dur": 10,
+			"hot": att.mgiAtk * SACREDSOIL_PW
+		})

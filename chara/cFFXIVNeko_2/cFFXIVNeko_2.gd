@@ -8,10 +8,10 @@ var SummonChara = null
 
 func _init():
 	logoImgName = "Summoner"
+	OCCUPATION = "Magic"
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "Magic"
 	chaName = FFData.name_1
 	attCoe.atkRan = 3
 	attCoe.maxHp = 3

@@ -14,10 +14,10 @@ var locale = TranslationServer.get_locale()
 
 func _init():
 	logoImgName = "DarkKnight"
+	OCCUPATION = "Protect"
 
 func _extInit():
 	._extInit()
-	OCCUPATION = "Protect"
 	chaName = tr("FFXIVAolong_1-name_1")
 	attCoe.atkRan = 1
 	attCoe.maxHp = 5
