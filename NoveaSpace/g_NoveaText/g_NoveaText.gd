@@ -8,34 +8,33 @@ func format(text, config = {}):
 var Config = {
 	"c_base": "[color=%s]" % [COLOR.BASE], # 基础色
 	"c_buff": "[color=%s]" % [COLOR.BUFF], # buff色
-	"c_mgi": "[color=%s]" % [COLOR.C_MGI], # 魔法伤害数字色
-	"c_phy": "[color=%s]" % [COLOR.C_PHY], # 物理伤害数字色
+	"c_mgi": "[color=%s]" % [COLOR.MGI], # 魔法伤害数字色
+	"c_phy": "[color=%s]" % [COLOR.PHY], # 物理伤害数字色
+	"c_real": "[color=%s]" % [COLOR.REAL], # 真实伤害数字色
 	"c_pas": "[color=%s]" % [COLOR.PASSIVE], # 被动技能字色
-	"c_Tmgi": "[color=%s]" % [COLOR.MGI], # 魔法伤害文本色
-	"c_Tphy": "[color=%s]" % [COLOR.PHY], # 物理伤害文本色
-	"c_skill": "[color=%s]" % [COLOR.SKILL], # 技能文本色
-	"c_death": "[color=%s]" % [COLOR.DEATH],
+	"c_skill": "[color=%s]" % [COLOR.SKILL], # 技能名文本色
+	"c_las": "[color=%s]" % [COLOR.LASER], # 镭射文本色
+	"c_bul": "[color=%s]" % [COLOR.BULLET], # 实弹文本色
+	"c_dark": "[color=%s]" % [COLOR.DARK], # 暗物质文本色
+	"c_light": "[color=%s]" % [COLOR.LIGHT], # 光线文本色
+	"c_ele": "[color=%s]" % [COLOR.ELECTRIC], # 电能文本色
+	"s_vib": "[shake rate=7 level=7]", # 振动文本
 	"/c": "[/color]",
+	"/s": "[/shake]",
 }
 
 const COLOR = {
 	"BASE": "#eeeeee",
 	"BUFF": "#fff66e",
-	"PHY": "#ff7522",
-	"C_PHY": "#ffb386",
-	"MGI": "#00e4ff",
-	"C_MGI": "#83f2ff",
-	"PASSIVE": "#a9a9a9",
+	"PHY": "#ffb386",
+	"MGI": "#83f2ff",
 	"REAL": "#ffffff",
-	"PROTECT": "#79d8ff",
-	"ATTACK": "#ff7e7e",
-	"TREATMENT": "#9cff7d",
-	"DEATH": "#ff7e7e",
-	"BALANCE": "#ff4848",
-	"ARROW": "#86d1f4",
-	"SPEAR": "#8693f4",
-	"BOLE": "#80f87d",
-	"EWER": "#229fff",
-	"SPIRE": "#fcda72",
-	"SKILL": "#48daff"
+	"PASSIVE": "#a9a9a9",
+	"SKILL": "#48daff",
+	"LASER": "#F14141",
+	"BULLET": "#EED366",
+	"DARK": "#a570c9",
+	"LIGHT": "#fff1f2",
+	"ELECTRIC": "#219DEF",
+	"VIBRATE": "",
 }
