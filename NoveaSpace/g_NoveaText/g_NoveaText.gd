@@ -18,7 +18,9 @@ var Config = {
 	"c_dark": "[color=%s]" % [COLOR.DARK], # 暗物质文本色
 	"c_light": "[color=%s]" % [COLOR.LIGHT], # 光线文本色
 	"c_ele": "[color=%s]" % [COLOR.ELECTRIC], # 电能文本色
-	"s_vib": "[shake rate=7 level=7]", # 振动文本
+	"c_vib": "[color=%s]" % [COLOR.VIBRATE], # 振动文本色
+	"c_pow": "[color=%s]" % [COLOR.POWER], # 能源文本色
+	"s": "[shake rate=7 level=7]",
 	"/c": "[/color]",
 	"/s": "[/shake]",
 }
@@ -36,5 +38,6 @@ const COLOR = {
 	"DARK": "#a570c9",
 	"LIGHT": "#fff1f2",
 	"ELECTRIC": "#219DEF",
-	"VIBRATE": "",
+	"VIBRATE": "#67f845",
+	"POWER": "#f3ff6a"
 }

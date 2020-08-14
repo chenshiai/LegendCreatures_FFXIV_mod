@@ -2,6 +2,9 @@
 # 版本号 0.0.1 2020/08/14
 extends Chara
 const Novea = globalData.infoDs["g_NoveaUtils"]
+const TEXT = globalData.infoDs["g_NoveaText"]
+var BaseElement = load("%s%s" % [Novea.Path, "/Base/BaseElement.gd"])
+
 const MGI = Chara.HurtType.MGI # 魔法伤害
 const PHY = Chara.HurtType.PHY # 物理伤害
 const REAL = Chara.HurtType.REAL # 真实伤害

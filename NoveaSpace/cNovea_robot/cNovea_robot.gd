@@ -1,1 +1,0 @@
-extends "../Base/BaseChara.gd"
