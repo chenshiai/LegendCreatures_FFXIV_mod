@@ -4,7 +4,7 @@ var SkillText_2_1 = "{c_skill}[防御芯片]{/c}：安装了防御芯片的机�
 
 func _extInit():
 	._extInit()
-	chaName = "NOVEA-45 防御型"
+	chaName = "EA-45 防御型"
 	lv = 3
 	evos = []
 	atkEff = "atk_dao"

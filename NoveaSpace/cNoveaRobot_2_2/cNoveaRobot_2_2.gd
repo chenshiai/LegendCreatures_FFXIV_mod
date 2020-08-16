@@ -4,7 +4,7 @@ var SkillText_2_2 = "{c_skill}[歼灭芯片]{/c}：安装了歼灭芯片的机�
 
 func _extInit():
 	._extInit()
-	chaName = "NOVEA-39 歼灭型"
+	chaName = "EA-39 歼灭型"
 	lv = 3
 	evos = []
 	atkEff = "atk_dao"

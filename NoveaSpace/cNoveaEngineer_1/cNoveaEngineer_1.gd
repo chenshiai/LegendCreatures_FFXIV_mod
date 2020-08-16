@@ -1,6 +1,6 @@
 extends "../cNoveaEngineer/cNoveaEngineer.gd"
 
-var SkillText_1 = TEXT.format("{c_skill}[基建专精]{/c}：解锁基建建设的图纸，略微降低建设所消耗的资源。")
+var SkillText_1 = TEXT.format("{c_skill}[基建专精]{/c}：解锁基建建设的图纸。")
 
 func _extInit():
 	._extInit()

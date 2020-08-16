@@ -1,21 +1,13 @@
-extends "../Base/BaseChara.gd"
+extends "../cNoveaScientist/cNoveaScientist.gd"
 
+var SkillText_1 = "{c_skill}[武器研究]{/c}：解锁武器研究路线。"
 
 func _extInit():
 	._extInit()
-	chaName = "科学家"
-	evos = ["cNoveaScientist_1", "cNoveaScientist_2"]
+	chaName = "武器研究学家"
+	lv = 2
+	attCoe.atk += 2
+	attCoe.mgiAtk += 2
+	evos = ["cNoveaScientist_1_1", "cNoveaScientist_1_2"]
 	atkEff = "atk_dao"
-	addCdSkill("5",5)
-	addSkillTxt("[光之加护]：每5秒，获得5层[狂怒][抵御]")
-	addSkillTxt(TEXT.format("""[进化分支]：
-[{TProtect}]暗黑骑士
-[{TAttack}]武士
-[{TAttack}]忍者"""))
-
-
-func _castCdSkill(id):
-	._castCdSkill(id)
-	if id == "5":
-		addBuff(b_diYu.new(5))
-		addBuff(b_kuangNu.new(5))
+	addSkillTxt(TEXT.format(SkillText_1))
