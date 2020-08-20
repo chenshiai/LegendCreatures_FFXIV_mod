@@ -18,4 +18,11 @@ func _extInit():
 	evos = ["cNoveaRobot_1", "cNoveaRobot_2"]
 	atkEff = "atk_dao"
 	addSkillTxt(TEXT.format(SkillText))
-	
+
+
+func _onHurt(atkInfo):
+	._onHurt(atkInfo)
+	if atkInfo.atkType == ELECTRIC:
+		atkInfo.hurtVal *= 2
+	if atkInfo.atkType == BULLET:
+		atkInfo.hurtVal *= 0.5
