@@ -26,7 +26,7 @@ var Config = {
 }
 
 const COLOR = {
-	"BASE": "#fff7c9",
+	"BASE": "#F0E6D2",
 	"BUFF": "#fff66e",
 	"PHY": "#ffb386",
 	"MGI": "#83f2ff",

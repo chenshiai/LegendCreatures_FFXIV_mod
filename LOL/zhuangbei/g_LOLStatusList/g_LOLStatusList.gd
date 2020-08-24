@@ -130,4 +130,25 @@ class b_kuangbao extends BaseBuff:
 			if atkNum >= 3:
 				atkNum = 0
 				masCha.hurtChara(atkInfo.hitCha,50,Chara.HurtType.REAL,Chara.AtkType.EFF)
-			
+
+
+# 黑色切割者
+class b_qiegezhe extends BaseBuff:
+	var buffLevel = 1
+	func _init(config):
+		_set_config("b_qiegezhe", config)
+		effId = "p_zhonDu"
+		_update()
+
+	func _update():
+		var bf = target.hasBuff(self.id)
+		if bf != null and bf != self:
+			bf.buffLevel += 1
+			if bf.buffLevel > 6:
+				bf.buffLevel = 6
+
+	func _upS():
+		att.defL = -0.04 * buffLevel
+		life = clamp(life, 0, 6)
+		eff.amount = 10
+					
