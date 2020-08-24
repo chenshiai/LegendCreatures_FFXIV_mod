@@ -1,24 +1,16 @@
-extends Item
-func init():
+extends "../LOLItemBase/LOLItemBase.gd"
+
+func _init():
 	name = "瑞莱的冰晶节杖"
-	type = config.EQUITYPE_EQUI
-	attInit()
-	att.mgiAtk = 120
+	att.mgiAtk = 90
 	att.maxHp = 300
-	att.cd = 0.1
-	info = "每次攻击赋予目标5层[结霜]"
-	info += "\n技能命中对敌人造成[结霜]*魔法攻击3%的魔法伤害"
-	
-func _connect():
-	masCha.connect("onAtkChara",self,"run")
-var t = 0;
-func _upS():
-	t += 1+1*masCha.att.cd
-	#print(t)
-var bl = false
-var n = 0
-func run(atkInfo:AtkInfo):
-	if atkInfo.atkType == Chara.AtkType.SKILL or atkInfo.atkType == Chara.AtkType.NORMAL:
+	info = TEXT.format("""{c_base}每次攻击赋予目标5层[结霜]
+技能命中对敌人造成{c_mgi}[结霜]层数 x 3%法强{/c}的魔法伤害{/c}""")
+
+
+func _onAtkChara(atkInfo:AtkInfo):
+	if atkInfo.atkType == SKILL or atkInfo.atkType == NORMAL:
 		atkInfo.hitCha.addBuff(b_jieShuang.new(5))
-	if atkInfo.atkType == Chara.AtkType.SKILL:
-		masCha.hurtChara(atkInfo.hitCha,masCha.att.mgiAtk*0.03*atkInfo.hitCha.hasBuff("b_jieShuang").life,Chara.HurtType.MGI,Chara.AtkType.EFF )
+	var bf = atkInfo.hitCha.hasBuff("b_jieShuang")
+	if atkInfo.atkType == SKILL and bf != null:
+		masCha.hurtChara(atkInfo.hitCha, masCha.att.mgiAtk * 0.03 * bf.life, MGI,EFF )

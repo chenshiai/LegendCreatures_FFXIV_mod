@@ -1,17 +1,13 @@
-extends Item
-func init():
+extends "../LOLItemBase/LOLItemBase.gd"
+
+func _init():
 	name = "虚空之杖"
-	type = config.EQUITYPE_EQUI
-	attInit()
 	att.mgiAtk = 80
-	att.mgiPen = 30
+	att.mgiPen = 15
 	att.mgiPenL = 0.3
-	info = "技能攻击附带魔法穿透值两倍的真实伤害"
-	
-func _connect():
-	masCha.connect("onAtkChara",self,"run")
+	info = TEXT.format("{c_base}技能攻击附带{c_mgi}固定法穿值两倍{/c}的真实伤害{/c}")
 
 
-func run(atkInfo):
-	if atkInfo.atkType == Chara.AtkType.SKILL:
-		masCha.hurtChara(atkInfo.hitCha,masCha.att.mgiPen*2,Chara.HurtType.REAL,Chara.AtkType.EFF )
+func _onAtkChara(atkInfo):
+	if atkInfo.atkType == SKILL:
+		masCha.hurtChara(atkInfo.hitCha, masCha.att.mgiPen * 2, REAL, EFF )

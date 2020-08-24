@@ -2,17 +2,16 @@ extends "../LOLItemBase/LOLItemBase.gd"
 
 
 func _init():
-	name = TEXT.format("{c_base}海克斯科技原型腰带{/c}")
+	name = "海克斯科技原型腰带"
 	att.maxHp = 300
 	att.mgiAtk = 60
 	att.mgiSuck = 0.2
 	att.cd = 0.1
-	info = TEXT.format("{c_base}战斗开始后，第一次攻击将闪烁到敌人最后一排并对每个前排敌人造成{c_mgi}150(+25% x 法强){/c}的魔法伤害{/c}")
-	
+	info = TEXT.format("{c_base}战斗开始后，第一次攻击将闪烁到敌人最后一排并对每个前两排的敌人造成{c_mgi}150(+25% x 法强){/c}魔法伤害{/c}")
 
-func _connect():
-	masCha.connect("onAtkChara", self, "run")
-	sys.main.connect("onBattleEnd", self, "run1")
+
+func _onBattleEnd():
+	bl = true
 
 
 var bl = true
@@ -23,11 +22,7 @@ var vs = [
 ]
 
 
-func run1():
-	bl = true
-
-
-func run(atkInfo):
+func _onAtkChara(atkInfo):
 	if bl:
 		bl = false
 		var mv = masCha.cell

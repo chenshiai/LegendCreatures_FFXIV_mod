@@ -126,6 +126,6 @@ func get_area_chas(type, x = Vector2(0, 1), y = Vector2(0, 1)):
 	for i in range(x1, x2 + 1):
 		for j in range(y1, y2 + 1):
 			var cha = sys.main.matCha(Vector2(i, j))
-			if cha != null and cha.team == 1:
+			if cha != null:
 				chas.append(cha)
 	return chas

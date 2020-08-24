@@ -1,33 +1,18 @@
-extends Item
-func init():
+extends "../LOLItemBase/LOLItemBase.gd"
+
+func _init():
 	name = "莫雷洛秘典"
-	type = config.EQUITYPE_EQUI
-	attInit()
 	att.mgiAtk = 80
 	att.maxHp = 300
 	att.mgiPen = 30
-	info = "每次技能攻击会为该目标添加3秒重伤(回复量减少50%)"
-	
-func _connect():
-	masCha.connect("onAtkChara",self,"run")
+	info = TEXT.format("{c_base}对目标造成魔法伤害时，会为该目标施加持续3秒的{c_skill}[重伤]{/c}效果(受到的治疗量减少40%){/c}")
 
 
-func run(atkInfo):
-	if atkInfo.atkType == Chara.AtkType.SKILL:
-		atkInfo.hitCha.addBuff(b_zhongshang.new(3))
+func _onAtkChara(atkInfo):
+	if atkInfo.hurtType == MGI:
+		STATUS.b_zhongshang.new({
+			"cha": atkInfo.hitCha,
+			"dur": 3,
+		})
 
-class b_zhongshang extends Buff:
-	func _init(lv = 1):
-		attInit()
-		effId = "p_liuXue"
-		life = lv
-		isNegetive=true
-	func init():
-		pass
-	func _connect():
-		masCha.connect("onPlusHp",self,"onHurt")
-	func _upS():
-		eff.amount = clamp(life,1,10)
-	func onHurt(val):
-		masCha.att.hp -= val*0.5
 	

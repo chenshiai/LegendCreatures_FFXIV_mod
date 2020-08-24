@@ -1,36 +1,33 @@
-extends Item
-func init():
+extends "../LOLItemBase/LOLItemBase.gd"
+
+func _init():
 	name = "卢登的回声"
-	type = config.EQUITYPE_EQUI
-	attInit()
 	att.mgiAtk = 100
 	att.cd = 0.1
-	info = "每次攻击减少技能剩余CD的1%"
-	info += "\n技能命中对敌人周围1格最多2个敌人单位造成100+5%魔法攻击的魔法伤害(5秒CD)"
-	
-func _connect():
-	masCha.connect("onCastCdSkill",self,"run1")
-	masCha.connect("onAtkChara",self,"run")
+	info = TEXT.format("""{c_base}充能时间8s，每次攻击或释放技能都会减少此装备5%的充能时间
+充能完毕后，下一次攻击将对目标及周围1格内的敌人造成{c_mgi}100(+10% x 法强){/c}的魔法伤害{/c}""")
 
-var t = 0;
-func _upS():
-	t += 1+1*masCha.att.cd
-	#print(t)
+
+var t = 0
 var bl = false
-var n = 0
-func run(atkInfo:AtkInfo):
-	for i in masCha.skills:
-		i.nowTime+=i.nowTime*0.01
-	if bl && atkInfo.atkType == Chara.AtkType.NORMAL:
-		#print(atkInfo.hitCha.cell)
-		for arr in masCha.getCellChas(atkInfo.hitCha.cell,1,1):
-			#print(arr)
-			if n < 2:
-				masCha.hurtChara(arr,masCha.att.mgiAtk*0.05+100,Chara.HurtType.MGI,Chara.AtkType.EFF )
-			n += 1
-			bl = false
-		n = 0
-func run1(id):
-	if t >= 5:
+func _onAtkChara(atkInfo:AtkInfo):
+	_onCastCdSkill()
+	if bl:
+		bl = false
+		for cha in masCha.getCellChas(atkInfo.hitCha.cell, 1, 1):
+			masCha.hurtChara(cha, masCha.att.mgiAtk * 0.10 + 100, MGI, EFF)
+
+func _onCastCdSkill(id = ""):
+	t += 0.04
+	if t >= 8:
 		bl = true
 		t = 0
+
+func _upS():
+	t += 1 + masCha.att.cd
+	if t >= 8:
+		bl = true
+		t = 0
+
+func _onBattleEnd():
+	t = 0
