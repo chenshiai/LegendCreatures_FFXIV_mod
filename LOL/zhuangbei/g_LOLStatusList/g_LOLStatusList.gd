@@ -57,7 +57,7 @@ class ReduceDamage extends BaseBuff:
 			atkInfo.hurtVal *= 1 - reduce_pw
 		elif reduce_type == atkInfo.hurtType:
 			atkInfo.hurtVal *= 1 - reduce_pw
-	
+
 # 兰德里的折磨 冰霜
 class b_bingshuang extends BaseBuff:
 	func _init(config):
@@ -91,13 +91,10 @@ class b_mieshizhe extends BaseBuff:
 class b_ningzhi extends BaseBuff:
 	func _init(config):
 		_set_config("b_ningzhi", config)
-
 	func _connect():
 		masCha.connect("onHurt", self, "run")
-
 	func _upS():
 		life = clamp(life, 0, 3)
-
 	func run(atkInfo):
 		atkInfo.hurtVal = 0
 
@@ -109,21 +106,17 @@ class b_kuangbao extends BaseBuff:
 	func _init(config):
 		_set_config("b_kuangbao", config)
 		_update()
-	
 	func _connect():
 		masCha.connect("onAtkChara", self, "run")
-
-	func _upS():
-		att.spd = 0.08 * buffLevel
-		life = clamp(life, 0, 5)
-
 	func _update():
 		var bf = target.hasBuff(self.id)
 		if bf != null and bf != self:
 			bf.buffLevel += 1
 			if bf.buffLevel > 6:
 				bf.buffLevel = 6
-
+	func _upS():
+		att.spd = 0.08 * buffLevel
+		life = clamp(life, 0, 5)
 	func run(atkInfo):
 		if atkInfo.atkType == Chara.AtkType.NORMAL and buffLevel == 6:
 			atkNum += 1
@@ -137,18 +130,24 @@ class b_qiegezhe extends BaseBuff:
 	var buffLevel = 1
 	func _init(config):
 		_set_config("b_qiegezhe", config)
-		effId = "p_zhonDu"
 		_update()
-
+		effId = "p_zhonDu"
 	func _update():
 		var bf = target.hasBuff(self.id)
 		if bf != null and bf != self:
 			bf.buffLevel += 1
 			if bf.buffLevel > 6:
 				bf.buffLevel = 6
-
 	func _upS():
 		att.defL = -0.04 * buffLevel
 		life = clamp(life, 0, 6)
 		eff.amount = 10
-					
+
+# 挑战护手
+class b_tiaozhanhushou extends BassShield:
+	func _init(config):
+		_set_config("b_tiaozhanhushou", config)
+		self.shieldValue = _get(config, "HD", 0)
+	func _upS():
+		life = clamp(life, 0, 5)
+		self.shieldValue -= self.shieldValue * 0.25

@@ -1,28 +1,22 @@
-extends Item
+extends "../LOLItemBase/LOLItemBase.gd"
 
 
-func init():
+func _init():
 	name = "饮血剑"
-	type = config.EQUITYPE_EQUI
-	attInit()
 	att.atk = 80
 	att.suck = 0.20
-	info = "护盾：0" 
-	info += "\n生命偷取溢出的生命会变成护盾最多存储1500"
-	info += "\n每回合战斗开始护盾值衰减30%"
-	
-func _connect():
-	masCha.connect("onAtkChara",self,"run1")
-	masCha.connect("onPlusHp",self,"run")
-	masCha.connect("onHurt",self,"run2")
-	sys.main.connect("onBattleStart",self,"run3") #护盾衰减
+	info = TEXT.format("""护盾：0
+生命偷取溢出的生命值会形成一个最多抵挡1500点伤害的护盾
+每回合战斗开始，上一回合的护盾值衰减30%""")
+
 var hp = 0
 var d = 0
 var infos = "护盾：%s\n生命偷取溢出的生命会变成护盾最多存储1500\n每回合战斗开始护盾值衰减30%%" 
-func run1(atkInfo):
+func _onAtkChara(atkInfo):
 	if masCha.att.hp > (masCha.att.maxHp - atkInfo.hurtVal*masCha.att.suck):
 		hp = atkInfo.hurtVal*masCha.att.suck - (masCha.att.maxHp - masCha.att.hp)
-func run(val):
+
+func _onPlusHp(val):
 	if hp > 0:
 		var n = val - (masCha.att.maxHp - masCha.att.hp)
 		if n > 0:
@@ -31,14 +25,15 @@ func run(val):
 				d = 1500
 			hp = 0
 			info = infos % d as int
-func run2(atkInfo):
+
+func _onHurt(atkInfo):
 	if d > 0:
 		atkInfo.hurtVal = 0
 		d -= atkInfo.atkVal
 		if d < 0:
 			d = 0
 		info = infos % d as int
-func run3():
+func _onBattleStart():
 	if d > 0:
 		d = d*0.7
 		info = infos % d as int

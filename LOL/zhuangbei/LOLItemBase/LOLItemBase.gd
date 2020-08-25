@@ -23,6 +23,7 @@ func _connect():
 	masCha.connect("onAtkChara", self, "_onAtkChara")
 	masCha.connect("onCastCdSkill", self, "_onCastCdSkill")
 	masCha.connect("onHurt", self, "_onHurt")
+	masCha.connect("onPlusHp",self,"_onPlusHp")
 
 
 func _onBattleStart():
@@ -34,4 +35,6 @@ func _onAtkChara(atkInfo):
 func _onCastCdSkill(id):
 	pass
 func _onHurt(atkInfo):
+	pass
+func _onPlusHp(val):
 	pass
