@@ -9,6 +9,10 @@ func _init():
 消耗所有充能，下一次攻击会造成{c_mgi}120{/c}的额外魔法伤害，并将该伤害弹射给其他5个目标{/c}""")
 
 
+func _onBattleStart():
+	c = 0
+	n = 0
+
 var c = 0 #弹射次数
 var n = 0 #攻击次数
 func _onCastCdSkill(id):

@@ -5,6 +5,7 @@ class BaseBuff extends Buff:
 	const NORMAL = Chara.AtkType.NORMAL
 	const SKILL = Chara.AtkType.SKILL
 	const EFF = Chara.AtkType.EFF
+	const MISS = Chara.AtkType.MISS
 	var Utils = globalData.infoDs["g_LOLUtils"]
 	var target = null
 	func _init():
@@ -62,23 +63,19 @@ class ReduceDamage extends BaseBuff:
 class b_bingshuang extends BaseBuff:
 	func _init(config):
 		_set_config("b_bingshuang", config, true)
-		effId = "p_jieShuang"
 		att.penL = -0.1
 		att.defL = -0.1
 	func _upS():
 		att.spd = -(0.10 + life * 0.01)
-		eff.amount = 5
 		life = clamp(life, 0, 15)
 
 # 重伤
 class b_zhongshang extends BaseBuff:
 	func _init(config):
 		_set_config("b_zhongshang", config, true)
-		effId = "p_liuXue"
 		att.reHp = -0.4
 	func _upS():
 		life = clamp(life, 0, 3)
-		eff.amount = 5
 
 # 灭世者的魔法帽
 class b_mieshizhe extends BaseBuff:
@@ -106,14 +103,16 @@ class b_kuangbao extends BaseBuff:
 	func _init(config):
 		_set_config("b_kuangbao", config)
 		_update()
+		_conflict("b_kuangbao")
+
 	func _connect():
 		masCha.connect("onAtkChara", self, "run")
 	func _update():
 		var bf = target.hasBuff(self.id)
 		if bf != null and bf != self:
-			bf.buffLevel += 1
-			if bf.buffLevel > 6:
-				bf.buffLevel = 6
+			self.buffLevel += bf.buffLevel
+			if self.buffLevel > 6:
+				self.buffLevel = 6
 	func _upS():
 		att.spd = 0.08 * buffLevel
 		life = clamp(life, 0, 5)
@@ -131,17 +130,19 @@ class b_qiegezhe extends BaseBuff:
 	func _init(config):
 		_set_config("b_qiegezhe", config)
 		_update()
-		effId = "p_zhonDu"
+		_conflict("b_qiegezhe")
 	func _update():
 		var bf = target.hasBuff(self.id)
 		if bf != null and bf != self:
-			bf.buffLevel += 1
-			if bf.buffLevel > 6:
-				bf.buffLevel = 6
+			print("上一个:", bf, bf.buffLevel)
+			self.buffLevel += bf.buffLevel
+			print("最新：", self, self.buffLevel)
+
+			if self.buffLevel > 6:
+				self.buffLevel = 6
 	func _upS():
 		att.defL = -0.04 * buffLevel
 		life = clamp(life, 0, 6)
-		eff.amount = 10
 
 # 挑战护手
 class b_tiaozhanhushou extends BassShield:
@@ -151,3 +152,28 @@ class b_tiaozhanhushou extends BassShield:
 	func _upS():
 		life = clamp(life, 0, 5)
 		self.shieldValue -= self.shieldValue * 0.25
+
+# 钢铁烈阳之匣
+class b_xuedun extends BassShield:
+	func _init(config):
+		_set_config("b_xuedun", config)
+		_conflict("b_xuedun")
+		self.shieldValue = _get(config, "HD", 0)
+	func _upS():
+		life = clamp(life, 0, 5)
+
+# 救赎 唯一buff
+class b_jiushu extends BaseBuff:
+	var	t = 0
+	func _init(config):
+		_set_config("b_jiushu", config)
+		_conflict("b_jiushu")
+	func _upS():
+		t += 1
+		if t >= 5:
+			for cha in masCha.getAllChas(2):
+				cha.plusHp(10+masCha.lv*20, false)
+			for cha in masCha.getAllChas(1):
+				masCha.hurtChara(cha,masCha.att.maxHp*0.02, REAL, EFF)
+			t = 0
+		

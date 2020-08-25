@@ -18,6 +18,4 @@ func _onAtkChara(atkInfo:AtkInfo):
 				if n < 3 :
 					var d:Eff = masCha.newEff(masCha.atkEff, masCha.sprcPos)
 					d._initFlyCha(cha)
-
-		for cha in chas:
-			masCha.hurtChara(cha, masCha.att.atk * 0.40, PHY, EFF)
+					masCha.hurtChara(cha, masCha.att.atk * 0.40, PHY, EFF)

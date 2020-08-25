@@ -11,9 +11,12 @@ func _init():
 var t = 0 #计时
 func _upS():
 	t += 1
-	if t == 5:
+	if t >= 5:
 		masCha.delBuff(masCha.hasBuff("b_jiSu"))
 		t = 0
 
+func _onBattleStart():
+	t = 0
+		
 func _onAtkChara(atkInfo:AtkInfo):
 	masCha.addBuff(b_jiSu.new(8))

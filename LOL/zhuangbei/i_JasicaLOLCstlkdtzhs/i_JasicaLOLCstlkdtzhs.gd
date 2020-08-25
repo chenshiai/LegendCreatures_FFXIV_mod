@@ -6,7 +6,6 @@ var skillInfo = """{c_base}提供单位100%的基础攻击力
 
 const cd = 20
 var nowTime = 0
-var shiledValue = 0 #护盾值
 var open = true
 
 
@@ -24,9 +23,17 @@ func _connect():
 	att.atk = (masCha.attCoe.atk * 8.5 * masCha.lv) as int
 
 
+func _onBattleStart():
+	nowTime = 0
+	open = true
+	aTime = 0 # 伤害累积时间
+	aHurt = 0 # 累积伤害
+	aOpen = false # 累积开关
+
 func _upS():
 	# 技能冷却计时器
 	if !open:
+		print("进入冷却")
 		nowTime += masCha.att.cd + 1
 		if nowTime >= cd:
 			open = true
@@ -35,6 +42,7 @@ func _upS():
 	if aOpen:
 		aTime += 1
 		nowTime = 0
+		print("开启累计")
 		# 伤害累积开启5秒后自动关闭累积
 		if aTime >= 5:
 			aTime = 0
@@ -50,6 +58,7 @@ func _onHurt(atkInfo:AtkInfo):
 		if aHurt >= masCha.att.maxHp * 0.15 and open:
 			aOpen = false # 关闭伤害累积计时器
 			open = false # 关闭技能冷却计时器
+			print("触发护盾")
 			STATUS.b_tiaozhanhushou.new({
 				"cha": masCha,
 				"dur": 5,
