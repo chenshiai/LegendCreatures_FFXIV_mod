@@ -14,4 +14,4 @@ func _onBattleStart():
 			"dur": 5,
 			"HD": (masCha.att.maxHp * 0.25 + 120)
 		})
-	
+

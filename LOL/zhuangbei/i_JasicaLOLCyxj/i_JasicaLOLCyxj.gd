@@ -2,17 +2,19 @@ extends "../LOLItemBase/LOLItemBase.gd"
 
 var HD = 0
 var Infos = """{c_base}{c_skill}护盾：{0}{/c}
-生命偷取溢出的生命值会形成一个最多抵挡1500点伤害的护盾
+{c_skill}唯一被动：{/c}生命偷取溢出的生命值会形成一个最多抵挡1500点伤害的护盾
 每回合战斗开始，上一回合的护盾值衰减30%{/c}"""
 
 func _init():
+	id = "i_JasicaLOLCyxj"
+	RepeatId = id
 	name = "饮血剑"
 	att.atk = 80
 	att.suck = 0.20
 	info = TEXT.format(Infos, { 0: HD as int })
 
 func _onAtkChara(atkInfo):
-	if atkInfo.atkType == NORMAL:
+	if atkInfo.atkType == NORMAL and !Repeat:
 		var suckVal = atkInfo.hurtVal * masCha.att.suck
 		if (masCha.att.hp + suckVal) > masCha.att.maxHp:
 			HD += (masCha.att.hp + suckVal) - masCha.att.maxHp
@@ -25,7 +27,7 @@ func _onHurt(atkInfo):
 			HD = 0
 		updataInfo()
 
-func _onBattleEnd():
+func _onBattleStart():
 	if HD > 0:
 		HD *= 0.7
 		updataInfo()

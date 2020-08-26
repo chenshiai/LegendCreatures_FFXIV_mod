@@ -2,12 +2,14 @@ extends "../LOLItemBase/LOLItemBase.gd"
 
 
 func _init():
+	id = "i_JasicaLOLAhkskjyxyd"
+	RepeatId = id
 	name = "海克斯科技原型腰带"
 	att.maxHp = 300
 	att.mgiAtk = 60
 	att.mgiSuck = 0.2
 	att.cd = 0.1
-	info = TEXT.format("{c_base}战斗开始后，第一次攻击将闪烁到敌人最后一排并对每个前两排的敌人造成{c_mgi}150(+25% x 法强){/c}魔法伤害{/c}")
+	info = TEXT.format("{c_base}{c_skill}唯一主动——火焰弹：{/c}战斗开始后，第一次攻击将闪烁到敌人最后一排并对每个前两排的敌人造成{c_mgi}150(+25% x 法强){/c}魔法伤害{/c}")
 
 
 func _onBattleEnd():
@@ -23,7 +25,7 @@ var vs = [
 
 
 func _onAtkChara(atkInfo):
-	if bl:
+	if bl and !Repeat:
 		bl = false
 		var mv = masCha.cell
 		if masCha.team == 1:

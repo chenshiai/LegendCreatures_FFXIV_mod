@@ -13,6 +13,9 @@ const SKILL = Chara.AtkType.SKILL # 技能攻击
 const EFF = Chara.AtkType.EFF # 特效攻击
 const MISS = Chara.AtkType.MISS # miss攻击
 
+var Repeat = false # 是否有冲突装备
+var RepeatId = "" # 冲突装备Id
+
 func _init():
 	attInit()
 	type = config.EQUITYPE_EQUI
@@ -24,7 +27,14 @@ func _connect():
 	masCha.connect("onCastCdSkill", self, "_onCastCdSkill")
 	masCha.connect("onHurt", self, "_onHurt")
 	masCha.connect("onPlusHp",self,"_onPlusHp")
+	_set_repeat()
 
+
+func _set_repeat():
+	for item in masCha.items:
+		if item.id == RepeatId:
+			Repeat = true
+			return
 
 func _onBattleStart():
 	pass

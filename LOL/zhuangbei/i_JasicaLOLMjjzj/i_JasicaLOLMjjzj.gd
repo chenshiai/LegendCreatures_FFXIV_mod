@@ -1,70 +1,23 @@
-extends Item
-func init():
+extends "../LOLItemBase/LOLItemBase.gd"
+
+func _init():
+	id = "i_JasicaLOLMjjzj"
+	RepeatId = id
 	name = "荆棘之甲"
-	type = config.EQUITYPE_EQUI
-	attInit()
 	att.def = 80
 	att.maxHp = 350
-	info = "唯一·荆棘:被普通攻击时,会反弹10%护甲值加上35的魔法伤害，并施加重伤3秒(回复量减少50%)"
-	info += "\n唯一·寒铁:被普通攻击时,减少攻击者20%攻击速度持续1秒"
-	#effId = "sk_yunShi"
-	
-func _connect():
-	sys.main.connect("onBattleStart",self,"run")
-func _upS():
-	pass
-func run():
-	masCha.addBuff(w_jingji.new())
+	info = TEXT.format("""{c_base}{c_skill}唯一·荆棘：{/c}被普通攻击时，会回敬攻击者魔法伤害，数额为{c_mgi}35(+自身10%的护甲值){/c}，并施加重伤3秒(回复量减少40%)
+{c_skill}唯一·寒铁：{/c}被普通攻击时，减少攻击者20%攻击速度，持续2秒{/c}""")
 
-class w_jingji extends Buff:
-	var n = 0 
-	func _init(lv = 1):
-		attInit()
-		#life = lv
-		id = "w_kuangbao"
-		#isNegetive=true
-	
-	func init():
-		pass
-	
-	func _connect():
-		masCha.connect("onHurt",self,"run")
-	func _upS():
-		pass
-	func run(atkInfo):
-		if atkInfo.atkType == Chara.AtkType.NORMAL :
-			atkInfo.atkCha.addBuff(b_zhongshang.new(3))
-			atkInfo.atkCha.addBuff(w_hantie.new(1))
-			masCha.hurtChara(atkInfo.atkCha,masCha.att.def*0.1 + 35,Chara.HurtType.MGI,Chara.AtkType.EFF )
 
-class b_zhongshang extends Buff:
-	func _init(lv = 1):
-		attInit()
-		effId = "p_liuXue"
-		life = lv
-		isNegetive=true
-	func init():
-		pass
-	func _connect():
-		masCha.connect("onPlusHp",self,"onHurt")
-	func _upS():
-		eff.amount = clamp(life,1,10)
-	func onHurt(val):
-		masCha.att.hp -= val*0.5
-
-class w_hantie extends Buff:
-	var n = 0 
-	func _init(lv = 1):
-		attInit()
-		life = lv
-		id = "w_kuangbao"
-		#isNegetive=true
-		att.spd = -0.20
-	
-	func init():
-		pass
-	
-	func _connect():
-		pass
-	func _upS():
-		pass
+func _onHurt(atkInfo):
+	if atkInfo.atkType == NORMAL and !Repeat:
+		masCha.hurtChara(atkInfo.atkCha, masCha.att.def * 0.1 + 35, MGI, EFF)
+		STATUS.b_zhongshang.new({
+			"cha": atkInfo.atkCha,
+			"dur": 3
+		})
+		STATUS.b_hantie.new({
+			"cha": atkInfo.atkCha,
+			"dur": 2,
+		})

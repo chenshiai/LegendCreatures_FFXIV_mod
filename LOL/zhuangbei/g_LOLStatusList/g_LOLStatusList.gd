@@ -18,15 +18,15 @@ class BaseBuff extends Buff:
 		if target != null:
 			target.addBuff(self)
 		casCha = _get(config, "cas", null)
+	func _conflict(buffId):
+		var bf = target.hasBuff(buffId)
+		if bf != null and bf != self:
+			bf.isDel = true
 	func _get(config, name, default = null):
 		if config.has(name):
 			return config[name]
 		else:
 			return default
-	func _conflict(buffId):
-		var bf = target.hasBuff(buffId)
-		if bf != null and bf != self:
-			bf.isDel = true
 
 # 护盾基类
 class BassShield extends BaseBuff:
@@ -130,18 +130,15 @@ class b_qiegezhe extends BaseBuff:
 	func _init(config):
 		_set_config("b_qiegezhe", config)
 		_update()
-		_conflict("b_qiegezhe")
 	func _update():
 		var bf = target.hasBuff(self.id)
 		if bf != null and bf != self:
-			print("上一个:", bf, bf.buffLevel)
-			self.buffLevel += bf.buffLevel
-			print("最新：", self, self.buffLevel)
-
-			if self.buffLevel > 6:
-				self.buffLevel = 6
+			bf.buffLevel += 1
+			if bf.buffLevel > 6:
+				bf.buffLevel = 6
 	func _upS():
 		att.defL = -0.04 * buffLevel
+		print(self, " 当前层数：", buffLevel)
 		life = clamp(life, 0, 6)
 
 # 挑战护手
@@ -157,7 +154,6 @@ class b_tiaozhanhushou extends BassShield:
 class b_xuedun extends BassShield:
 	func _init(config):
 		_set_config("b_xuedun", config)
-		_conflict("b_xuedun")
 		self.shieldValue = _get(config, "HD", 0)
 	func _upS():
 		life = clamp(life, 0, 5)
@@ -176,4 +172,12 @@ class b_jiushu extends BaseBuff:
 			for cha in masCha.getAllChas(1):
 				masCha.hurtChara(cha,masCha.att.maxHp*0.02, REAL, EFF)
 			t = 0
-		
+
+# 寒铁
+class b_hantie extends BaseBuff:
+	func _init(config):
+		_set_config("b_hantie", config)
+		_conflict("b_hantie")
+		att.spd = -0.20
+	func _upS():
+		life = clamp(life, 0, 2)
