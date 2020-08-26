@@ -1,24 +1,36 @@
 extends "../LOLItemBase/LOLItemBase.gd"
 
 func _init():
+	id = "i_JasicaLOLAldldzm"
+	RepeatId = id
 	name = "兰德里的折磨"	
 	att.mgiAtk = 80
 	att.maxHp = 300
 	att.cd = 0.1
-	info = TEXT.format("""{c_base}技能与普攻叠加2层{c_skill}[冰霜]{/c}
-攻击带有15层冰霜的单位时清除15层冰霜并造成对方{c_real}[最大生命2%]{/c}的真实伤害
-{c_skill}[冰霜]{/c}：减少目标10%物理防御、魔法防御、攻速，每层多减少1%攻速{/c}""")
+	info = TEXT.format("""{c_base}{c_skill}唯一被动——疯狂：{/c}战斗开始后，每过1秒，携带者造成的伤害提高2%(最大值10%)。
+{c_skill}唯一被动——折磨：{/c}伤害型技能会烧·灼目标3秒，每秒造成相当于目标1%最大生命值的魔法伤害，目标每有一个负面效果都会提升50%的烧·灼伤害{/c}""")
 
+var upAtkR = 0 # 疯狂伤害加成
+
+func _onBattleStart():
+	upAtkR = 0
+
+func _upS():
+	if Repeat:
+		return
+	
+	upAtkR += 0.02
+	if upAtkR > 0.1:
+		upAtkR = 0.1
+	att.atkR = upAtkR
 
 func _onAtkChara(atkInfo:AtkInfo):
-	if atkInfo.atkType == NORMAL or atkInfo.atkType == SKILL:
+	if Repeat:
+		return
+	if atkInfo.atkType == SKILL:
 		STATUS.b_bingshuang.new({
 			"cha": atkInfo.hitCha,
-			"dur": 2,
+			"dur": 3,
+			"cas": masCha
 		})
-		var bf = atkInfo.hitCha.hasBuff("b_bingshuang")
-		if bf != null && bf.life >= 15 :
-			bf.isDel = true
-			masCha.hurtChara(atkInfo.hitCha, atkInfo.hitCha.att.maxHp * 0.02, REAL, EFF)
-
 	

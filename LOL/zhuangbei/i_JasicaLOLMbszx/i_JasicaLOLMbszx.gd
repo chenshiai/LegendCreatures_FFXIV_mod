@@ -1,6 +1,8 @@
 extends "../LOLItemBase/LOLItemBase.gd"
 
 func _init():
+	id = "i_JasicaLOLMbszx"
+	RepeatId = id
 	name = "冰霜之心"
 	att.def = 110
 	att.maxHp = 200

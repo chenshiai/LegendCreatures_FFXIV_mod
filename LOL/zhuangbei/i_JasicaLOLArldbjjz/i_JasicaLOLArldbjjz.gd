@@ -13,4 +13,4 @@ func _onAtkChara(atkInfo:AtkInfo):
 		atkInfo.hitCha.addBuff(b_jieShuang.new(5))
 	var bf = atkInfo.hitCha.hasBuff("b_jieShuang")
 	if atkInfo.atkType == SKILL and bf != null:
-		masCha.hurtChara(atkInfo.hitCha, masCha.att.mgiAtk * 0.03 * bf.life, MGI,EFF )
+		masCha.hurtChara(atkInfo.hitCha, masCha.att.mgiAtk * 0.03 * bf.life, MGI, EFF)

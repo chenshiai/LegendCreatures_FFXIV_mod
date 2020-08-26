@@ -1,12 +1,19 @@
 extends "../LOLItemBase/LOLItemBase.gd"
 
 func _init():
+	id = "i_JasicaLOLAxkzz"
+	RepeatId = id
 	name = "虚空之杖"
 	att.mgiAtk = 80
 	att.mgiPen = 15
-	att.mgiPenL = 0.3
-	info = TEXT.format("{c_base}技能攻击附带{c_mgi}固定法穿值两倍{/c}的真实伤害{/c}")
+	att.mgiPenL = 0.4
+	info = TEXT.format("""{c_base}{c_skill}唯一被动——溶解：{/c}+40%法术穿透
+技能攻击附带{c_mgi}固定法穿值两倍{/c}的真实伤害{/c}""")
 
+func _connect():
+	._connect()
+	if Repeat:
+		att.mgiPenL = 0
 
 func _onAtkChara(atkInfo):
 	if atkInfo.atkType == SKILL:

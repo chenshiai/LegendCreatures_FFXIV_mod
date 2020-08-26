@@ -63,11 +63,14 @@ class ReduceDamage extends BaseBuff:
 class b_bingshuang extends BaseBuff:
 	func _init(config):
 		_set_config("b_bingshuang", config, true)
-		att.penL = -0.1
-		att.defL = -0.1
 	func _upS():
-		att.spd = -(0.10 + life * 0.01)
-		life = clamp(life, 0, 15)
+		var num = 0
+		for bf in masCha.buffs:
+			if bf.isNegetive:
+				num += 1
+		casCha.hurtChara(masCha, (masCha.att.maxHp * 0.01) + (num * 0.05) , MGI, EFF)
+		
+		life = clamp(life, 0, 3)
 
 # 重伤
 class b_zhongshang extends BaseBuff:
@@ -138,7 +141,6 @@ class b_qiegezhe extends BaseBuff:
 				bf.buffLevel = 6
 	func _upS():
 		att.defL = -0.04 * buffLevel
-		print(self, " 当前层数：", buffLevel)
 		life = clamp(life, 0, 6)
 
 # 挑战护手

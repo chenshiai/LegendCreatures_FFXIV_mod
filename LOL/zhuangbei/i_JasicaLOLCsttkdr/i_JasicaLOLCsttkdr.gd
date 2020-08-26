@@ -1,12 +1,14 @@
 extends "../LOLItemBase/LOLItemBase.gd"
 
 func _init():
+	id = "i_JasicaLOLCsttkdr"
+	RepeatId = id
 	name = "斯塔缇克电刃"
-	att.spd = 0.6
+	att.spd = 0.4
 	att.cri = 0.25
 	att.atkRan = 2
-	info = TEXT.format("""{c_base}每8次普通攻击或释放技能后充能完毕
-消耗所有充能，下一次攻击会造成{c_mgi}120{/c}的额外魔法伤害，并将该伤害弹射给其他5个目标{/c}""")
+	info = TEXT.format("""{c_base}{c_skill}盈能：{/c}每8次普通攻击或释放技能后充能完毕
+{c_skill}电击：{/c}消耗所有充能，下一次攻击会造成{c_mgi}120{/c}的额外魔法伤害，并将该伤害弹射给其他5个目标{/c}""")
 
 
 func _onBattleStart():

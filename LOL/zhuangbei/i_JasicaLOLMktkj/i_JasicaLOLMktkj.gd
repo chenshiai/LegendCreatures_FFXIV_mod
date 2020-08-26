@@ -1,51 +1,32 @@
-extends Item
-func init():
+extends "../LOLItemBase/LOLItemBase.gd"
+
+func _init():
+	id = "i_JasicaLOLMktkj"
+	RepeatId = id
 	name = "狂徒铠甲"
-	type = config.EQUITYPE_EQUI
-	attInit()
 	att.maxHp = 800
 	att.reHp = 0.2
 	att.cd = 0.1
-	info = "唯一·狂徒:每次命中减少技能剩余CD的1%"
-	info += "\n唯一·狂徒:每受到普攻或技能8次伤害恢复最大生命的3%"
-	info += "\n唯一·狂徒:如果最大生命大于5000则回复2%"
-	#info += "\n唯一·狂徒:每5秒回复150生命"
-	
+	info = TEXT.format("""{c_base}{c_skill}唯一被动：{/c}+10%冷却缩减。
+{c_skill}唯一被动：{/c}在自身拥有至少3000点最大生命值时，提供狂徒之心效果。
+
+[狂徒之心]：每受到8次普攻或技能伤害，恢复最大生命的2%。{/c}""")
+
+var open = false # 狂徒之心是否开启
+var num = 0 # 受到攻击次数
+
 func _connect():
-	sys.main.connect("onBattleStart",self,"run")
+	._connect()
+	if Repeat:
+		att.cd = 0
 
-func _upS():
-	pass
-func run():
-	masCha.addBuff(w_kuangtu.new())
+func _onHurt(atkInfo):
+	if (atkInfo.atkType == NORMAL or atkInfo.atkType == SKILL) and !Repeat:
+		if masCha.att.maxHp >= 3000:
+			num += 1
+			if num >= 8:
+				masCha.plusHp(masCha.att.maxHp * 0.02)
 
-class w_kuangtu extends Buff:
-	func _init(lv = 1):
-		attInit()
-		id = "w_kuangtu"
-	func init():
-		pass
-	func _connect():
-		masCha.connect("onHurtEnd",self,"run")
-	# var t = 0 #计时
-	func _upS():
-		# t += 1
-		# if t == 5:
-		# 	masCha.plusHp(150)
-		# 	t = 0
-		pass
-	var n = 0
-	func run(atkInfo:AtkInfo):
-		if atkInfo.atkType == Chara.AtkType.NORMAL || atkInfo.atkType == Chara.AtkType.SKILL:
-			n += 1
-		if n == 15:
-			if masCha.att.maxHp > 5000:
-				masCha.plusHp(masCha.att.maxHp * 0.01)
-			else:
-				masCha.plusHp(masCha.att.maxHp * 0.03)
-			n = 0
-		if atkInfo.isMiss :
-			for i in masCha.skills:
-				i.nowTime+=i.nowTime*0.01
+
 
 	

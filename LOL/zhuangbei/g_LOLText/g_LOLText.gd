@@ -32,7 +32,7 @@ const COLOR = {
 	"MGI": "#83f2ff",
 	"REAL": "#ffffff",
 	"PASSIVE": "#a9a9a9",
-	"SKILL": "#48daff",
+	"SKILL": "#C8AA6E",
 	"LASER": "#F14141",
 	"BULLET": "#EED366",
 	"DARK": "#a570c9",

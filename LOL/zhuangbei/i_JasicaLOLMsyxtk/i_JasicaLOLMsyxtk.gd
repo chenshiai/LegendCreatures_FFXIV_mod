@@ -1,25 +1,33 @@
-extends Item
-func init():
+extends "../LOLItemBase/LOLItemBase.gd"
+
+func _init():
+	id = "i_JasicaLOLMsyxtk"
+	RepeatId = id
 	name = "适应性头盔"
-	type = config.EQUITYPE_EQUI
-	attInit()
 	att.maxHp = 450
 	att.mgiDef = 55
 	att.reHp = 0.1
-	info = "受到来自同一个单位的伤害时,使单位所有后续伤害减少30%"
-	#effId = "sk_yunShi"
-	
-func _connect():
-	masCha.connect("onHurt",self,"run")
-	masCha.connect("onAddItem",self,"run1")
-var cha:Chara
-func run1(item):
-	cha = masCha
-func run(atkInfo):
-	if cha == atkInfo.atkCha:
-		#print("适应性头盔:%s" % atkInfo.hurtVal)
-		atkInfo.hurtVal *= 0.7
-	cha = atkInfo.atkCha
-	#if atkInfo.atkType == Chara.AtkType.SKILL:
-	#	masCha.plusHp(masCha.att.maxHp*0.01)
+	att.cd = 0.1
+	info = TEXT.format("{c_base}{c_skill}唯一被动：{/c}承受魔法伤害后，携带者获得1%的魔法伤害减免，最大提升至20%，持续4s。{/c}")
 
+var Level = 0 # 当前累计伤害减免
+const HOLD = 4 # 持续时间
+var nowTime = 0 # 倒计时
+
+func _onHurt(atkInfo):
+	if Repeat:
+		return
+	if atkInfo.hurtType == MGI:
+		nowTime = 0
+		atkInfo.hurtVal *= 1 - Level
+		Level += 0.01
+		if Level > 0.2:
+			Level = 0.2
+
+func _upS():
+	if Repeat:
+		return
+	
+	nowTime += 1
+	if nowTime >= HOLD:
+		Level = 0

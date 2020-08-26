@@ -8,7 +8,7 @@ func _init():
 	att.maxHp = 400
 	att.atk = 40
 	att.cd = 0.20
-	info = TEXT.format("{c_base}{c_skill}唯一·切割者：{/c}造成物理伤害时减少目标4%护甲，持续6秒(最多叠加6次，减少24%护甲){/c}")
+	info = TEXT.format("{c_base}{c_skill}唯一被动：{/c}造成物理伤害时减少目标4%护甲，持续6秒(最多叠加6次，减少24%护甲){/c}")
 
 
 func _onAtkChara(atkInfo):

@@ -1,6 +1,8 @@
 extends "../LOLItemBase/LOLItemBase.gd"
 
 func _init():
+	id = "i_JasicaLOLCwjzr"
+	RepeatId = id
 	name = "无尽之刃"
 	att.atk = 80
 	att.cri = 0.25

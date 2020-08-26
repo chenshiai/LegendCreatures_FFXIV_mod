@@ -32,9 +32,10 @@ func _connect():
 
 func _set_repeat():
 	for item in masCha.items:
-		if item.id == RepeatId:
+		if item.id == RepeatId and item != self:
 			Repeat = true
 			return
+	Repeat = false
 
 func _onBattleStart():
 	pass

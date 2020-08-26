@@ -1,21 +1,22 @@
-extends Item
-func init():
+extends "../LOLItemBase/LOLItemBase.gd"
+
+func _init():
+	id = "i_JasicaLOLMzfkj"
+	Repeat = id
 	name = "振奋铠甲"
-	type = config.EQUITYPE_EQUI
-	attInit()
 	att.maxHp = 550
 	att.mgiDef = 65
 	att.cd = 0.1
-	att.reHp = 0.20
-	info = "受到技能攻击时回复最大生命的1%"
-	info += "\n承受伤害减少15%"
-	#effId = "sk_yunShi"
+	att.reHp = 0.30
+	info = TEXT.format("""{c_base}{c_skill}唯一被动：{/c}受到技能攻击时回复最大生命的1%。
+{c_skill}唯一被动：{/c}所受的全部治疗效果提高30%。{/c}""")
 	
 func _connect():
-	masCha.connect("onHurt",self,"run")
+	._connect()
+	if Repeat:
+		att.reHp = 0
 
-func run(atkInfo):
-	atkInfo.hurtVal *= 0.85
-	if atkInfo.atkType == Chara.AtkType.SKILL:
-		masCha.plusHp(masCha.att.maxHp*0.01)
+func _onHurt(atkInfo):
+	if atkInfo.atkType == SKILL:
+		masCha.plusHp(masCha.att.maxHp * 0.01)
 
