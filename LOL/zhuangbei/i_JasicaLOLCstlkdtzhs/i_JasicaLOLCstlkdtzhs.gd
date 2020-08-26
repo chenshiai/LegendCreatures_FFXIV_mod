@@ -24,6 +24,8 @@ func _connect():
 	._connect()
 	if !Repeat:
 		att.atk = (masCha.attCoe.atk * 8.5 * masCha.lv) as int
+	else:
+		att.atk = 0
 
 
 func _onBattleStart():

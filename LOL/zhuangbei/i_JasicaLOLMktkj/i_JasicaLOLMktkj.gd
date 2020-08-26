@@ -6,7 +6,6 @@ func _init():
 	name = "狂徒铠甲"
 	att.maxHp = 800
 	att.reHp = 0.2
-	att.cd = 0.1
 	info = TEXT.format("""{c_base}{c_skill}唯一被动：{/c}+10%冷却缩减。
 {c_skill}唯一被动：{/c}在自身拥有至少3000点最大生命值时，提供狂徒之心效果。
 
@@ -19,6 +18,8 @@ func _connect():
 	._connect()
 	if Repeat:
 		att.cd = 0
+	else:
+		att.cd = 0.1
 
 func _onHurt(atkInfo):
 	if (atkInfo.atkType == NORMAL or atkInfo.atkType == SKILL) and !Repeat:
