@@ -14,28 +14,38 @@ const EFF = Chara.AtkType.EFF # 特效攻击
 const MISS = Chara.AtkType.MISS # miss攻击
 
 var Repeat = false # 是否有冲突装备
+var HasRepeatSkill
 var RepeatId = "" # 冲突装备Id
+var ItemSkill = {} # 装备唯一技能字典
 
 func _init():
 	attInit()
 	type = config.EQUITYPE_EQUI
 
 func _connect():
-	sys.main.connect("onBattleEnd", self, "_onBattleEnd")
-	sys.main.connect("onBattleStart", self, "_onBattleStart")
-	masCha.connect("onAtkChara", self, "_onAtkChara")
-	masCha.connect("onCastCdSkill", self, "_onCastCdSkill")
 	masCha.connect("onHurt", self, "_onHurt")
 	masCha.connect("onPlusHp",self,"_onPlusHp")
+	masCha.connect("onAddItem", self, "_onAddItem")
+	masCha.connect("onDelItem", self, "_onDelItem")
+	masCha.connect("onAtkChara", self, "_onAtkChara")
+	masCha.connect("onCastCdSkill", self, "_onCastCdSkill")
+	sys.main.connect("onBattleEnd", self, "_onBattleEnd")
+	sys.main.connect("onBattleStart", self, "_onBattleStart")
 	_set_repeat()
 
 
 func _set_repeat():
 	for item in masCha.items:
-		if item.id == RepeatId and item != self:
-			Repeat = true
-			return
+		if item != self:
+			itemskills = Lol.getVal(item, "ItemSkill", {})
+			if item.id == RepeatId:
+				Repeat = true
+				return
+			for skill in self.ItemSkill.keys():
+				if itemskills[skill]:
+					item.ItemSkill[skill] = false
 	Repeat = false
+
 
 func _onBattleStart():
 	pass
@@ -49,3 +59,7 @@ func _onHurt(atkInfo):
 	pass
 func _onPlusHp(val):
 	pass
+func _onAddItem(item):
+	pass
+func _onDelItem(item):
+	_set_repeat()

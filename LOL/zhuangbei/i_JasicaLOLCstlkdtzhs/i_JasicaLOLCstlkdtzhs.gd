@@ -1,7 +1,7 @@
 extends "../LOLItemBase/LOLItemBase.gd"
 
 var skillInfo = """{c_base}{c_skill}唯一被动——巨人之力：{/c}提供携带者100%基础攻击力的额外攻击力
-{c_skill}救主灵刃：{/c}5秒内受到15%最大生命值以上伤害时，获得40%最大生命值的护盾(冷却时间：20秒)
+{c_skill}唯一被动——救主灵刃：{/c}5秒内受到15%最大生命值以上伤害时，获得40%最大生命值的护盾(固定冷却：20秒)
 护盾会在5s内持续衰减{/c}"""
 
 const cd = 20
@@ -16,6 +16,7 @@ var aOpen = false # 累积开关
 func _init():
 	id = "i_JasicaLOLCstlkdtzhs"
 	RepeatId = id
+	ItemSkill = { "SpiritualBlade": true }
 	name = "斯特拉克的挑战护手"
 	att.maxHp = 450
 	info = TEXT.format(skillInfo)
@@ -36,13 +37,14 @@ func _onBattleStart():
 	aOpen = false # 累积开关
 
 func _upS():
-	# 技能冷却计时器
+	# 技能冷却计时
 	if !open:
 		nowTime += masCha.att.cd + 1
 		if nowTime >= cd:
 			open = true
+			nowTime = 0
 
-	# 伤害累积计时器
+	# 伤害累积计时
 	if aOpen:
 		aTime += 1
 		nowTime = 0
@@ -53,7 +55,7 @@ func _upS():
 			aOpen = false
 
 func _onHurt(atkInfo:AtkInfo):
-	# 如果伤害累积未开始，则开始累积计时器
+	# 如果伤害累积未开始，则开始累积计时
 	if !aOpen and open:
 		aOpen = true
 	else:

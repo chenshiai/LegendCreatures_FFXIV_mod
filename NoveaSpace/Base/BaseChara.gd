@@ -70,7 +70,7 @@ func _onAtkInfo(atkInfo: AtkInfo):
 		atkInfo.canCri = true
 
 
-func NSHurt(target, atkVal, hurtType, atkType):
+func NoveaHurt(target, atkVal, hurtType, atkType):
 	if target != null and !target.isDeath:
 		self.hurtChara(target, atkVal, hurtType, atkType)
 

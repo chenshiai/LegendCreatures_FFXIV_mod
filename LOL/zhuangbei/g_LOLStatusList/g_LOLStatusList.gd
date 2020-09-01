@@ -183,3 +183,23 @@ class b_hantie extends BaseBuff:
 		att.spd = -0.20
 	func _upS():
 		life = clamp(life, 0, 2)
+
+# 幽影华尔兹
+class b_youyinghuaerzi extends BaseBuff:
+	func _init(config):
+		_set_config("b_youyinghuaerzi", config)
+	func _connect():
+		masCha.connect("onAtkChara", self, "_onAtkChara")
+	func _onAtkChara(atkInfo):
+		if atkInfo.hitCha == casCha:
+			atkInfo.hurtVal *= 0.88
+	func _upS():
+		life = clamp(life, 0, 4)
+
+# 幻影之舞 护盾
+class b_youyinghuaerziHD extends BassShield:
+	func _init(config):
+		_set_config("b_youyinghuaerziHD", config)
+		self.shieldValue = _get(config, "HD", 0)
+	func _upS():
+		life = clamp(life, 0, 3)
