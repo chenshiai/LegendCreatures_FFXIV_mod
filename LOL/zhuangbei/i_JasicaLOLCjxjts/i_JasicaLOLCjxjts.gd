@@ -12,8 +12,7 @@ func _init():
 穿戴单位变为近战{/c}""")
 	
 
-func _connect():
-	._connect()
+func _updataAttInfo():
 	att.atkRan = 1 - masCha.att.atkRan
 
 func _upS():

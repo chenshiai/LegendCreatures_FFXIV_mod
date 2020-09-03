@@ -15,8 +15,7 @@ func _init():
 var nowTime = 0
 var bl = false
 
-func _connect():
-	._connect()
+func _updataAttInfo():
 	if Repeat:
 		att.cd = 0.1
 	else:

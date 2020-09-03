@@ -55,6 +55,8 @@ func _upS():
 			aOpen = false
 
 func _onHurt(atkInfo:AtkInfo):
+	if Repeat or !ItemSkill["SpiritualBlade"]:
+		return
 	# 如果伤害累积未开始，则开始累积计时
 	if !aOpen and open:
 		aOpen = true

@@ -9,8 +9,7 @@ func _init():
 	info = TEXT.format("""{c_base}{c_skill}唯一被动——溶解：{/c}+40%法术穿透
 技能攻击附带{c_mgi}固定法穿值两倍{/c}的真实伤害{/c}""")
 
-func _connect():
-	._connect()
+func _updataAttInfo():
 	if Repeat:
 		att.mgiPenL = 0
 	else:

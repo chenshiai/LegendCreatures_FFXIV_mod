@@ -31,26 +31,26 @@ func _connect():
 	masCha.connect("onCastCdSkill", self, "_onCastCdSkill")
 	sys.main.connect("onBattleEnd", self, "_onBattleEnd")
 	sys.main.connect("onBattleStart", self, "_onBattleStart")
-	_set_repeat()
 
 
 func _set_repeat():
-	for item in masCha.items:
-		if item != self:
-			itemskills = Lol.getVal(item, "ItemSkill", {})
-			if item.id == RepeatId:
-				Repeat = true
-				return
-			for skill in self.ItemSkill.keys():
-				if itemskills[skill]:
-					item.ItemSkill[skill] = false
 	Repeat = false
-
-func _reset_repeat():
-	Repeat = false
+	_updataAttInfo()
 	for skill in self.ItemSkill.keys():
 		self.ItemSkill[skill] = true
 
+	for item in masCha.items:
+		var itemskills = item.get("ItemSkill")
+		if item != self and itemskills:
+			if item.id == RepeatId and !item.Repeat:
+				Repeat = true
+				_updataAttInfo()
+			for skill in self.ItemSkill.keys():
+				if itemskills[skill]:
+					self.ItemSkill[skill] = false
+
+func _updataAttInfo():
+	pass
 
 func _onBattleStart():
 	pass
@@ -65,6 +65,6 @@ func _onHurt(atkInfo):
 func _onPlusHp(val):
 	pass
 func _onAddItem(item):
-	_reset_repeat()
+	_set_repeat()
 func _onDelItem(item):
 	_set_repeat()

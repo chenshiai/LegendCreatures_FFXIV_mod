@@ -14,8 +14,7 @@ func _init():
 var open = false # 狂徒之心是否开启
 var num = 0 # 受到攻击次数
 
-func _connect():
-	._connect()
+func _updataAttInfo():
 	if Repeat:
 		att.cd = 0
 	else:
