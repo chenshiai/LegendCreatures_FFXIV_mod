@@ -22,10 +22,9 @@ func _connect():
 		_randomAtt("atk", "maxHp")
 	self.connect("randomAtt", self, "_randomAtt", ["atk", "maxHp"])
 	self.connect("updateAtt", self, "updateAtt")
-	masCha.connect("onHurt", self, "run")
 
-func run(atkInfo:AtkInfo):
-	if atkInfo.atkType != Chara.AtkType.NORMAL:
+func _onHurt(atkInfo:AtkInfo):
+	if atkInfo.atkType != NORMAL:
 		return
 	if sys.rndPer(30):
 		atkInfo.hurtVal *= 1 - (Level * 0.02 + 0.1)
