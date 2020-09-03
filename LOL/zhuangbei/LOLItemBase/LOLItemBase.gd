@@ -46,6 +46,11 @@ func _set_repeat():
 					item.ItemSkill[skill] = false
 	Repeat = false
 
+func _reset_repeat():
+	Repeat = false
+	for skill in self.ItemSkill.keys():
+		self.ItemSkill[skill] = true
+
 
 func _onBattleStart():
 	pass
@@ -60,6 +65,6 @@ func _onHurt(atkInfo):
 func _onPlusHp(val):
 	pass
 func _onAddItem(item):
-	pass
+	_reset_repeat()
 func _onDelItem(item):
 	_set_repeat()

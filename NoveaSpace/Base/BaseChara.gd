@@ -111,7 +111,7 @@ func get_normalHurtType():
 func set_normalAtkType(value):
 	if value >= 0:
 		normalAtkType = value
-	
+
 func get_normalAtkType():
 	if normalAtkType:
 		return normalAtkType

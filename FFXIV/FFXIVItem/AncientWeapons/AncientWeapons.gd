@@ -1,6 +1,4 @@
-extends Item
-const Utils = globalData.infoDs["g_aFFXIVUtils"]
-const TEXT = globalData.infoDs["g_bFFXIVText"]
+extends "../BaseItem.gd"
 
 const STEP = ["", "·天极", "·魂晶", "·魂灵", "·新星", "·镇魂"]
 const EXP_MAX = 20 # 每升一级需要的经验值
@@ -41,21 +39,12 @@ func _getEpilogue(over = false):
 	})
 	return Epilogue
 
-func _init():
-	attInit()
-	price = 500
-	type = config.EQUITYPE_EQUI
 
-func _connect():
-	sys.main.connect("onBattleStart", self, "growStart")
-	sys.main.connect("onBattleEnd", self, "growEnd")
-	sys.main.connect("onCharaDel", self, "expUp")
-
-func growStart():
+func _onBattleStart():
 	if sys.main.btChas.has(masCha):
 		GROW_START = true
 
-func growEnd():
+func _onBattleEnd():
 	if !GROW_START and fixed != 0:
 		fixed = 2
 		emit_signal("randomAtt")
@@ -63,7 +52,7 @@ func growEnd():
 		fixed -= 1
 	GROW_START = false
 
-func expUp(cha):
+func _onCharaDel(cha):
 	if Level == 5:
 		exp_now = 20
 	if GROW_START and Level < 5 and cha.team == 2:
@@ -216,7 +205,7 @@ func _randomAtt(ban1, ban2):
 		if item.attr == ban1 or item.attr == ban2:
 			randAtt.append(item)
 
-	# 删除已有的词条
+	# 删除已有的词条(不在上面删除是因为，遍历的同时删除会导致下标错误)
 	for item in randAtt:
 		AllAtt.erase(item)
 	randAtt = []
