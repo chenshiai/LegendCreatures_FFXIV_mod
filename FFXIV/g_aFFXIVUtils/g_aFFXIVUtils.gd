@@ -221,7 +221,7 @@ func draw_shadow(img, startPositon, endPositon, speed = 25):
 	var distance = endPositon - startPositon
 	var rs = preload("res://core/ying.tscn")
 	var n = distance.length() / speed
-	var texture = img.texture_normal
+	var texture = img.texture
 	for i in range(n):
 		var spr = rs.instance()
 		sys.main.map.add_child(spr)

@@ -165,7 +165,7 @@ func cleftFlow(first = true):
 	})
 	FFHurtChara(target, att.mgiAtk * cleftFlow_pw, Chara.HurtType.MGI, WaterPro)
 	BUFF_LIST.b_decreasedTolerance.new({
-		"cha": cha,
+		"cha": target,
 		"dur": 4,
 		"text": "水耐性下降·大",
 		"pw": 99,

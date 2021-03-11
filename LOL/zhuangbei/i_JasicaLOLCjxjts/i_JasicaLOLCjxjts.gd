@@ -13,11 +13,11 @@ func _init():
 	
 
 func _updataAttInfo():
-	att.atkRan = 1 - masCha.att.atkRan
+	masCha.att.atkRan = 1
 
 func _upS():
-	if masCha.att.atkRan > 1:
-		att.atkRan = 1 - masCha.att.atkRan
+	if masCha.att.atkRan != 1:
+		masCha.att.atkRan = 1
 
 
 func _onAtkChara(atkInfo:AtkInfo):

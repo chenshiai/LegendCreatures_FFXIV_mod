@@ -27,7 +27,7 @@ func _onBattleStart():
 	# var imt = ImageTexture.new()
 	# im.load(path + "cFFXIV_Tatalu/cha.png")
 	# imt.create_from_image(im)
-	# img.texture_normal = imt
+	# img.texture = imt
 	# BUFF_LIST.b_Adloquium.new({"cha": self, "HD": 800, "dur": 10})
 	# BUFF_LIST.b_Adloquium.new({"cha": self, "HD": 800, "dur": 10})
 	# BUFF_LIST.b_Adloquium.new({"cha": self, "HD": 800, "dur": 10})

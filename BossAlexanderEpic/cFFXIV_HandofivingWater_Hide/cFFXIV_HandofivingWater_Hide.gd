@@ -29,14 +29,14 @@ func parting():
 	aiOn = false
 	stone = Utils.load_texture(self.direc, "cFFXIV_HandofivingWater_Hide/cha3.png")
 	cloth = Utils.load_texture(self.direc, "cFFXIV_HandofivingWater_Hide/cha2.png")
-	originImg = img.texture_normal
+	originImg = img.texture
 	var status = null
 	if cellRan(Summoner.cell) <= 2:
 		status = "near"
-		self.img.texture_normal = stone
+		self.img.texture = stone
 	elif cellRan(Summoner.cell) > 2:
 		status = "far"
-		self.img.texture_normal = cloth
+		self.img.texture = cloth
 
 	Chant.chantStart("离别之手", 10)
 	yield(reTimer(10), "timeout")
@@ -57,7 +57,7 @@ func parting():
 		return
 	self.img.set_rotation_degrees(0)
 	self.normalSpr.position = Vector2(0, 0)
-	self.img.texture_normal = originImg
+	self.img.texture = originImg
 	yield(reTimer(1), "timeout")
 	self.att.hp = -1
 	hurtChara(self, 100)
